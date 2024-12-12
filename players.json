@@ -1,0 +1,60 @@
+[
+  {
+    "nom": "Messi",
+    "carriere": [
+      {
+        "club": "Barcelone",
+        "pays": "Espagne",
+        "arrivee": 2010,
+        "depart": 2015
+      },
+      {
+        "club": "Paris Saint-Germain",
+        "pays": "France",
+        "arrivee": 2015,
+        "depart": 2021
+      },
+      {
+        "club": "Inter Miami",
+        "pays": "États-Unis",
+        "arrivee": 2021,
+        "depart": "Présent"
+      }
+    ]
+  },
+  {
+    "nom": "Ronaldo",
+    "carriere": [
+      {
+        "club": "Sporting CP",
+        "pays": "Portugal",
+        "arrivee": 2002,
+        "depart": 2003
+      },
+      {
+        "club": "Manchester United",
+        "pays": "Angleterre",
+        "arrivee": 2003,
+        "depart": 2009
+      },
+      {
+        "club": "Real Madrid",
+        "pays": "Espagne",
+        "arrivee": 2009,
+        "depart": 2018
+      },
+      {
+        "club": "Juventus",
+        "pays": "Italie",
+        "arrivee": 2018,
+        "depart": 2021
+      },
+      {
+        "club": "Al Nassr",
+        "pays": "Arabie Saoudite",
+        "arrivee": 2022,
+        "depart": "Présent"
+      }
+    ]
+  }
+]
