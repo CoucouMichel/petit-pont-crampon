@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Devinez le joueur</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Petit Pont Crampon</h1>
+    <p>Tapez les clubs ou pays où le joueur a joué, ou devinez son nom de famille :</p>
+    <input type="text" id="guess-input" placeholder="Entrez une réponse">
+    
+    <!-- Compteur de tentatives -->
+    <p id="attempts">Tentatives : 0</p>
+    
+    <h2>Carrière du joueur</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Années</th>
+                <th>Club</th>
+                <th>Pays</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>2010-2015</td>
+                <td class="hidden" data-club="Barcelone">Barcelone</td>
+                <td class="hidden" data-country="Espagne">Espagne</td>
+            </tr>
+            <tr>
+                <td>2015-2021</td>
+                <td class="hidden" data-club="Paris Saint-Germain">Paris Saint-Germain</td>
+                <td class="hidden" data-country="France">France</td>
+            </tr>
+            <tr>
+                <td>2021-Présent</td>
+                <td class="hidden" data-club="Inter Miami">Inter Miami</td>
+                <td class="hidden" data-country="États-Unis">États-Unis</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>Mauvaises réponses</h3>
+    <ul id="wrong-answers"></ul>
+
+    <p id="feedback"></p>
+
+    <script>
+        const playerName = "Messi";  // Nom du joueur à deviner (en minuscules pour simplification)
+        let attempts = 0;  // Variable pour suivre le nombre de tentatives
+
+        // Fonction pour rendre visible le texte d'une cellule
+        function revealText(cell) {
+            cell.classList.add('visible');  // Ajoute la classe 'visible' pour rendre le texte visible
+        }
+
+        // Fonction pour révéler toutes les cellules du tableau
+        function revealAllCells() {
+            const allCells = document.querySelectorAll('td');
+            allCells.forEach(cell => {
+                cell.classList.add('visible');  // Rendre toutes les cellules visibles
+            });
+        }
+
+        // Fonction pour vérifier la réponse
+        function checkAnswer(input) {
+            const answer = input.trim().toLowerCase();  // Réponse de l'utilisateur, en minuscules
+            const feedback = document.getElementById("feedback");
+
+            // Vérifier si l'utilisateur a trouvé le nom de famille du joueur
+            if (answer === playerName.toLowerCase()) {
+                feedback.textContent = `Bingo ! Vous avez trouvé le joueur : ${playerName}`;
+                feedback.style.color = "green";  // Le message de succès en vert
+
+                // Révéler toutes les cellules du tableau
+                revealAllCells();
+            } else {
+                feedback.textContent = '';  // Effacer le message de feedback si ce n'est pas le bon nom
+
+                // Incrémenter le compteur de tentatives et afficher le nombre de tentatives
+                attempts++;
+                document.getElementById("attempts").textContent = `Tentatives : ${attempts}`;
+
+                // Ajouter la mauvaise réponse à la liste
+                const wrongAnswersList = document.getElementById("wrong-answers");
+                const listItem = document.createElement("li");
+                listItem.textContent = answer;
+                wrongAnswersList.appendChild(listItem);
+            }
+
+            // Recherche de toutes les cellules avec les attributs 'data-country' ou 'data-club'
+            const cells = document.querySelectorAll('td[data-country], td[data-club]');
+            
+            cells.forEach(cell => {
+                // Si le pays ou le club deviné correspond à celui de la cellule, on révèle le texte
+                if (cell.getAttribute('data-country') && cell.getAttribute('data-country').toLowerCase() === answer) {
+                    revealText(cell);  // Rendre le texte du pays visible
+                } else if (cell.getAttribute('data-club') && cell.getAttribute('data-club').toLowerCase() === answer) {
+                    revealText(cell);  // Rendre le texte du club visible
+                }
+            });
+        }
+
+        // Lier la fonction au champ de saisie pour vérifier l'entrée de l'utilisateur
+        const input = document.getElementById("guess-input");
+        input.addEventListener("keyup", (event) => {
+            if (event.key === "Enter") {
+                checkAnswer(input.value);  // Vérifie la réponse de l'utilisateur
+                input.value = "";  // Efface le champ après soumission
+            }
+        });
+    </script>
+</body>
+</html>

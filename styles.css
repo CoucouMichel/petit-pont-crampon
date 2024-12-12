@@ -1,0 +1,178 @@
+/* Définir les couleurs principales */
+:root {
+    --primary-color: #2c3e50;  /* Couleur primaire (bleu foncé) */
+    --secondary-color: #f39c12; /* Orange */
+    --background-color: #111e2b; /* Bleu marine */
+    --text-color: #ffffff; /* Texte blanc */
+    --highlight-color: #e74c3c; /* Rouge pour survol ou messages d'erreur */
+    --success-color: #2ecc71; /* Vert pour le succès */
+}
+
+/* Applique des styles de base à la page */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;  /* Centrer verticalement */
+    text-align: center;
+    flex-direction: column;
+}
+
+/* Conteneur pour centrer le tableau avec des marges à gauche et à droite */
+.container {
+    width: 100%;
+    max-width: 1000px;
+    margin: 20px auto; /* Centre le conteneur et ajoute une marge automatique */
+    padding: 20px;
+    background-color: #111e2b;
+    border-radius: 10px;
+}
+
+/* Styles du titre */
+h1 {
+    color: #fff;
+    margin-bottom: 20px;
+}
+
+/* Style du tableau */
+table {
+    width: 50%;
+    border-collapse: collapse;
+    text-align: left;
+    margin: 20px 0;  /* Ajoute une marge de 20px en haut et en bas */
+    padding-left: 20px;  /* Ajoute des marges internes à gauche */
+    padding-right: 20px;  /* Ajoute des marges internes à droite */
+    background-color: #ffffff00;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Définir la largeur des colonnes */
+th, td {
+    padding: 12px 15px;
+    border: 1px solid #08061d;
+    font-size: 16px;
+    color: var(--text-color); /* Texte en blanc pour toutes les cellules */
+}
+
+th {
+    background-color: var(--primary-color);
+    color: #fff;
+}
+
+td {
+    background-color: #f8f8f8;
+    color: var(--text-color);  /* Texte en blanc */
+}
+
+/* Lignes alternées avec des nuances de bleu marine */
+tr:nth-child(odd) td {
+    background-color: #111e2b;  /* Bleu marine pour les lignes impaires */
+}
+
+tr:nth-child(even) td {
+    background-color: #1a2633;  /* Couleur proche du bleu marine pour les lignes paires */
+}
+
+/* Masquer le texte de la cellule, mais garder la couleur de fond */
+td.hidden {
+    visibility: hidden; /* Masque le texte tout en gardant la couleur de fond */
+    position: relative;
+}
+
+/* Appliquer un léger surlignage orange sur les cellules à trouver */
+td.hidden::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(243, 156, 18, 0.3); /* Légèrement transparent avec une couleur orange */
+    border-radius: 5px;
+}
+
+/* Lorsque la cellule est révélée */
+td.visible {
+    visibility: visible !important; /* Force la visibilité de la cellule */
+}
+
+/* Pour la colonne des pays, appliquer un fond bleu marine et garder la structure */
+td[data-country] {
+    background-color: #111e2b; /* Bleu marine pour la colonne "Pays" */
+    visibility: hidden; /* Le texte reste invisible */
+}
+
+/* Pour la colonne des clubs, appliquer la couleur de fond appropriée */
+td[data-club] {
+    background-color: #111e2b; /* Bleu marine pour la colonne "Club" */
+    visibility: hidden; /* Le texte reste invisible */
+}
+
+/* Rendre le tableau responsive */
+@media (max-width: 768px) {
+    table {
+        font-size: 14px;
+    }
+    
+    th, td {
+        padding: 10px;
+    }
+    
+    .container {
+        padding: 10px;
+    }
+}
+
+/* Appliquer un style au champ de saisie */
+#guess-input {
+    width: 30%; /* Largement plus large */
+    padding: 15px; /* Augmenter l'espace autour du texte */
+    font-size: 18px; /* Augmenter la taille du texte */
+    border-radius: 15px; /* Bords arrondis */
+    border: 2px solid #f39c12; /* Bordure de couleur orange */
+    background-color: #f1f1f1; /* Fond clair */
+    color: #333; /* Texte foncé pour la lisibilité */
+    margin-top: 20px;
+    transition: border-color 0.3s ease; /* Transition pour l'animation au survol */
+}
+
+/* Ajouter un effet de survol pour améliorer l'interaction */
+#guess-input:focus {
+    border-color: #e74c3c; /* Bordure rouge lors du focus */
+    outline: none; /* Enlever la bordure par défaut au focus */
+}
+
+<!-- Ajoutez ce bloc juste avant la liste des mauvaises réponses -->
+<p id="attempts">Tentatives : 0</p>
+
+
+/* Liste des mauvaises réponses */
+#incorrect-guesses {
+    margin-top: 20px;
+    color: var(--highlight-color);
+    font-size: 16px;
+}
+
+/* Définir la largeur des colonnes */
+th:nth-child(1), td:nth-child(1) {
+    width: 20%; /* Réduire la largeur de la colonne "Années" */
+}
+
+th:nth-child(2), td:nth-child(2),
+th:nth-child(3), td:nth-child(3) {
+    width: 40%; /* Répartir la largeur entre les colonnes "Club" et "Pays" */
+}
+/* Style pour afficher les tentatives */
+#attempts {
+    margin-top: 10px;
+    color: var(--text-color);
+    font-size: 18px;
+    font-weight: bold;
+}
