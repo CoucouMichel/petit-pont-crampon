@@ -79,7 +79,7 @@
     <p id="feedback"></p>
 
     <script>
-        let clubsCountries = [];  // Liste des clubs et pays
+        let clubscountries = [];  // Liste des clubs et pays
         const playerName = "Messi";
         let attempts = 0;
 
@@ -87,14 +87,13 @@
 fetch('clubscountries.json')
     .then(response => response.json())
     .then(data => {
-        clubsCountries = data;
+        clubscountries = data;
     })
     .catch(error => console.log('Erreur lors du chargement du fichier JSON:', error));
 
-// Fonction pour afficher les suggestions
 function showSuggestions() {
     const input = document.getElementById('guess-input').value.toLowerCase();
-    const filteredSuggestions = clubsCountries.filter(item => item.toLowerCase().includes(input));
+    const filteredSuggestions = clubscountries.filter(item => item.toLowerCase().includes(input));
 
     const autocompleteList = document.getElementById("autocomplete-list");
     autocompleteList.innerHTML = ''; // Vider les suggestions précédentes
@@ -103,14 +102,14 @@ function showSuggestions() {
         const listItem = document.createElement("li");
         listItem.textContent = suggestion;
         listItem.addEventListener("click", () => {
-            document.getElementById("guess-input").value = suggestion; // Remplir la barre de saisie avec le mot sélectionné
+            document.getElementById("guess-input").value = suggestion; // Remplir la barre de saisie
             checkAnswer(suggestion); // Vérifier la réponse
-            autocompleteList.innerHTML = ""; // Masquer la liste déroulante après sélection
+            autocompleteList.innerHTML = ""; // Masquer la liste
         });
         autocompleteList.appendChild(listItem);
     });
 
-    // Afficher ou masquer la liste déroulante
+    // Afficher ou masquer la liste
     if (filteredSuggestions.length > 0) {
         autocompleteList.style.display = "block";
     } else {
@@ -118,38 +117,34 @@ function showSuggestions() {
     }
 }
 
+
 // Fonction pour vérifier la réponse
 function checkAnswer(input) {
     const answer = input.trim().toLowerCase();
     const feedback = document.getElementById("feedback");
 
-    // Remplacez "playerName" par le nom du joueur à deviner dans votre logique
-    const playerName = "Marseille";  // Exemple de nom à deviner
-
-    if (answer === playerName.toLowerCase()) {
-        feedback.textContent = `Bingo ! Vous avez trouvé le joueur : ${playerName}`;
+    // Vérification si la réponse correspond à un club ou un pays
+    if (clubscountries.some(item => item.toLowerCase() === answer)) {
+        feedback.textContent = `Bingo ! Vous avez trouvé : ${input}`;
         feedback.style.color = "green";
         revealAllCells();  // Révéler toutes les cellules
     } else {
-        feedback.textContent = '';  // Effacer le message de feedback si ce n'est pas le bon nom
+        feedback.textContent = '';  // Effacer le message de feedback si ce n'est pas la bonne réponse
         attempts++;
         document.getElementById("attempts").textContent = `Tentatives : ${attempts}`;
 
         // Ajouter la mauvaise réponse à la liste
         const wrongAnswersList = document.getElementById("wrong-answers");
-        if (input && input !== "") {
-            const listItem = document.createElement("li");
-            listItem.textContent = input;
-            wrongAnswersList.appendChild(listItem);
-        }
+        const listItem = document.createElement("li");
+        listItem.textContent = input;
+        wrongAnswersList.appendChild(listItem);
     }
 
     // Recherche dans les cellules
     const cells = document.querySelectorAll('td[data-country], td[data-club]');
     cells.forEach(cell => {
-        if (cell.getAttribute('data-country') && cell.getAttribute('data-country').toLowerCase() === answer) {
-            revealText(cell);
-        } else if (cell.getAttribute('data-club') && cell.getAttribute('data-club').toLowerCase() === answer) {
+        const cellContent = cell.textContent.toLowerCase();
+        if (cellContent === answer) {
             revealText(cell);
         }
     });
