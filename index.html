@@ -51,22 +51,8 @@
                 <th>Pays</th>
             </tr>
         </thead>
-        <tbody>
-            <tr>
-                <td>2010-2015</td>
-                <td class="hidden" data-club="Barcelone">Barcelone</td>
-                <td class="hidden" data-country="Espagne">Espagne</td>
-            </tr>
-            <tr>
-                <td>2015-2021</td>
-                <td class="hidden" data-club="Paris Saint-Germain">Paris Saint-Germain</td>
-                <td class="hidden" data-country="France">France</td>
-            </tr>
-            <tr>
-                <td>2021-Présent</td>
-                <td class="hidden" data-club="Inter Miami">Inter Miami</td>
-                <td class="hidden" data-country="États-Unis">États-Unis</td>
-            </tr>
+        <tbody id="career-table">
+            <!-- Carrière des joueurs affichée ici -->
         </tbody>
     </table>
 
@@ -76,100 +62,94 @@
     <p id="feedback"></p>
 
     <script>
-        const playerName = "Messi";
+        const players = ["Cristiano_Ronaldo", "Lionel_Messi", "Kylian_Mbappé"];
+        let currentPlayer = "";
         let attempts = 0;
 
-        // Charger le fichier JSON avec tous les clubs et pays
-        async function loadclubscountries() {
-            const response = await fetch('./clubscountries.json');  // Charge le fichier JSON
+        // Fonction pour récupérer les données de carrière d'un joueur via l'API Wikipedia
+        async function fetchPlayerData(playerName) {
+            const url = `https://fr.wikipedia.org/w/api.php?action=query&prop=revisions&rvprop=content&format=json&titles=${encodeURIComponent(playerName)}`;
+            
+            const response = await fetch(url);
             const data = await response.json();
-            return data;
+            
+            const pages = data.query.pages;
+            const page = pages[Object.keys(pages)[0]];
+
+            if (page) {
+                const content = page.revisions[0]["*"];
+                return extractCareerInfo(content); // Extraire les infos de carrière
+            }
         }
 
-  // Fonction pour afficher les suggestions
-async function showSuggestions(value) {
-    const autocompleteList = document.getElementById("autocomplete-list");
-    autocompleteList.innerHTML = ""; // Réinitialise les suggestions
-    if (value.trim() === "") return;
+        // Fonction pour extraire les informations de carrière d'un joueur
+        function extractCareerInfo(content) {
+            const careerRegex = /\|[^\|]*\s*(\d{4}-\d{4})\s*\|([^\|]+)\s*\|([^\|]+)\s*\|/g;
+            const career = [];
+            let match;
 
-    const data = await loadclubscountries();
-    const suggestions = new Set();
-
-    // Rechercher les correspondances dans les clubs et pays
-    for (let club in data) {
-        const country = data[club];
-
-        // Si la saisie correspond au club ou au pays, les ajouter aux suggestions
-        if (club.toLowerCase().includes(value.toLowerCase())) {
-            suggestions.add(club);
+            while ((match = careerRegex.exec(content)) !== null) {
+                const year = match[1];
+                const club = match[2].trim();
+                const country = match[3].trim();
+                career.push({ years: year, club: club, country: country });
+            }
+            
+            return career;
         }
-        if (country.toLowerCase().includes(value.toLowerCase())) {
-            suggestions.add(country);
-        }
-    }
 
-    // Trier les suggestions par ordre alphabétique
-    const sortedSuggestions = Array.from(suggestions).sort();
+        // Fonction pour afficher la carrière du joueur dans le tableau
+        function displayCareer(career) {
+            const careerTable = document.getElementById("career-table");
+            careerTable.innerHTML = ""; // Réinitialise le tableau
 
-    // Afficher les suggestions
-    if (sortedSuggestions.length > 0) {
-        autocompleteList.style.display = 'block'; // Affiche la liste
-        sortedSuggestions.forEach(suggestion => {
-            const listItem = document.createElement("li");
-            listItem.textContent = suggestion;
-            listItem.addEventListener("click", () => {
-                // Remplir le champ de saisie avec le mot sélectionné
-                document.getElementById("guess-input").value = suggestion;
-                
-                // Masquer la liste déroulante après sélection
-                autocompleteList.innerHTML = "";
-
-                // Vérifier la réponse
-                checkAnswer(suggestion);
-
-                // Vider le champ de saisie après avoir sélectionné un mot
-                document.getElementById("guess-input").value = "";
+            career.forEach(entry => {
+                const row = document.createElement("tr");
+                row.innerHTML = `<td>${entry.years}</td><td class="hidden" data-club="${entry.club}">${entry.club}</td><td class="hidden" data-country="${entry.country}">${entry.country}</td>`;
+                careerTable.appendChild(row);
             });
+        }
 
-            autocompleteList.appendChild(listItem);
-        });
-    } else {
-        autocompleteList.style.display = 'none'; // Cache la liste si aucune suggestion
-    }
-}
+        // Fonction pour choisir un joueur aléatoirement
+        function chooseRandomPlayer() {
+            const randomIndex = Math.floor(Math.random() * players.length);
+            currentPlayer = players[randomIndex];
+            fetchPlayerData(currentPlayer).then(career => {
+                displayCareer(career);
+            });
+        }
 
         // Fonction pour vérifier la réponse de l'utilisateur
-function checkAnswer(input) {
-    const answer = input.trim().toLowerCase();
-    const feedback = document.getElementById("feedback");
+        function checkAnswer(input) {
+            const answer = input.trim().toLowerCase();
+            const feedback = document.getElementById("feedback");
 
-    if (answer === playerName.toLowerCase()) {
-        feedback.textContent = `Bingo ! Vous avez trouvé le joueur : ${playerName}`;
-        feedback.style.color = "green";  // Le message de succès en vert
-        revealAllCells();  // Révéler toutes les cellules
-    } else {
-        feedback.textContent = '';  // Effacer le message de feedback si ce n'est pas le bon nom
-        attempts++;
-        document.getElementById("attempts").textContent = `Tentatives : ${attempts}`;
+            if (answer === currentPlayer.replace("_", " ").toLowerCase()) {
+                feedback.textContent = `Bingo ! Vous avez trouvé le joueur : ${currentPlayer.replace("_", " ")}`;
+                feedback.style.color = "green";  // Le message de succès en vert
+                revealAllCells();  // Révéler toutes les cellules
+            } else {
+                feedback.textContent = '';  // Effacer le message de feedback si ce n'est pas le bon nom
+                attempts++;
+                document.getElementById("attempts").textContent = `Tentatives : ${attempts}`;
 
-        // Ajouter la mauvaise réponse à la liste
-        const wrongAnswersList = document.getElementById("wrong-answers");
-        const listItem = document.createElement("li");
-        listItem.textContent = answer;
-        wrongAnswersList.appendChild(listItem); // Cette ligne ajoute la mauvaise réponse à la liste
-    }
+                // Ajouter la mauvaise réponse à la liste
+                const wrongAnswersList = document.getElementById("wrong-answers");
+                const listItem = document.createElement("li");
+                listItem.textContent = answer;
+                wrongAnswersList.appendChild(listItem);
+            }
 
-    // Recherche de toutes les cellules avec les attributs 'data-country' ou 'data-club'
-    const cells = document.querySelectorAll('td[data-country], td[data-club]');
-    cells.forEach(cell => {
-        if (cell.getAttribute('data-country') && cell.getAttribute('data-country').toLowerCase() === answer) {
-            revealText(cell);
-        } else if (cell.getAttribute('data-club') && cell.getAttribute('data-club').toLowerCase() === answer) {
-            revealText(cell);
+            // Recherche de toutes les cellules avec les attributs 'data-country' ou 'data-club'
+            const cells = document.querySelectorAll('td[data-country], td[data-club]');
+            cells.forEach(cell => {
+                if (cell.getAttribute('data-country') && cell.getAttribute('data-country').toLowerCase() === answer) {
+                    revealText(cell);
+                } else if (cell.getAttribute('data-club') && cell.getAttribute('data-club').toLowerCase() === answer) {
+                    revealText(cell);
+                }
+            });
         }
-    });
-}
-
 
         // Fonction pour rendre visible le texte d'une cellule
         function revealText(cell) {
@@ -190,14 +170,16 @@ function checkAnswer(input) {
             showSuggestions(input.value); // Met à jour les suggestions dynamiquement
         });
 
-input.addEventListener("keyup", (event) => {
-    if (event.key === "Enter") {
-        checkAnswer(input.value);
-        input.value = ""; // Vider la barre de saisie après chaque saisie
-        document.getElementById("autocomplete-list").innerHTML = ""; // Cache les suggestions
-    }
-});
+        input.addEventListener("keyup", (event) => {
+            if (event.key === "Enter") {
+                checkAnswer(input.value);
+                input.value = "";
+                document.getElementById("autocomplete-list").innerHTML = ""; // Cache les suggestions
+            }
+        });
 
+        // Choisir un joueur au chargement de la page
+        window.onload = chooseRandomPlayer;
     </script>
 </body>
 </html>
