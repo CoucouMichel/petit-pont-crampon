@@ -6,48 +6,36 @@
     <title>Petit Pont Crampon</title>
     <link rel="stylesheet" href="styles.css">
     <style>
-        /* Réinitialisation des styles par défaut */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        /* Style de base */
         body {
             font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
             line-height: 1.6;
-            background-color: #f9f9f9;
-            color: #333;
         }
 
         .container {
-            max-width: 800px;
-            margin: 20px auto;
             padding: 20px;
-            background-color: #fff;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            border-radius: 5px;
+            max-width: 800px;
+            margin: 0 auto;
         }
 
-        h1, h2 {
+        .input-container {
+            position: relative;
             margin-bottom: 20px;
         }
 
-        /* Champ de saisie */
         #guess-input {
             width: 100%;
-            max-width: 400px;
             padding: 10px;
-            margin-bottom: 20px;
+            font-size: 16px;
             border: 1px solid #ddd;
             border-radius: 5px;
+            box-sizing: border-box;
         }
 
-        /* Suggestions automatiques */
         .autocomplete-suggestions {
             position: absolute;
-            background-color: #ffffff;
+            background-color: #fff;
             border: 1px solid #ddd;
             border-radius: 5px;
             max-height: 150px;
@@ -55,54 +43,50 @@
             z-index: 1000;
             width: 100%;
         }
+
         .autocomplete-suggestions li {
             padding: 10px;
             cursor: pointer;
             list-style: none;
         }
+
         .autocomplete-suggestions li:hover {
             background-color: #f0f0f0;
         }
 
-        /* Tableau des carrières */
-        #table-wrapper {
-            max-height: 300px;
-            overflow-y: auto;
-            margin-top: 20px;
-            border: 1px solid #ddd;
+        #attempts,
+        #feedback {
+            margin-bottom: 20px;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
+            margin-top: 20px;
+            table-layout: fixed;
         }
 
         th, td {
-            border: 1px solid #ddd;
             padding: 10px;
             text-align: left;
+            border: 1px solid #ddd;
         }
 
         td.hidden {
-            background-color: #fff;
             color: transparent;
         }
 
         td.visible {
-            background-color: #e0f7fa;
             color: #000;
+            background-color: #e0f7fa;
         }
 
-        /* Mauvaises réponses */
         #wrong-answers {
-            margin-top: 20px;
-            padding-left: 20px;
-            list-style: disc;
+            margin-top: 10px;
         }
 
-        #feedback {
-            margin-top: 20px;
-            font-weight: bold;
+        #wrong-answers li {
+            color: red;
         }
     </style>
 </head>
@@ -110,38 +94,37 @@
     <div class="container">
         <h1>Petit Pont Crampon</h1>
         <p>Démasquez le joueur mystère en trouvant les pays et les clubs dans lesquels il a joué !</p>
-
+        
         <div class="input-container">
             <input type="text" id="guess-input" placeholder="Tapez un pays, un club ou le nom du joueur mystère" autocomplete="off">
             <ul id="autocomplete-list" class="autocomplete-suggestions"></ul>
         </div>
-
+        
         <p id="attempts">Tentatives : 0</p>
-
-        <h2>Carrière du joueur</h2>
-        <div id="table-wrapper">
-            <table id="career-table">
-                <thead>
-                    <tr>
-                        <th>Années</th>
-                        <th>Club</th>
-                        <th>Pays</th>
-                    </tr>
-                </thead>
-                <tbody id="career-table-body">
-                    <!-- Les lignes du tableau seront ajoutées dynamiquement -->
-                </tbody>
-            </table>
-        </div>
-
+        <p id="feedback"></p>
+        
         <h3>Mauvaises réponses</h3>
         <ul id="wrong-answers"></ul>
+    </div>
 
-        <p id="feedback"></p>
+    <div class="container">
+        <h2>Carrière du joueur</h2>
+        <table id="career-table">
+            <thead>
+                <tr>
+                    <th>Années</th>
+                    <th>Club</th>
+                    <th>Pays</th>
+                </tr>
+            </thead>
+            <tbody id="career-table-body">
+                <!-- Les lignes du tableau seront ajoutées dynamiquement -->
+            </tbody>
+        </table>
     </div>
 
     <script>
-        let selectedPlayer;  // Variable pour le joueur mystère
+        let selectedPlayer;
         let attempts = 0;
 
         // Charger le fichier JSON avec les statistiques des joueurs
@@ -165,7 +148,6 @@
             const stats = await selectRandomPlayer();
             const tableBody = document.getElementById('career-table-body');
             tableBody.innerHTML = '';
-
             if (stats) {
                 stats.forEach(stat => {
                     const row = document.createElement('tr');
@@ -176,8 +158,6 @@
                     `;
                     tableBody.appendChild(row);
                 });
-            } else {
-                console.error("Aucune donnée trouvée pour ce joueur");
             }
         }
 
@@ -190,30 +170,32 @@
             const data = await loadPlayerStats();
             const suggestions = new Set();
 
-            for (let player in data) {
-                data[player].forEach(entry => {
-                    if (entry.team.toLowerCase().includes(value.toLowerCase())) {
-                        suggestions.add(entry.team);
-                    }
-                    if (entry.country.toLowerCase().includes(value.toLowerCase())) {
-                        suggestions.add(entry.country);
-                    }
-                });
+            for (let club in data) {
+                const country = data[club];
+                if (club.toLowerCase().includes(value.toLowerCase())) {
+                    suggestions.add(club);
+                }
+                if (country.toLowerCase().includes(value.toLowerCase())) {
+                    suggestions.add(country);
+                }
             }
 
-            Array.from(suggestions).sort().forEach(suggestion => {
-                const listItem = document.createElement("li");
-                listItem.textContent = suggestion;
-                listItem.addEventListener("click", () => {
-                    document.getElementById("guess-input").value = suggestion;
-                    autocompleteList.innerHTML = "";
-                    checkAnswer(suggestion);
+            const sortedSuggestions = Array.from(suggestions).sort();
+            if (sortedSuggestions.length > 0) {
+                sortedSuggestions.forEach(suggestion => {
+                    const listItem = document.createElement("li");
+                    listItem.textContent = suggestion;
+                    listItem.addEventListener("click", () => {
+                        document.getElementById("guess-input").value = suggestion;
+                        autocompleteList.innerHTML = "";
+                        checkAnswer(suggestion);
+                    });
+                    autocompleteList.appendChild(listItem);
                 });
-                autocompleteList.appendChild(listItem);
-            });
+            }
         }
 
-        // Fonction pour vérifier la réponse
+        // Fonction pour vérifier la réponse de l'utilisateur
         function checkAnswer(input) {
             const answer = input.trim().toLowerCase();
             const feedback = document.getElementById("feedback");
@@ -226,10 +208,9 @@
                 feedback.textContent = '';
                 attempts++;
                 document.getElementById("attempts").textContent = `Tentatives : ${attempts}`;
-
                 const wrongAnswersList = document.getElementById("wrong-answers");
                 const listItem = document.createElement("li");
-                listItem.textContent = input;
+                listItem.textContent = answer;
                 wrongAnswersList.appendChild(listItem);
             }
 
@@ -242,14 +223,17 @@
             });
         }
 
+        // Fonction pour révéler une cellule
         function revealText(cell) {
-            cell.classList.remove('hidden');
             cell.classList.add('visible');
         }
 
+        // Fonction pour révéler toutes les cellules
         function revealAllCells() {
             const allCells = document.querySelectorAll('td');
-            allCells.forEach(cell => cell.classList.add('visible'));
+            allCells.forEach(cell => {
+                cell.classList.add('visible');
+            });
         }
 
         const input = document.getElementById("guess-input");
