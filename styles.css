@@ -129,7 +129,24 @@ td[data-club] {
         padding: 10px;
     }
 }
+/* Centrer la barre de saisie */
+body {
+    display: flex;
+    justify-content: center; /* Centre horizontalement */
+    align-items: center; /* Centre verticalement */
+    height: 100vh; /* Hauteur de l'écran pour centrer verticalement */
+    margin: 0; /* Enlève toute marge par défaut du body */
+    flex-direction: column; /* Les éléments sont centrés verticalement aussi */
+}
 
+/* Centrer la barre de saisie */
+input#guess-input {
+    width: 80%; /* Fixe une largeur pour la barre de saisie */
+    max-width: 400px; /* Limite la largeur maximale */
+    padding: 10px; /* Ajouter du padding pour plus de confort */
+    font-size: 16px; /* Taille de la police */
+    margin-bottom: 10px; /* Espacement sous la barre de saisie */
+}
 #guess-input {
     width: 100%; /* Barre de saisie plus large */
     max-width: 500px; /* Largeur maximale */
