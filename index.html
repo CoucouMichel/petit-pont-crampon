@@ -128,7 +128,7 @@ async function showSuggestions(value) {
     checkAnswer(`${suggestion.club}, ${suggestion.country}`);
     
     // Vider le champ de saisie après avoir sélectionné un mot
-    document.getElementById("guess-input").value = "";
+    document.getElementById("guess-input").value = suggestion;
 });
 
             autocompleteList.appendChild(listItem);
@@ -157,6 +157,8 @@ async function showSuggestions(value) {
                 const listItem = document.createElement("li");
                 listItem.textContent = answer;
                 wrongAnswersList.appendChild(listItem);
+
+                document.getElementById("wrong-answers").innerHTML = '';
             }
 
             // Recherche de toutes les cellules avec les attributs 'data-country' ou 'data-club'
