@@ -131,23 +131,22 @@ td[data-club] {
 }
 
 #guess-input {
-    width: 60%; /* Ajustez la largeur pour l'équilibre */
-    padding: 15px; /* Conservez un bon espace interne */
-    font-size: 18px; /* Taille de texte lisible */
-    border-radius: 10px; /* Bords arrondis */
-    border: 3px solid var(--primary-color); /* Couleur de bordure */
-    background-color: var(--background-color); /* Fond assorti au design */
-    color: var(--text-color); /* Texte en blanc */
-    margin: 0 auto; /* Centrer horizontalement */
-    display: block; /* Nécessaire pour que `margin: auto` fonctionne */
-    text-align: center; /* Texte centré dans le champ */
-    transition: border-color 0.3s ease; /* Animation lors du focus */
+    width: 100%; /* Barre de saisie plus large */
+    max-width: 500px; /* Largeur maximale */
+    padding: 15px; /* Espacement interne */
+    font-size: 18px; /* Texte plus grand */
+    border-radius: 15px; /* Coins arrondis */
+    border: 2px solid var(--secondary-color); /* Bordure orange */
+    background-color: var(--background-color); /* Fond bleu marine */
+    color: var(--text-color); /* Texte blanc */
+    margin-top: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Ombre pour un effet visuel */
+    text-align: center; /* Centre le texte dans la barre */
 }
 
-/* Focus sur la barre de saisie */
 #guess-input:focus {
-    border-color: var(--secondary-color); /* Changer la bordure au focus */
-    outline: none; /* Supprimer le contour par défaut */
+    border-color: var(--highlight-color); /* Change la couleur de bordure au focus */
+    outline: none; /* Supprime la bordure par défaut */
 }
 
 
