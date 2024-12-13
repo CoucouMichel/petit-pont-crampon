@@ -117,11 +117,20 @@ async function showSuggestions(value) {
         sortedSuggestions.forEach(suggestion => {
             const listItem = document.createElement("li");
             listItem.textContent = suggestion;
-            listItem.addEventListener("click", () => {
-                document.getElementById("guess-input").value = suggestion;
-                autocompleteList.innerHTML = ""; // Cache les suggestions après sélection
-                checkAnswer(suggestion); // Vérifie la réponse
-            });
+   listItem.addEventListener("click", () => {
+    // Remplir le champ de saisie avec le mot sélectionné
+    document.getElementById("guess-input").value = `${suggestion.club}, ${suggestion.country}`;
+    
+    // Masquer la liste déroulante après sélection
+    autocompleteList.innerHTML = "";
+    
+    // Vérifier la réponse
+    checkAnswer(`${suggestion.club}, ${suggestion.country}`);
+    
+    // Vider le champ de saisie après avoir sélectionné un mot
+    document.getElementById("guess-input").value = "";
+});
+
             autocompleteList.appendChild(listItem);
         });
     } else {
