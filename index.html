@@ -139,38 +139,37 @@ async function showSuggestions(value) {
 }
 
         // Fonction pour vérifier la réponse de l'utilisateur
-        function checkAnswer(input) {
-            const answer = input.trim().toLowerCase();
-            const feedback = document.getElementById("feedback");
+function checkAnswer(input) {
+    const answer = input.trim().toLowerCase();
+    const feedback = document.getElementById("feedback");
 
-            if (answer === playerName.toLowerCase()) {
-                feedback.textContent = `Bingo ! Vous avez trouvé le joueur : ${playerName}`;
-                feedback.style.color = "green";  // Le message de succès en vert
-                revealAllCells();  // Révéler toutes les cellules
-            } else {
-                feedback.textContent = '';  // Effacer le message de feedback si ce n'est pas le bon nom
-                attempts++;
-                document.getElementById("attempts").textContent = `Tentatives : ${attempts}`;
+    if (answer === playerName.toLowerCase()) {
+        feedback.textContent = `Bingo ! Vous avez trouvé le joueur : ${playerName}`;
+        feedback.style.color = "green";  // Le message de succès en vert
+        revealAllCells();  // Révéler toutes les cellules
+    } else {
+        feedback.textContent = '';  // Effacer le message de feedback si ce n'est pas le bon nom
+        attempts++;
+        document.getElementById("attempts").textContent = `Tentatives : ${attempts}`;
 
-                // Ajouter la mauvaise réponse à la liste
-                const wrongAnswersList = document.getElementById("wrong-answers");
-                const listItem = document.createElement("li");
-                listItem.textContent = answer;
-                wrongAnswersList.appendChild(listItem);
+        // Ajouter la mauvaise réponse à la liste
+        const wrongAnswersList = document.getElementById("wrong-answers");
+        const listItem = document.createElement("li");
+        listItem.textContent = answer;
+        wrongAnswersList.appendChild(listItem); // Cette ligne ajoute la mauvaise réponse à la liste
+    }
 
-                document.getElementById("wrong-answers").innerHTML = '';
-            }
-
-            // Recherche de toutes les cellules avec les attributs 'data-country' ou 'data-club'
-            const cells = document.querySelectorAll('td[data-country], td[data-club]');
-            cells.forEach(cell => {
-                if (cell.getAttribute('data-country') && cell.getAttribute('data-country').toLowerCase() === answer) {
-                    revealText(cell);
-                } else if (cell.getAttribute('data-club') && cell.getAttribute('data-club').toLowerCase() === answer) {
-                    revealText(cell);
-                }
-            });
+    // Recherche de toutes les cellules avec les attributs 'data-country' ou 'data-club'
+    const cells = document.querySelectorAll('td[data-country], td[data-club]');
+    cells.forEach(cell => {
+        if (cell.getAttribute('data-country') && cell.getAttribute('data-country').toLowerCase() === answer) {
+            revealText(cell);
+        } else if (cell.getAttribute('data-club') && cell.getAttribute('data-club').toLowerCase() === answer) {
+            revealText(cell);
         }
+    });
+}
+
 
         // Fonction pour rendre visible le texte d'une cellule
         function revealText(cell) {
@@ -191,13 +190,14 @@ async function showSuggestions(value) {
             showSuggestions(input.value); // Met à jour les suggestions dynamiquement
         });
 
-        input.addEventListener("keyup", (event) => {
-            if (event.key === "Enter") {
-                checkAnswer(input.value);
-                input.value = "";
-                document.getElementById("autocomplete-list").innerHTML = ""; // Cache les suggestions
-            }
-        });
+input.addEventListener("keyup", (event) => {
+    if (event.key === "Enter") {
+        checkAnswer(input.value);
+        input.value = ""; // Vider la barre de saisie après chaque saisie
+        document.getElementById("autocomplete-list").innerHTML = ""; // Cache les suggestions
+    }
+});
+
     </script>
 </body>
 </html>
