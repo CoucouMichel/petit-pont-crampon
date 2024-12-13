@@ -6,7 +6,45 @@
     <title>Petit Pont Crampon</title>
     <link rel="stylesheet" href="styles.css">
     <style>
-        /* Styles pour la liste déroulante */
+        /* Réinitialisation des styles par défaut */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Style de base */
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+
+        h1, h2 {
+            margin-bottom: 20px;
+        }
+
+        /* Champ de saisie */
+        #guess-input {
+            width: 100%;
+            max-width: 400px;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        /* Suggestions automatiques */
         .autocomplete-suggestions {
             position: absolute;
             background-color: #ffffff;
@@ -15,7 +53,7 @@
             max-height: 150px;
             overflow-y: auto;
             z-index: 1000;
-            width: 300px;
+            width: 100%;
         }
         .autocomplete-suggestions li {
             padding: 10px;
@@ -26,59 +64,76 @@
             background-color: #f0f0f0;
         }
 
-        /* Style pour les cellules visibles */
-        td.visible {
-            background-color: #e0f7fa;
-        }
-
-        /* Limiter la taille du tableau */
-        table {
-            width: 100%;
-            border-collapse: collapse;
+        /* Tableau des carrières */
+        #table-wrapper {
+            max-height: 300px;
+            overflow-y: auto;
             margin-top: 20px;
-            table-layout: fixed;
-        }
-        th, td {
-            padding: 10px;
-            text-align: left;
             border: 1px solid #ddd;
         }
 
-        /* Style pour l'entrée de texte */
-        #guess-input {
-            width: 300px;
-            padding: 8px;
-            margin-bottom: 20px;
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+
+        td.hidden {
+            background-color: #fff;
+            color: transparent;
+        }
+
+        td.visible {
+            background-color: #e0f7fa;
+            color: #000;
+        }
+
+        /* Mauvaises réponses */
+        #wrong-answers {
+            margin-top: 20px;
+            padding-left: 20px;
+            list-style: disc;
+        }
+
+        #feedback {
+            margin-top: 20px;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
-  <body>
     <div class="container">
         <h1>Petit Pont Crampon</h1>
         <p>Démasquez le joueur mystère en trouvant les pays et les clubs dans lesquels il a joué !</p>
+
         <div class="input-container">
-            <input type="text" id="guess-input" placeholder="Tapez un pays, un club ou le nom du joueur mystère" autocomplete="on">
+            <input type="text" id="guess-input" placeholder="Tapez un pays, un club ou le nom du joueur mystère" autocomplete="off">
             <ul id="autocomplete-list" class="autocomplete-suggestions"></ul>
         </div>
-        
+
         <p id="attempts">Tentatives : 0</p>
-        
- <h2>Carrière du joueur</h2>
-       <div id="table-wrapper">
-    <table id="career-table">
-        <thead>
-            <tr>
-                <th>Années</th>
-                <th>Club</th>
-                <th>Pays</th>
-            </tr>
-        </thead>
-        <tbody id="career-table-body">
-            <!-- Contenu dynamique -->
-        </tbody>
-    </table>
-</div>
+
+        <h2>Carrière du joueur</h2>
+        <div id="table-wrapper">
+            <table id="career-table">
+                <thead>
+                    <tr>
+                        <th>Années</th>
+                        <th>Club</th>
+                        <th>Pays</th>
+                    </tr>
+                </thead>
+                <tbody id="career-table-body">
+                    <!-- Les lignes du tableau seront ajoutées dynamiquement -->
+                </tbody>
+            </table>
+        </div>
+
         <h3>Mauvaises réponses</h3>
         <ul id="wrong-answers"></ul>
 
@@ -91,7 +146,7 @@
 
         // Charger le fichier JSON avec les statistiques des joueurs
         async function loadPlayerStats() {
-            const response = await fetch('./players_stats.json');  // Charge le fichier JSON avec les statistiques des joueurs
+            const response = await fetch('./players_stats.json');
             const data = await response.json();
             return data;
         }
@@ -99,17 +154,17 @@
         // Fonction pour choisir un joueur aléatoire
         async function selectRandomPlayer() {
             const playersData = await loadPlayerStats();
-            const players = Object.keys(playersData);  // Récupérer les noms des joueurs
-            const randomPlayer = players[Math.floor(Math.random() * players.length)];  // Sélectionner un joueur au hasard
-            selectedPlayer = randomPlayer;  // Définir le joueur mystère
-            return playersData[selectedPlayer];  // Retourner les statistiques de ce joueur
+            const players = Object.keys(playersData);
+            const randomPlayer = players[Math.floor(Math.random() * players.length)];
+            selectedPlayer = randomPlayer;
+            return playersData[selectedPlayer];
         }
 
         // Fonction pour afficher les statistiques du joueur dans le tableau
         async function displayPlayerStats() {
-            const stats = await selectRandomPlayer();  // Choisir un joueur aléatoire et récupérer ses stats
+            const stats = await selectRandomPlayer();
             const tableBody = document.getElementById('career-table-body');
-            tableBody.innerHTML = '';  // Vider le tableau avant de le remplir
+            tableBody.innerHTML = '';
 
             if (stats) {
                 stats.forEach(stat => {
@@ -129,115 +184,84 @@
         // Fonction pour afficher les suggestions (clubs et pays)
         async function showSuggestions(value) {
             const autocompleteList = document.getElementById("autocomplete-list");
-            autocompleteList.innerHTML = ""; // Réinitialise les suggestions
+            autocompleteList.innerHTML = "";
             if (value.trim() === "") return;
 
-            const data = await loadclubscountries();
+            const data = await loadPlayerStats();
             const suggestions = new Set();
 
-            // Rechercher les correspondances dans les clubs et pays
-            for (let club in data) {
-                const country = data[club];
-
-                // Si la saisie correspond au club ou au pays, les ajouter aux suggestions
-                if (club.toLowerCase().includes(value.toLowerCase())) {
-                    suggestions.add(club);
-                }
-                if (country.toLowerCase().includes(value.toLowerCase())) {
-                    suggestions.add(country);
-                }
-            }
-
-            // Trier les suggestions par ordre alphabétique
-            const sortedSuggestions = Array.from(suggestions).sort();
-
-            // Afficher les suggestions
-            if (sortedSuggestions.length > 0) {
-                autocompleteList.style.display = 'block'; // Affiche la liste
-                sortedSuggestions.forEach(suggestion => {
-                    const listItem = document.createElement("li");
-                    listItem.textContent = suggestion;
-                    listItem.addEventListener("click", () => {
-                        // Remplir le champ de saisie avec le mot sélectionné
-                        document.getElementById("guess-input").value = suggestion;
-                        
-                        // Masquer la liste déroulante après sélection
-                        autocompleteList.innerHTML = "";
-
-                        // Vérifier la réponse
-                        checkAnswer(suggestion);
-
-                        // Vider le champ de saisie après avoir sélectionné un mot
-                        document.getElementById("guess-input").value = "";
-                    });
-
-                    autocompleteList.appendChild(listItem);
+            for (let player in data) {
+                data[player].forEach(entry => {
+                    if (entry.team.toLowerCase().includes(value.toLowerCase())) {
+                        suggestions.add(entry.team);
+                    }
+                    if (entry.country.toLowerCase().includes(value.toLowerCase())) {
+                        suggestions.add(entry.country);
+                    }
                 });
-            } else {
-                autocompleteList.style.display = 'none'; // Cache la liste si aucune suggestion
             }
+
+            Array.from(suggestions).sort().forEach(suggestion => {
+                const listItem = document.createElement("li");
+                listItem.textContent = suggestion;
+                listItem.addEventListener("click", () => {
+                    document.getElementById("guess-input").value = suggestion;
+                    autocompleteList.innerHTML = "";
+                    checkAnswer(suggestion);
+                });
+                autocompleteList.appendChild(listItem);
+            });
         }
 
-        // Fonction pour vérifier la réponse de l'utilisateur
+        // Fonction pour vérifier la réponse
         function checkAnswer(input) {
             const answer = input.trim().toLowerCase();
             const feedback = document.getElementById("feedback");
 
             if (answer === selectedPlayer.toLowerCase()) {
                 feedback.textContent = `Bingo ! Vous avez trouvé le joueur : ${selectedPlayer}`;
-                feedback.style.color = "green";  // Le message de succès en vert
-                revealAllCells();  // Révéler toutes les cellules
+                feedback.style.color = "green";
+                revealAllCells();
             } else {
-                feedback.textContent = '';  // Effacer le message de feedback si ce n'est pas le bon nom
+                feedback.textContent = '';
                 attempts++;
                 document.getElementById("attempts").textContent = `Tentatives : ${attempts}`;
 
-                // Ajouter la mauvaise réponse à la liste
                 const wrongAnswersList = document.getElementById("wrong-answers");
                 const listItem = document.createElement("li");
-                listItem.textContent = answer;
-                wrongAnswersList.appendChild(listItem); // Cette ligne ajoute la mauvaise réponse à la liste
+                listItem.textContent = input;
+                wrongAnswersList.appendChild(listItem);
             }
 
-            // Recherche de toutes les cellules avec les attributs 'data-country' ou 'data-club'
             const cells = document.querySelectorAll('td[data-country], td[data-club]');
             cells.forEach(cell => {
-                if (cell.getAttribute('data-country') && cell.getAttribute('data-country').toLowerCase() === answer) {
-                    revealText(cell);
-                } else if (cell.getAttribute('data-club') && cell.getAttribute('data-club').toLowerCase() === answer) {
+                if (cell.getAttribute('data-country')?.toLowerCase() === answer ||
+                    cell.getAttribute('data-club')?.toLowerCase() === answer) {
                     revealText(cell);
                 }
             });
         }
 
-        // Fonction pour rendre visible le texte d'une cellule
         function revealText(cell) {
+            cell.classList.remove('hidden');
             cell.classList.add('visible');
         }
 
-        // Fonction pour révéler toutes les cellules du tableau
         function revealAllCells() {
             const allCells = document.querySelectorAll('td');
-            allCells.forEach(cell => {
-                cell.classList.add('visible');
-            });
+            allCells.forEach(cell => cell.classList.add('visible'));
         }
 
-        // Lier la fonction au champ de saisie pour vérifier l'entrée de l'utilisateur
         const input = document.getElementById("guess-input");
-        input.addEventListener("input", (event) => {
-            showSuggestions(input.value); // Met à jour les suggestions dynamiquement
-        });
-
+        input.addEventListener("input", () => showSuggestions(input.value));
         input.addEventListener("keyup", (event) => {
             if (event.key === "Enter") {
                 checkAnswer(input.value);
-                input.value = ""; // Vider la barre de saisie après chaque saisie
-                document.getElementById("autocomplete-list").innerHTML = ""; // Cache les suggestions
+                input.value = "";
+                document.getElementById("autocomplete-list").innerHTML = "";
             }
         });
 
-        // Charger et afficher les données du joueur mystère au démarrage
         displayPlayerStats();
     </script>
 </body>
