@@ -5,13 +5,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Petit Pont Crampon</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Styles pour la liste déroulante */
+        .autocomplete-suggestions {
+            position: absolute;
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            max-height: 150px;
+            overflow-y: auto;
+            z-index: 1000;
+            width: 300px;
+        }
+        .autocomplete-suggestions li {
+            padding: 10px;
+            cursor: pointer;
+            list-style: none;
+        }
+        .autocomplete-suggestions li:hover {
+            background-color: #f0f0f0;
+        }
+
+        /* Style pour les cellules visibles */
+        td.visible {
+            background-color: #e0f7fa;
+        }
+    </style>
 </head>
 <body>
     <h1>Petit Pont Crampon</h1>
     <p>Démasquez le joueur mystère en trouvant les pays et les clubs dans lesquels il a joué !</p>
-    <input type="text" id="guess-input" placeholder="Tapez un pays, un club ou le nom du joueur mystère">
+    <div style="position: relative;">
+        <input type="text" id="guess-input" placeholder="Tapez un pays, un club ou le nom du joueur mystère" autocomplete="off">
+        <ul id="autocomplete-list" class="autocomplete-suggestions"></ul>
+    </div>
     
-    <!-- Compteur de tentatives -->
     <p id="attempts">Tentatives : 0</p>
     
     <h2>Carrière du joueur</h2>
@@ -48,38 +76,67 @@
     <p id="feedback"></p>
 
     <script>
-        const playerName = "Messi";  // Nom du joueur à deviner (en minuscules pour simplification)
-        let attempts = 0;  // Variable pour suivre le nombre de tentatives
+        const playerName = "Messi";
+        let attempts = 0;
 
-        // Fonction pour rendre visible le texte d'une cellule
-        function revealText(cell) {
-            cell.classList.add('visible');  // Ajoute la classe 'visible' pour rendre le texte visible
+        // Charger le fichier JSON avec tous les clubs et pays
+        async function loadclubscountries() {
+            const response = await fetch('clubscountries.json');  // Charge le fichier JSON
+            const data = await response.json();
+            return data;
         }
 
-        // Fonction pour révéler toutes les cellules du tableau
-        function revealAllCells() {
-            const allCells = document.querySelectorAll('td');
-            allCells.forEach(cell => {
-                cell.classList.add('visible');  // Rendre toutes les cellules visibles
+        // Fonction pour afficher les suggestions
+async function showSuggestions(value) {
+    const autocompleteList = document.getElementById("autocomplete-list");
+    autocompleteList.innerHTML = ""; // Réinitialise les suggestions
+    if (value.trim() === "") {
+        autocompleteList.style.display = 'none'; // Cache la liste si la saisie est vide
+        return;
+    }
+
+    const data = await loadclubscountries();
+    const filteredSuggestions = [];
+
+    // Rechercher dans les clubs et pays correspondants à l'entrée de l'utilisateur
+    for (let country in data) {
+        for (let club of data[country]) {
+            if (club.toLowerCase().includes(value.toLowerCase()) || country.toLowerCase().includes(value.toLowerCase())) {
+                filteredSuggestions.push({ club, country });
+            }
+        }
+    }
+
+    // Afficher les suggestions si elles existent
+    if (filteredSuggestions.length > 0) {
+        autocompleteList.style.display = 'block'; // Affiche la liste
+        filteredSuggestions.forEach(suggestion => {
+            const listItem = document.createElement("li");
+            listItem.textContent = `${suggestion.club} (${suggestion.country})`;
+            listItem.addEventListener("click", () => {
+                document.getElementById("guess-input").value = `${suggestion.club}, ${suggestion.country}`;
+                autocompleteList.innerHTML = ""; // Cache les suggestions après sélection
+                checkAnswer(`${suggestion.club}, ${suggestion.country}`);  // Vérifie la réponse après la sélection
             });
-        }
+            autocompleteList.appendChild(listItem);
+        });
+    } else {
+        autocompleteList.style.display = 'none'; // Cache la liste si aucune suggestion
+    }
+}
 
-        // Fonction pour vérifier la réponse
+
+        // Fonction pour vérifier la réponse de l'utilisateur
         function checkAnswer(input) {
-            const answer = input.trim().toLowerCase();  // Réponse de l'utilisateur, en minuscules
+            const answer = input.trim().toLowerCase();
             const feedback = document.getElementById("feedback");
 
-            // Vérifier si l'utilisateur a trouvé le nom de famille du joueur
             if (answer === playerName.toLowerCase()) {
                 feedback.textContent = `Bingo ! Vous avez trouvé le joueur : ${playerName}`;
                 feedback.style.color = "green";  // Le message de succès en vert
-
-                // Révéler toutes les cellules du tableau
-                revealAllCells();
+                revealAllCells();  // Révéler toutes les cellules
             } else {
                 feedback.textContent = '';  // Effacer le message de feedback si ce n'est pas le bon nom
-
-                // Incrémenter le compteur de tentatives et afficher le nombre de tentatives
                 attempts++;
                 document.getElementById("attempts").textContent = `Tentatives : ${attempts}`;
 
@@ -92,23 +149,39 @@
 
             // Recherche de toutes les cellules avec les attributs 'data-country' ou 'data-club'
             const cells = document.querySelectorAll('td[data-country], td[data-club]');
-            
             cells.forEach(cell => {
-                // Si le pays ou le club deviné correspond à celui de la cellule, on révèle le texte
                 if (cell.getAttribute('data-country') && cell.getAttribute('data-country').toLowerCase() === answer) {
-                    revealText(cell);  // Rendre le texte du pays visible
+                    revealText(cell);
                 } else if (cell.getAttribute('data-club') && cell.getAttribute('data-club').toLowerCase() === answer) {
-                    revealText(cell);  // Rendre le texte du club visible
+                    revealText(cell);
                 }
+            });
+        }
+
+        // Fonction pour rendre visible le texte d'une cellule
+        function revealText(cell) {
+            cell.classList.add('visible');
+        }
+
+        // Fonction pour révéler toutes les cellules du tableau
+        function revealAllCells() {
+            const allCells = document.querySelectorAll('td');
+            allCells.forEach(cell => {
+                cell.classList.add('visible');
             });
         }
 
         // Lier la fonction au champ de saisie pour vérifier l'entrée de l'utilisateur
         const input = document.getElementById("guess-input");
+        input.addEventListener("input", (event) => {
+            showSuggestions(input.value); // Met à jour les suggestions dynamiquement
+        });
+
         input.addEventListener("keyup", (event) => {
             if (event.key === "Enter") {
-                checkAnswer(input.value);  // Vérifie la réponse de l'utilisateur
-                input.value = "";  // Efface le champ après soumission
+                checkAnswer(input.value);
+                input.value = "";
+                document.getElementById("autocomplete-list").innerHTML = ""; // Cache les suggestions
             }
         });
     </script>
