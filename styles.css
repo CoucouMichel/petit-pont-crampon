@@ -179,8 +179,8 @@ th:nth-child(3), td:nth-child(3) {
 /* Styles pour la liste déroulante */
 .autocomplete-suggestions {
     position: absolute;
-    background-color: #ffffff;
-    border: 1px solid #ddd;
+    background-color: #111e2b;
+    border: 1px solid #b9cf3c;
     border-radius: 5px;
     max-height: 150px;
     overflow-y: auto;
