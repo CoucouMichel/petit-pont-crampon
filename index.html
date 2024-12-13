@@ -137,15 +137,19 @@
             const tableBody = document.getElementById('career-table-body');
             tableBody.innerHTML = '';  // Vider le tableau avant de le remplir
 
-            stats.forEach(stat => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${stat.season}</td>
-                    <td class="hidden" data-club="${stat.team}">${stat.team}</td>
-                    <td class="hidden" data-country="${stat.country}">${stat.country}</td>
-                `;
-                tableBody.appendChild(row);
-            });
+            if (stats) {
+                stats.forEach(stat => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${stat.season}</td>
+                        <td class="hidden" data-club="${stat.team}">${stat.team}</td>
+                        <td class="hidden" data-country="${stat.country}">${stat.country}</td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            } else {
+                console.error("Aucune donnée trouvée pour ce joueur");
+            }
         }
 
         // Fonction pour vérifier la réponse de l'utilisateur
