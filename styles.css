@@ -41,8 +41,8 @@ h1 {
 
 /* Style du tableau */
 table {
-    width: 100%;
-    max-width: 100%;
+    width: 50%;
+    max-width: 50%;
     border-collapse: collapse;
     margin-top: 20px; /* Ajoute un espacement au-dessus du tableau */
     background-color: #ffffff00;
@@ -177,12 +177,12 @@ input#guess-input {
 
 /* Définir la largeur des colonnes */
 th:nth-child(1), td:nth-child(1) {
-    width: 20%; /* Réduire la largeur de la colonne "Années" */
+    width: 10%; /* Réduire la largeur de la colonne "Années" */
 }
 
 th:nth-child(2), td:nth-child(2),
 th:nth-child(3), td:nth-child(3) {
-    width: 40%; /* Répartir la largeur entre les colonnes "Club" et "Pays" */
+    width: 45%; /* Répartir la largeur entre les colonnes "Club" et "Pays" */
 }
 /* Style pour afficher les tentatives */
 #attempts {
