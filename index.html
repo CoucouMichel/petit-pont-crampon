@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Petit Pont Crampon</title>
-    <link rel="stylesheet" href="styles.css">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -170,14 +169,15 @@
             const data = await loadPlayerStats();
             const suggestions = new Set();
 
-            for (let club in data) {
-                const country = data[club];
-                if (club.toLowerCase().includes(value.toLowerCase())) {
-                    suggestions.add(club);
-                }
-                if (country.toLowerCase().includes(value.toLowerCase())) {
-                    suggestions.add(country);
-                }
+            for (let player in data) {
+                data[player].forEach(entry => {
+                    if (entry.team.toLowerCase().includes(value.toLowerCase())) {
+                        suggestions.add(entry.team);
+                    }
+                    if (entry.country.toLowerCase().includes(value.toLowerCase())) {
+                        suggestions.add(entry.country);
+                    }
+                });
             }
 
             const sortedSuggestions = Array.from(suggestions).sort();
