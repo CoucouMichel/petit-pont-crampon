@@ -62,24 +62,47 @@
     <p id="feedback"></p>
 
     <script>
-        const playerName = "Messi";  // Nom du joueur mystère
+        let selectedPlayer;  // Variable pour le joueur mystère
         let attempts = 0;
 
-        // Charger le fichier JSON avec tous les clubs et pays
-        async function loadclubscountries() {
-            const response = await fetch('./clubscountries.json');  // Charge le fichier JSON
+        // Charger le fichier JSON avec les statistiques des joueurs
+        async function loadPlayerStats() {
+            const response = await fetch('./players_stats.json');  // Charge le fichier JSON avec les statistiques des joueurs
             const data = await response.json();
             return data;
         }
 
-        // Charger les données de la carrière du joueur depuis le fichier JSON
-        async function loadPlayerStats() {
-            const response = await fetch('./players_stats.json');  // Charge le fichier JSON avec les statistiques des joueurs
-            const data = await response.json();
-            return data[playerName];  // Retourne les stats du joueur mystère
+        // Fonction pour choisir un joueur aléatoire
+        async function selectRandomPlayer() {
+            const playersData = await loadPlayerStats();
+            const players = Object.keys(playersData);  // Récupérer les noms des joueurs
+            const randomPlayer = players[Math.floor(Math.random() * players.length)];  // Sélectionner un joueur au hasard
+            selectedPlayer = randomPlayer;  // Définir le joueur mystère
+            return playersData[selectedPlayer];  // Retourner les statistiques de ce joueur
         }
 
-        // Fonction pour afficher les suggestions
+        // Fonction pour afficher les statistiques du joueur dans le tableau
+        async function displayPlayerStats() {
+            const stats = await selectRandomPlayer();  // Choisir un joueur aléatoire et récupérer ses stats
+            const tableBody = document.getElementById('career-table-body');
+            tableBody.innerHTML = '';  // Vider le tableau avant de le remplir
+
+            if (stats) {
+                stats.forEach(stat => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${stat.season}</td>
+                        <td class="hidden" data-club="${stat.team}">${stat.team}</td>
+                        <td class="hidden" data-country="${stat.country}">${stat.country}</td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            } else {
+                console.error("Aucune donnée trouvée pour ce joueur");
+            }
+        }
+
+        // Fonction pour afficher les suggestions (clubs et pays)
         async function showSuggestions(value) {
             const autocompleteList = document.getElementById("autocomplete-list");
             autocompleteList.innerHTML = ""; // Réinitialise les suggestions
@@ -131,34 +154,13 @@
             }
         }
 
-        // Fonction pour afficher les statistiques du joueur dans le tableau
-        async function displayPlayerStats() {
-            const stats = await loadPlayerStats();
-            const tableBody = document.getElementById('career-table-body');
-            tableBody.innerHTML = '';  // Vider le tableau avant de le remplir
-
-            if (stats) {
-                stats.forEach(stat => {
-                    const row = document.createElement('tr');
-                    row.innerHTML = `
-                        <td>${stat.season}</td>
-                        <td class="hidden" data-club="${stat.team}">${stat.team}</td>
-                        <td class="hidden" data-country="${stat.country}">${stat.country}</td>
-                    `;
-                    tableBody.appendChild(row);
-                });
-            } else {
-                console.error("Aucune donnée trouvée pour ce joueur");
-            }
-        }
-
         // Fonction pour vérifier la réponse de l'utilisateur
         function checkAnswer(input) {
             const answer = input.trim().toLowerCase();
             const feedback = document.getElementById("feedback");
 
-            if (answer === playerName.toLowerCase()) {
-                feedback.textContent = `Bingo ! Vous avez trouvé le joueur : ${playerName}`;
+            if (answer === selectedPlayer.toLowerCase()) {
+                feedback.textContent = `Bingo ! Vous avez trouvé le joueur : ${selectedPlayer}`;
                 feedback.style.color = "green";  // Le message de succès en vert
                 revealAllCells();  // Révéler toutes les cellules
             } else {
@@ -211,7 +213,7 @@
             }
         });
 
-        // Charger les données et afficher les statistiques au début
+        // Charger et afficher les données du joueur mystère au démarrage
         displayPlayerStats();
     </script>
 </body>
