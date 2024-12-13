@@ -180,17 +180,21 @@ th:nth-child(3), td:nth-child(3) {
 /* Styles pour la liste déroulante */
 .autocomplete-suggestions {
     position: absolute;
-    background-color: ##FFFFFF;
+    background-color: #111e2b;
     border: 1px solid #b9cf3c;
     border-radius: 5px;
     max-height: 150px;
     overflow-y: auto;
     z-index: 1000;
-    width: 100%; /* Prendre toute la largeur du champ de saisie */
+    width: 100%; /* Prend toute la largeur du champ de saisie */
+    max-width: 500px; /* La même largeur maximale que l'input */
+    left: 50%; /* Centrer horizontalement */
+    transform: translateX(-50%); /* Ajuster pour le centrage parfait */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombre pour le menu déroulant */
-    display: none; /* Par défaut, la liste est cachée */
-    margin-top: 5px; /* Ajouter un léger espacement entre l'input et la liste */
+    display: none; /* Masqué par défaut */
+    margin-top: 5px; /* Espacement entre l'input et la liste */
 }
+
 
 /* Style des éléments de la liste déroulante */
 .autocomplete-suggestions li {
