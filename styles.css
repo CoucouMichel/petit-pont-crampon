@@ -196,9 +196,14 @@ th:nth-child(3), td:nth-child(3) {
     padding: 10px;
     cursor: pointer;
     list-style: none;
+    background-color: var(--background-color); /* Fond bleu marine */
+    color: var(--text-color); /* Texte en blanc */
+    border-bottom: 1px solid var(--primary-color); /* Ligne de séparation */
 }
 
 /* Surlignage d'un élément lors du survol */
 .autocomplete-suggestions li:hover {
-    background-color: #f0f0f0;
+    background-color: var(--secondary-color); /* Fond orange */
+    color: #fff; /* Texte blanc */
 }
+
