@@ -81,7 +81,7 @@
 
         // Charger le fichier JSON avec tous les clubs et pays
         async function loadclubscountries() {
-            const response = await fetch('clubscountries.json');  // Charge le fichier JSON
+            const response = await fetch('./clubscountries.json');  // Charge le fichier JSON
             const data = await response.json();
             return data;
         }
