@@ -93,31 +93,34 @@ async function showSuggestions(value) {
     if (value.trim() === "") return;
 
     const data = await loadclubscountries();
-    const filteredSuggestions = new Set();
+    const suggestions = new Set();
 
     // Rechercher les correspondances dans les clubs et pays
     for (let club in data) {
         const country = data[club];
 
-        // Si la saisie correspond au club ou au pays, l'ajouter aux suggestions
+        // Si la saisie correspond au club ou au pays, les ajouter aux suggestions
         if (club.toLowerCase().includes(value.toLowerCase())) {
-            filteredSuggestions.add({ type: "club", text: club });
+            suggestions.add(club);
         }
         if (country.toLowerCase().includes(value.toLowerCase())) {
-            filteredSuggestions.add({ type: "country", text: country });
+            suggestions.add(country);
         }
     }
 
+    // Trier les suggestions par ordre alphabétique
+    const sortedSuggestions = Array.from(suggestions).sort();
+
     // Afficher les suggestions
-    if (filteredSuggestions.size > 0) {
+    if (sortedSuggestions.length > 0) {
         autocompleteList.style.display = 'block'; // Affiche la liste
-        filteredSuggestions.forEach(suggestion => {
+        sortedSuggestions.forEach(suggestion => {
             const listItem = document.createElement("li");
-            listItem.textContent = suggestion.text;
+            listItem.textContent = suggestion;
             listItem.addEventListener("click", () => {
-                document.getElementById("guess-input").value = suggestion.text;
+                document.getElementById("guess-input").value = suggestion;
                 autocompleteList.innerHTML = ""; // Cache les suggestions après sélection
-                checkAnswer(suggestion.text); // Vérifie la réponse
+                checkAnswer(suggestion); // Vérifie la réponse
             });
             autocompleteList.appendChild(listItem);
         });
@@ -125,6 +128,7 @@ async function showSuggestions(value) {
         autocompleteList.style.display = 'none'; // Cache la liste si aucune suggestion
     }
 }
+
         // Fonction pour vérifier la réponse de l'utilisateur
         function checkAnswer(input) {
             const answer = input.trim().toLowerCase();
