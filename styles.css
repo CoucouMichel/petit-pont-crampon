@@ -205,9 +205,10 @@ th:nth-child(3), td:nth-child(3) {
 
 /* Surlignage d'un élément lors du survol */
 .autocomplete-suggestions li:hover {
-    background-color: #cde73c; /* Fond jaune-vert */
-    color: #000; /* Texte noir */
-    font-weight: bold; /* Facultatif : accentuer le texte */
-    border-radius: 5px; /* Ajoutez un arrondi pour un effet élégant */
+    background-color: #cde73c !important; /* Fond jaune-vert forcé */
+    color: #000 !important; /* Texte noir forcé */
+    font-weight: bold; /* Accentuer le texte */
+    border-radius: 5px; /* Facultatif : arrondi des bords */
 }
+
 
