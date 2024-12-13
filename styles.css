@@ -130,24 +130,26 @@ td[data-club] {
     }
 }
 
-/* Appliquer un style au champ de saisie */
 #guess-input {
-    width: 200%; /* Largement plus large */
-    padding: 20px; /* Augmenter l'espace autour du texte */
-    font-size: 15px; /* Augmenter la taille du texte */
-    border-radius: 15px; /* Bords arrondis */
-    border: 4px solid #58bcff; /* Bordure de couleur orange */
-    background-color: #f1f1f1; /* Fond clair */
-    color: #333; /* Texte foncé pour la lisibilité */
-    margin-top: 15px;
-    transition: border-color 0.3s ease; /* Transition pour l'animation au survol */
+    width: 60%; /* Ajustez la largeur pour l'équilibre */
+    padding: 15px; /* Conservez un bon espace interne */
+    font-size: 18px; /* Taille de texte lisible */
+    border-radius: 10px; /* Bords arrondis */
+    border: 3px solid var(--primary-color); /* Couleur de bordure */
+    background-color: var(--background-color); /* Fond assorti au design */
+    color: var(--text-color); /* Texte en blanc */
+    margin: 0 auto; /* Centrer horizontalement */
+    display: block; /* Nécessaire pour que `margin: auto` fonctionne */
+    text-align: center; /* Texte centré dans le champ */
+    transition: border-color 0.3s ease; /* Animation lors du focus */
 }
 
-/* Ajouter un effet de survol pour améliorer l'interaction */
+/* Focus sur la barre de saisie */
 #guess-input:focus {
-    border-color: #cde73c; /* Bordure jaune lors du focus */
-    outline: none; /* Enlever la bordure par défaut au focus */
+    border-color: var(--secondary-color); /* Changer la bordure au focus */
+    outline: none; /* Supprimer le contour par défaut */
 }
+
 
 <!-- Ajoutez ce bloc juste avant la liste des mauvaises réponses -->
 <p id="attempts">Tentatives : 0</p>
