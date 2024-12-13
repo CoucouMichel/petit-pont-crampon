@@ -94,7 +94,7 @@ td.hidden::after {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(243, 156, 18, 0.3); /* Légèrement transparent avec une couleur orange */
+    background-color: rgba(23, 196, 248, 0.5); /* Légèrement transparent avec une couleur orange */
     border-radius: 5px;
 }
 
@@ -132,20 +132,20 @@ td[data-club] {
 
 /* Appliquer un style au champ de saisie */
 #guess-input {
-    width: 30%; /* Largement plus large */
-    padding: 15px; /* Augmenter l'espace autour du texte */
-    font-size: 18px; /* Augmenter la taille du texte */
+    width: 200%; /* Largement plus large */
+    padding: 20px; /* Augmenter l'espace autour du texte */
+    font-size: 15px; /* Augmenter la taille du texte */
     border-radius: 15px; /* Bords arrondis */
-    border: 2px solid #f39c12; /* Bordure de couleur orange */
+    border: 4px solid #58bcff; /* Bordure de couleur orange */
     background-color: #f1f1f1; /* Fond clair */
     color: #333; /* Texte foncé pour la lisibilité */
-    margin-top: 20px;
+    margin-top: 15px;
     transition: border-color 0.3s ease; /* Transition pour l'animation au survol */
 }
 
 /* Ajouter un effet de survol pour améliorer l'interaction */
 #guess-input:focus {
-    border-color: #e74c3c; /* Bordure rouge lors du focus */
+    border-color: #cde73c; /* Bordure jaune lors du focus */
     outline: none; /* Enlever la bordure par défaut au focus */
 }
 
@@ -157,7 +157,7 @@ td[data-club] {
 #incorrect-guesses {
     margin-top: 20px;
     color: var(--highlight-color);
-    font-size: 16px;
+    font-size: 10px;
 }
 
 /* Définir la largeur des colonnes */
@@ -175,4 +175,30 @@ th:nth-child(3), td:nth-child(3) {
     color: var(--text-color);
     font-size: 18px;
     font-weight: bold;
+}
+/* Styles pour la liste déroulante */
+.autocomplete-suggestions {
+    position: absolute;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    max-height: 150px;
+    overflow-y: auto;
+    z-index: 1000;
+    width: 100%; /* Prendre toute la largeur du champ de saisie */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombre pour le menu déroulant */
+    display: none; /* Par défaut, la liste est cachée */
+    margin-top: 5px; /* Ajouter un léger espacement entre l'input et la liste */
+}
+
+/* Style des éléments de la liste déroulante */
+.autocomplete-suggestions li {
+    padding: 10px;
+    cursor: pointer;
+    list-style: none;
+}
+
+/* Surlignage d'un élément lors du survol */
+.autocomplete-suggestions li:hover {
+    background-color: #f0f0f0;
 }
