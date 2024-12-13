@@ -137,8 +137,8 @@ td[data-club] {
     font-size: 18px; /* Texte plus grand */
     border-radius: 15px; /* Coins arrondis */
     border: 2px solid var(--secondary-color); /* Bordure orange */
-    background-color: var(--background-color); /* Fond bleu marine */
-    color: var(--text-color); /* Texte blanc */
+    background-color: #ffffff;(--background-color); /* Fond bleu marine */
+    color: #000000;(--text-color); /* Texte blanc */
     margin-top: 10px;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Ombre pour un effet visuel */
     text-align: center; /* Centre le texte dans la barre */
