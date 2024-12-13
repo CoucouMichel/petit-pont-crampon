@@ -1,14 +1,13 @@
 /* Définir les couleurs principales */
 :root {
-    --primary-color: #2c3e50;  /* Couleur primaire (bleu foncé) */
+    --primary-color: #2c3e50;  /* Bleu foncé */
     --secondary-color: #f39c12; /* Orange */
     --background-color: #111e2b; /* Bleu marine */
     --text-color: #ffffff; /* Texte blanc */
-    --highlight-color: #e74c3c; /* Rouge pour survol ou messages d'erreur */
-    --success-color: #2ecc71; /* Vert pour le succès */
+    --highlight-color: #e74c3c; /* Rouge pour erreurs */
 }
 
-/* Applique des styles de base à la page */
+/* Corps de la page */
 body {
     font-family: 'Arial', sans-serif;
     background-color: var(--background-color);
@@ -17,111 +16,73 @@ body {
     padding: 0;
     display: flex;
     justify-content: center;
-    align-items: flex-start; /* Aligne les éléments en haut de la page */
-    height: 100vh;  /* Centrer verticalement */
+    align-items: flex-start;
+    height: 100vh;
     text-align: center;
     flex-direction: column;
-    padding-top: 20px; /* Ajoute un peu d'espace en haut */
 }
 
-/* Conteneur pour centrer le tableau avec des marges à gauche et à droite */
+/* Conteneur principal */
 .container {
-    width: 100%;
-    max-width: 1000px; /* Limite la largeur du conteneur */
-    margin: 0 auto; /* Centre le conteneur horizontalement */
+    width: 90%;
+    max-width: 600px;
+    margin: auto;
     padding: 20px;
-    background-color: #111e2b;
+    background-color: var(--background-color);
     border-radius: 10px;
-    box-sizing: border-box; /* Assure que le padding ne dépasse pas la largeur maximale */
 }
 
-/* Styles du titre */
+/* Titre */
 h1 {
-    color: #fff;
+    color: var(--text-color);
     margin-bottom: 20px;
 }
 
-/* Style du tableau */
-table {
+/* Champ de saisie */
+#guess-input {
     width: 100%;
-    max-width: 600px; /* Limite la largeur maximale du tableau */
-    border-collapse: collapse;
-    text-align: left;
-    margin: 20px 0;  /* Ajoute une marge de 20px en haut et en bas */
-    background-color: #ffffff00;
+    max-width: 400px;
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid var(--secondary-color);
     border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    max-height: 400px; /* Limite la hauteur du tableau */
-    overflow-y: auto; /* Active le défilement vertical si nécessaire */
-    margin-bottom: 40px; /* Espace supplémentaire sous le tableau */
+    margin-bottom: 20px;
 }
 
-/* Définir la largeur des colonnes */
+/* Table */
+table {
+    width: 100%;
+    max-width: 100%;
+    border-collapse: collapse;
+    margin: auto;
+    background-color: #ffffff00;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
 th, td {
-    padding: 12px 15px;
+    padding: 12px;
+    text-align: left;
     border: 1px solid #08061d;
-    font-size: 16px;
-    color: var(--text-color); /* Texte en blanc pour toutes les cellules */
+    color: var(--text-color);
 }
 
 th {
     background-color: var(--primary-color);
-    color: #fff;
 }
 
 td {
-    background-color: #f8f8f8;
-    color: var(--text-color);  /* Texte en blanc */
+    background-color: #1a2633;
 }
 
-/* Masquer le texte de la cellule, mais garder la couleur de fond */
-td.hidden {
-    visibility: hidden; /* Masque le texte tout en gardant la couleur de fond */
-    position: relative;
-}
-
-/* Appliquer un léger surlignage orange sur les cellules à trouver */
-td.hidden::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(23, 196, 248, 0.5); /* Légèrement transparent avec une couleur orange */
-    border-radius: 5px;
-}
-
-/* Lorsque la cellule est révélée */
-td.visible {
-    visibility: visible !important; /* Force la visibilité de la cellule */
-}
-
-/* Pour la colonne des pays, appliquer un fond bleu marine et garder la structure */
-td[data-country] {
-    background-color: #111e2b; /* Bleu marine pour la colonne "Pays" */
-    visibility: hidden; /* Le texte reste invisible */
-}
-
-/* Pour la colonne des clubs, appliquer la couleur de fond appropriée */
-td[data-club] {
-    background-color: #111e2b; /* Bleu marine pour la colonne "Club" */
-    visibility: hidden; /* Le texte reste invisible */
-}
-
-/* Rendre le tableau responsive */
+/* Responsive */
 @media (max-width: 768px) {
     table {
         font-size: 14px;
     }
-    
+
     th, td {
-        padding: 10px;
-    }
-    
-    .container {
-        padding: 10px;
+        padding: 8px;
     }
 }
 
