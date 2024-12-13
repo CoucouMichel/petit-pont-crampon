@@ -26,7 +26,7 @@ body {
 
 /* Conteneur pour centrer le tableau avec des marges à gauche et à droite */
 .container {
-    width: 100%;
+    width: 50%;
     max-width: 1000px;
     margin: 20px auto; /* Centre le conteneur et ajoute une marge automatique */
     padding: 20px;
