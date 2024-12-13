@@ -8,7 +8,7 @@
     --success-color: #2ecc71; /* Vert pour le succès */
 }
 
-/* Applique des styles de base à la page */
+/* Corps de la page */
 body {
     font-family: 'Arial', sans-serif;
     background-color: var(--background-color);
@@ -18,19 +18,19 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;  /* Centrer verticalement */
+    height: 100vh;
     text-align: center;
-    flex-direction: column;
 }
 
-/* Conteneur pour centrer le tableau avec des marges à gauche et à droite */
+/* Conteneur principal */
 .container {
-    width: 100%;
-    max-width: 1000px;
-    margin: 20px auto; /* Centre le conteneur et ajoute une marge automatique */
+    width: 90%;
+    max-width: 600px;
+    margin: 0 auto;
     padding: 20px;
-    background-color: #111e2b;
-    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 /* Styles du titre */
@@ -41,15 +41,12 @@ h1 {
 
 /* Style du tableau */
 table {
-    width: 50%;
+    width: 100%;
+    max-width: 100%;
     border-collapse: collapse;
-    text-align: left;
-    margin: 20px 0;  /* Ajoute une marge de 20px en haut et en bas */
-    padding-left: 20px;  /* Ajoute des marges internes à gauche */
-    padding-right: 20px;  /* Ajoute des marges internes à droite */
+    margin-top: 20px; /* Ajoute un espacement au-dessus du tableau */
     background-color: #ffffff00;
     border-radius: 10px;
-    overflow: hidden;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
