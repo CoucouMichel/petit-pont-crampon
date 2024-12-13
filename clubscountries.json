@@ -1,475 +1,475 @@
 {
-"Aalborg",
-"Aarhus",
-"Aberdeen",
-"Adelaide United",
-"Afghanistan,"
-"Afrique du Sud,"
-"Akhmat Grozny",
-"Akron Tolyatti",
-"Albanie,"
-"Algérie,"
-"Allemagne,"
-"Anderlecht",
-"Andorre,"
-"Angola,"
-"Anguilla,"
-"Antarctique,"
-"Antigua-et-Barbuda,"
-"Antilles néerlandaises,"
-"Arabie saoudite,"
-"Argentine,"
-"Arménie,"
-"Arsenal",
-"Aruba,"
-"Aston Villa",
-"Athletico Paranaense",
-"Atlanta United",
-"Atlético Goianiense",
-"Atlético Mineiro",
-"Auckland FC",
-"Austin FC",
-"Australie,"
-"Autriche,"
-"Azerbaïdjan,"
-"Bahamas,"
-"Bahia",
-"Bahreïn,"
-"Bangladesh,"
-"Baník Ostrava",
-"Barbade,"
-"Barnsley",
-"Beerschot",
-"Bélarus,"
-"Belgique,"
-"Belize,"
-"Bénin,"
-"Bermudes,"
-"Bhoutan,"
-"Birmingham City",
-"Blackburn Rovers",
-"Blackpool",
-"Bodø/Glimt",
-"Bohemians Prague 1905",
-"Bolivie,"
-"Bolton Wanderers",
-"Bosnie-Herzégovine,"
-"Botafogo",
-"Botswana,"
-"Bournemouth",
-"Brann",
-"Brentford",
-"Brésil,"
-"Brighton & Hove Albion",
-"Brisbane Roar",
-"Bristol City",
-"Bristol Rovers",
-"Brøndby",
-"Brunéi Darussalam,"
-"Bulgarie,"
-"Burkina Faso,"
-"Burnley",
-"Burton Albion",
-"Burundi,"
-"Cambodge,"
-"Cambridge United",
-"Cameroun,"
-"Canada,"
-"Cap-Vert,"
-"Cardiff City",
-"Celtic",
-"Central Coast Mariners",
-"Cercle Brugge",
-"Ceuta et Melilla,"
-"CF Montréal",
-"Charleroi",
-"Charlotte FC",
-"Charlton Athletic",
-"Chelsea",
-"Chicago Fire",
-"Chili,"
-"Chine,"
-"Chypre,"
-"Club Brugge",
-"Colombie,"
-"Colorado Rapids",
-"Columbus Crew",
-"Comores,"
-"Congo-Brazzaville,"
-"Corée du Nord,"
-"Corée du Sud,"
-"Corinthians",
-"Costa Rica,"
-"Côte d’Ivoire,"
-"Coventry City",
-"Crawley Town",
-"Criciúma",
-"Croatie,"
-"Cruzeiro",
-"Crystal Palace",
-"CSKA Moscow",
-"Cuba,"
-"Cuiabá",
-"D.C. United",
-"Danemark,"
-"Dender EH",
-"Derby County",
-"Diego Garcia,"
-"Djibouti,"
-"Dominique,"
-"Dukla Prague",
-"Dundee United",
-"Dundee",
-"Dynamo České Budějovice",
-"Dynamo Makhachkala",
-"Dynamo Moscow",
-"Égypte,"
-"El Salvador,"
-"Émirats arabes unis,"
-"Équateur,"
-"Érythrée,"
-"Espagne,"
-"Estonie,"
-"État de la Cité du Vatican,"
-"États fédérés de Micronésie,"
-"États-Unis,"
-"Éthiopie,"
-"Everton",
-"Exeter City",
-"Fakel Voronezh",
-"FC Cincinnati",
-"FC Dallas",
-"FC Khimki",
-"FC København",
-"FC Krasnodar",
-"FC Midtjylland",
-"FC Nordsjælland",
-"FC Orenburg",
-"FC Rostov",
-"Fidji,"
-"Finlande,"
-"Flamengo",
-"Fluminense",
-"Fortaleza",
-"France,"
-"Fredrikstad",
-"Fulham",
-"Gabon,"
-"Gambie,"
-"Géorgie du Sud et les îles Sandwich du Sud,"
-"Géorgie,"
-"Ghana,"
-"Gibraltar,"
-"Grèce,"
-"Grêmio",
-"Grenade,"
-"Groenland,"
-"Guadeloupe,"
-"Guam,"
-"Guatemala,"
-"Guernesey,"
-"Guinée équatoriale,"
-"Guinée,"
-"Guinée-Bissau,"
-"Guyana,"
-"Guyane française,"
-"Haïti,"
-"Hamarkameratene",
-"Haugesund",
-"Heart of Midlothian",
-"Hibernian",
-"Honduras,"
-"Hongrie,"
-"Houston Dynamo",
-"Hradec Králové",
-"Huddersfield Town",
-"Hull City",
-"Île Bouvet,"
-"Île Christmas,"
-"Île Clipperton,"
-"Île de l'Ascension,"
-"Île de Man,"
-"Île Norfolk,"
-"Îles Åland,"
-"Îles Caïmans,"
-"Îles Canaries,"
-"Îles Cocos - Keeling,"
-"Îles Cook,"
-"Îles Féroé,"
-"Îles Heard et MacDonald,"
-"Îles Malouines,"
-"Îles Mariannes du Nord,"
-"Îles Marshall,"
-"Îles Mineures Éloignées des États-Unis,"
-"Îles Salomon,"
-"Îles Turks et Caïques,"
-"Îles Vierges britanniques,"
-"Îles Vierges des États-Unis,"
-"Inde,"
-"Indonésie,"
-"Inter Miami",
-"Internacional",
-"Ipswich Town",
-"Irak,"
-"Iran,"
-"Irlande,"
-"Islande,"
-"Israël,"
-"Italie,"
-"Jablonec",
-"Jamaïque,"
-"Japon,"
-"Jersey,"
-"Jordanie,"
-"Juventude",
-"KAA Gent",
-"Kazakhstan,"
-"Kenya,"
-"KFUM Oslo",
-"Kilmarnock",
-"Kirghizistan,"
-"Kiribati,"
-"Kortrijk",
-"Koweït,"
-"KRC Genk",
-"Kristiansund",
-"Krylia Sovetov",
-"KVC Westerlo",
-"Laos,"
-"Leeds United",
-"Leicester City",
-"Lesotho,"
-"Lettonie,"
-"Leyton Orient",
-"Liban,"
-"Libéria,"
-"Libye,"
-"Liechtenstein,"
-"Lillestrøm",
-"Lincoln City",
-"Lituanie,"
-"Liverpool",
-"Lokomotiv Moscow",
-"Los Angeles FC",
-"Los Angeles Galaxy",
-"Luton Town",
-"Luxembourg,"
-"Lyngby",
-"Macarthur FC",
-"Macédoine,"
-"Madagascar,"
-"Malaisie,"
-"Malawi,"
-"Maldives,"
-"Mali,"
-"Malte,"
-"Manchester City",
-"Manchester United",
-"Mansfield Town",
-"Maroc,"
-"Martinique,"
-"Maurice,"
-"Mauritanie,"
-"Mayotte,"
-"Mechelen",
-"Melbourne City",
-"Melbourne Victory",
-"Mexique,"
-"MFK Karviná",
-"Middlesbrough",
-"Millwall",
-"Minnesota United",
-"Mladá Boleslav",
-"Moldavie,"
-"Molde",
-"Monaco,"
-"Mongolie,"
-"Monténégro,"
-"Montserrat,"
-"Motherwell",
-"Mozambique,"
-"Myanmar,"
-"Namibie,"
-"Nashville SC",
-"Nauru,"
-"Népal,"
-"New England Revolution",
-"New York City",
-"New York Red Bulls",
-"Newcastle United Jets",
-"Newcastle United",
-"Nicaragua,"
-"Niger,"
-"Nigéria,"
-"Niue,"
-"Northampton Town",
-"Norvège,"
-"Norwich City",
-"Nottingham Forest",
-"Nouvelle-Calédonie,"
-"Nouvelle-Zélande,"
-"Odd",
-"Oman,"
-"Orlando City",
-"Oud-Heverlee Leuven",
-"Ouganda,"
-"Ouzbékistan,"
-"Oxford United",
-"Pakistan,"
-"Palaos,"
-"Palmeiras",
-"Panama,"
-"Papouasie-Nouvelle-Guinée,"
-"Paraguay,"
-"Pardubice",
-"Pari Nizhny Novgorod",
-"Pays-Bas,"
-"Pérou,"
-"Perth Glory",
-"Peterborough United",
-"Philadelphia Union",
-"Philippines,"
-"Pitcairn,"
-"Plymouth Argyle",
-"Pologne,"
-"Polynésie française,"
-"Portland Timbers",
-"Porto Rico,"
-"Portsmouth",
-"Portugal,"
-"Preston North End",
-"Qatar,"
-"Queens Park Rangers",
-"R.A.S. chinoise de Hong Kong,"
-"R.A.S. chinoise de Macao,"
-"Randers",
-"Rangers",
-"Reading",
-"Real Salt Lake",
-"Red Bull Bragantino",
-"régions éloignées de l’Océanie,"
-"République centrafricaine,"
-"République démocratique du Congo,"
-"République dominicaine,"
-"République tchèque,"
-"Réunion,"
-"Rosenborg",
-"Ross County",
-"Rotherham United",
-"Roumanie,"
-"Royal Antwerp",
-"Royaume-Uni,"
-"Rubin Kazan",
-"Russie,"
-"Rwanda,"
-"Sahara occidental,"
-"Saint-Barthélémy,"
-"Sainte-Hélène,"
-"Sainte-Lucie,"
-"Saint-Kitts-et-Nevis,"
-"Saint-Marin,"
-"Saint-Martin,"
-"Saint-Pierre-et-Miquelon,"
-"Saint-Vincent-et-les Grenadines,"
-"Samoa américaines,"
-"Samoa,"
-"San Jose Earthquakes",
-"Sandefjord",
-"São Paulo",
-"Sao Tomé-et-Principe,"
-"Sarpsborg 08",
-"Seattle Sounders",
-"Sénégal,"
-"Serbie,"
-"Serbie-et-Monténégro,"
-"Seychelles,"
-"Sheffield United",
-"Sheffield Wednesday",
-"Shrewsbury Town",
-"Sierra Leone,"
-"Sigma Olomouc",
-"Silkeborg",
-"Singapour,"
-"Sint-Truiden",
-"Slavia Prague",
-"Slovácko",
-"Slovan Liberec",
-"Slovaquie,"
-"Slovénie,"
-"Somalie,"
-"Sønderjyske",
-"Soudan,"
-"Southampton",
-"Sparta Prague",
-"Spartak Moscow",
-"Sporting Kansas City",
-"Sri Lanka,"
-"St Johnstone",
-"St Mirren",
-"St. Louis City",
-"Standard Liège",
-"Stevenage",
-"Stockport County",
-"Stoke City",
-"Strømsgodset",
-"Suède,"
-"Suisse,"
-"Sunderland",
-"Suriname,"
-"Svalbard et Île Jan Mayen,"
-"Swansea City",
-"Swaziland,"
-"Sydney FC",
-"Syrie,"
-"Tadjikistan,"
-"Taïwan,"
-"Tanzanie,"
-"Tchad,"
-"Teplice",
-"Terres australes françaises,"
-"Territoire britannique de l'océan Indien,"
-"Territoire palestinien,"
-"Thaïlande,"
-"Timor oriental,"
-"Togo,"
-"Tokelau,"
-"Tonga,"
-"Toronto FC",
-"Tottenham Hotspur",
-"Trinité-et-Tobago,"
-"Tristan da Cunha,"
-"Tromsø",
-"Tunisie,"
-"Turkménistan,"
-"Turquie,"
-"Tuvalu,"
-"Ukraine,"
-"Union européenne,"
-"Union Saint-Gilloise",
-"Uruguay,"
-"Vancouver Whitecaps",
-"Vanuatu,"
-"Vasco da Gama",
-"Vejle",
-"Venezuela,"
-"Viborg",
-"Viêt Nam,"
-"Viking",
-"Viktoria Plzeň",
-"Vitória",
-"Wallis-et-Futuna,"
-"Watford",
-"Wellington Phoenix",
-"West Bromwich Albion",
-"West Ham United",
-"Western Sydney Wanderers",
-"Western United",
-"Wigan Athletic",
-"Wolverhampton Wanderers",
-"Wrexham",
-"Wycombe Wanderers",
-"Yémen,"
-"Zambie,"
-"Zenit St. Petersburg",
-"Zimbabwe"
+  "Aalborg",
+  "Aarhus",
+  "Aberdeen",
+  "Adelaide United",
+  "Afghanistan,"
+  "Afrique du Sud,"
+  "Akhmat Grozny",
+  "Akron Tolyatti",
+  "Albanie,"
+  "Algérie,"
+  "Allemagne,"
+  "Anderlecht",
+  "Andorre,"
+  "Angola,"
+  "Anguilla,"
+  "Antarctique,"
+  "Antigua-et-Barbuda,"
+  "Antilles néerlandaises,"
+  "Arabie saoudite,"
+  "Argentine,"
+  "Arménie,"
+  "Arsenal",
+  "Aruba,"
+  "Aston Villa",
+  "Athletico Paranaense",
+  "Atlanta United",
+  "Atlético Goianiense",
+  "Atlético Mineiro",
+  "Auckland FC",
+  "Austin FC",
+  "Australie,"
+  "Autriche,"
+  "Azerbaïdjan,"
+  "Bahamas,"
+  "Bahia",
+  "Bahreïn,"
+  "Bangladesh,"
+  "Baník Ostrava",
+  "Barbade,"
+  "Barnsley",
+  "Beerschot",
+  "Bélarus,"
+  "Belgique,"
+  "Belize,"
+  "Bénin,"
+  "Bermudes,"
+  "Bhoutan,"
+  "Birmingham City",
+  "Blackburn Rovers",
+  "Blackpool",
+  "Bodø/Glimt",
+  "Bohemians Prague 1905",
+  "Bolivie,"
+  "Bolton Wanderers",
+  "Bosnie-Herzégovine,"
+  "Botafogo",
+  "Botswana,"
+  "Bournemouth",
+  "Brann",
+  "Brentford",
+  "Brésil,"
+  "Brighton & Hove Albion",
+  "Brisbane Roar",
+  "Bristol City",
+  "Bristol Rovers",
+  "Brøndby",
+  "Brunéi Darussalam,"
+  "Bulgarie,"
+  "Burkina Faso,"
+  "Burnley",
+  "Burton Albion",
+  "Burundi,"
+  "Cambodge,"
+  "Cambridge United",
+  "Cameroun,"
+  "Canada,"
+  "Cap-Vert,"
+  "Cardiff City",
+  "Celtic",
+  "Central Coast Mariners",
+  "Cercle Brugge",
+  "Ceuta et Melilla,"
+  "CF Montréal",
+  "Charleroi",
+  "Charlotte FC",
+  "Charlton Athletic",
+  "Chelsea",
+  "Chicago Fire",
+  "Chili,"
+  "Chine,"
+  "Chypre,"
+  "Club Brugge",
+  "Colombie,"
+  "Colorado Rapids",
+  "Columbus Crew",
+  "Comores,"
+  "Congo-Brazzaville,"
+  "Corée du Nord,"
+  "Corée du Sud,"
+  "Corinthians",
+  "Costa Rica,"
+  "Côte d’Ivoire,"
+  "Coventry City",
+  "Crawley Town",
+  "Criciúma",
+  "Croatie,"
+  "Cruzeiro",
+  "Crystal Palace",
+  "CSKA Moscow",
+  "Cuba,"
+  "Cuiabá",
+  "D.C. United",
+  "Danemark,"
+  "Dender EH",
+  "Derby County",
+  "Diego Garcia,"
+  "Djibouti,"
+  "Dominique,"
+  "Dukla Prague",
+  "Dundee United",
+  "Dundee",
+  "Dynamo České Budějovice",
+  "Dynamo Makhachkala",
+  "Dynamo Moscow",
+  "Égypte,"
+  "El Salvador,"
+  "Émirats arabes unis,"
+  "Équateur,"
+  "Érythrée,"
+  "Espagne,"
+  "Estonie,"
+  "État de la Cité du Vatican,"
+  "États fédérés de Micronésie,"
+  "États-Unis,"
+  "Éthiopie,"
+  "Everton",
+  "Exeter City",
+  "Fakel Voronezh",
+  "FC Cincinnati",
+  "FC Dallas",
+  "FC Khimki",
+  "FC København",
+  "FC Krasnodar",
+  "FC Midtjylland",
+  "FC Nordsjælland",
+  "FC Orenburg",
+  "FC Rostov",
+  "Fidji,"
+  "Finlande,"
+  "Flamengo",
+  "Fluminense",
+  "Fortaleza",
+  "France,"
+  "Fredrikstad",
+  "Fulham",
+  "Gabon,"
+  "Gambie,"
+  "Géorgie du Sud et les îles Sandwich du Sud,"
+  "Géorgie,"
+  "Ghana,"
+  "Gibraltar,"
+  "Grèce,"
+  "Grêmio",
+  "Grenade,"
+  "Groenland,"
+  "Guadeloupe,"
+  "Guam,"
+  "Guatemala,"
+  "Guernesey,"
+  "Guinée équatoriale,"
+  "Guinée,"
+  "Guinée-Bissau,"
+  "Guyana,"
+  "Guyane française,"
+  "Haïti,"
+  "Hamarkameratene",
+  "Haugesund",
+  "Heart of Midlothian",
+  "Hibernian",
+  "Honduras,"
+  "Hongrie,"
+  "Houston Dynamo",
+  "Hradec Králové",
+  "Huddersfield Town",
+  "Hull City",
+  "Île Bouvet,"
+  "Île Christmas,"
+  "Île Clipperton,"
+  "Île de l'Ascension,"
+  "Île de Man,"
+  "Île Norfolk,"
+  "Îles Åland,"
+  "Îles Caïmans,"
+  "Îles Canaries,"
+  "Îles Cocos - Keeling,"
+  "Îles Cook,"
+  "Îles Féroé,"
+  "Îles Heard et MacDonald,"
+  "Îles Malouines,"
+  "Îles Mariannes du Nord,"
+  "Îles Marshall,"
+  "Îles Mineures Éloignées des États-Unis,"
+  "Îles Salomon,"
+  "Îles Turks et Caïques,"
+  "Îles Vierges britanniques,"
+  "Îles Vierges des États-Unis,"
+  "Inde,"
+  "Indonésie,"
+  "Inter Miami",
+  "Internacional",
+  "Ipswich Town",
+  "Irak,"
+  "Iran,"
+  "Irlande,"
+  "Islande,"
+  "Israël,"
+  "Italie,"
+  "Jablonec",
+  "Jamaïque,"
+  "Japon,"
+  "Jersey,"
+  "Jordanie,"
+  "Juventude",
+  "KAA Gent",
+  "Kazakhstan,"
+  "Kenya,"
+  "KFUM Oslo",
+  "Kilmarnock",
+  "Kirghizistan,"
+  "Kiribati,"
+  "Kortrijk",
+  "Koweït,"
+  "KRC Genk",
+  "Kristiansund",
+  "Krylia Sovetov",
+  "KVC Westerlo",
+  "Laos,"
+  "Leeds United",
+  "Leicester City",
+  "Lesotho,"
+  "Lettonie,"
+  "Leyton Orient",
+  "Liban,"
+  "Libéria,"
+  "Libye,"
+  "Liechtenstein,"
+  "Lillestrøm",
+  "Lincoln City",
+  "Lituanie,"
+  "Liverpool",
+  "Lokomotiv Moscow",
+  "Los Angeles FC",
+  "Los Angeles Galaxy",
+  "Luton Town",
+  "Luxembourg,"
+  "Lyngby",
+  "Macarthur FC",
+  "Macédoine,"
+  "Madagascar,"
+  "Malaisie,"
+  "Malawi,"
+  "Maldives,"
+  "Mali,"
+  "Malte,"
+  "Manchester City",
+  "Manchester United",
+  "Mansfield Town",
+  "Maroc,"
+  "Martinique,"
+  "Maurice,"
+  "Mauritanie,"
+  "Mayotte,"
+  "Mechelen",
+  "Melbourne City",
+  "Melbourne Victory",
+  "Mexique,"
+  "MFK Karviná",
+  "Middlesbrough",
+  "Millwall",
+  "Minnesota United",
+  "Mladá Boleslav",
+  "Moldavie,"
+  "Molde",
+  "Monaco,"
+  "Mongolie,"
+  "Monténégro,"
+  "Montserrat,"
+  "Motherwell",
+  "Mozambique,"
+  "Myanmar,"
+  "Namibie,"
+  "Nashville SC",
+  "Nauru,"
+  "Népal,"
+  "New England Revolution",
+  "New York City",
+  "New York Red Bulls",
+  "Newcastle United Jets",
+  "Newcastle United",
+  "Nicaragua,"
+  "Niger,"
+  "Nigéria,"
+  "Niue,"
+  "Northampton Town",
+  "Norvège,"
+  "Norwich City",
+  "Nottingham Forest",
+  "Nouvelle-Calédonie,"
+  "Nouvelle-Zélande,"
+  "Odd",
+  "Oman,"
+  "Orlando City",
+  "Oud-Heverlee Leuven",
+  "Ouganda,"
+  "Ouzbékistan,"
+  "Oxford United",
+  "Pakistan,"
+  "Palaos,"
+  "Palmeiras",
+  "Panama,"
+  "Papouasie-Nouvelle-Guinée,"
+  "Paraguay,"
+  "Pardubice",
+  "Pari Nizhny Novgorod",
+  "Pays-Bas,"
+  "Pérou,"
+  "Perth Glory",
+  "Peterborough United",
+  "Philadelphia Union",
+  "Philippines,"
+  "Pitcairn,"
+  "Plymouth Argyle",
+  "Pologne,"
+  "Polynésie française,"
+  "Portland Timbers",
+  "Porto Rico,"
+  "Portsmouth",
+  "Portugal,"
+  "Preston North End",
+  "Qatar,"
+  "Queens Park Rangers",
+  "R.A.S. chinoise de Hong Kong,"
+  "R.A.S. chinoise de Macao,"
+  "Randers",
+  "Rangers",
+  "Reading",
+  "Real Salt Lake",
+  "Red Bull Bragantino",
+  "régions éloignées de l’Océanie,"
+  "République centrafricaine,"
+  "République démocratique du Congo,"
+  "République dominicaine,"
+  "République tchèque,"
+  "Réunion,"
+  "Rosenborg",
+  "Ross County",
+  "Rotherham United",
+  "Roumanie,"
+  "Royal Antwerp",
+  "Royaume-Uni,"
+  "Rubin Kazan",
+  "Russie,"
+  "Rwanda,"
+  "Sahara occidental,"
+  "Saint-Barthélémy,"
+  "Sainte-Hélène,"
+  "Sainte-Lucie,"
+  "Saint-Kitts-et-Nevis,"
+  "Saint-Marin,"
+  "Saint-Martin,"
+  "Saint-Pierre-et-Miquelon,"
+  "Saint-Vincent-et-les Grenadines,"
+  "Samoa américaines,"
+  "Samoa,"
+  "San Jose Earthquakes",
+  "Sandefjord",
+  "São Paulo",
+  "Sao Tomé-et-Principe,"
+  "Sarpsborg 08",
+  "Seattle Sounders",
+  "Sénégal,"
+  "Serbie,"
+  "Serbie-et-Monténégro,"
+  "Seychelles,"
+  "Sheffield United",
+  "Sheffield Wednesday",
+  "Shrewsbury Town",
+  "Sierra Leone,"
+  "Sigma Olomouc",
+  "Silkeborg",
+  "Singapour,"
+  "Sint-Truiden",
+  "Slavia Prague",
+  "Slovácko",
+  "Slovan Liberec",
+  "Slovaquie,"
+  "Slovénie,"
+  "Somalie,"
+  "Sønderjyske",
+  "Soudan,"
+  "Southampton",
+  "Sparta Prague",
+  "Spartak Moscow",
+  "Sporting Kansas City",
+  "Sri Lanka,"
+  "St Johnstone",
+  "St Mirren",
+  "St. Louis City",
+  "Standard Liège",
+  "Stevenage",
+  "Stockport County",
+  "Stoke City",
+  "Strømsgodset",
+  "Suède,"
+  "Suisse,"
+  "Sunderland",
+  "Suriname,"
+  "Svalbard et Île Jan Mayen,"
+  "Swansea City",
+  "Swaziland,"
+  "Sydney FC",
+  "Syrie,"
+  "Tadjikistan,"
+  "Taïwan,"
+  "Tanzanie,"
+  "Tchad,"
+  "Teplice",
+  "Terres australes françaises,"
+  "Territoire britannique de l'océan Indien,"
+  "Territoire palestinien,"
+  "Thaïlande,"
+  "Timor oriental,"
+  "Togo,"
+  "Tokelau,"
+  "Tonga,"
+  "Toronto FC",
+  "Tottenham Hotspur",
+  "Trinité-et-Tobago,"
+  "Tristan da Cunha,"
+  "Tromsø",
+  "Tunisie,"
+  "Turkménistan,"
+  "Turquie,"
+  "Tuvalu,"
+  "Ukraine,"
+  "Union européenne,"
+  "Union Saint-Gilloise",
+  "Uruguay,"
+  "Vancouver Whitecaps",
+  "Vanuatu,"
+  "Vasco da Gama",
+  "Vejle",
+  "Venezuela,"
+  "Viborg",
+  "Viêt Nam,"
+  "Viking",
+  "Viktoria Plzeň",
+  "Vitória",
+  "Wallis-et-Futuna,"
+  "Watford",
+  "Wellington Phoenix",
+  "West Bromwich Albion",
+  "West Ham United",
+  "Western Sydney Wanderers",
+  "Western United",
+  "Wigan Athletic",
+  "Wolverhampton Wanderers",
+  "Wrexham",
+  "Wycombe Wanderers",
+  "Yémen,"
+  "Zambie,"
+  "Zenit St. Petersburg",
+  "Zimbabwe"
 }
