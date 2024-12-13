@@ -90,33 +90,34 @@
 async function showSuggestions(value) {
     const autocompleteList = document.getElementById("autocomplete-list");
     autocompleteList.innerHTML = ""; // Réinitialise les suggestions
-    if (value.trim() === "") {
-        autocompleteList.style.display = 'none'; // Cache la liste si la saisie est vide
-        return;
-    }
+    if (value.trim() === "") return;
 
     const data = await loadclubscountries();
-    const filteredSuggestions = [];
+    const filteredSuggestions = new Set();
 
-    // Rechercher dans les clubs et pays correspondants à l'entrée de l'utilisateur
-    for (let country in data) {
-        for (let club of data[country]) {
-            if (club.toLowerCase().includes(value.toLowerCase()) || country.toLowerCase().includes(value.toLowerCase())) {
-                filteredSuggestions.push({ club, country });
-            }
+    // Rechercher les correspondances dans les clubs et pays
+    for (let club in data) {
+        const country = data[club];
+
+        // Si la saisie correspond au club ou au pays, l'ajouter aux suggestions
+        if (club.toLowerCase().includes(value.toLowerCase())) {
+            filteredSuggestions.add({ type: "club", text: club });
+        }
+        if (country.toLowerCase().includes(value.toLowerCase())) {
+            filteredSuggestions.add({ type: "country", text: country });
         }
     }
 
-    // Afficher les suggestions si elles existent
-    if (filteredSuggestions.length > 0) {
+    // Afficher les suggestions
+    if (filteredSuggestions.size > 0) {
         autocompleteList.style.display = 'block'; // Affiche la liste
         filteredSuggestions.forEach(suggestion => {
             const listItem = document.createElement("li");
-            listItem.textContent = `${suggestion.club} (${suggestion.country})`;
+            listItem.textContent = suggestion.text;
             listItem.addEventListener("click", () => {
-                document.getElementById("guess-input").value = `${suggestion.club}, ${suggestion.country}`;
+                document.getElementById("guess-input").value = suggestion.text;
                 autocompleteList.innerHTML = ""; // Cache les suggestions après sélection
-                checkAnswer(`${suggestion.club}, ${suggestion.country}`);  // Vérifie la réponse après la sélection
+                checkAnswer(suggestion.text); // Vérifie la réponse
             });
             autocompleteList.appendChild(listItem);
         });
@@ -124,8 +125,6 @@ async function showSuggestions(value) {
         autocompleteList.style.display = 'none'; // Cache la liste si aucune suggestion
     }
 }
-
-
         // Fonction pour vérifier la réponse de l'utilisateur
         function checkAnswer(input) {
             const answer = input.trim().toLowerCase();
