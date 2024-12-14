@@ -130,7 +130,7 @@
                 const listItem = document.createElement("li");
                 listItem.textContent = suggestion;
                 listItem.addEventListener("click", () => {
-                    document.getElementById("guess-input").value = suggestion;
+                    document.getElementById("guess-input").value = "";
                     autocompleteList.innerHTML = ""; // Masquer la liste après sélection
                     checkAnswer(suggestion);
                 });
