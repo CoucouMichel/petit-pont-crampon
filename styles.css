@@ -25,7 +25,7 @@ body {
 /* Conteneur principal */
 .container {
     width: 90%;
-    max-width: 800px;
+    max-width: 500px;
     background-color: #111e2b;
     padding: 20px;
     border-radius: 8px;
@@ -198,7 +198,7 @@ th:nth-child(3), td:nth-child(3) {
     max-height: 150px;
     overflow-y: auto;
     z-index: 1000;
-    width: auto; /* Ajuste la largeur selon le champ d'entrée */
+    width: 100%; /* Ajuste la largeur selon le champ d'entrée */
     padding: 0;
     margin-top: 5px;
     list-style: none;
