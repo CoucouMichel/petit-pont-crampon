@@ -12,11 +12,17 @@
         <h1>Petit Pont Crampon</h1>
         <p>Démasquez le joueur mystère en trouvant les pays et les clubs dans lesquels il a joué !</p>
         
-        <div class="input-container">
-            <input type="text" id="guess-input" placeholder="Tapez un pays, un club ou le nom du joueur mystère" autocomplete="off">
-            <ul id="autocomplete-list" class="autocomplete-suggestions"></ul>
-            <div id="guess-feedback"></div>
-        </div>
+<div class="input-container" style="position: relative;">
+    <input 
+        type="text" 
+        id="guess-input" 
+        placeholder="Tapez un pays, un club ou le nom du joueur mystère" 
+        autocomplete="off" 
+        style="width: 100%;"
+    >
+    <ul id="autocomplete-list" class="autocomplete-suggestions"></ul>
+    <div id="guess-feedback"></div>
+</div>
         
         <p id="attempts">Tentatives : 0</p>
         <p id="feedback"></p>
