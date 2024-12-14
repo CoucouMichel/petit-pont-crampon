@@ -175,19 +175,6 @@
         });
 
         displayPlayerStats();
-
-        // Fonction pour ajuster dynamiquement la position de la liste de suggestions
-function adjustSuggestionsPosition() {
-    const autocompleteList = document.getElementById("autocomplete-list");
-    const inputRect = document.getElementById("guess-input").getBoundingClientRect();
-
-    autocompleteList.style.bottom = `${window.innerHeight - inputRect.top + 10}px`; // Placer au-dessus du champ
-    autocompleteList.style.left = `${inputRect.left}px`; // Aligner horizontalement
-    autocompleteList.style.width = `${inputRect.width}px`; // Ajuster à la largeur du champ
-}
-
-// Appeler la fonction au redimensionnement de la fenêtre
-window.addEventListener("resize", adjustSuggestionsPosition);
     </script>
 </body>
 </html>
