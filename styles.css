@@ -196,7 +196,7 @@ th:nth-child(3), td:nth-child(3) {
 /* Styles pour la liste déroulante */
 .autocomplete-suggestions {
     position: absolute;
-    background-color: white;
+    background-color: #111e2b;
     border: 1px solid #ddd;
     border-radius: 5px;
     max-height: 150px;
@@ -212,7 +212,10 @@ th:nth-child(3), td:nth-child(3) {
 .autocomplete-suggestions li {
     padding: 10px;
     cursor: pointer;
-    border-bottom: 1px solid #f0f0f0;
+    list-style: none;
+    background-color: var(--background-color); /* Fond bleu marine */
+    color: var(--text-color); /* Texte en blanc */
+    border-bottom: 1px solid var(--primary-color); /* Ligne de séparation */
 }
 
 .autocomplete-suggestions li:last-child {
@@ -220,6 +223,8 @@ th:nth-child(3), td:nth-child(3) {
 }
 
 .autocomplete-suggestions li:hover {
-    background-color: #f7f7f7;
-    color: #333;
+    background-color: #c8ff00;
+    color: #000;
+    font-weight: bold; /* Accentuer le texte */
+    border-radius: 5px; /* Facultatif : arrondi des bords */
 }
