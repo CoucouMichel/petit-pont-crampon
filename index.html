@@ -51,6 +51,12 @@
             return data;
         }
 
+    // Charger le fichier JSON avec les clubs et pays
+    async function loadClubsCountries() {
+        const response = await fetch('./clubscountries.json');
+        const data = await response.json();
+        return data;
+    } 
         // Fonction pour choisir un joueur aléatoire
         async function selectRandomPlayer() {
             const playersData = await loadPlayerStats();
