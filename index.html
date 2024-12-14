@@ -25,9 +25,6 @@
         
         <p id="attempts">Tentatives : 0</p>
         <p id="feedback"></p>
-        
-        <h3>Mauvaises réponses</h3>
-        <ul id="wrong-answers"></ul>
     </div>
 
     <div class="container">
@@ -50,7 +47,6 @@
         let selectedPlayer;
         let attempts = 0;
 
-        // Charger les fichiers JSON
         async function loadPlayerStats() {
             const response = await fetch('./players_stats.json');
             return response.json();
@@ -66,7 +62,6 @@
             return response.json();
         }
 
-        // Sélection d'un joueur aléatoire
         async function selectRandomPlayer() {
             const playersData = await loadPlayerStats();
             const players = Object.keys(playersData);
@@ -74,7 +69,6 @@
             return playersData[selectedPlayer];
         }
 
-        // Afficher les statistiques du joueur
         async function displayPlayerStats() {
             const stats = await selectRandomPlayer();
             const tableBody = document.getElementById('career-table-body');
@@ -96,7 +90,6 @@
             });
         }
 
-        // Afficher les suggestions
         async function showSuggestions(value) {
             const autocompleteList = document.getElementById("autocomplete-list");
             autocompleteList.innerHTML = "";
@@ -128,7 +121,6 @@
             });
         }
 
-        // Vérification de la réponse
         async function checkAnswer(input) {
             const answer = input.trim().toLowerCase();
             const feedback = document.getElementById("feedback");
@@ -148,10 +140,6 @@
                 feedback.textContent = '';
                 attempts++;
                 document.getElementById("attempts").textContent = `Tentatives : ${attempts}`;
-                const wrongAnswersList = document.getElementById("wrong-answers");
-                const listItem = document.createElement("li");
-                listItem.textContent = answer;
-                wrongAnswersList.appendChild(listItem);
             }
 
             const cells = document.querySelectorAll('td[data-country], td[data-club]');
@@ -168,7 +156,6 @@
             blinkInput(isCorrect);
         }
 
-        // Clignotement du champ
         function blinkInput(isCorrect) {
             const inputField = document.getElementById("guess-input");
             if (isCorrect) {
@@ -181,12 +168,10 @@
             }, 500);
         }
 
-        // Révéler une cellule
         function revealText(cell) {
             cell.classList.add('visible');
         }
 
-        // Révéler toutes les cellules
         function revealAllCells() {
             const allCells = document.querySelectorAll('td');
             allCells.forEach(cell => {
