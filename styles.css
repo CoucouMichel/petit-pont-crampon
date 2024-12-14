@@ -224,31 +224,26 @@ th:nth-child(3), td:nth-child(3) {
     font-weight: bold; /* Accentuer le texte */
     border-radius: 5px; /* Facultatif : arrondi des bords */
 
-   .feedback-container {
+#guess-feedback {
     display: flex;
-    justify-content: center;
+    gap: 5px; /* Espacement entre les carrés */
     margin-top: 10px;
-    gap: 5px;
 }
 
 .feedback-box {
     width: 20px;
     height: 20px;
     border-radius: 4px;
-    background-color: #ccc; /* Couleur neutre par défaut */
-    border: 1px solid #aaa;
-    animation: fade-in 0.3s ease-in-out;
 }
 
 .feedback-box.correct {
-    background-color: #4caf50; /* Vert pour une réponse correcte */
-    border-color: #3e8e41;
+    background-color: green; /* Carré vert */
 }
 
 .feedback-box.incorrect {
-    background-color: #f44336; /* Rouge pour une réponse incorrecte */
-    border-color: #c62828;
+    background-color: red; /* Carré rouge */
 }
+
 
 /* Animation pour l'apparition des carrés */
 @keyframes fade-in {
