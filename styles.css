@@ -1,6 +1,6 @@
 /* Définir les couleurs principales */
 :root {
-    --primary-color: #2c3e50;  /* Couleur primaire (bleu foncé) */
+    --primary-color: #c8ff00;  /* Couleur primaire (bleu foncé) */
     --secondary-color: #f39c12; /* Orange */
     --background-color: #111e2b; /* Bleu marine */
     --text-color: #ffffff; /* Texte blanc */
@@ -10,7 +10,7 @@
 
 /* Corps de la page */
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: 'Aptos', sans-serif;
     background-color: var(--background-color);
     color: var(--text-color);
     margin: 0;
@@ -56,7 +56,7 @@ table {
 th, td {
     padding: 12px 15px;
     border: 1px solid #08061d;
-    font-size: 16px;
+    font-size: 14px;
     color: var(--text-color); /* Texte en blanc pour toutes les cellules */
 }
 
@@ -117,7 +117,7 @@ td[data-club] {
 /* Rendre le tableau responsive */
 @media (max-width: 768px) {
     table {
-        font-size: 14px;
+        font-size: 10px;
     }
     
     th, td {
@@ -195,7 +195,7 @@ th:nth-child(3), td:nth-child(3) {
 }
 /* Styles pour la liste déroulante */
 .autocomplete-suggestions {
-   position: absolute;
+    position: absolute;
     background-color: #111e2b;
     max-height: 150px;
     overflow-y: auto;
@@ -205,7 +205,6 @@ th:nth-child(3), td:nth-child(3) {
     margin-top: 5px;
     list-style: none;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
 }
 
 .autocomplete-suggestions li {
