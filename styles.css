@@ -196,37 +196,30 @@ th:nth-child(3), td:nth-child(3) {
 /* Styles pour la liste déroulante */
 .autocomplete-suggestions {
     position: absolute;
-    background-color: #111e2b;
-    border: 1px solid #b9cf3c;
+    background-color: white;
+    border: 1px solid #ddd;
     border-radius: 5px;
     max-height: 150px;
     overflow-y: auto;
     z-index: 1000;
-    width: 100%; /* Prend toute la largeur du champ de saisie */
-    max-width: 500px; /* La même largeur maximale que l'input */
-    left: 50%; /* Centrer horizontalement */
-    transform: translateX(-50%); /* Ajuster pour le centrage parfait */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombre pour le menu déroulant */
-    display: none; /* Masqué par défaut */
-    margin-top: 5px; /* Espacement entre l'input et la liste */
+    width: calc(100% - 20px); /* Ajuste la largeur selon le champ d'entrée */
+    padding: 0;
+    margin-top: 5px;
+    list-style: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-
-/* Style des éléments de la liste déroulante */
 .autocomplete-suggestions li {
     padding: 10px;
     cursor: pointer;
-    list-style: none;
-    background-color: var(--background-color); /* Fond bleu marine */
-    color: var(--text-color); /* Texte en blanc */
-    border-bottom: 1px solid var(--primary-color); /* Ligne de séparation */
+    border-bottom: 1px solid #f0f0f0;
 }
 
-/* Surlignage d'un élément lors du survol */
+.autocomplete-suggestions li:last-child {
+    border-bottom: none;
+}
+
 .autocomplete-suggestions li:hover {
-    background-color: #cde73c !important; /* Fond jaune-vert forcé */
-    color: #000 !important; /* Texte noir forcé */
-    font-weight: bold; /* Accentuer le texte */
-    border-radius: 5px; /* Facultatif : arrondi des bords */
+    background-color: #f7f7f7;
+    color: #333;
 }
-
