@@ -104,13 +104,11 @@ td.visible {
 
 /* Pour la colonne des pays, appliquer un fond bleu marine et garder la structure */
 td[data-country] {
-    background-color: #111e2b; /* Bleu marine pour la colonne "Pays" */
     visibility: hidden; /* Le texte reste invisible */
 }
 
 /* Pour la colonne des clubs, appliquer la couleur de fond appropriée */
 td[data-club] {
-    background-color: #111e2b; /* Bleu marine pour la colonne "Club" */
     visibility: hidden; /* Le texte reste invisible */
 }
 
