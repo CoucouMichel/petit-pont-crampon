@@ -90,34 +90,34 @@
             autocompleteList.innerHTML = "";
             if (value.trim() === "") return;
 
-            const data = await loadPlayerStats();
+            const data = await loadClubsCountries();
             const suggestions = new Set();
 
-            for (let player in data) {
-                data[player].forEach(entry => {
-                    if (entry.team.toLowerCase().includes(value.toLowerCase())) {
-                        suggestions.add(entry.team);
-                    }
-                    if (entry.country.toLowerCase().includes(value.toLowerCase())) {
-                        suggestions.add(entry.country);
-                    }
-                });
-            }
-
-            const sortedSuggestions = Array.from(suggestions).sort();
-            if (sortedSuggestions.length > 0) {
-                sortedSuggestions.forEach(suggestion => {
-                    const listItem = document.createElement("li");
-                    listItem.textContent = suggestion;
-                    listItem.addEventListener("click", () => {
-                        document.getElementById("guess-input").value = suggestion;
-                        autocompleteList.innerHTML = "";
-                        checkAnswer(suggestion);
-                    });
-                    autocompleteList.appendChild(listItem);
-                });
-            }
+            for (let club in data) {
+        const country = data[club];
+        if (club.toLowerCase().includes(value.toLowerCase())) {
+            suggestions.add(club);
         }
+        if (country.toLowerCase().includes(value.toLowerCase())) {
+            suggestions.add(country);
+        }
+    }
+
+         const sortedSuggestions = Array.from(suggestions).sort();
+    if (sortedSuggestions.length > 0) {
+        autocompleteList.style.display = "block"; // Afficher la liste
+        sortedSuggestions.forEach(suggestion => {
+            const listItem = document.createElement("li");
+            listItem.textContent = suggestion;
+            listItem.addEventListener("click", () => {
+                document.getElementById("guess-input").value = suggestion;
+                autocompleteList.innerHTML = ""; // Masquer la liste après sélection
+                checkAnswer(suggestion);
+            });
+            autocompleteList.appendChild(listItem);
+        });
+    }
+}
 
         // Fonction pour vérifier la réponse de l'utilisateur
         function checkAnswer(input) {
