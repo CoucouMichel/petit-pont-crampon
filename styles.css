@@ -196,11 +196,11 @@ th:nth-child(3), td:nth-child(3) {
 /* Styles pour la liste déroulante */
 .autocomplete-suggestions {
     position: absolute;
-    background-color: #111e2b;
+    background-color: #28333d;
     max-height: 150px;
     overflow-y: auto;
     z-index: 1000;
-    width: calc(42% - 15px); /* Ajuste la largeur selon le champ d'entrée */
+    width: calc(100% - 20px); /* Ajuste la largeur selon le champ d'entrée */
     padding: 0;
     margin-top: 5px;
     list-style: none;
@@ -213,7 +213,7 @@ th:nth-child(3), td:nth-child(3) {
     list-style: none;
     background-color: var(--background-color); /* Fond bleu marine */
     color: var(--text-color); /* Texte en blanc */
-    border-bottom: 1px solid var(--primary-color); /* Ligne de séparation */
+    border-bottom: 1px solid #3f464d; /* Ligne de séparation */
 }
 
 .autocomplete-suggestions li:last-child {
@@ -221,8 +221,8 @@ th:nth-child(3), td:nth-child(3) {
 }
 
 .autocomplete-suggestions li:hover {
-    background-color: #c8ff00;
-    color: #000;
+    background-color: #111e2b;
+    color: #c8ff00;
     font-weight: bold; /* Accentuer le texte */
     border-radius: 5px; /* Facultatif : arrondi des bords */
 }
