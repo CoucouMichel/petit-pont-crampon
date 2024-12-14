@@ -202,26 +202,58 @@
         });
     }
 
-function updateFeedbackBoxes(isCorrect) {
-    const feedbackContainer = document.getElementById("guess-feedback");
+// Fonction pour afficher le clignotement en fonction de la réponse
+function blinkInput(isCorrect) {
+    const inputField = document.getElementById("guess-input");
 
-    // Supprime les carrés existants avant chaque nouvelle tentative
-    feedbackContainer.innerHTML = "";
-
-    // Crée un nouveau carré
-    const feedbackBox = document.createElement("div");
-    feedbackBox.classList.add("feedback-box");
-
-    // Ajoute la classe pour la couleur (correct ou incorrect)
+    // Ajoute la classe appropriée (vert ou rouge)
     if (isCorrect) {
-        feedbackBox.classList.add("correct");
+        inputField.classList.add("blink-green");
     } else {
-        feedbackBox.classList.add("incorrect");
+        inputField.classList.add("blink-red");
     }
 
-    // Ajoute le carré au conteneur
-    feedbackContainer.appendChild(feedbackBox);
+    // Supprime la classe après 500ms pour l'effet de clignotement
+    setTimeout(() => {
+        inputField.classList.remove("blink-green", "blink-red");
+    }, 500);
 }
+
+// Fonction pour vérifier la réponse de l'utilisateur
+function checkAnswer(input) {
+    const answer = input.trim().toLowerCase();
+    const feedback = document.getElementById("feedback");
+
+    let isCorrect = false; // Initialisation du statut
+
+    if (answer === selectedPlayer.toLowerCase()) {
+        feedback.textContent = `Bingo ! Vous avez trouvé le joueur : ${selectedPlayer}`;
+        feedback.style.color = "green";
+        revealAllCells();
+        isCorrect = true; // Bonne réponse
+    } else {
+        feedback.textContent = '';
+        attempts++;
+        document.getElementById("attempts").textContent = `Tentatives : ${attempts}`;
+        const wrongAnswersList = document.getElementById("wrong-answers");
+        const listItem = document.createElement("li");
+        listItem.textContent = answer;
+        wrongAnswersList.appendChild(listItem);
+    }
+
+    const cells = document.querySelectorAll('td[data-country], td[data-club]');
+    cells.forEach(cell => {
+        if (cell.getAttribute('data-country')?.toLowerCase() === answer ||
+            cell.getAttribute('data-club')?.toLowerCase() === answer) {
+            revealText(cell);
+            isCorrect = true; // Si un pays ou un club est correct
+        }
+    });
+
+    // Applique le clignotement en fonction de la réponse
+    blinkInput(isCorrect);
+}
+
 
     const input = document.getElementById("guess-input");
     input.addEventListener("input", () => showSuggestions(input.value));
