@@ -73,6 +73,10 @@
             tableBody.innerHTML = '';
             if (stats) {
                 stats.forEach(stat => {
+                     // Vérification pour ignorer les lignes contenant "Season" ou "Seasons"
+            if (stat.season.toLowerCase().includes("season")) {
+                return; // Ignorer cette ligne
+            }
                     const row = document.createElement('tr');
                     row.innerHTML = `
                         <td>${stat.season}</td>
