@@ -56,7 +56,7 @@ table {
 th, td {
     padding: 12px 15px;
     border: 1px solid #08061d;
-    font-size: 14px;
+    font-size: 10px;
     color: var(--text-color); /* Texte en blanc pour toutes les cellules */
 }
 
@@ -141,14 +141,14 @@ input#guess-input {
     width: 80%; /* Fixe une largeur pour la barre de saisie */
     max-width: 400px; /* Limite la largeur maximale */
     padding: 10px; /* Ajouter du padding pour plus de confort */
-    font-size: 16px; /* Taille de la police */
+    font-size: 10px; /* Taille de la police */
     margin-bottom: 10px; /* Espacement sous la barre de saisie */
 }
 #guess-input {
     width: 100%; /* Barre de saisie plus large */
     max-width: 500px; /* Largeur maximale */
     padding: 15px; /* Espacement interne */
-    font-size: 18px; /* Texte plus grand */
+    font-size: 12px; /* Texte plus grand */
     border-radius: 15px; /* Coins arrondis */
     border: 2px solid var(--secondary-color); /* Bordure orange */
     background-color: #ffffff;(--background-color); /* Fond bleu marine */
@@ -177,18 +177,18 @@ input#guess-input {
 
 /* Définir la largeur des colonnes */
 th:nth-child(1), td:nth-child(1) {
-    width: 10%; /* Réduire la largeur de la colonne "Années" */
+    width: 16%; /* Réduire la largeur de la colonne "Années" */
 }
 
 th:nth-child(2), td:nth-child(2),
 th:nth-child(3), td:nth-child(3) {
-    width: 45%; /* Répartir la largeur entre les colonnes "Club" et "Pays" */
+    width: 42%; /* Répartir la largeur entre les colonnes "Club" et "Pays" */
 }
 /* Style pour afficher les tentatives */
 #attempts {
     margin-top: 10px;
     color: var(--text-color);
-    font-size: 18px;
+    font-size: 16px;
     font-weight: bold;
 }
 /* Styles pour la liste déroulante */
