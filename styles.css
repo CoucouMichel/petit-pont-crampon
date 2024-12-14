@@ -224,14 +224,14 @@ th:nth-child(3), td:nth-child(3) {
     font-weight: bold; /* Accentuer le texte */
     border-radius: 5px; /* Facultatif : arrondi des bords */
 
-    .feedback-container {
+   .feedback-container {
     display: flex;
     justify-content: center;
     margin-top: 10px;
     gap: 5px;
 }
 
-.feedback-container .feedback-box {
+.feedback-box {
     width: 20px;
     height: 20px;
     border-radius: 4px;
@@ -240,12 +240,12 @@ th:nth-child(3), td:nth-child(3) {
     animation: fade-in 0.3s ease-in-out;
 }
 
-.feedback-container .feedback-box.correct {
+.feedback-box.correct {
     background-color: #4caf50; /* Vert pour une réponse correcte */
     border-color: #3e8e41;
 }
 
-.feedback-container .feedback-box.incorrect {
+.feedback-box.incorrect {
     background-color: #f44336; /* Rouge pour une réponse incorrecte */
     border-color: #c62828;
 }
@@ -260,6 +260,4 @@ th:nth-child(3), td:nth-child(3) {
         opacity: 1;
         transform: scale(1);
     }
-}
-
 }
