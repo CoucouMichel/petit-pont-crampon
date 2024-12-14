@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Petit Pont Crampon</title>
-        <!-- Lien vers votre fichier CSS -->
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -12,17 +11,17 @@
         <h1>Petit Pont Crampon</h1>
         <p>Démasquez le joueur mystère en trouvant les pays et les clubs dans lesquels il a joué !</p>
         
-<div class="input-container" style="position: relative;">
-    <input 
-        type="text" 
-        id="guess-input" 
-        placeholder="Tapez un pays, un club ou le nom du joueur mystère" 
-        autocomplete="off" 
-        style="width: 100%;"
-    >
-    <ul id="autocomplete-list" class="autocomplete-suggestions"></ul>
-    <div id="guess-feedback"></div>
-</div>
+        <div class="input-container" style="position: relative;">
+            <input 
+                type="text" 
+                id="guess-input" 
+                placeholder="Tapez un pays, un club ou le nom du joueur mystère" 
+                autocomplete="off" 
+                style="width: 100%;"
+            >
+            <ul id="autocomplete-list" class="autocomplete-suggestions"></ul>
+            <div id="guess-feedback"></div>
+        </div>
         
         <p id="attempts">Tentatives : 0</p>
         <p id="feedback"></p>
@@ -47,58 +46,46 @@
         </table>
     </div>
 
-  <script>
-    let selectedPlayer;
-    let attempts = 0;
+    <script>
+        let selectedPlayer;
+        let attempts = 0;
 
-    // Charger le fichier JSON avec les statistiques des joueurs
-    async function loadPlayerStats() {
-        const response = await fetch('./players_stats.json');
-        const data = await response.json();
-        return data;
-    }
+        // Charger les fichiers JSON
+        async function loadPlayerStats() {
+            const response = await fetch('./players_stats.json');
+            return response.json();
+        }
 
-    // Charger le fichier JSON avec les clubs et pays
-    async function loadClubsCountries() {
-        const response = await fetch('./clubscountries.json');
-        const data = await response.json();
-        return data;
-    }
+        async function loadClubsCountries() {
+            const response = await fetch('./clubscountries.json');
+            return response.json();
+        }
 
-    // Charger le fichier JSON avec les correspondances des pays
-    async function loadCountryMapping() {
-        const response = await fetch('./country_mapping.json');
-        const data = await response.json();
-        return data;
-    }
+        async function loadCountryMapping() {
+            const response = await fetch('./country_mapping.json');
+            return response.json();
+        }
 
-    // Fonction pour choisir un joueur aléatoire
-    async function selectRandomPlayer() {
-        const playersData = await loadPlayerStats();
-        const players = Object.keys(playersData);
-        const randomPlayer = players[Math.floor(Math.random() * players.length)];
-        selectedPlayer = randomPlayer;
-        return playersData[selectedPlayer];
-    }
+        // Sélection d'un joueur aléatoire
+        async function selectRandomPlayer() {
+            const playersData = await loadPlayerStats();
+            const players = Object.keys(playersData);
+            selectedPlayer = players[Math.floor(Math.random() * players.length)];
+            return playersData[selectedPlayer];
+        }
 
-    // Fonction pour afficher les statistiques du joueur dans le tableau
-    async function displayPlayerStats() {
-        const stats = await selectRandomPlayer();
-        const tableBody = document.getElementById('career-table-body');
-        const countryMapping = await loadCountryMapping(); // Charger les correspondances
+        // Afficher les statistiques du joueur
+        async function displayPlayerStats() {
+            const stats = await selectRandomPlayer();
+            const tableBody = document.getElementById('career-table-body');
+            const countryMapping = await loadCountryMapping();
 
-        tableBody.innerHTML = '';
+            tableBody.innerHTML = '';
 
-        if (stats) {
             stats.forEach(stat => {
-                // Ignorer les lignes contenant "Season" ou "Seasons"
-                if (stat.season.toLowerCase().includes("season")) {
-                    return; // Ignorer cette ligne
-                }
+                if (stat.season.toLowerCase().includes("season")) return;
 
-                // Remplacer les abréviations des pays par leur nom complet
                 const fullCountryName = countryMapping[stat.country] || stat.country;
-
                 const row = document.createElement('tr');
                 row.innerHTML = `
                     <td>${stat.season}</td>
@@ -108,163 +95,116 @@
                 tableBody.appendChild(row);
             });
         }
-    }
 
-    // Fonction pour afficher les suggestions (clubs et pays)
-    async function showSuggestions(value) {
-        const autocompleteList = document.getElementById("autocomplete-list");
-        autocompleteList.innerHTML = "";
-        if (value.trim() === "") return;
+        // Afficher les suggestions
+        async function showSuggestions(value) {
+            const autocompleteList = document.getElementById("autocomplete-list");
+            autocompleteList.innerHTML = "";
+            if (value.trim() === "") return;
 
-        const data = await loadClubsCountries();
-        const suggestions = new Set();
+            const data = await loadClubsCountries();
+            const suggestions = new Set();
 
-        for (let club in data) {
-            const country = data[club];
-            if (club.toLowerCase().includes(value.toLowerCase())) {
-                suggestions.add(club);
+            for (let club in data) {
+                const country = data[club];
+                if (club.toLowerCase().includes(value.toLowerCase())) {
+                    suggestions.add(club);
+                }
+                if (country.toLowerCase().includes(value.toLowerCase())) {
+                    suggestions.add(country);
+                }
             }
-            if (country.toLowerCase().includes(value.toLowerCase())) {
-                suggestions.add(country);
-            }
-        }
 
-        const sortedSuggestions = Array.from(suggestions).sort();
-        if (sortedSuggestions.length > 0) {
-            autocompleteList.style.display = "block"; // Afficher la liste
+            const sortedSuggestions = Array.from(suggestions).sort();
             sortedSuggestions.forEach(suggestion => {
                 const listItem = document.createElement("li");
                 listItem.textContent = suggestion;
                 listItem.addEventListener("click", () => {
                     document.getElementById("guess-input").value = "";
-                    autocompleteList.innerHTML = ""; // Masquer la liste après sélection
+                    autocompleteList.innerHTML = "";
                     checkAnswer(suggestion);
                 });
                 autocompleteList.appendChild(listItem);
             });
         }
-    }
 
-    // Fonction pour vérifier la réponse de l'utilisateur
-    async function checkAnswer(input) {
-        const answer = input.trim().toLowerCase();
-        const feedback = document.getElementById("feedback");
-        const countryMapping = await loadCountryMapping(); // Charger les correspondances
+        // Vérification de la réponse
+        async function checkAnswer(input) {
+            const answer = input.trim().toLowerCase();
+            const feedback = document.getElementById("feedback");
+            const countryMapping = await loadCountryMapping();
+            const reverseMapping = Object.fromEntries(
+                Object.entries(countryMapping).map(([abbr, fullName]) => [fullName.toLowerCase(), abbr.toLowerCase()])
+            );
 
-        let isCorrect = false;
+            let isCorrect = false;
 
-        // Inverser la correspondance pour permettre la recherche des abréviations
-        const reverseMapping = Object.fromEntries(
-            Object.entries(countryMapping).map(([abbr, fullName]) => [fullName.toLowerCase(), abbr.toLowerCase()])
-        );
+            if (answer === selectedPlayer.toLowerCase()) {
+                feedback.textContent = `Bingo ! Vous avez trouvé le joueur : ${selectedPlayer}`;
+                feedback.style.color = "green";
+                revealAllCells();
+                isCorrect = true;
+            } else {
+                feedback.textContent = '';
+                attempts++;
+                document.getElementById("attempts").textContent = `Tentatives : ${attempts}`;
+                const wrongAnswersList = document.getElementById("wrong-answers");
+                const listItem = document.createElement("li");
+                listItem.textContent = answer;
+                wrongAnswersList.appendChild(listItem);
+            }
 
-        if (answer === selectedPlayer.toLowerCase()) {
-            feedback.textContent = `Bingo ! Vous avez trouvé le joueur : ${selectedPlayer}`;
-            feedback.style.color = "green";
-            revealAllCells();
-            isCorrect = true; // Bonne réponse
-        } else {
-            feedback.textContent = '';
-            attempts++;
-            document.getElementById("attempts").textContent = `Tentatives : ${attempts}`;
-            const wrongAnswersList = document.getElementById("wrong-answers");
-            const listItem = document.createElement("li");
-            listItem.textContent = answer;
-            wrongAnswersList.appendChild(listItem);
+            const cells = document.querySelectorAll('td[data-country], td[data-club]');
+            cells.forEach(cell => {
+                const cellCountry = cell.getAttribute('data-country')?.toLowerCase();
+                const cellClub = cell.getAttribute('data-club')?.toLowerCase();
+
+                if (cellCountry === answer || reverseMapping[cellCountry] === answer || cellClub === answer) {
+                    revealText(cell);
+                    isCorrect = true;
+                }
+            });
+
+            blinkInput(isCorrect);
         }
 
-        const cells = document.querySelectorAll('td[data-country], td[data-club]');
-        cells.forEach(cell => {
-            const cellCountry = cell.getAttribute('data-country')?.toLowerCase();
-            const cellClub = cell.getAttribute('data-club')?.toLowerCase();
+        // Clignotement du champ
+        function blinkInput(isCorrect) {
+            const inputField = document.getElementById("guess-input");
+            if (isCorrect) {
+                inputField.classList.add("blink-green");
+            } else {
+                inputField.classList.add("blink-red");
+            }
+            setTimeout(() => {
+                inputField.classList.remove("blink-green", "blink-red");
+            }, 500);
+        }
 
-            if (cellCountry === answer ||
-                reverseMapping[cellCountry] === answer || // Vérifie si l'utilisateur donne l'abréviation
-                cellClub === answer) {
-                revealText(cell);
-                isCorrect = true;
+        // Révéler une cellule
+        function revealText(cell) {
+            cell.classList.add('visible');
+        }
+
+        // Révéler toutes les cellules
+        function revealAllCells() {
+            const allCells = document.querySelectorAll('td');
+            allCells.forEach(cell => {
+                cell.classList.add('visible');
+            });
+        }
+
+        const input = document.getElementById("guess-input");
+        input.addEventListener("input", () => showSuggestions(input.value));
+        input.addEventListener("keyup", (event) => {
+            if (event.key === "Enter") {
+                checkAnswer(input.value);
+                input.value = "";
+                document.getElementById("autocomplete-list").innerHTML = "";
             }
         });
 
-        updateFeedbackBoxes(isCorrect);
-    }
-
-    // Fonction pour révéler une cellule
-    function revealText(cell) {
-        cell.classList.add('visible');
-    }
-
-    // Fonction pour révéler toutes les cellules
-    function revealAllCells() {
-        const allCells = document.querySelectorAll('td');
-        allCells.forEach(cell => {
-            cell.classList.add('visible');
-        });
-    }
-
-// Fonction pour afficher le clignotement en fonction de la réponse
-function blinkInput(isCorrect) {
-    const inputField = document.getElementById("guess-input");
-
-    // Ajoute la classe appropriée (vert ou rouge)
-    if (isCorrect) {
-        inputField.classList.add("blink-green");
-    } else {
-        inputField.classList.add("blink-red");
-    }
-
-    // Supprime la classe après 500ms pour l'effet de clignotement
-    setTimeout(() => {
-        inputField.classList.remove("blink-green", "blink-red");
-    }, 500);
-}
-
-// Fonction pour vérifier la réponse de l'utilisateur
-function checkAnswer(input) {
-    const answer = input.trim().toLowerCase();
-    const feedback = document.getElementById("feedback");
-
-    let isCorrect = false; // Initialisation du statut
-
-    if (answer === selectedPlayer.toLowerCase()) {
-        feedback.textContent = `Bingo ! Vous avez trouvé le joueur : ${selectedPlayer}`;
-        feedback.style.color = "green";
-        revealAllCells();
-        isCorrect = true; // Bonne réponse
-    } else {
-        feedback.textContent = '';
-        attempts++;
-        document.getElementById("attempts").textContent = `Tentatives : ${attempts}`;
-        const wrongAnswersList = document.getElementById("wrong-answers");
-        const listItem = document.createElement("li");
-        listItem.textContent = answer;
-        wrongAnswersList.appendChild(listItem);
-    }
-
-    const cells = document.querySelectorAll('td[data-country], td[data-club]');
-    cells.forEach(cell => {
-        if (cell.getAttribute('data-country')?.toLowerCase() === answer ||
-            cell.getAttribute('data-club')?.toLowerCase() === answer) {
-            revealText(cell);
-            isCorrect = true; // Si un pays ou un club est correct
-        }
-    });
-
-    // Applique le clignotement en fonction de la réponse
-    blinkInput(isCorrect);
-}
-
-
-    const input = document.getElementById("guess-input");
-    input.addEventListener("input", () => showSuggestions(input.value));
-    input.addEventListener("keyup", (event) => {
-        if (event.key === "Enter") {
-            checkAnswer(input.value);
-            input.value = "";
-            document.getElementById("autocomplete-list").innerHTML = "";
-        }
-    });
-
-    // Charger et afficher les statistiques
-    displayPlayerStats();
-</script>
+        displayPlayerStats();
+    </script>
+</body>
+</html>
