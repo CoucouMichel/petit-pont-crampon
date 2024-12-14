@@ -15,6 +15,7 @@
         <div class="input-container">
             <input type="text" id="guess-input" placeholder="Tapez un pays, un club ou le nom du joueur mystère" autocomplete="off">
             <ul id="autocomplete-list" class="autocomplete-suggestions"></ul>
+            <div id="guess-feedback" class="feedback-container"></div>
         </div>
         
         <p id="attempts">Tentatives : 0</p>
@@ -123,10 +124,33 @@
     }
 }
 
+        // Fonction pour afficher les carrés en fonction des réponses
+function updateFeedbackBoxes(isCorrect) {
+    const feedbackContainer = document.getElementById("guess-feedback");
+    
+    // Supprime les carrés existants avant chaque nouvelle tentative
+    feedbackContainer.innerHTML = "";
+
+    // Crée un nouveau carré
+    const feedbackBox = document.createElement("div");
+    feedbackBox.classList.add("feedback-box");
+
+    // Ajoute la classe pour la couleur (correct ou incorrect)
+    if (isCorrect) {
+        feedbackBox.classList.add("correct");
+    } else {
+        feedbackBox.classList.add("incorrect");
+    }
+
+    // Ajoute le carré au conteneur
+    feedbackContainer.appendChild(feedbackBox);
+}
         // Fonction pour vérifier la réponse de l'utilisateur
         function checkAnswer(input) {
             const answer = input.trim().toLowerCase();
             const feedback = document.getElementById("feedback");
+
+              let isCorrect = false; // Initialisation du statut
 
             if (answer === selectedPlayer.toLowerCase()) {
                 feedback.textContent = `Bingo ! Vous avez trouvé le joueur : ${selectedPlayer}`;
@@ -147,9 +171,13 @@
                 if (cell.getAttribute('data-country')?.toLowerCase() === answer ||
                     cell.getAttribute('data-club')?.toLowerCase() === answer) {
                     revealText(cell);
-                }
-            });
+            isCorrect = true; // Si un pays ou un club est correct
         }
+    });
+
+    // Met à jour les carrés en fonction de la réponse
+    updateFeedbackBoxes(isCorrect);
+}
 
         // Fonction pour révéler une cellule
         function revealText(cell) {
