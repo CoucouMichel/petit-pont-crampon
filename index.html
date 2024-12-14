@@ -196,22 +196,26 @@
         });
     }
 
-    // Fonction pour afficher les carrés en fonction des réponses
-    function updateFeedbackBoxes(isCorrect) {
-        const feedbackContainer = document.getElementById("guess-feedback");
-        feedbackContainer.innerHTML = "";
+function updateFeedbackBoxes(isCorrect) {
+    const feedbackContainer = document.getElementById("guess-feedback");
 
-        const feedbackBox = document.createElement("div");
-        feedbackBox.classList.add("feedback-box");
+    // Supprime les carrés existants avant chaque nouvelle tentative
+    feedbackContainer.innerHTML = "";
 
-        if (isCorrect) {
-            feedbackBox.classList.add("correct");
-        } else {
-            feedbackBox.classList.add("incorrect");
-        }
+    // Crée un nouveau carré
+    const feedbackBox = document.createElement("div");
+    feedbackBox.classList.add("feedback-box");
 
-        feedbackContainer.appendChild(feedbackBox);
+    // Ajoute la classe pour la couleur (correct ou incorrect)
+    if (isCorrect) {
+        feedbackBox.classList.add("correct");
+    } else {
+        feedbackBox.classList.add("incorrect");
     }
+
+    // Ajoute le carré au conteneur
+    feedbackContainer.appendChild(feedbackBox);
+}
 
     const input = document.getElementById("guess-input");
     input.addEventListener("input", () => showSuggestions(input.value));
