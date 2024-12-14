@@ -195,18 +195,17 @@ th:nth-child(3), td:nth-child(3) {
 }
 /* Styles pour la liste déroulante */
 .autocomplete-suggestions {
-    position: absolute;
+   position: absolute;
     background-color: #111e2b;
-    border: 1px solid #ddd;
-    border-radius: 5px;
     max-height: 150px;
     overflow-y: auto;
     z-index: 1000;
-    width: calc(100% - 20px); /* Ajuste la largeur selon le champ d'entrée */
+    width: calc(42% - 15px); /* Ajuste la largeur selon le champ d'entrée */
     padding: 0;
     margin-top: 5px;
     list-style: none;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
 }
 
 .autocomplete-suggestions li {
