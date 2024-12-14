@@ -71,13 +71,19 @@
         async function displayPlayerStats() {
             const stats = await selectRandomPlayer();
             const tableBody = document.getElementById('career-table-body');
+            const countryMapping = await loadCountryMapping(); // Charger les correspondances
+            
             tableBody.innerHTML = '';
+           
             if (stats) {
                 stats.forEach(stat => {
                      // Vérification pour ignorer les lignes contenant "Season" ou "Seasons"
             if (stat.season.toLowerCase().includes("season")) {
                 return; // Ignorer cette ligne
             }
+                     // Remplacer les abréviations des pays par leur nom complet
+            const fullCountryName = countryMapping[stat.country] || stat.country; // Utiliser l'abréviation si pas de correspondance
+
                     const row = document.createElement('tr');
                     row.innerHTML = `
                         <td>${stat.season}</td>
@@ -149,9 +155,15 @@ function updateFeedbackBoxes(isCorrect) {
         function checkAnswer(input) {
             const answer = input.trim().toLowerCase();
             const feedback = document.getElementById("feedback");
+            const countryMapping = await loadCountryMapping(); // Charger les correspondances
 
               let isCorrect = false; // Initialisation du statut
 
+ // Inverser la correspondance pour permettre la recherche des abréviations
+    const reverseMapping = Object.fromEntries(
+        Object.entries(countryMapping).map(([abbr, fullName]) => [fullName.toLowerCase(), abbr.toLowerCase()])
+    );
+            
             if (answer === selectedPlayer.toLowerCase()) {
                 feedback.textContent = `Bingo ! Vous avez trouvé le joueur : ${selectedPlayer}`;
                 feedback.style.color = "green";
@@ -171,6 +183,9 @@ function updateFeedbackBoxes(isCorrect) {
             cells.forEach(cell => {
                 if (cell.getAttribute('data-country')?.toLowerCase() === answer ||
                     cell.getAttribute('data-club')?.toLowerCase() === answer) {
+                      if (cellCountry === answer ||
+            reverseMapping[cellCountry] === answer || // Vérifie si l'utilisateur donne l'abréviation
+            cellClub === answer) {
                     revealText(cell);
             isCorrect = true; // Si un pays ou un club est correct
         }
