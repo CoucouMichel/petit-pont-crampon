@@ -70,11 +70,48 @@
         }
 
         async function displayPlayerStats() {
-            const stats = await selectRandomPlayer();
-            const tableBody = document.getElementById('career-table-body');
-            const countryMapping = await loadCountryMapping();
+    const stats = await selectRandomPlayer();
+    const tableBody = document.getElementById('career-table-body');
+    const countryMapping = await loadCountryMapping(); // Charger les correspondances de pays
 
-            tableBody.innerHTML = '';
+    tableBody.innerHTML = '';
+
+    // Regrouper les saisons par club
+    const groupedStats = {};
+    stats.forEach(stat => {
+        // Ignorer les lignes contenant "Season" ou "Seasons"
+        if (stat.season.toLowerCase().includes("season")) {
+            return; // Ignorer cette ligne
+        }
+
+        const fullCountryName = countryMapping[stat.country] || stat.country; // Nom complet du pays
+        const clubKey = `${stat.team}-${fullCountryName}`; // Identifiant unique basé sur le club et le pays
+
+        if (!groupedStats[clubKey]) {
+            groupedStats[clubKey] = {
+                club: stat.team,
+                country: fullCountryName,
+                seasons: []
+            };
+        }
+        groupedStats[clubKey].seasons.push(stat.season);
+    });
+
+    // Construire les lignes du tableau
+    Object.values(groupedStats).forEach(group => {
+        const firstSeason = group.seasons[0];
+        const lastSeason = group.seasons[group.seasons.length - 1];
+        const seasonRange = firstSeason === lastSeason ? firstSeason : `${firstSeason}–${lastSeason}`;
+
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${seasonRange}</td>
+            <td class="hidden" data-club="${group.club}">${group.club}</td>
+            <td class="hidden" data-country="${group.country}">${group.country}</td>
+        `;
+        tableBody.appendChild(row);
+    });
+}
 
             stats.forEach(stat => {
                 if (stat.season.toLowerCase().includes("season")) return;
