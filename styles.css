@@ -195,9 +195,10 @@ th:nth-child(3), td:nth-child(3) {
 .autocomplete-suggestions {
     position: absolute;
     background-color: #28333d;
+    max-height: 150px;
     overflow-y: auto;
     z-index: 1000;
-    width: 100%; /* Ajuste la largeur selon le champ d'entrée */
+    width: auto; /* Ajuste la largeur selon le champ d'entrée */
     padding: 0;
     margin-top: 5px;
     list-style: none;
