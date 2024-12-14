@@ -156,6 +156,7 @@ function updateFeedbackBoxes(isCorrect) {
                 feedback.textContent = `Bingo ! Vous avez trouvé le joueur : ${selectedPlayer}`;
                 feedback.style.color = "green";
                 revealAllCells();
+                isCorrect = true; // Bonne réponse
             } else {
                 feedback.textContent = '';
                 attempts++;
