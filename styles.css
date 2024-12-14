@@ -224,35 +224,22 @@ th:nth-child(3), td:nth-child(3) {
     font-weight: bold; /* Accentuer le texte */
     border-radius: 5px; /* Facultatif : arrondi des bords */
 
-#guess-feedback {
-    display: flex;
-    gap: 5px; /* Espacement entre les carrés */
-    margin-top: 10px;
+/* Clignotement vert */
+.blink-green {
+    animation: blink-green 0.5s ease;
 }
 
-.feedback-box {
-    width: 20px;
-    height: 20px;
-    border-radius: 4px;
+@keyframes blink-green {
+    0%, 100% { background-color: white; }
+    50% { background-color: lightgreen; }
 }
 
-.feedback-box.correct {
-    background-color: green; /* Carré vert */
+/* Clignotement rouge */
+.blink-red {
+    animation: blink-red 0.5s ease;
 }
 
-.feedback-box.incorrect {
-    background-color: red; /* Carré rouge */
-}
-
-
-/* Animation pour l'apparition des carrés */
-@keyframes fade-in {
-    from {
-        opacity: 0;
-        transform: scale(0.9);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
+@keyframes blink-red {
+    0%, 100% { background-color: white; }
+    50% { background-color: lightcoral; }
 }
