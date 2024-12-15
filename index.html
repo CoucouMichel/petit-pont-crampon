@@ -76,8 +76,7 @@
 
     tableBody.innerHTML = '';
 
-    // Regrouper les saisons par club
-    const groupedStats = {};
+
     stats.forEach(stat => {
         // Ignorer les lignes contenant "Season" ou "Seasons"
         if (stat.season.toLowerCase().includes("season")) {
