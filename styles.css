@@ -21,13 +21,17 @@ body {
     height: 100vh;
     text-align: center;
 }
-
+/* Global container */
+.global-container {
+    position: relative;
+    z-index: 0; /* Définit un contexte de pile de base */
+}
 /* Conteneur principal */
-.container {
+.input-container {
     top: 0;
     margin: -5;
-    position: sticky;
-    z-index: 99;
+    position: relative;
+    z-index: 10;
     width: 100%;
     max-width: 500px;
     background-color: #111e2b;
@@ -198,27 +202,26 @@ th:nth-child(3), td:nth-child(3) {
     color: var(--text-color);
     font-size: 10px;
 }
-/* Styles pour la liste déroulante */
+/* Liste déroulante des suggestions */
 .autocomplete-suggestions {
     position: absolute;
     background-color: #28333d;
     max-height: 150px;
     overflow-y: auto;
-    z-index: 10000;
-    width: 100%; /* Ajuste la largeur selon le champ d'entrée */
-    padding: 0;
+    z-index: 1000; /* Priorité sur les autres éléments */
+    width: 100%;
     margin-top: 5px;
     list-style: none;
+    padding: 0;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .autocomplete-suggestions li {
     padding: 10px;
     cursor: pointer;
-    list-style: none;
-    background-color: var(--background-color); /* Fond bleu marine */
-    color: var(--text-color); /* Texte en blanc */
-    border-bottom: 1px solid #3f464d; /* Ligne de séparation */
+    background-color: var(--background-color);
+    color: var(--text-color);
+    border-bottom: 1px solid #3f464d;
 }
 
 .autocomplete-suggestions li:last-child {
@@ -228,8 +231,15 @@ th:nth-child(3), td:nth-child(3) {
 .autocomplete-suggestions li:hover {
     background-color: #111e2b;
     color: #c8ff00;
-    font-weight: bold; /* Accentuer le texte */
-    border-radius: 5px; /* Facultatif : arrondi des bords */
+    font-weight: bold;
+    border-radius: 5px;
+}
+
+/* Empêche le tableau d'interférer */
+.container table {
+    position: relative;
+    z-index: 1; /* Tableau en dessous */
+}
 
 /* Clignotement vert */
 .blink-green {
