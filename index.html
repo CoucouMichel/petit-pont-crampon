@@ -7,41 +7,42 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container" id="title-container">
-    <h1>Petit Pont Crampon</h1>
-    <p>Démasquez le joueur mystère en trouvant les pays et les clubs dans lesquels il a joué !</p>
-</div>
-<div class="container">
-    <div class="input-container" style="position: relative;">
-        <input 
-            type="text" 
-            id="guess-input" 
-            placeholder="Tapez un pays, un club ou le nom du joueur mystère" 
-            autocomplete="off" 
-            style="width: 100%;"
-        >
-        <ul id="autocomplete-list" class="autocomplete-suggestions"></ul>
-        <div id="guess-feedback"></div>
+    <div class="container">
+        <h1>Petit Pont Crampon</h1>
+        <p>Démasquez le joueur mystère en trouvant les pays et les clubs dans lesquels il a joué !</p>
+        
+        <div class="input-container" style="position: relative;">
+            <input 
+                type="text" 
+                id="guess-input" 
+                placeholder="Tapez un pays, un club ou le nom du joueur mystère" 
+                autocomplete="off" 
+                style="width: 100%;"
+            >
+            <ul id="autocomplete-list" class="autocomplete-suggestions"></ul>
+            <div id="guess-feedback"></div>
+        </div>
+        
+        <p id="attempts">Tentatives : 0</p>
+        <p id="feedback"></p>
     </div>
-    <p id="attempts">Tentatives : 0</p>
-    <p id="feedback"></p>
-</div>
 
-<div class="container">
-    <h2>Carrière du joueur</h2>
-    <table id="career-table">
-        <thead>
-            <tr>
-                <th>Années</th>
-                <th>Club</th>
-                <th>Pays</th>
-            </tr>
-        </thead>
-        <tbody id="career-table-body">
-            <!-- Les lignes du tableau seront ajoutées dynamiquement -->
-        </tbody>
-    </table>
-</div>
+    <div class="container">
+        <h2>Carrière du joueur</h2>
+        <table id="career-table">
+            <thead>
+                <tr>
+                    <th>Années</th>
+                    <th>Club</th>
+                    <th>Pays</th>
+                </tr>
+            </thead>
+            <tbody id="career-table-body">
+                <!-- Les lignes du tableau seront ajoutées dynamiquement -->
+            </tbody>
+        </table>
+    </div>
+
     <script>
         let selectedPlayer;
         let attempts = 0;
