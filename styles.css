@@ -48,6 +48,9 @@ table {
     background-color: #ffffff00;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-height: 300px; /* Limite la hauteur visible du tableau */
+    overflow-y: auto; /* Ajoute un défilement vertical */
+    display: block; /* Permet de défiler uniquement dans le corps du tableau */
 }
 
 /* Définir la largeur des colonnes */
@@ -151,7 +154,7 @@ input#guess-input {
     border: 2px solid var(--secondary-color); /* Bordure orange */
     background-color: #ffffff;(--background-color); /* Fond bleu marine */
     color: #000000;(--text-color); /* Texte blanc */
-    margin-top: 10px;
+    margin: 10px auto; /* Centré avec une marge */
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Ombre pour un effet visuel */
     text-align: center; /* Centre le texte dans la barre */
 }
@@ -222,22 +225,24 @@ th:nth-child(3), td:nth-child(3) {
     font-weight: bold; /* Accentuer le texte */
     border-radius: 5px; /* Facultatif : arrondi des bords */
 
-/* Clignotement vert */
+/* Animation succès */
 .blink-green {
-    animation: blink-green 0.5s ease;
+    animation: blink-green 0.6s ease-in-out;
 }
 
 @keyframes blink-green {
-    0%, 100% { background-color: white; }
-    50% { background-color: lightgreen; }
+    0% { background-color: var(--success-color); }
+    50% { background-color: white; }
+    100% { background-color: var(--success-color); }
 }
 
-/* Clignotement rouge */
+/* Animation erreur */
 .blink-red {
-    animation: blink-red 0.5s ease;
+    animation: blink-red 0.6s ease-in-out;
 }
 
 @keyframes blink-red {
-    0%, 100% { background-color: white; }
-    50% { background-color: lightcoral; }
+    0% { background-color: var(--highlight-color); }
+    50% { background-color: white; }
+    100% { background-color: var(--highlight-color); }
 }
