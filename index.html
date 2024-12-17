@@ -69,7 +69,7 @@
             return playersData[selectedPlayer];
         }
 
- async function displayPlayerStats() {
+async function displayPlayerStats() {
     const stats = await selectRandomPlayer();
     const tableBody = document.getElementById('career-table-body');
     const countryMapping = await loadCountryMapping();
@@ -88,23 +88,25 @@
         // Extraire les années de début et de fin
         const [startYear, endYear] = stat.season.split('-').map(year => parseInt(year, 10));
 
+        // Vérifier si le groupe actuel peut être étendu
         if (
             currentGroup &&
             currentGroup.team === stat.team &&
             currentGroup.country === fullCountryName &&
-            currentGroup.endYear + 1 === startYear
+            currentGroup.endYear + 1 === startYear // Les saisons sont consécutives
         ) {
-            // Étendre la plage de saisons pour ce club
-            currentGroup.endYear = endYear;
+            // Étendre la plage de saisons
+            currentGroup.endYear = endYear || currentGroup.endYear; // Conserver la fin actuelle si undefined
         } else {
             // Ajouter le groupe précédent à la liste
             if (currentGroup) {
                 groupedStats.push(currentGroup);
             }
+
             // Créer un nouveau groupe
             currentGroup = {
                 startYear,
-                endYear,
+                endYear: endYear || startYear, // Si endYear est undefined, utiliser startYear
                 team: stat.team,
                 country: fullCountryName,
             };
