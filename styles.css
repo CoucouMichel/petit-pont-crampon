@@ -23,15 +23,13 @@ body {
 }
 
 /* Conteneur principal */
-.container {
-    width: 90%;
-    max-width: 500px;
-    background-color: #111e2b;
-    padding: 20px;
-    border-radius: 8px;
-    margin-top: 20px;
-    max-height: 500px;
-    text-align: center;
+.container:first-of-type {
+    position: sticky; /* Fixe la position en haut */
+    top: 0; /* Distance par rapport au haut de la page */
+    z-index: 10; /* Assure que le titre reste au-dessus des autres éléments */
+    background-color: var(--background-color); /* Couleur de fond pour éviter la superposition */
+    padding: 10px 20px; /* Espacement agréable autour du titre */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Ajoute une ombre légère */
 }
 
 /* Titre */
