@@ -60,7 +60,7 @@ h1 {
 
 /* Style du tableau */
 table {
-    position: fixed;
+    position: relative;
     width: 800px;
     max-width: 100%;
     border-collapse: collapse;
