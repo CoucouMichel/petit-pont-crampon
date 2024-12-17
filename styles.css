@@ -24,7 +24,7 @@ body {
 
 /* Conteneur principal */
 .container:first-of-type {
-    position: fixed;
+    position: sticky;
     top: 0; /* Distance par rapport au haut de la page */
     z-index: 10; /* Assure que le titre reste au-dessus des autres éléments */
     background-color: var(--background-color); /* Couleur de fond pour éviter la superposition */
@@ -41,7 +41,7 @@ h1 {
 
 /* Style du tableau */
 table {
-    position: fixed;
+    position: absolute;
     width: 100%;
     max-width: 100%;
     border-collapse: collapse;
