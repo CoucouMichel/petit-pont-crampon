@@ -24,7 +24,6 @@ body {
 
 /* Conteneur principal */
 .container {
-    position: relative;
     top: 0;
     z-index:10;
     width: 90%;
