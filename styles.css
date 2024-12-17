@@ -50,8 +50,7 @@ table {
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     max-height: 500px; /* Limite la hauteur visible du tableau */
-    margin-left: auto;
-    margin-right: auto;
+    margin: 0 auto;
 }
 
 /* Définir la largeur des colonnes */
