@@ -69,57 +69,65 @@
             return playersData[selectedPlayer];
         }
 
-        async function displayPlayerStats() {
-            const stats = await selectRandomPlayer();
-            const tableBody = document.getElementById('career-table-body');
-            const countryMapping = await loadCountryMapping();
+       async function displayPlayerStats() {
+    const stats = await selectRandomPlayer();
+    const tableBody = document.getElementById('career-table-body');
+    const countryMapping = await loadCountryMapping();
 
-            tableBody.innerHTML = '';
+    tableBody.innerHTML = '';
 
-            stats.forEach(stat => {
-                if (stat.season.toLowerCase().includes("season")) return;
+    // Regrouper les saisons par club et pays
+    const groupedStats = [];
+    let currentGroup = null;
 
-                const fullCountryName = countryMapping[stat.country] || stat.country;
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${stat.season}</td>
-                    <td class="hidden" data-club="${stat.team}">${stat.team}</td>
-                    <td class="hidden" data-country="${fullCountryName}">${fullCountryName}</td>
-                `;
-                tableBody.appendChild(row);
-            });
-        }
+    stats.forEach((stat, index) => {
+        if (stat.season.toLowerCase().includes("season")) return;
 
-        async function showSuggestions(value) {
-            const autocompleteList = document.getElementById("autocomplete-list");
-            autocompleteList.innerHTML = "";
-            if (value.trim() === "") return;
+        const fullCountryName = countryMapping[stat.country] || stat.country;
 
-            const data = await loadClubsCountries();
-            const suggestions = new Set();
-
-            for (let club in data) {
-                const country = data[club];
-                if (club.toLowerCase().includes(value.toLowerCase())) {
-                    suggestions.add(club);
-                }
-                if (country.toLowerCase().includes(value.toLowerCase())) {
-                    suggestions.add(country);
-                }
+        if (
+            currentGroup &&
+            currentGroup.team === stat.team &&
+            currentGroup.country === fullCountryName
+        ) {
+            // Étendre la plage de saisons pour ce club
+            currentGroup.endSeason = stat.season;
+        } else {
+            // Ajouter le groupe précédent à la liste
+            if (currentGroup) {
+                groupedStats.push(currentGroup);
             }
-
-            const sortedSuggestions = Array.from(suggestions).sort();
-            sortedSuggestions.forEach(suggestion => {
-                const listItem = document.createElement("li");
-                listItem.textContent = suggestion;
-                listItem.addEventListener("click", () => {
-                    document.getElementById("guess-input").value = "";
-                    autocompleteList.innerHTML = "";
-                    checkAnswer(suggestion);
-                });
-                autocompleteList.appendChild(listItem);
-            });
+            // Créer un nouveau groupe
+            currentGroup = {
+                startSeason: stat.season,
+                endSeason: stat.season,
+                team: stat.team,
+                country: fullCountryName,
+            };
         }
+
+        // Ajouter le dernier groupe à la liste après la dernière itération
+        if (index === stats.length - 1) {
+            groupedStats.push(currentGroup);
+        }
+    });
+
+    // Ajouter les données regroupées au tableau
+    groupedStats.forEach(group => {
+        const row = document.createElement('tr');
+        const seasonRange =
+            group.startSeason === group.endSeason
+                ? group.startSeason
+                : `${group.startSeason} - ${group.endSeason}`;
+
+        row.innerHTML = `
+            <td>${seasonRange}</td>
+            <td class="hidden" data-club="${group.team}">${group.team}</td>
+            <td class="hidden" data-country="${group.country}">${group.country}</td>
+        `;
+        tableBody.appendChild(row);
+    });
+}
 
         async function checkAnswer(input) {
             const answer = input.trim().toLowerCase();
