@@ -90,37 +90,48 @@
             });
         }
 
-        async function showSuggestions(value) {
-            const autocompleteList = document.getElementById("autocomplete-list");
-            autocompleteList.innerHTML = "";
-            if (value.trim() === "") return;
+       async function showSuggestions(value) {
+    const autocompleteList = document.getElementById("autocomplete-list");
+    autocompleteList.innerHTML = ""; // Réinitialiser la liste
 
-            const data = await loadClubsCountries();
-            const suggestions = new Set();
+    if (value.trim() === "") return; // Ne rien afficher si l'entrée est vide
 
-            for (let club in data) {
-                const country = data[club];
-                if (club.toLowerCase().includes(value.toLowerCase())) {
-                    suggestions.add(club);
-                }
-                if (country.toLowerCase().includes(value.toLowerCase())) {
-                    suggestions.add(country);
-                }
+    try {
+        const data = await loadClubsCountries(); // Charger les données depuis le JSON
+        const suggestions = new Set();
+
+        for (let club in data) {
+            const country = data[club];
+
+            // Rechercher dans les clubs et les pays
+            if (club.toLowerCase().includes(value.toLowerCase())) {
+                suggestions.add(club);
             }
-
-            const sortedSuggestions = Array.from(suggestions).sort();
-            sortedSuggestions.forEach(suggestion => {
-                const listItem = document.createElement("li");
-                listItem.textContent = suggestion;
-                listItem.addEventListener("click", () => {
-                    document.getElementById("guess-input").value = "";
-                    autocompleteList.innerHTML = "";
-                    checkAnswer(suggestion);
-                });
-                autocompleteList.appendChild(listItem);
-            });
+            if (country.toLowerCase().includes(value.toLowerCase())) {
+                suggestions.add(country);
+            }
         }
 
+        // Trier les suggestions
+        const sortedSuggestions = Array.from(suggestions).sort();
+
+        // Ajouter chaque suggestion à la liste
+        sortedSuggestions.forEach(suggestion => {
+            const listItem = document.createElement("li");
+            listItem.textContent = suggestion;
+            listItem.classList.add("suggestion-item");
+            listItem.addEventListener("click", () => {
+                document.getElementById("guess-input").value = "";
+                autocompleteList.innerHTML = ""; // Effacer la liste après un clic
+                checkAnswer(suggestion);
+            });
+            autocompleteList.appendChild(listItem);
+        });
+
+    } catch (error) {
+        console.error("Erreur lors du chargement des suggestions :", error);
+    }
+}
         async function checkAnswer(input) {
             const answer = input.trim().toLowerCase();
             const feedback = document.getElementById("feedback");
@@ -179,15 +190,15 @@
             });
         }
 
-        const input = document.getElementById("guess-input");
-        input.addEventListener("input", () => showSuggestions(input.value));
-        input.addEventListener("keyup", (event) => {
-            if (event.key === "Enter") {
-                checkAnswer(input.value);
-                input.value = "";
-                document.getElementById("autocomplete-list").innerHTML = "";
-            }
-        });
+const input = document.getElementById("guess-input");
+input.addEventListener("input", () => showSuggestions(input.value)); // Mise à jour des suggestions
+input.addEventListener("keyup", (event) => {
+    if (event.key === "Enter") {
+        checkAnswer(input.value);
+        input.value = ""; // Effacer la saisie
+        document.getElementById("autocomplete-list").innerHTML = ""; // Effacer la liste
+    }
+});
 
         displayPlayerStats();
     </script>
