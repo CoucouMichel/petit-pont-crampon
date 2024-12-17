@@ -41,6 +41,7 @@ h1 {
 
 /* Style du tableau */
 table {
+    position: sticky;
     width: 100%;
     max-width: 100%;
     border-collapse: collapse;
