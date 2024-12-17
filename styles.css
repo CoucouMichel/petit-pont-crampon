@@ -34,8 +34,8 @@ body {
     margin-top: 20px;
     max-height: 500px;
     text-align: center;
-    padding-right: 5px;
-    padding-left: 5px;
+    margin: 5px auto;
+    max-width: calc(100% - 5px)
 }
 
 /* Titre */
@@ -51,12 +51,12 @@ table {
     width: 100%;
     max-width: 100%;
     border-collapse: collapse;
-    margin-top: 20px; /* Ajoute un espacement au-dessus du tableau */
+    margin-top: 10px; /* Ajoute un espacement au-dessus du tableau */
     background-color: #ffffff00;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding-right: 5px;
-    padding-left: 5px;
+    margin: 5px auto;
+    max-width: calc(100% - 5px)
 }
 
 /* Définir la largeur des colonnes */
