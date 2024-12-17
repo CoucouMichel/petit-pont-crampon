@@ -50,13 +50,12 @@ h1 {
 /* Style du tableau */
 table {
     position: absolute auto;
-    width: 50%;
+    width: max(50%, min(500px, 100%))
     border-collapse: collapse;
     background-color: #ffffff00;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     margin: 5px auto;
-    max-width: calc(100% - 5px);
 }
 
 /* Définir la largeur des colonnes */
