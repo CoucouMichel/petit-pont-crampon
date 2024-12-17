@@ -48,7 +48,7 @@ h1 {
 
 /* Style du tableau */
 table {
-    width: 600%;
+    width: 600xp;
     border-collapse: collapse;
     background-color: #ffffff00;
     border-radius: 1px;
