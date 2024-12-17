@@ -48,7 +48,7 @@ table {
     background-color: #ffffff00;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    max-height: 300px; /* Limite la hauteur visible du tableau */
+    max-height: 800px; /* Limite la hauteur visible du tableau */
     overflow-y: auto; /* Ajoute un défilement vertical */
     display: block; /* Permet de défiler uniquement dans le corps du tableau */
 }
