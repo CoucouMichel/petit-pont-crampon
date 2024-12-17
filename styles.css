@@ -23,13 +23,16 @@ body {
 }
 
 /* Conteneur principal */
-.container:first-of-type {
+.container {
     position: sticky;
-    top: 0; /* Distance par rapport au haut de la page */
-    z-index: 10; /* Assure que le titre reste au-dessus des autres éléments */
-    background-color: var(--background-color); /* Couleur de fond pour éviter la superposition */
-    padding: 10px 20px; /* Espacement agréable autour du titre */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Ajoute une ombre légère */
+    width: 90%;
+    max-width: 500px;
+    background-color: #111e2b;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 20px;
+    max-height: 500px;
+    text-align: center;
 }
 
 /* Titre */
@@ -45,12 +48,10 @@ table {
     width: 100%;
     max-width: 100%;
     border-collapse: collapse;
-    margin-top: 10px; /* Ajoute un espacement au-dessus du tableau */
+    margin-top: 20px; /* Ajoute un espacement au-dessus du tableau */
     background-color: #ffffff00;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    max-height: 500px; /* Limite la hauteur visible du tableau */
-    margin: 0 auto;
 }
 
 /* Définir la largeur des colonnes */
@@ -154,7 +155,7 @@ input#guess-input {
     border: 2px solid var(--secondary-color); /* Bordure orange */
     background-color: #ffffff;(--background-color); /* Fond bleu marine */
     color: #000000;(--text-color); /* Texte blanc */
-    margin: 10px auto; /* Centré avec une marge */
+    margin-top: 10px;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Ombre pour un effet visuel */
     text-align: center; /* Centre le texte dans la barre */
 }
@@ -225,24 +226,22 @@ th:nth-child(3), td:nth-child(3) {
     font-weight: bold; /* Accentuer le texte */
     border-radius: 5px; /* Facultatif : arrondi des bords */
 
-/* Animation succès */
+/* Clignotement vert */
 .blink-green {
-    animation: blink-green 0.6s ease-in-out;
+    animation: blink-green 0.5s ease;
 }
 
 @keyframes blink-green {
-    0% { background-color: var(--success-color); }
-    50% { background-color: white; }
-    100% { background-color: var(--success-color); }
+    0%, 100% { background-color: white; }
+    50% { background-color: lightgreen; }
 }
 
-/* Animation erreur */
+/* Clignotement rouge */
 .blink-red {
-    animation: blink-red 0.6s ease-in-out;
+    animation: blink-red 0.5s ease;
 }
 
 @keyframes blink-red {
-    0% { background-color: var(--highlight-color); }
-    50% { background-color: white; }
-    100% { background-color: var(--highlight-color); }
+    0%, 100% { background-color: white; }
+    50% { background-color: lightcoral; }
 }
