@@ -41,7 +41,7 @@ h1 {
 
 /* Style du tableau */
 table {
-    position: absolute;
+    position: sticky;
     width: 100%;
     max-width: 100%;
     border-collapse: collapse;
@@ -49,7 +49,7 @@ table {
     background-color: #ffffff00;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    max-height: 800px; /* Limite la hauteur visible du tableau */
+    max-height: 500px; /* Limite la hauteur visible du tableau */
 }
 
 /* Définir la largeur des colonnes */
