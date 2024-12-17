@@ -50,7 +50,7 @@ h1 {
 
 /* Style du tableau */
 table {
-    width: max(50%, min(800px, 100%))
+    width: max(70%, min(800px, 100%))
     border-collapse: collapse;
     background-color: #ffffff00;
     border-radius: 1px;
