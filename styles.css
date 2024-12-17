@@ -157,8 +157,8 @@ input#guess-input {
     width: 100%; /* Barre de saisie plus large */
     max-width: 500px; /* Largeur maximale */
     padding: 15px; /* Espacement interne */
-    font-size: 16px; /* Texte plus grand */
-    border-radius: 15px; /* Coins arrondis */
+    font-size: 14px; /* Texte plus grand */
+    border-radius: 10px; /* Coins arrondis */
     border: 2px solid var(--secondary-color); /* Bordure orange */
     background-color: #ffffff;(--background-color); /* Fond bleu marine */
     color: #000000;(--text-color); /* Texte blanc */
@@ -181,7 +181,7 @@ input#guess-input {
 #incorrect-guesses {
     margin-top: 20px;
     color: var(--highlight-color);
-    font-size: 10px;
+    font-size: 12px;
 }
 
 /* Définir la largeur des colonnes */
