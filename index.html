@@ -69,7 +69,7 @@
             return playersData[selectedPlayer];
         }
 
-       async function displayPlayerStats() {
+ async function displayPlayerStats() {
     const stats = await selectRandomPlayer();
     const tableBody = document.getElementById('career-table-body');
     const countryMapping = await loadCountryMapping();
@@ -85,13 +85,17 @@
 
         const fullCountryName = countryMapping[stat.country] || stat.country;
 
+        // Extraire les années de début et de fin
+        const [startYear, endYear] = stat.season.split('-').map(year => parseInt(year, 10));
+
         if (
             currentGroup &&
             currentGroup.team === stat.team &&
-            currentGroup.country === fullCountryName
+            currentGroup.country === fullCountryName &&
+            currentGroup.endYear + 1 === startYear
         ) {
             // Étendre la plage de saisons pour ce club
-            currentGroup.endSeason = stat.season;
+            currentGroup.endYear = endYear;
         } else {
             // Ajouter le groupe précédent à la liste
             if (currentGroup) {
@@ -99,8 +103,8 @@
             }
             // Créer un nouveau groupe
             currentGroup = {
-                startSeason: stat.season,
-                endSeason: stat.season,
+                startYear,
+                endYear,
                 team: stat.team,
                 country: fullCountryName,
             };
@@ -114,12 +118,12 @@
 
     // Ajouter les données regroupées au tableau
     groupedStats.forEach(group => {
-        const row = document.createElement('tr');
         const seasonRange =
-            group.startSeason === group.endSeason
-                ? group.startSeason
-                : `${group.startSeason} - ${group.endSeason}`;
+            group.startYear === group.endYear
+                ? `${group.startYear}-${group.endYear}`
+                : `${group.startYear}-${group.endYear}`;
 
+        const row = document.createElement('tr');
         row.innerHTML = `
             <td>${seasonRange}</td>
             <td class="hidden" data-club="${group.team}">${group.team}</td>
@@ -128,7 +132,6 @@
         tableBody.appendChild(row);
     });
 }
-
         async function checkAnswer(input) {
             const answer = input.trim().toLowerCase();
             const feedback = document.getElementById("feedback");
