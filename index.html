@@ -69,121 +69,58 @@
             return playersData[selectedPlayer];
         }
 
-async function displayPlayerStats() {
-    const stats = await selectRandomPlayer();
-    const tableBody = document.getElementById('career-table-body');
-    const countryMapping = await loadCountryMapping();
+        async function displayPlayerStats() {
+            const stats = await selectRandomPlayer();
+            const tableBody = document.getElementById('career-table-body');
+            const countryMapping = await loadCountryMapping();
 
-    tableBody.innerHTML = '';
+            tableBody.innerHTML = '';
 
-    // Regrouper les saisons par club et pays
-    const groupedStats = [];
-    let currentGroup = null;
+            stats.forEach(stat => {
+                if (stat.season.toLowerCase().includes("season")) return;
 
-    stats.forEach((stat, index) => {
-        if (stat.season.toLowerCase().includes("season")) return;
+                const fullCountryName = countryMapping[stat.country] || stat.country;
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${stat.season}</td>
+                    <td class="hidden" data-club="${stat.team}">${stat.team}</td>
+                    <td class="hidden" data-country="${fullCountryName}">${fullCountryName}</td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
 
-        const fullCountryName = countryMapping[stat.country] || stat.country;
+        async function showSuggestions(value) {
+            const autocompleteList = document.getElementById("autocomplete-list");
+            autocompleteList.innerHTML = "";
+            if (value.trim() === "") return;
 
-        // Extraire les années de début et de fin
-        const [startYear, endYear] = stat.season.split('-').map(year => parseInt(year, 10));
+            const data = await loadClubsCountries();
+            const suggestions = new Set();
 
-        // Vérifier si le groupe actuel peut être étendu
-        if (
-            currentGroup &&
-            currentGroup.team === stat.team &&
-            currentGroup.country === fullCountryName &&
-            currentGroup.endYear + 1 === startYear // Les saisons sont consécutives
-        ) {
-            // Étendre la plage de saisons
-            currentGroup.endYear = endYear || currentGroup.endYear; // Conserver la fin actuelle si undefined
-        } else {
-            // Ajouter le groupe précédent à la liste
-            if (currentGroup) {
-                groupedStats.push(currentGroup);
+            for (let club in data) {
+                const country = data[club];
+                if (club.toLowerCase().includes(value.toLowerCase())) {
+                    suggestions.add(club);
+                }
+                if (country.toLowerCase().includes(value.toLowerCase())) {
+                    suggestions.add(country);
+                }
             }
 
-            // Créer un nouveau groupe
-            currentGroup = {
-                startYear,
-                endYear: endYear || startYear, // Si endYear est undefined, utiliser startYear
-                team: stat.team,
-                country: fullCountryName,
-            };
+            const sortedSuggestions = Array.from(suggestions).sort();
+            sortedSuggestions.forEach(suggestion => {
+                const listItem = document.createElement("li");
+                listItem.textContent = suggestion;
+                listItem.addEventListener("click", () => {
+                    document.getElementById("guess-input").value = "";
+                    autocompleteList.innerHTML = "";
+                    checkAnswer(suggestion);
+                });
+                autocompleteList.appendChild(listItem);
+            });
         }
 
-        // Ajouter le dernier groupe à la liste après la dernière itération
-        if (index === stats.length - 1) {
-            groupedStats.push(currentGroup);
-        }
-    });
-
-    // Ajouter les données regroupées au tableau
-    groupedStats.forEach(group => {
-        const seasonRange =
-            group.startYear === group.endYear
-                ? `${group.startYear}`
-                : `${group.startYear}-${group.endYear}`;
-
-        const row = document.createElement('tr');
-        row.innerHTML = `
-            <td>${seasonRange}</td>
-            <td class="hidden" data-club="${group.team}">${group.team}</td>
-            <td class="hidden" data-country="${group.country}">${group.country}</td>
-        `;
-        tableBody.appendChild(row);
-    });
-}
-
-// Correction des suggestions dans la liste déroulante
-async function showSuggestions(value) {
-    const autocompleteList = document.getElementById("autocomplete-list");
-    autocompleteList.innerHTML = "";
-    if (value.trim() === "") return;
-
-    const data = await loadClubsCountries();
-    const suggestions = new Set();
-
-    // Ajout des clubs et des pays correspondant à l'entrée
-    for (let club in data) {
-        const country = data[club];
-        if (club.toLowerCase().includes(value.toLowerCase())) {
-            suggestions.add(club);
-        }
-        if (country.toLowerCase().includes(value.toLowerCase())) {
-            suggestions.add(country);
-        }
-    }
-
-    // Trie les suggestions par ordre alphabétique
-    const sortedSuggestions = Array.from(suggestions).sort();
-    sortedSuggestions.forEach(suggestion => {
-        const listItem = document.createElement("li");
-        listItem.textContent = suggestion;
-        listItem.addEventListener("click", () => {
-            document.getElementById("guess-input").value = "";
-            autocompleteList.innerHTML = "";
-            checkAnswer(suggestion);
-        });
-        autocompleteList.appendChild(listItem);
-    });
-}
-
-// Recharger les suggestions lors de chaque saisie dans le champ
-const input = document.getElementById("guess-input");
-input.addEventListener("input", () => showSuggestions(input.value));
-input.addEventListener("keyup", (event) => {
-    if (event.key === "Enter") {
-        checkAnswer(input.value);
-        input.value = "";
-        document.getElementById("autocomplete-list").innerHTML = "";
-    }
-});
-
-// Charger les données initiales
-displayPlayerStats();
-}
-        
         async function checkAnswer(input) {
             const answer = input.trim().toLowerCase();
             const feedback = document.getElementById("feedback");
