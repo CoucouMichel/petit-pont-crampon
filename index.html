@@ -134,6 +134,56 @@ async function displayPlayerStats() {
         tableBody.appendChild(row);
     });
 }
+
+// Correction des suggestions dans la liste déroulante
+async function showSuggestions(value) {
+    const autocompleteList = document.getElementById("autocomplete-list");
+    autocompleteList.innerHTML = "";
+    if (value.trim() === "") return;
+
+    const data = await loadClubsCountries();
+    const suggestions = new Set();
+
+    // Ajout des clubs et des pays correspondant à l'entrée
+    for (let club in data) {
+        const country = data[club];
+        if (club.toLowerCase().includes(value.toLowerCase())) {
+            suggestions.add(club);
+        }
+        if (country.toLowerCase().includes(value.toLowerCase())) {
+            suggestions.add(country);
+        }
+    }
+
+    // Trie les suggestions par ordre alphabétique
+    const sortedSuggestions = Array.from(suggestions).sort();
+    sortedSuggestions.forEach(suggestion => {
+        const listItem = document.createElement("li");
+        listItem.textContent = suggestion;
+        listItem.addEventListener("click", () => {
+            document.getElementById("guess-input").value = "";
+            autocompleteList.innerHTML = "";
+            checkAnswer(suggestion);
+        });
+        autocompleteList.appendChild(listItem);
+    });
+}
+
+// Recharger les suggestions lors de chaque saisie dans le champ
+const input = document.getElementById("guess-input");
+input.addEventListener("input", () => showSuggestions(input.value));
+input.addEventListener("keyup", (event) => {
+    if (event.key === "Enter") {
+        checkAnswer(input.value);
+        input.value = "";
+        document.getElementById("autocomplete-list").innerHTML = "";
+    }
+});
+
+// Charger les données initiales
+displayPlayerStats();
+}
+        
         async function checkAnswer(input) {
             const answer = input.trim().toLowerCase();
             const feedback = document.getElementById("feedback");
