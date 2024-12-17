@@ -342,5 +342,726 @@
             "team": "",
             "country": ""
         }
+    ],
+    "Gianluigi Donnarumma": [
+        {
+            "season": "2014-2015",
+            "team": "Milan",
+            "country": "it ITA"
+        },
+        {
+            "season": "2015-2016",
+            "team": "Milan",
+            "country": "it ITA"
+        },
+        {
+            "season": "2016-2017",
+            "team": "Milan",
+            "country": "it ITA"
+        },
+        {
+            "season": "2017-2018",
+            "team": "Milan",
+            "country": "it ITA"
+        },
+        {
+            "season": "2018-2019",
+            "team": "Milan",
+            "country": "it ITA"
+        },
+        {
+            "season": "2019-2020",
+            "team": "Milan",
+            "country": "it ITA"
+        },
+        {
+            "season": "2020-2021",
+            "team": "Milan",
+            "country": "it ITA"
+        },
+        {
+            "season": "2021-2022",
+            "team": "Paris S-G",
+            "country": "fr FRA"
+        },
+        {
+            "season": "2022-2023",
+            "team": "Paris S-G",
+            "country": "fr FRA"
+        },
+        {
+            "season": "2023-2024",
+            "team": "Paris S-G",
+            "country": "fr FRA"
+        },
+        {
+            "season": "2024-2025",
+            "team": "Paris S-G",
+            "country": "fr FRA"
+        },
+        {
+            "season": "11 Seasons",
+            "team": "",
+            "country": "2 Leagues"
+        },
+        {
+            "season": "Milan (7 Seasons)",
+            "team": "1 League",
+            "country": ""
+        },
+        {
+            "season": "Paris S-G (4 Seasons)",
+            "team": "1 League",
+            "country": ""
+        },
+        {
+            "season": "",
+            "team": "",
+            "country": ""
+        },
+        {
+            "season": "Serie A (7 Seasons)",
+            "team": "",
+            "country": ""
+        },
+        {
+            "season": "Ligue 1 (4 Seasons)",
+            "team": "",
+            "country": ""
+        }
+    ],
+    "Achraf Hakimi": [
+        {
+            "season": "2016-2017",
+            "team": "Real Madrid",
+            "country": "es ESP"
+        },
+        {
+            "season": "2017-2018",
+            "team": "Real Madrid",
+            "country": "es ESP"
+        },
+        {
+            "season": "2018-2019",
+            "team": "Dortmund",
+            "country": "de GER"
+        },
+        {
+            "season": "2019-2020",
+            "team": "Dortmund",
+            "country": "de GER"
+        },
+        {
+            "season": "2020-2021",
+            "team": "Inter",
+            "country": "it ITA"
+        },
+        {
+            "season": "2021-2022",
+            "team": "Paris S-G",
+            "country": "fr FRA"
+        },
+        {
+            "season": "2022-2023",
+            "team": "Paris S-G",
+            "country": "fr FRA"
+        },
+        {
+            "season": "2023-2024",
+            "team": "Paris S-G",
+            "country": "fr FRA"
+        },
+        {
+            "season": "2024-2025",
+            "team": "Paris S-G",
+            "country": "fr FRA"
+        },
+        {
+            "season": "9 Seasons",
+            "team": "",
+            "country": "4 Leagues"
+        },
+        {
+            "season": "Paris S-G (4 Seasons)",
+            "team": "1 League",
+            "country": ""
+        },
+        {
+            "season": "Dortmund (2 Seasons)",
+            "team": "1 League",
+            "country": ""
+        },
+        {
+            "season": "Real Madrid (2 Seasons)",
+            "team": "1 League",
+            "country": ""
+        },
+        {
+            "season": "Inter (1 Season)",
+            "team": "1 League",
+            "country": ""
+        },
+        {
+            "season": "",
+            "team": "",
+            "country": ""
+        },
+        {
+            "season": "Ligue 1 (4 Seasons)",
+            "team": "",
+            "country": ""
+        },
+        {
+            "season": "Bundesliga (2 Seasons)",
+            "team": "",
+            "country": ""
+        },
+        {
+            "season": "La Liga (2 Seasons)",
+            "team": "",
+            "country": ""
+        },
+        {
+            "season": "Serie A (1 Season)",
+            "team": "",
+            "country": ""
+        }
+    ],
+    "Marquinhos": [
+        {
+            "season": "2012-2013",
+            "team": "Roma",
+            "country": "it ITA"
+        },
+        {
+            "season": "2013-2014",
+            "team": "Paris S-G",
+            "country": "fr FRA"
+        },
+        {
+            "season": "2014-2015",
+            "team": "Paris S-G",
+            "country": "fr FRA"
+        },
+        {
+            "season": "2015-2016",
+            "team": "Paris S-G",
+            "country": "fr FRA"
+        },
+        {
+            "season": "2016-2017",
+            "team": "Paris S-G",
+            "country": "fr FRA"
+        },
+        {
+            "season": "2017-2018",
+            "team": "Paris S-G",
+            "country": "fr FRA"
+        },
+        {
+            "season": "2018-2019",
+            "team": "Paris S-G",
+            "country": "fr FRA"
+        },
+        {
+            "season": "2019-2020",
+            "team": "Paris S-G",
+            "country": "fr FRA"
+        },
+        {
+            "season": "2020-2021",
+            "team": "Paris S-G",
+            "country": "fr FRA"
+        },
+        {
+            "season": "2021-2022",
+            "team": "Paris S-G",
+            "country": "fr FRA"
+        },
+        {
+            "season": "2022-2023",
+            "team": "Paris S-G",
+            "country": "fr FRA"
+        },
+        {
+            "season": "2023-2024",
+            "team": "Paris S-G",
+            "country": "fr FRA"
+        },
+        {
+            "season": "2024-2025",
+            "team": "Paris S-G",
+            "country": "fr FRA"
+        },
+        {
+            "season": "13 Seasons",
+            "team": "",
+            "country": "2 Leagues"
+        },
+        {
+            "season": "Paris S-G (12 Seasons)",
+            "team": "1 League",
+            "country": ""
+        },
+        {
+            "season": "Roma (1 Season)",
+            "team": "1 League",
+            "country": ""
+        },
+        {
+            "season": "",
+            "team": "",
+            "country": ""
+        },
+        {
+            "season": "Ligue 1 (12 Seasons)",
+            "team": "",
+            "country": ""
+        },
+        {
+            "season": "Serie A (1 Season)",
+            "team": "",
+            "country": ""
+        }
+    ],
+    "Ousmane Dembele": [
+        {
+            "season": "2015-2016",
+            "team": "Rennes",
+            "country": "fr FRA"
+        },
+        {
+            "season": "2016-2017",
+            "team": "Dortmund",
+            "country": "de GER"
+        },
+        {
+            "season": "2017-2018",
+            "team": "Barcelona",
+            "country": "es ESP"
+        },
+        {
+            "season": "2018-2019",
+            "team": "Barcelona",
+            "country": "es ESP"
+        },
+        {
+            "season": "2019-2020",
+            "team": "Barcelona",
+            "country": "es ESP"
+        },
+        {
+            "season": "2020-2021",
+            "team": "Barcelona",
+            "country": "es ESP"
+        },
+        {
+            "season": "2021-2022",
+            "team": "Barcelona",
+            "country": "es ESP"
+        },
+        {
+            "season": "2022-2023",
+            "team": "Barcelona",
+            "country": "es ESP"
+        },
+        {
+            "season": "2023-2024",
+            "team": "Paris S-G",
+            "country": "fr FRA"
+        },
+        {
+            "season": "2024-2025",
+            "team": "Paris S-G",
+            "country": "fr FRA"
+        },
+        {
+            "season": "10 Seasons",
+            "team": "",
+            "country": "3 Leagues"
+        },
+        {
+            "season": "Barcelona (6 Seasons)",
+            "team": "1 League",
+            "country": ""
+        },
+        {
+            "season": "Paris S-G (2 Seasons)",
+            "team": "1 League",
+            "country": ""
+        },
+        {
+            "season": "Dortmund (1 Season)",
+            "team": "1 League",
+            "country": ""
+        },
+        {
+            "season": "Rennes (1 Season)",
+            "team": "1 League",
+            "country": ""
+        },
+        {
+            "season": "",
+            "team": "",
+            "country": ""
+        },
+        {
+            "season": "La Liga (6 Seasons)",
+            "team": "",
+            "country": ""
+        },
+        {
+            "season": "Ligue 1 (3 Seasons)",
+            "team": "",
+            "country": ""
+        },
+        {
+            "season": "Bundesliga (1 Season)",
+            "team": "",
+            "country": ""
+        }
+    ],
+    "Nuno Mendes": [
+        {
+            "season": "2019-2020",
+            "team": "Sporting CP",
+            "country": "pt POR"
+        },
+        {
+            "season": "2020-2021",
+            "team": "Sporting CP",
+            "country": "pt POR"
+        },
+        {
+            "season": "2021-2022",
+            "team": "Sporting CP",
+            "country": "pt POR"
+        },
+        {
+            "season": "2021-2022",
+            "team": "Paris S-G",
+            "country": "fr FRA"
+        },
+        {
+            "season": "2022-2023",
+            "team": "Paris S-G",
+            "country": "fr FRA"
+        },
+        {
+            "season": "2023-2024",
+            "team": "Paris S-G",
+            "country": "fr FRA"
+        },
+        {
+            "season": "2024-2025",
+            "team": "Paris S-G",
+            "country": "fr FRA"
+        },
+        {
+            "season": "6 Seasons",
+            "team": "",
+            "country": "2 Leagues"
+        },
+        {
+            "season": "Paris S-G (4 Seasons)",
+            "team": "1 League",
+            "country": ""
+        },
+        {
+            "season": "Sporting CP (3 Seasons)",
+            "team": "1 League",
+            "country": ""
+        },
+        {
+            "season": "",
+            "team": "",
+            "country": ""
+        },
+        {
+            "season": "Ligue 1 (4 Seasons)",
+            "team": "",
+            "country": ""
+        },
+        {
+            "season": "Primeira Liga (3 Seasons)",
+            "team": "",
+            "country": ""
+        }
+    ],
+    "Milan Skriniar": [
+        {
+            "season": "2015-2016",
+            "team": "Sampdoria",
+            "country": "it ITA"
+        },
+        {
+            "season": "2016-2017",
+            "team": "Sampdoria",
+            "country": "it ITA"
+        },
+        {
+            "season": "2017-2018",
+            "team": "Inter",
+            "country": "it ITA"
+        },
+        {
+            "season": "2018-2019",
+            "team": "Inter",
+            "country": "it ITA"
+        },
+        {
+            "season": "2019-2020",
+            "team": "Inter",
+            "country": "it ITA"
+        },
+        {
+            "season": "2020-2021",
+            "team": "Inter",
+            "country": "it ITA"
+        },
+        {
+            "season": "2021-2022",
+            "team": "Inter",
+            "country": "it ITA"
+        },
+        {
+            "season": "2022-2023",
+            "team": "Inter",
+            "country": "it ITA"
+        },
+        {
+            "season": "2023-2024",
+            "team": "Paris S-G",
+            "country": "fr FRA"
+        },
+        {
+            "season": "2024-2025",
+            "team": "Paris S-G",
+            "country": "fr FRA"
+        },
+        {
+            "season": "10 Seasons",
+            "team": "",
+            "country": "2 Leagues"
+        },
+        {
+            "season": "Inter (6 Seasons)",
+            "team": "1 League",
+            "country": ""
+        },
+        {
+            "season": "Sampdoria (2 Seasons)",
+            "team": "1 League",
+            "country": ""
+        },
+        {
+            "season": "Paris S-G (2 Seasons)",
+            "team": "1 League",
+            "country": ""
+        },
+        {
+            "season": "",
+            "team": "",
+            "country": ""
+        },
+        {
+            "season": "Serie A (8 Seasons)",
+            "team": "",
+            "country": ""
+        },
+        {
+            "season": "Ligue 1 (2 Seasons)",
+            "team": "",
+            "country": ""
+        }
+    ],
+    "Randal Kolo Muani": [
+        {
+            "season": "2016-2017",
+            "team": "Nantes",
+            "country": "fr FRA"
+        },
+        {
+            "season": "2017-2018",
+            "team": "Nantes",
+            "country": "fr FRA"
+        },
+        {
+            "season": "2018-2019",
+            "team": "Nantes",
+            "country": "fr FRA"
+        },
+        {
+            "season": "",
+            "team": "",
+            "country": ""
+        },
+        {
+            "season": "2020-2021",
+            "team": "Nantes",
+            "country": "fr FRA"
+        },
+        {
+            "season": "2021-2022",
+            "team": "Nantes",
+            "country": "fr FRA"
+        },
+        {
+            "season": "2022-2023",
+            "team": "Eint Frankfurt",
+            "country": "de GER"
+        },
+        {
+            "season": "2023-2024",
+            "team": "Eint Frankfurt",
+            "country": "de GER"
+        },
+        {
+            "season": "2023-2024",
+            "team": "Paris S-G",
+            "country": "fr FRA"
+        },
+        {
+            "season": "2024-2025",
+            "team": "Paris S-G",
+            "country": "fr FRA"
+        },
+        {
+            "season": "8 Seasons",
+            "team": "",
+            "country": "2 Leagues"
+        },
+        {
+            "season": "Nantes (5 Seasons)",
+            "team": "1 League",
+            "country": ""
+        },
+        {
+            "season": "Paris S-G (2 Seasons)",
+            "team": "1 League",
+            "country": ""
+        },
+        {
+            "season": "Eint Frankfurt (2 Seasons)",
+            "team": "1 League",
+            "country": ""
+        },
+        {
+            "season": "",
+            "team": "",
+            "country": ""
+        },
+        {
+            "season": "Ligue 1 (7 Seasons)",
+            "team": "",
+            "country": ""
+        },
+        {
+            "season": "Bundesliga (2 Seasons)",
+            "team": "",
+            "country": ""
+        }
+    ],
+    "Carlos Soler": [
+        {
+            "season": "2015-2016",
+            "team": "Valencia",
+            "country": "es ESP"
+        },
+        {
+            "season": "2016-2017",
+            "team": "Valencia",
+            "country": "es ESP"
+        },
+        {
+            "season": "2017-2018",
+            "team": "Valencia",
+            "country": "es ESP"
+        },
+        {
+            "season": "2018-2019",
+            "team": "Valencia",
+            "country": "es ESP"
+        },
+        {
+            "season": "2019-2020",
+            "team": "Valencia",
+            "country": "es ESP"
+        },
+        {
+            "season": "2020-2021",
+            "team": "Valencia",
+            "country": "es ESP"
+        },
+        {
+            "season": "2021-2022",
+            "team": "Valencia",
+            "country": "es ESP"
+        },
+        {
+            "season": "2022-2023",
+            "team": "Valencia",
+            "country": "es ESP"
+        },
+        {
+            "season": "2022-2023",
+            "team": "Paris S-G",
+            "country": "fr FRA"
+        },
+        {
+            "season": "2023-2024",
+            "team": "Paris S-G",
+            "country": "fr FRA"
+        },
+        {
+            "season": "2024-2025",
+            "team": "Paris S-G",
+            "country": "fr FRA"
+        },
+        {
+            "season": "2024-2025",
+            "team": "West Ham",
+            "country": "eng ENG"
+        },
+        {
+            "season": "10 Seasons",
+            "team": "",
+            "country": "3 Leagues"
+        },
+        {
+            "season": "Valencia (8 Seasons)",
+            "team": "1 League",
+            "country": ""
+        },
+        {
+            "season": "Paris S-G (3 Seasons)",
+            "team": "1 League",
+            "country": ""
+        },
+        {
+            "season": "West Ham (1 Season)",
+            "team": "1 League",
+            "country": ""
+        },
+        {
+            "season": "",
+            "team": "",
+            "country": ""
+        },
+        {
+            "season": "La Liga (8 Seasons)",
+            "team": "",
+            "country": ""
+        },
+        {
+            "season": "Ligue 1 (3 Seasons)",
+            "team": "",
+            "country": ""
+        },
+        {
+            "season": "Premier League (1 Season)",
+            "team": "",
+            "country": ""
+        }
     ]
 }
