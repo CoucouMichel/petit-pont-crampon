@@ -151,6 +151,8 @@ input#guess-input {
     margin-bottom: 10px; /* Espacement sous la barre de saisie */
 }
 #guess-input {
+    position: relative;
+    z-index: 10;
     width: 100%; /* Barre de saisie plus large */
     max-width: 500px; /* Largeur maximale */
     padding: 15px; /* Espacement interne */
@@ -202,7 +204,7 @@ th:nth-child(3), td:nth-child(3) {
     background-color: #28333d;
     max-height: 150px;
     overflow-y: auto;
-    z-index: 1000;
+    z-index: 10000;
     width: 100%; /* Ajuste la largeur selon le champ d'entrée */
     padding: 0;
     margin-top: 5px;
