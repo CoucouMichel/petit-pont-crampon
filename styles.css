@@ -41,11 +41,11 @@ h1 {
 
 /* Style du tableau */
 table {
-    position: sticky;
+    position: relative;
     width: 100%;
     max-width: 100%;
     border-collapse: collapse;
-    margin-top: 20px; /* Ajoute un espacement au-dessus du tableau */
+    margin-top: 10px; /* Ajoute un espacement au-dessus du tableau */
     background-color: #ffffff00;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
