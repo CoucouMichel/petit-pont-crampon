@@ -24,6 +24,9 @@ body {
 
 /* Conteneur principal */
 .container {
+    position: sticky;
+    top: 0;
+    z-index:10;
     width: 90%;
     max-width: 500px;
     background-color: #111e2b;
@@ -43,6 +46,7 @@ h1 {
 
 /* Style du tableau */
 table {
+    max height: 300px;
     width: 100%;
     max-width: 100%;
     border-collapse: collapse;
