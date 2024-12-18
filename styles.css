@@ -46,14 +46,19 @@ h1 {
     margin-bottom: 10px;
 }
 
+.container {
+    margin-top: 270px;
+    }
+}
+
 /* Style du tableau */
 table {
-    width: 600xp;
+    width: 800xp;
+    max-width: 100%;
     border-collapse: collapse;
     background-color: #ffffff00;
     border-radius: 1px;
     margin: 5px auto;
-    margin-top: 20px;
 }
 
 /* Définir la largeur des colonnes */
@@ -126,13 +131,6 @@ td[data-club] {
         padding: 10px;
     }
     
-.container {
-    width: 100%;
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    }
-}
 /* Centrer la barre de saisie */
 body {
     display: flex;
