@@ -158,7 +158,7 @@ td[data-club] {
     }
 
     .global-container {
-    margin-top: -200px; /* Or a smaller positive value */
+    margin-top: 0px; /* Or a smaller positive value */
     }
 }
     
