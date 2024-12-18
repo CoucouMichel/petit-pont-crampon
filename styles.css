@@ -167,7 +167,7 @@ input#guess-input {
     width: 80%; /* Fixe une largeur pour la barre de saisie */
     max-width: 400px; /* Limite la largeur maximale */
     padding: 10px; /* Ajouter du padding pour plus de confort */
-    font-size: 16px; /* Taille de la police */
+    font-size: 14px; /* Taille de la police */
     margin-bottom: 20px; /* Espacement sous la barre de saisie */
 }
 #guess-input {
@@ -222,7 +222,7 @@ th:nth-child(3), td:nth-child(3) {
     overflow-y: auto;
     z-index: 1000; /* Priorité sur les autres éléments */
     width: 100%;
-    margin-top: 5px;
+    margin-top: -20px;
     list-style: none;
     padding: 0;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -231,8 +231,8 @@ th:nth-child(3), td:nth-child(3) {
 .autocomplete-suggestions li {
     padding: 10px;
     cursor: pointer;
-    background-color: var(--background-color);
-    color: var(--text-color);
+    background-color: #161616;
+    color: #adbb62;
     border-bottom: 1px solid #3f464d;
 }
 
@@ -260,7 +260,7 @@ th:nth-child(3), td:nth-child(3) {
 
 @keyframes blink-green {
     0%, 100% { background-color: white; }
-    50% { background-color: lightgreen; }
+    50% { #f39c12; }
 }
 
 /* Clignotement rouge */
