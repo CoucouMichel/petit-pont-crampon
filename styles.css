@@ -17,7 +17,6 @@ body {
     background-color: var(--background-color); /* Fond similaire au reste de la page */
     color: var(--text-color); /* Texte blanc */
     z-index: 9999; /* Toujours au-dessus des autres éléments */
-    padding: 20px; /* Ajoute un peu de marge intérieure */
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Ombre pour le séparer du contenu */
     text-align: center;
 }
@@ -30,7 +29,7 @@ h1 {
 
 /* Conteneur du tableau */
 .container {
-    margin-top: 250px; /* Ajustez cette valeur selon la hauteur réelle de votre en-tête fixe */
+    margin-top: 270px; /* Ajustez cette valeur selon la hauteur réelle de votre en-tête fixe */
 }
 
 /* Style du tableau */
@@ -60,16 +59,6 @@ th {
 td {
     background-color: #111e2b;
     color: var(--text-color);  /* Texte en blanc */
-}
-
-/* Lignes alternées avec des nuances de bleu marine */
-tr:nth-child(odd) td {
-    background-color: #111e2b;  /* Bleu marine pour les lignes impaires */
-}
-
-tr:nth-child(even) td {
-    background-color: #1a2633;  /* Couleur proche du bleu marine pour les lignes paires */
-}
 
 /* Masquer le texte de la cellule, mais garder la couleur de fond */
 td.hidden {
@@ -90,20 +79,35 @@ td.hidden {
         padding: 10px;
     }
 }
-
 /* Centrer la barre de saisie */
+body {
+    display: flex;
+    justify-content: center; /* Centre horizontalement */
+    align-items: center; /* Centre verticalement */
+    height: 100vh; /* Hauteur de l'écran pour centrer verticalement */
+    margin: 0; /* Enlève toute marge par défaut du body */
+    flex-direction: column; /* Les éléments sont centrés verticalement aussi */
+    
+#guess-input {
+    width: 80%; /* Barre de saisie plus large */
+    max-width: 400px; /* Largeur maximale */
+    padding: 10px; /* Espacement interne */
+    font-size: 14px; /* Texte plus grand */
+    border-radius: 5px; /* Coins arrondis */
+    border: 2px solid var(--secondary-color); /* Bordure orange */
+    background-color: #ffffff;(--background-color); /* Fond bleu marine */
+    color: #000000;(--text-color); /* Texte blanc */
+    margin-top: 15px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Ombre pour un effet visuel */
+    text-align: center; /* Centre le texte dans la barre */
+}
+    
 input#guess-input {
     width: 80%; /* Fixe une largeur pour la barre de saisie */
     max-width: 400px; /* Limite la largeur maximale */
     padding: 10px; /* Ajouter du padding pour plus de confort */
     font-size: 16px; /* Taille de la police */
     margin-bottom: 10px; /* Espacement sous la barre de saisie */
-    border-radius: 10px; /* Coins arrondis */
-    border: 2px solid var(--secondary-color); /* Bordure orange */
-    background-color: #ffffff; /* Fond blanc */
-    color: #000000; /* Texte noir */
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Ombre pour un effet visuel */
-    text-align: center; /* Centre le texte dans la barre */
 }
 
 input#guess-input:focus {
