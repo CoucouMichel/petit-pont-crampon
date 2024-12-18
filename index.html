@@ -27,77 +27,27 @@
         </div>
 
         <div class="container">
-    <h2 id="player-name"></h2>
-    <table id="career-table">
-        <thead>
-            <tr>
-                <th>Années</th>
-                <th>Club</th>
-                <th>Pays</th>
-            </tr>
-        </thead>
-        <tbody id="career-table-body">
-            <!-- Les lignes du tableau seront ajoutées dynamiquement -->
-        </tbody>
-    </table>
-    <input 
-        type="text" 
-        id="guess-input" 
-        placeholder="Tapez un mot (prénom ou nom)" 
-        autocomplete="off"
-    >
-</div>
-
+            <h2>Carrière du joueur</h2>
+            <table id="career-table">
+                <thead>
+                    <tr>
+                        <th>Années</th>
+                        <th>Club</th>
+                        <th>Pays</th>
+                    </tr>
+                </thead>
+                <tbody id="career-table-body">
+                    <!-- Les lignes du tableau seront ajoutées dynamiquement -->
+                </tbody>
+            </table>
+        </div>
+    </div>
 </body>
 
 <script>
         let selectedPlayer;
         let attempts = 0;
 
-// Nom du joueur mystère
-const playerName = "Didier Drogba";
-
-// Fonction pour afficher le nom masqué
-function displayPlayerName(name) {
-    const nameContainer = document.getElementById("player-name");
-    const words = name.split(" "); // Divise le nom en mots
-    nameContainer.innerHTML = words
-        .map(word => `<span class="hidden" data-word="${word.toLowerCase()}">${word}</span>`)
-        .join(" ");
-}
-
-// Fonction pour vérifier la réponse utilisateur
-function checkGuess(input) {
-    const spans = document.querySelectorAll("#player-name span");
-    let found = false;
-
-    spans.forEach(span => {
-        if (span.dataset.word === input.toLowerCase()) {
-            span.classList.remove("hidden");
-            span.classList.add("visible");
-            found = true;
-        }
-    });
-
-    if (!found) {
-        alert("Mot incorrect !");
-    }
-}
-
-// Affiche le nom du joueur avec les mots masqués
-displayPlayerName(playerName);
-
-// Écouteur pour la saisie utilisateur
-document.getElementById("guess-input").addEventListener("keyup", function (e) {
-    if (e.key === "Enter") {
-        const userInput = e.target.value.trim(); // Récupère l'entrée utilisateur
-        if (userInput) {
-            checkGuess(userInput); // Vérifie l'entrée
-            e.target.value = ""; // Réinitialise le champ de saisie
-        }
-    }
-});
-    
         async function loadPlayerStats() {
             const response = await fetch('./players_stats.json');
             return response.json();
