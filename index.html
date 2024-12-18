@@ -27,40 +27,76 @@
         </div>
 
         <div class="container">
-            <h2 id="player-name"</h2>
-            <table id="career-table">
-                <thead>
-                    <tr>
-                        <th>Années</th>
-                        <th>Club</th>
-                        <th>Pays</th>
-                    </tr>
-                </thead>
-                <tbody id="career-table-body">
-                    <!-- Les lignes du tableau seront ajoutées dynamiquement -->
-                </tbody>
-            </table>
-        </div>
-    </div>
+    <h2 id="player-name"></h2>
+    <table id="career-table">
+        <thead>
+            <tr>
+                <th>Années</th>
+                <th>Club</th>
+                <th>Pays</th>
+            </tr>
+        </thead>
+        <tbody id="career-table-body">
+            <!-- Les lignes du tableau seront ajoutées dynamiquement -->
+        </tbody>
+    </table>
+    <input 
+        type="text" 
+        id="guess-input" 
+        placeholder="Tapez un mot (prénom ou nom)" 
+        autocomplete="off"
+    >
+</div>
+
 </body>
 
 <script>
         let selectedPlayer;
         let attempts = 0;
 
-// Fonction pour afficher un nom avec surlignage
+// Nom du joueur mystère
+const playerName = "Didier Drogba";
+
+// Fonction pour afficher le nom masqué
 function displayPlayerName(name) {
     const nameContainer = document.getElementById("player-name");
-
-    // Diviser le nom en mots et ajouter le surlignage
-    const highlightedName = name
-        .split(" ") // Diviser le nom en mots
-        .map(word => `<span class="highlight">${word}</span>`) // Ajouter le surlignage
-        .join(" "); // Rejoindre les mots avec des espaces
-
-    // Insérer le résultat dans le conteneur
-    nameContainer.innerHTML = highlightedName;
+    const words = name.split(" "); // Divise le nom en mots
+    nameContainer.innerHTML = words
+        .map(word => `<span class="hidden" data-word="${word.toLowerCase()}">${word}</span>`)
+        .join(" ");
 }
+
+// Fonction pour vérifier la réponse utilisateur
+function checkGuess(input) {
+    const spans = document.querySelectorAll("#player-name span");
+    let found = false;
+
+    spans.forEach(span => {
+        if (span.dataset.word === input.toLowerCase()) {
+            span.classList.remove("hidden");
+            span.classList.add("visible");
+            found = true;
+        }
+    });
+
+    if (!found) {
+        alert("Mot incorrect !");
+    }
+}
+
+// Affiche le nom du joueur avec les mots masqués
+displayPlayerName(playerName);
+
+// Écouteur pour la saisie utilisateur
+document.getElementById("guess-input").addEventListener("keyup", function (e) {
+    if (e.key === "Enter") {
+        const userInput = e.target.value.trim(); // Récupère l'entrée utilisateur
+        if (userInput) {
+            checkGuess(userInput); // Vérifie l'entrée
+            e.target.value = ""; // Réinitialise le champ de saisie
+        }
+    }
+});
     
         async function loadPlayerStats() {
             const response = await fetch('./players_stats.json');
@@ -155,7 +191,6 @@ function displayPlayerName(name) {
                 Object.entries(countryMapping).map(([abbr, fullName]) => [fullName.toLowerCase(), abbr.toLowerCase()])
             );
 
-
             let isCorrect = false;
 
             if (answer === selectedPlayer.toLowerCase()) {
@@ -206,12 +241,6 @@ function displayPlayerName(name) {
             });
         }
 
-// Fonction pour révéler le nom du joueur
-function revealPlayerName(name) {
-    const nameContainer = document.getElementById("player-name");
-    nameContainer.textContent = name; // Remplace tout le contenu par le texte brut
-}
-    
 const input = document.getElementById("guess-input");
 input.addEventListener("input", () => showSuggestions(input.value)); // Mise à jour des suggestions
 input.addEventListener("keyup", (event) => {
