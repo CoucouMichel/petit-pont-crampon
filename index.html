@@ -200,7 +200,24 @@ input.addEventListener("keyup", (event) => {
         document.getElementById("autocomplete-list").innerHTML = ""; // Effacer la liste
     }
 });
+    
+const thirdColumnCells = Array.from(document.querySelectorAll('table tr td:nth-child(3)'));
 
+thirdColumnCells.forEach(async (cell) => {
+  const countryName = cell.textContent.trim();
+  if (countryName) {
+    try {
+      const response = await fetch(`https://restcountries.com/v3.1/name/${countryName}`);
+      const data = await response.json();
+      const flagUrl = data[0].flags.png; // Get the flag URL from the API response
+
+      // Apply the flag image to the cell using a pseudo-element
+      cell.style.setProperty('--flag-url', `url('${flagUrl}')`);
+    } catch (error) {
+      console.error(`Error fetching flag for ${countryName}:`, error);
+    }
+  }
+});
         displayPlayerStats();
     </script>
 </body>
