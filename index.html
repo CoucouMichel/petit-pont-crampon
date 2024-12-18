@@ -155,6 +155,7 @@ function displayPlayerName(name) {
                 Object.entries(countryMapping).map(([abbr, fullName]) => [fullName.toLowerCase(), abbr.toLowerCase()])
             );
 
+
             let isCorrect = false;
 
             if (answer === selectedPlayer.toLowerCase()) {
@@ -205,6 +206,12 @@ function displayPlayerName(name) {
             });
         }
 
+// Fonction pour révéler le nom du joueur
+function revealPlayerName(name) {
+    const nameContainer = document.getElementById("player-name");
+    nameContainer.textContent = name; // Remplace tout le contenu par le texte brut
+}
+    
 const input = document.getElementById("guess-input");
 input.addEventListener("input", () => showSuggestions(input.value)); // Mise à jour des suggestions
 input.addEventListener("keyup", (event) => {
