@@ -43,7 +43,7 @@ h1 {
 }
 
 /* Conteneur du tableau */
-.container {
+.global-container {
     margin-top: 280px; /* Ajustez cette valeur selon la hauteur réelle de votre en-tête fixe */
 }
 
