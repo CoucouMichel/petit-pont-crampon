@@ -250,7 +250,7 @@ th:nth-child(3), td:nth-child(3) {
 }
 
 @keyframes blink-green {
-    0%, 100% { background-color: white; }
+    0%, 100% { background-color: black; }
     50% { background-color: lightgreen; }
 }
 
@@ -260,6 +260,6 @@ th:nth-child(3), td:nth-child(3) {
 }
 
 @keyframes blink-red {
-    0%, 100% { background-color: white; }
+    0%, 100% { background-color: black; }
     50% { background-color: lightcoral; }
 }
