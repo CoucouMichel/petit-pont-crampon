@@ -46,9 +46,10 @@ h1 {
 }
 
 /* Conteneur du tableau */
-.container {
+.global-container {
   position: relative; /* or position: absolute */
   z-index: 12; /* or any value higher than 11 */
+  margin-top: -160px; /* Adjust the value as needed */
 }
 
 h2.ai-style-change-1 {
