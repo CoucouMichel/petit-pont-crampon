@@ -17,13 +17,9 @@ body {
     padding: 0;
     display: flex;
     justify-content: center;
-    align-items: center;@
+    align-items: center;
     height: 100vh;
     text-align: center;
-}
-/* Global container */
-.global-container {
-    padding-top: 150px; /* Crée un espace pour le header */
 }
 /* Conteneur principal */
 .fixed-header {
@@ -33,7 +29,7 @@ body {
     width: 100%; /* Prend toute la largeur */
     background-color: var(--background-color); /* Fond similaire au reste de la page */
     color: var(--text-color); /* Texte blanc */
-    z-index: 1000; /* Toujours au-dessus des autres éléments */
+    z-index: 9999; /* Toujours au-dessus des autres éléments */
     padding: 20px; /* Ajoute un peu de marge intérieure */
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Ombre pour le séparer du contenu */
     text-align: center;
@@ -46,8 +42,9 @@ h1 {
     margin-bottom: 10px;
 }
 
+/* Conteneur du tableau */
 .container {
-    margin-top: 270px;
+    margin-top: 100px; /* Ajustez cette valeur selon la hauteur réelle de votre en-tête fixe */
 }
 
 /* Style du tableau */
@@ -57,7 +54,7 @@ table {
     border-collapse: collapse;
     background-color: #ffffff00;
     border-radius: 1px;
-    margin: 5px auto;
+    margin: 0 auto;
 }
 
 /* Définir la largeur des colonnes */
