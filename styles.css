@@ -68,13 +68,14 @@ h2.ai-style-change-1 {
 /* Style du tableau */
 table#career-table {
   position: absolute;
-  top: 35px; /* Adjust this value based on the h2's height and desired spacing */
+  top: 70px; /* Adjust this value based on the h2's height and desired spacing */
   left: 50%;
   transform: translateX(-50%);
-  width: 70%;
+  width: 450px;
   background-color: initial;
   z-index: 10;
   padding-top: 30px;
+  border-collapse: collapse;
 }
 
 /* Définir la largeur des colonnes */
