@@ -177,14 +177,13 @@ input#guess-input {
     font-size: 14px; /* Texte plus grand */
     border-radius: 5px; /* Coins arrondis */
     border: 1px solid #c8ff0052; /* Bordure orange */
-    background-color: #000000; /* Fond bleu marine */
+    background-color: #161616; /* Fond bleu marine */
     color: #949e71; /* Texte blanc */
-    margin-top: 15px;
     text-align: center; /* Centre le texte dans la barre */
 }
 
 #guess-input:focus {
-    border-color: var(--highlight-color); /* Change la couleur de bordure au focus */
+    border-color: #949e71; /* Change la couleur de bordure au focus */
     outline: none; /* Supprime la bordure par défaut */
 }
 
