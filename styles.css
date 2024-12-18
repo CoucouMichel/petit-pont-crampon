@@ -49,7 +49,7 @@ h1 {
 .global-container {
   position: relative; /* or position: absolute */
   z-index: 12; /* or any value higher than 11 */
-  margin-top: -160px; /* Adjust the value as needed */
+  margin-top: -360px; /* Adjust the value as needed */
 }
 
 h2.ai-style-change-1 {
@@ -68,7 +68,7 @@ h2.ai-style-change-1 {
 /* Style du tableau */
 table#career-table {
   position: absolute;
-  top: 250px; /* Adjust this value based on the h2's height and desired spacing */
+  top: 35px; /* Adjust this value based on the h2's height and desired spacing */
   left: 50%;
   transform: translateX(-50%);
   width: 70%;
