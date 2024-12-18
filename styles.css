@@ -65,6 +65,11 @@ tr:nth-child(even) td {
     background-color: #1a2633;  /* Couleur proche du bleu marine pour les lignes paires */
 }
 
+/* Masquer le texte de la cellule, mais garder la couleur de fond */
+td.hidden {
+    visibility: hidden; /* Masque le texte tout en gardant la couleur de fond */
+    position: relative;
+
 /* Rendre le tableau responsive */
 @media (max-width: 768px) {
     table {
