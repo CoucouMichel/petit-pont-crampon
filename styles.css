@@ -46,8 +46,8 @@ h1 {
 }
 
 /* Conteneur du tableau */
-.global-container {
-    margin-top: 280px; /* Ajustez cette valeur selon la hauteur réelle de votre en-tête fixe */
+.global-container > .container {
+  z-index: 11; /* or any value higher than 10 */
 }
 
 h2.ai-style-change-1 {
