@@ -1,13 +1,3 @@
-/* Définir les couleurs principales */
-:root {
-    --primary-color: #c8ff00;  /* Couleur primaire (bleu foncé) */
-    --secondary-color: #f39c12; /* Orange */
-    --background-color: #111e2b; /* Bleu marine */
-    --text-color: #ffffff; /* Texte blanc */
-    --highlight-color: #e74c3c; /* Rouge pour survol ou messages d'erreur */
-    --success-color: #2ecc71; /* Vert pour le succès */
-}
-
 /* Corps de la page */
 body {
     font-family: 'Aptos', sans-serif;
@@ -15,16 +5,9 @@ body {
     color: var(--text-color);
     margin: 0;
     padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
     text-align: center;
 }
-/* Global container */
-.global-container {
-    padding-top: 150px; /* Crée un espace pour le header */
-}
+
 /* Conteneur principal */
 .fixed-header {
     position: fixed; /* Fixe l'élément en haut de la page */
@@ -33,27 +16,26 @@ body {
     width: 100%; /* Prend toute la largeur */
     background-color: var(--background-color); /* Fond similaire au reste de la page */
     color: var(--text-color); /* Texte blanc */
-    z-index: 1000; /* Toujours au-dessus des autres éléments */
+    z-index: 9999; /* Toujours au-dessus des autres éléments */
     padding: 20px; /* Ajoute un peu de marge intérieure */
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Ombre pour le séparer du contenu */
     text-align: center;
 }
 
-/* Titre */
-h1 {
-    font-size: 24px;
-    color: #c8ff00;
-    margin-bottom: 10px;
+/* Conteneur du tableau */
+.container {
+    margin-top: 100px; /* Ajustez cette valeur selon la hauteur réelle de votre en-tête fixe */
 }
 
 /* Style du tableau */
 table {
-    width: 600xp;
+    width: 800px;
+    max-width: 100%;
     border-collapse: collapse;
     background-color: #ffffff00;
     border-radius: 1px;
-    margin: 5px auto;
-    margin-top: 20px;
+    margin: 0 auto;
+    padding: 20px;
 }
 
 /* Définir la largeur des colonnes */
@@ -83,39 +65,6 @@ tr:nth-child(even) td {
     background-color: #1a2633;  /* Couleur proche du bleu marine pour les lignes paires */
 }
 
-/* Masquer le texte de la cellule, mais garder la couleur de fond */
-td.hidden {
-    visibility: hidden; /* Masque le texte tout en gardant la couleur de fond */
-    position: relative;
-}
-
-/* Appliquer un léger surlignage orange sur les cellules à trouver */
-td.hidden::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(23, 196, 248, 0.5); /* Légèrement transparent avec une couleur orange */
-    border-radius: 5px;
-}
-
-/* Lorsque la cellule est révélée */
-td.visible {
-    visibility: visible !important; /* Force la visibilité de la cellule */
-}
-
-/* Pour la colonne des pays, appliquer un fond bleu marine et garder la structure */
-td[data-country] {
-    visibility: hidden; /* Le texte reste invisible */
-}
-
-/* Pour la colonne des clubs, appliquer la couleur de fond appropriée */
-td[data-club] {
-    visibility: hidden; /* Le texte reste invisible */
-}
-
 /* Rendre le tableau responsive */
 @media (max-width: 768px) {
     table {
@@ -126,21 +75,9 @@ td[data-club] {
         padding: 10px;
     }
     
-.container {
-    width: 100%;
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
+    .container {
+        padding: 10px;
     }
-}
-/* Centrer la barre de saisie */
-body {
-    display: flex;
-    justify-content: center; /* Centre horizontalement */
-    align-items: center; /* Centre verticalement */
-    height: 100vh; /* Hauteur de l'écran pour centrer verticalement */
-    margin: 0; /* Enlève toute marge par défaut du body */
-    flex-direction: column; /* Les éléments sont centrés verticalement aussi */
 }
 
 /* Centrer la barre de saisie */
@@ -150,30 +87,18 @@ input#guess-input {
     padding: 10px; /* Ajouter du padding pour plus de confort */
     font-size: 16px; /* Taille de la police */
     margin-bottom: 10px; /* Espacement sous la barre de saisie */
-}
-#guess-input {
-    width: 80%; /* Barre de saisie plus large */
-    max-width: 400px; /* Largeur maximale */
-    padding: 10px; /* Espacement interne */
-    font-size: 14px; /* Texte plus grand */
-    border-radius: 5px; /* Coins arrondis */
+    border-radius: 10px; /* Coins arrondis */
     border: 2px solid var(--secondary-color); /* Bordure orange */
-    background-color: #ffffff;(--background-color); /* Fond bleu marine */
-    color: #000000;(--text-color); /* Texte blanc */
-    margin-top: 15px;
+    background-color: #ffffff; /* Fond blanc */
+    color: #000000; /* Texte noir */
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Ombre pour un effet visuel */
     text-align: center; /* Centre le texte dans la barre */
 }
 
-#guess-input:focus {
+input#guess-input:focus {
     border-color: var(--highlight-color); /* Change la couleur de bordure au focus */
     outline: none; /* Supprime la bordure par défaut */
 }
-
-
-<!-- Ajoutez ce bloc juste avant la liste des mauvaises réponses -->
-<p id="attempts">Tentatives : 0</p>
-
 
 /* Liste des mauvaises réponses */
 #incorrect-guesses {
@@ -191,12 +116,14 @@ th:nth-child(2), td:nth-child(2),
 th:nth-child(3), td:nth-child(3) {
     width: 38%; /* Répartir la largeur entre les colonnes "Club" et "Pays" */
 }
+
 /* Style pour afficher les tentatives */
 #attempts {
     margin-top: 5px;
     color: var(--text-color);
     font-size: 10px;
 }
+
 /* Liste déroulante des suggestions */
 .autocomplete-suggestions {
     position: absolute;
@@ -228,12 +155,6 @@ th:nth-child(3), td:nth-child(3) {
     color: #c8ff00;
     font-weight: bold;
     border-radius: 5px;
-}
-
-/* Empêche le tableau d'interférer */
-.container table {
-    position: relative;
-    z-index: 1; /* Tableau en dessous */
 }
 
 /* Clignotement vert */
