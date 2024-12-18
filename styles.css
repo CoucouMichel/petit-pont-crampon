@@ -46,7 +46,7 @@ h1 {
 }
 
 /* Conteneur du tableau */
-.global-container {
+.container {
   position: relative; /* or position: absolute */
   z-index: 12; /* or any value higher than 11 */
 }
