@@ -68,6 +68,14 @@ h2.ai-style-change-1 {
   margin-bottom: 0px;
 }
 
+.highlight {
+    background-color: var(--primary-color); /* Jaune */
+    color: #111e2b; /* Texte bleu marine */
+    padding: 2px 4px;
+    border-radius: 3px;
+    font-weight: bold;
+}
+
 /* Style du tableau */
 table#career-table {
   position: absolute;
