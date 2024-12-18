@@ -8,25 +8,27 @@
 </head>
 <body>
     <div class="global-container">
-        <div class="fixed-header">
-    <h1>Petit Pont Crampon</h1>
-    <p>Démasquez le joueur mystère en trouvant les pays et les clubs dans lesquels il a joué !</p>
-    <div class="input-container" style="position: relative;">
+        <!-- En-tête fixée -->
+        <header class="fixed-header">
+            <h1>Petit Pont Crampon</h1>
+            <p>Démasquez le joueur mystère en trouvant les pays et les clubs dans lesquels il a joué !</p>
+            <div class="input-container" style="position: relative;">
                 <input 
                     type="text" 
                     id="guess-input" 
                     placeholder="Tapez un pays, un club ou le nom du joueur mystère" 
                     autocomplete="off"
                 >
+                <!-- Liste des suggestions -->
                 <ul id="autocomplete-list" class="autocomplete-suggestions"></ul>
                 <div id="guess-feedback"></div>
             </div>
-            
             <p id="attempts">Tentatives : 0</p>
             <p id="feedback"></p>
-        </div>
+        </header>
 
-        <div class="container">
+        <!-- Contenu principal -->
+        <main class="container">
             <h2>Carrière du joueur</h2>
             <table id="career-table">
                 <thead>
@@ -40,9 +42,10 @@
                     <!-- Les lignes du tableau seront ajoutées dynamiquement -->
                 </tbody>
             </table>
-        </div>
+        </main>
     </div>
 </body>
+</html>
 
     <script>
         let selectedPlayer;
