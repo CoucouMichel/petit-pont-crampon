@@ -98,7 +98,7 @@ th {
 td {
     background-color: #13171f;
     color: var(--text-color);  /* Texte en blanc */
-    font-size: 14px
+    font-size: 13px
 }
 
 /* Masquer le texte de la cellule, mais garder la couleur de fond */
@@ -246,7 +246,7 @@ th:nth-child(3), td:nth-child(3) {
 
 /* Clignotement vert */
 .blink-green {
-    animation: blink-green 0.5s ease;
+    animation: blink-green 0.8s ease;
 }
 
 @keyframes blink-green {
@@ -256,7 +256,7 @@ th:nth-child(3), td:nth-child(3) {
 
 /* Clignotement rouge */
 .blink-red {
-    animation: blink-red 0.5s ease;
+    animation: blink-red 0.8s ease;
 }
 
 @keyframes blink-red {
