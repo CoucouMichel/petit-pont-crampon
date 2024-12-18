@@ -27,27 +27,54 @@
         </div>
 
         <div class="container">
-            <h2>Carrière du joueur</h2>
-            <table id="career-table">
-                <thead>
-                    <tr>
-                        <th>Années</th>
-                        <th>Club</th>
-                        <th>Pays</th>
-                    </tr>
-                </thead>
-                <tbody id="career-table-body">
-                    <!-- Les lignes du tableau seront ajoutées dynamiquement -->
-                </tbody>
-            </table>
+    <h2 id="player-name">
+        <div class="word">
+            <span class="letter-box"></span>
+            <span class="letter-box"></span>
+            <span class="letter-box"></span>
+            <span class="letter-box"></span>
+            <span class="letter-box"></span>
+            <span class="letter-box"></span>
         </div>
-    </div>
+        <div class="word">
+            <span class="letter-box"></span>
+            <span class="letter-box"></span>
+            <span class="letter-box"></span>
+            <span class="letter-box"></span>
+            <span class="letter-box"></span>
+            <span class="letter-box"></span>
+        </div>
+    </h2>
+</div>
 </body>
 
 <script>
         let selectedPlayer;
         let attempts = 0;
 
+// Exemple de joueur mystère
+const playerName = "Didier Drogba";
+const playerNameElement = document.getElementById("player-name");
+
+// Réinitialiser l'affichage
+playerNameElement.innerHTML = "";
+
+// Créer des rectangles pour chaque mot
+playerName.split(" ").forEach(word => {
+    const wordElement = document.createElement("div");
+    wordElement.classList.add("word");
+
+    for (let i = 0; i < word.length; i++) {
+        const letterBox = document.createElement("span");
+        letterBox.classList.add("letter-box");
+        letterBox.dataset.letter = word[i].toUpperCase(); // Stocker la lettre pour la révélation
+        wordElement.appendChild(letterBox);
+    }
+
+    playerNameElement.appendChild(wordElement);
+});
+
+    
         async function loadPlayerStats() {
             const response = await fetch('./players_stats.json');
             return response.json();
