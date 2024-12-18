@@ -203,21 +203,30 @@ input.addEventListener("keyup", (event) => {
     
 const thirdColumnCells = Array.from(document.querySelectorAll('table tr td:nth-child(3)'));
 
-thirdColumnCells.forEach(async (cell) => {
-  const countryName = cell.textContent.trim();
-  if (countryName) {
-    try {
-      const response = await fetch(`https://restcountries.com/v3.1/name/${countryName}`);
-      const data = await response.json();
-      const flagUrl = data[0].flags.png; // Get the flag URL from the API response
+// Mapping of country names in French to ISO 3166-1 alpha-2 codes
+const countryCodes = {
+  'France': 'fr',
+  'Allemagne': 'de',
+  'Espagne': 'es',
+  // Add more countries here
+};
 
-      // Apply the flag image to the cell using a pseudo-element
-      cell.style.setProperty('--flag-url', `url('${flagUrl}')`);
-    } catch (error) {
-      console.error(`Error fetching flag for ${countryName}:`, error);
+async function fetchFlags() {
+  for (const cell of thirdColumnCells) {
+    const countryName = cell.textContent.trim();
+    if (countryName && countryCodes[countryName]) {
+      const countryCode = countryCodes[countryName];
+      try {
+        const flagUrl = `https://countryflagsapi.com/png/${countryCode}`;
+        cell.style.setProperty('--flag-url', `url('${flagUrl}')`);
+      } catch (error) {
+        console.error(`Error fetching flag for ${countryName}:`, error);
+      }
     }
   }
-});
+}
+
+fetchFlags(); // Call the function to fetch and apply flags
         displayPlayerStats();
     </script>
 </body>
