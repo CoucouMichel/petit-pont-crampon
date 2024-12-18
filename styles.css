@@ -4,7 +4,7 @@
     --secondary-color: #f39c12; /* Orange */
     --background-color: #111e2b; /* Bleu marine */
     --text-color: #ffffff; /* Texte blanc */
-    --highlight-color: #e74c3c; /* Rouge pour survol ou messages d'erreur */
+    --highlight-color: c8ff00; /* Rouge pour survol ou messages d'erreur */
     --success-color: #2ecc71; /* Vert pour le succès */
 }
 
@@ -46,8 +46,9 @@ h1 {
 }
 
 /* Conteneur du tableau */
-.global-container > .container {
-  z-index: 11; /* or any value higher than 10 */
+.global-container {
+  position: relative; /* or position: absolute */
+  z-index: 12; /* or any value higher than 11 */
 }
 
 h2.ai-style-change-1 {
