@@ -68,17 +68,24 @@ h2.ai-style-change-1 {
   margin-bottom: 0px;
 }
 
-.highlight {
-    background-color: var(--primary-color); /* Jaune */
-    color: #111e2b; /* Texte bleu marine */
-    padding: 2px 4px;
+/* Style des mots surlignés */
+.hidden {
+    visibility: hidden;
+    background-color: yellow;
+    color: black;
+    padding: 2px 5px;
     border-radius: 3px;
-    font-weight: bold;
 }
 
-#player-name {
-    transition: color 0.5s ease, background-color 0.5s ease;
+/* Les mots révélés */
+.visible {
+    visibility: visible;
+    background-color: yellow;
+    color: black;
+    padding: 2px 5px;
+    border-radius: 3px;
 }
+
 
 .revealed {
     color: var(--text-color);
