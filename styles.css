@@ -47,14 +47,29 @@ h1 {
     margin-top: 280px; /* Ajustez cette valeur selon la hauteur réelle de votre en-tête fixe */
 }
 
+h2.ai-style-change-1 {
+  position: fixed;
+  top: 270px;
+  width: 100%;
+  background-color: transparent;
+  z-index: 10;
+  color: white;
+  text-align: center;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: 0px;
+}
+
 /* Style du tableau */
-table {
-    width: 800xp;
-    max-width: 100%;
-    border-collapse: collapse;
-    background-color: #ffffff00;
-    border-radius: 1px;
-    margin: 0 auto;
+table#career-table {
+  position: absolute;
+  top: 300px; /* Adjust this value based on the h2's height and desired spacing */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 70%;
+  background-color: initial;
+  z-index: 10;
+  padding-top: 30px;
 }
 
 /* Définir la largeur des colonnes */
