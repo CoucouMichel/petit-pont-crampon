@@ -76,6 +76,15 @@ h2.ai-style-change-1 {
     font-weight: bold;
 }
 
+#player-name {
+    transition: color 0.5s ease, background-color 0.5s ease;
+}
+
+.revealed {
+    color: var(--text-color);
+    background-color: transparent;
+}
+
 /* Style du tableau */
 table#career-table {
   position: absolute;
