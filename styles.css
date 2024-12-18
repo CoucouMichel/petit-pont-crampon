@@ -1,8 +1,8 @@
 /* Définir les couleurs principales */
 :root {
     --primary-color: #c8ff00;  /* Couleur primaire (bleu foncé) */
-    --secondary-color: #f39c12; /* Orange */
-    --background-color: #111e2b; /* Bleu marine */
+    --secondary-color: #f39c12; /* Yellow */
+    --background-color: #13171f; /* Black */
     --text-color: #ffffff; /* Texte blanc */
     --highlight-color: c8ff00; /* Rouge pour survol ou messages d'erreur */
     --success-color: #2ecc71; /* Vert pour le succès */
@@ -90,22 +90,13 @@ th, td {
 }
 
 th {
-    background-color: var(--primary-color);
-    color: #111e2b;
+    background-color: #111e2b;
+    color: #c8ff00;
 }
 
 td {
     background-color: #111e2b;
     color: var(--text-color);  /* Texte en blanc */
-}
-
-/* Lignes alternées avec des nuances de bleu marine */
-tr:nth-child(odd) td {
-    background-color: #111e2b;  /* Bleu marine pour les lignes impaires */
-}
-
-tr:nth-child(even) td {
-    background-color: #1a2633;  /* Couleur proche du bleu marine pour les lignes paires */
 }
 
 /* Masquer le texte de la cellule, mais garder la couleur de fond */
