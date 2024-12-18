@@ -142,7 +142,8 @@ td[data-club] {
 /* Rendre le tableau responsive */
 @media (max-width: 768px) {
     table {
-        font-size: 10px;
+        font-size: 12px;
+        width: 100%;
     }
     
     th, td {
@@ -151,10 +152,11 @@ td[data-club] {
     
     .container {
         padding: 10px;
+        overflow-x: auto;
     }
 
     .global-container {
-    margin-top: -300px; /* Or a smaller positive value */
+    margin-top: -200px; /* Or a smaller positive value */
     }
 }
     
