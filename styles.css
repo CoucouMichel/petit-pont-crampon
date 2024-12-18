@@ -151,6 +151,10 @@ td[data-club] {
     .container {
         padding: 10px;
     }
+
+    .global-container {
+    margin-top: 0; /* Or a smaller positive value */
+    }
 }
     
 /* Centrer la barre de saisie */
