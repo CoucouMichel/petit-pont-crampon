@@ -68,30 +68,6 @@ h2.ai-style-change-1 {
   margin-bottom: 0px;
 }
 
-/* Style des mots surlignés */
-.hidden {
-    visibility: hidden;
-    background-color: yellow;
-    color: black;
-    padding: 2px 5px;
-    border-radius: 3px;
-}
-
-/* Les mots révélés */
-.visible {
-    visibility: visible;
-    background-color: yellow;
-    color: black;
-    padding: 2px 5px;
-    border-radius: 3px;
-}
-
-
-.revealed {
-    color: var(--text-color);
-    background-color: transparent;
-}
-
 /* Style du tableau */
 table#career-table {
   position: absolute;
