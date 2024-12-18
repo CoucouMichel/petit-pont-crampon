@@ -36,6 +36,7 @@ body {
     padding-left: 0; /* Removes the left padding */
     box-sizing: border-box; /* Ensures padding and border are included in the width */
     right: 0; /* Removes any right offset */
+    height: 220px;
 }
 
 /* Titre */
@@ -153,7 +154,7 @@ td[data-club] {
     }
 
     .global-container {
-    margin-top: -200px; /* Or a smaller positive value */
+    margin-top: -300px; /* Or a smaller positive value */
     }
 }
     
@@ -217,9 +218,9 @@ th:nth-child(3), td:nth-child(3) {
 }
 /* Style pour afficher les tentatives */
 #attempts {
-    margin-top: 5px;
+    margin-top: -2px;
     color: var(--text-color);
-    font-size: 10px;
+    font-size: 14px;
 }
 /* Liste déroulante des suggestions */
 .autocomplete-suggestions {
