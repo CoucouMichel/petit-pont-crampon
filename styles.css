@@ -84,18 +84,17 @@ table#career-table {
 /* Définir la largeur des colonnes */
 th, td {
     padding: 12px 15px;
-    border: 1px solid #08061d;
-    font-size: 10px;
+    font-size: 12px;
     color: var(--text-color); /* Texte en blanc pour toutes les cellules */
 }
 
 th {
-    background-color: #111e2b;
+    background-color: #13171f;
     color: #c8ff00;
 }
 
 td {
-    background-color: #111e2b;
+    background-color: #13171f;
     color: var(--text-color);  /* Texte en blanc */
 }
 
@@ -177,9 +176,9 @@ input#guess-input {
     padding: 10px; /* Espacement interne */
     font-size: 14px; /* Texte plus grand */
     border-radius: 5px; /* Coins arrondis */
-    border: 2px solid var(--secondary-color); /* Bordure orange */
-    background-color: #ffffff;(--background-color); /* Fond bleu marine */
-    color: #000000;(--text-color); /* Texte blanc */
+    border: 1px solid #29303e; /* Bordure orange */
+    background-color: solid #1c212c; /* Fond bleu marine */
+    color: #969eaf; /* Texte blanc */
     margin-top: 15px;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Ombre pour un effet visuel */
     text-align: center; /* Centre le texte dans la barre */
