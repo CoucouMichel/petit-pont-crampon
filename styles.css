@@ -10,7 +10,7 @@
 
 /* Corps de la page */
 body {
-    font-family: 'Aptos', sans-serif;
+    font-family: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
     background-color: var(--background-color);
     color: var(--text-color);
     margin: 0;
@@ -91,29 +91,20 @@ th, td {
 th {
     background-color: #13171f;
     color: #c8ff00;
+    font-weight: bold;
+    font-size: 16px;
 }
 
 td {
     background-color: #13171f;
     color: var(--text-color);  /* Texte en blanc */
+    font-size: 14px
 }
 
 /* Masquer le texte de la cellule, mais garder la couleur de fond */
 td.hidden {
     visibility: hidden; /* Masque le texte tout en gardant la couleur de fond */
     position: relative;
-}
-
-/* Appliquer un léger surlignage orange sur les cellules à trouver */
-td.hidden::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(23, 196, 248, 0.5); /* Légèrement transparent avec une couleur orange */
-    border-radius: 5px;
 }
 
 /* Lorsque la cellule est révélée */
@@ -260,7 +251,7 @@ th:nth-child(3), td:nth-child(3) {
 
 @keyframes blink-green {
     0%, 100% { background-color: white; }
-    50% { #f39c12; }
+    50% { background-color: lightgreen; }
 }
 
 /* Clignotement rouge */
