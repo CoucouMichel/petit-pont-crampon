@@ -17,7 +17,7 @@ body {
     padding: 0;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: center;@
     height: 100vh;
     text-align: center;
 }
@@ -48,7 +48,6 @@ h1 {
 
 .container {
     margin-top: 270px;
-    }
 }
 
 /* Style du tableau */
@@ -130,6 +129,11 @@ td[data-club] {
     th, td {
         padding: 10px;
     }
+    
+    .container {
+        padding: 10px;
+    }
+}
     
 /* Centrer la barre de saisie */
 body {
