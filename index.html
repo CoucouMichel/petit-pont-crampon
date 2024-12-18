@@ -27,7 +27,7 @@
         </div>
 
         <div class="container">
-            <h2>Carrière du joueur</h2>
+            <h2 id="player-name"</h2>
             <table id="career-table">
                 <thead>
                     <tr>
@@ -48,6 +48,20 @@
         let selectedPlayer;
         let attempts = 0;
 
+// Fonction pour afficher un nom avec surlignage
+function displayPlayerName(name) {
+    const nameContainer = document.getElementById("player-name");
+
+    // Diviser le nom en mots et ajouter le surlignage
+    const highlightedName = name
+        .split(" ") // Diviser le nom en mots
+        .map(word => `<span class="highlight">${word}</span>`) // Ajouter le surlignage
+        .join(" "); // Rejoindre les mots avec des espaces
+
+    // Insérer le résultat dans le conteneur
+    nameContainer.innerHTML = highlightedName;
+}
+    
         async function loadPlayerStats() {
             const response = await fetch('./players_stats.json');
             return response.json();
