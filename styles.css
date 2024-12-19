@@ -93,7 +93,7 @@ th {
     color: #c8ff00;
     font-weight: bold;
     font-size: 16px;
-    text-align: left;
+    text-align: center;
 }
 
 td {
@@ -102,15 +102,11 @@ td {
     font-size: 13px
 }
 
-tr td:first-child {
-  text-align: left;
-}
-
 /* Masquer le texte de la cellule, mais garder la couleur de fond */
 td.hidden {
     visibility: hidden; /* Masque le texte tout en gardant la couleur de fond */
     position: relative;
-    text-align: left;
+    text-align: center;
 }
 
 /* Lorsque la cellule est révélée */
