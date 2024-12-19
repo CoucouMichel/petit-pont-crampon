@@ -83,8 +83,8 @@
                 const fullCountryName = countryMapping[stat.country] || stat.country;
                 const row = document.createElement('tr');
                 row.innerHTML = `
-                    <td>${stat.season}</td>
-                    <td class="hidden" data-club="${stat.team}">${stat.team}</td>
+                    <td>${stat.years}</td>
+                    <td class="hidden" data-club="${stat.club}">${stat.team}</td>
                     <td class="hidden" data-country="${fullCountryName}">${fullCountryName}</td>
                 `;
                 tableBody.appendChild(row);
