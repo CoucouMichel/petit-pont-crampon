@@ -1,39 +1,50 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Petit Pont Crampon</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Petit Pont Crampon</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="global-container">
-    <div class="fixed-header">
-      <h1>Petit Pont Crampon</h1>
-      <p>Démasquez le joueur mystère en trouvant les pays et les clubs dans lesquels il a joué !</p>
-      <div class="input-container" style="position: relative;">
-        <input type="text" id="guess-input" placeholder="Tapez un pays, un club ou le nom du joueur mystère" autocomplete="off">
-        <ul id="autocomplete-list" class="autocomplete-suggestions"></ul>
-        <div id="guess-feedback"></div>
-      </div>
-      <p id="attempts">Tentatives : 0</p>
-      <p id="feedback"></p>
+    <div class="global-container">
+        <div class="fixed-header">
+    <h1>Petit Pont Crampon</h1>
+    <p>Démasquez le joueur mystère en trouvant les pays et les clubs dans lesquels il a joué !</p>
+    <div class="input-container" style="position: relative;">
+                <input 
+                    type="text" 
+                    id="guess-input" 
+                    placeholder="Tapez un pays, un club ou le nom du joueur mystère" 
+                    autocomplete="off"
+                >
+                <ul id="autocomplete-list" class="autocomplete-suggestions"></ul>
+                <div id="guess-feedback"></div>
+            </div>
+            
+            <p id="attempts">Tentatives : 0</p>
+            <p id="feedback"></p>
+        </div>
+
+        <div class="container">
+            <h2>Carrière du joueur</h2>
+            <table id="career-table">
+                <thead>
+                    <tr>
+                        <th>Années</th>
+                        <th>Club</th>
+                        <th>Pays</th>
+                    </tr>
+                </thead>
+                <tbody id="career-table-body">
+                    <!-- Les lignes du tableau seront ajoutées dynamiquement -->
+                </tbody>
+            </table>
+        </div>
     </div>
-    <div class="container">
-      <h2>Carrière du joueur</h2>
-      <table id="career-table">
-        <thead>
-          <tr>
-            <th>Années</th>
-            <th>Club</th>
-            <th>Pays</th>
-          </tr>
-        </thead>
-        <tbody id="career-table-body"></tbody>
-      </table>
-    </div>
-  </div>
-  <script>
+</body>
+
+<script>
         let selectedPlayer;
         let attempts = 0;
 
@@ -64,15 +75,6 @@
             const tableBody = document.getElementById('career-table-body');
             const countryMapping = await loadCountryMapping();
 
-  // Call addFlagsToCountryCells after the table rows have been added
-  addFlagsToCountryCells();
-  }
-
-  // Call displayPlayerStats to populate the table and add flags
-  displayPlayerStats();
-
-  const data = {};
-            
             tableBody.innerHTML = '';
 
             stats.forEach(stat => {
@@ -130,7 +132,7 @@
     } catch (error) {
         console.error("Erreur lors du chargement des suggestions :", error);
     }
-  }
+}
         async function checkAnswer(input) {
             const answer = input.trim().toLowerCase();
             const feedback = document.getElementById("feedback");
@@ -189,59 +191,17 @@
             });
         }
 
-  const input = document.getElementById("guess-input");
-  input.addEventListener("input", () => showSuggestions(input.value)); // Mise à jour des suggestions
-  input.addEventListener("keyup", (event) => {
+const input = document.getElementById("guess-input");
+input.addEventListener("input", () => showSuggestions(input.value)); // Mise à jour des suggestions
+input.addEventListener("keyup", (event) => {
     if (event.key === "Enter") {
         checkAnswer(input.value);
         input.value = ""; // Effacer la saisie
         document.getElementById("autocomplete-list").innerHTML = ""; // Effacer la liste
     }
-  });
+});
 
-  // Define a mapping of French country names to English country codes
-  const countryMapping = {
-  'France': 'fr',
-  'Espagne': 'es',
-  'Italie': 'it',
-  'Allemagne': 'de',
-  'Angleterre': 'gb',
-  // Add more mappings as needed
-  };
-
-  // Define the addFlagsToCountryCells function
-  async function addFlagsToCountryCells() {
-  const countryCells = Array.from(document.querySelectorAll('td.hidden:not([data-flag-added])'));
-
-  for (const cell of countryCells) {
-    // Get the country name from the data-country attribute
-    const countryName = cell.getAttribute('data-country');
-    if (!countryName) {
-      continue; // Skip if the data-country attribute is not present
-    }
-
-    // Get the English country code from the mapping
-    const countryCode = countryMapping[countryName] || countryName.substring(0, 2).toLowerCase();
-
-    const flagUrl = `https://flagcdn.com/h20/${countryCode}.webp`;
-
-    const img = document.createElement('img');
-    img.src = flagUrl;
-    img.alt = countryName;
-    img.style.width = '30px';
-    img.style.height = '20px';
-    img.style.marginRight = '5px';
-
-    cell.insertBefore(img, cell.firstChild);
-
-    // Mark the cell as having a flag added to prevent duplicate flags
-    cell.setAttribute('data-flag-added', 'true');
-  }
-  }
-    
-  // Start observing the document body for changes
-  observer.observe(document.body, { childList: true, subtree: true });
         displayPlayerStats();
-  </script>
+    </script>
 </body>
 </html>
