@@ -65,8 +65,16 @@
         }
 
         async function loadClubNameMapping() {
-    const response = await fetch('./clubNameMapping.json'); // Adjust the path as necessary
-    return response.json(); // Parse and return the JSON data
+    try {
+        const response = await fetch('./clubNameMapping.json'); // Ensure this path is correct
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json(); // Parse and return the JSON data
+    } catch (error) {
+        console.error("Error loading club name mapping:", error);
+        return {}; // Return an empty object on error
+    }
 }
 
 async function displayPlayerStats() {
@@ -74,7 +82,7 @@ async function displayPlayerStats() {
 
     const stats = await selectRandomPlayer(); // Fetch the player stats
     const tableBody = document.getElementById('career-table-body'); // Get the table body element
-    const countryMapping = await loadCountryMapping(); // Load country abbreviation mapping
+    const countryMapping = await loadClubsCountries(); // Load country abbreviation mapping
 
     tableBody.innerHTML = ''; // Clear existing rows
 
