@@ -201,6 +201,48 @@ input.addEventListener("keyup", (event) => {
     }
 });
 
+// Define the addFlagsToCountryCells function
+async function addFlagsToCountryCells() {
+  const countryCells = Array.from(document.querySelectorAll('td.hidden.visible'));
+
+  for (const cell of countryCells) {
+    // Check if the flag image already exists
+    if (cell.querySelector('img')) {
+      continue; // Skip if the flag image is already present
+    }
+
+    const countryName = cell.textContent.trim();
+    const countryCode = countryName.substring(0, 2).toLowerCase();
+    const flagUrl = `https://flagcdn.com/h20/${countryCode}.webp`;
+
+    const img = document.createElement('img');
+    img.src = flagUrl;
+    img.alt = countryName;
+    img.style.width = '30px';
+    img.style.height = '20px';
+    img.style.marginRight = '5px';
+
+    cell.insertBefore(img, cell.firstChild);
+  }
+}
+
+// Create a MutationObserver to detect changes in the DOM
+const observer = new MutationObserver(mutations => {
+  for (const mutation of mutations) {
+    if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
+      // Check if the added node is the table or a parent of the table
+      if (mutation.addedNodes[0].tagName === 'TABLE' || mutation.addedNodes[0].querySelector('table')) {
+        addFlagsToCountryCells();
+        // Disconnect the observer after the table is processed
+        observer.disconnect();
+        break;
+      }
+    }
+  }
+});
+
+// Start observing the document body for changes
+observer.observe(document.body, { childList: true, subtree: true });
         displayPlayerStats();
     </script>
 </body>
