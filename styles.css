@@ -101,10 +101,6 @@ td {
     font-size: 13px
 }
 
-tr:not(:first-child) > td:first-child {
-  color: lightgray;
-}
-
 /* Masquer le texte de la cellule, mais garder la couleur de fond */
 td.hidden {
     visibility: hidden; /* Masque le texte tout en gardant la couleur de fond */
