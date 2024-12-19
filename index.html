@@ -86,7 +86,10 @@
                 row.innerHTML = `
                     <td>${stat.season}</td>
                     <td class="hidden" data-club="${stat.team}">${stat.team}</td>
-                    <td class="hidden" data-country="${fullCountryName}">${fullCountryName}</td>
+                    <td class="hidden" data-country="${fullCountryName}">
+                        <img src="${flagUrl}" alt="${fullCountryName} flag" style="width: 20px; height: 15px; margin-right: 5px; vertical-align: middle;"> 
+                        ${fullCountryName}
+                    </td>
                 `;
                 tableBody.appendChild(row);
             });
