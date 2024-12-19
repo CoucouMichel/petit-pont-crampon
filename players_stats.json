@@ -45,5 +45,17 @@
         { "season": "2016", "country": "us", "team": "Montreal Impact" },
         { "season": "2017", "country": "us", "team": "Phx Rising" },
         { "season": "2018", "country": "us", "team": "Phx Rising" }
+    ],
+    "Christian Pulisic": [
+        { "season": "2015–2016", "country": "de", "team": "Dortmund" },
+        { "season": "2016–2017", "country": "de", "team": "Dortmund" },
+        { "season": "2017–2018", "country": "de", "team": "Dortmund" },
+        { "season": "2018–2019", "country": "de", "team": "Dortmund" },
+        { "season": "2019–2020", "country": "gb-eng", "team": "Chelsea" },
+        { "season": "2020–2021", "country": "gb-eng", "team": "Chelsea" },
+        { "season": "2021–2022", "country": "gb-eng", "team": "Chelsea" },
+        { "season": "2022–2023", "country": "gb-eng", "team": "Chelsea" },
+        { "season": "2023–2024", "country": "it", "team": "Milan" },
+        { "season": "2024–2025", "country": "it", "team": "Milan" }
     ]
 }
