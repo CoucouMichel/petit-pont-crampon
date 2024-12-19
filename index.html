@@ -57,12 +57,6 @@
             const response = await fetch('./clubscountries.json');
             return response.json();
         }
-
-        async function loadCountryMapping() {
-            const response = await fetch('./country2letters.json');
-            return response.json();
-        }
-
         async function selectRandomPlayer() {
             const playersData = await loadPlayerStats();
             const players = Object.keys(playersData);
