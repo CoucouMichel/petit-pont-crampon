@@ -201,18 +201,30 @@ input.addEventListener("keyup", (event) => {
     }
 });
 
+// Define a mapping of French country names to English country codes
+const countryMapping = {
+  'France': 'fr',
+  'Espagne': 'es',
+  'Italie': 'it',
+  'Allemagne': 'de',
+  'Angleterre': 'gb',
+  // Add more mappings as needed
+};
+
 // Define the addFlagsToCountryCells function
 async function addFlagsToCountryCells() {
-  const countryCells = Array.from(document.querySelectorAll('td.hidden.visible'));
+  const countryCells = Array.from(document.querySelectorAll('td.hidden:not([data-flag-added])'));
 
   for (const cell of countryCells) {
-    // Check if the flag image already exists
-    if (cell.querySelector('img')) {
-      continue; // Skip if the flag image is already present
+    // Get the country name from the data-country attribute
+    const countryName = cell.getAttribute('data-country');
+    if (!countryName) {
+      continue; // Skip if the data-country attribute is not present
     }
 
-    const countryName = cell.textContent.trim();
-    const countryCode = countryName.substring(0, 2).toLowerCase();
+    // Get the English country code from the mapping
+    const countryCode = countryMapping[countryName] || countryName.substring(0, 2).toLowerCase();
+
     const flagUrl = `https://flagcdn.com/h20/${countryCode}.webp`;
 
     const img = document.createElement('img');
@@ -223,24 +235,25 @@ async function addFlagsToCountryCells() {
     img.style.marginRight = '5px';
 
     cell.insertBefore(img, cell.firstChild);
+
+    // Mark the cell as having a flag added to prevent duplicate flags
+    cell.setAttribute('data-flag-added', 'true');
   }
 }
 
-// Create a MutationObserver to detect changes in the DOM
-const observer = new MutationObserver(mutations => {
-  for (const mutation of mutations) {
-    if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
-      // Check if the added node is the table or a parent of the table
-      if (mutation.addedNodes[0].tagName === 'TABLE' || mutation.addedNodes[0].querySelector('table')) {
-        addFlagsToCountryCells();
-        // Disconnect the observer after the table is processed
-        observer.disconnect();
-        break;
-      }
-    }
-  }
-});
+// Modify displayPlayerStats to call addFlagsToCountryCells after rendering
+async function displayPlayerStats() {
+  // ... (your existing displayPlayerStats code) ...
 
+  // Call addFlagsToCountryCells after the table rows have been added
+  addFlagsToCountryCells();
+}
+
+// Call displayPlayerStats to populate the table and add flags
+displayPlayerStats();
+
+const data = {};
+    
 // Start observing the document body for changes
 observer.observe(document.body, { childList: true, subtree: true });
         displayPlayerStats();
