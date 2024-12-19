@@ -200,6 +200,34 @@ input.addEventListener("keyup", (event) => {
         document.getElementById("autocomplete-list").innerHTML = ""; // Effacer la liste
     }
 });
+    async function addFlagsToCountryCells() {
+  const countryCells = Array.from(document.querySelectorAll('td.hidden.visible'));
+
+  for (const cell of countryCells) {
+    // Check if the flag image already exists
+    if (cell.querySelector('img')) {
+      continue; // Skip if the flag image is already present
+    }
+
+    const countryName = cell.textContent.trim();
+    const countryCode = countryName.substring(0, 2).toLowerCase();
+    const flagUrl = `https://flagcdn.com/h20/${countryCode}.webp`;
+
+    const img = document.createElement('img');
+    img.src = flagUrl;
+    img.alt = countryName;
+    img.style.width = '30px';
+    img.style.height = '20px';
+    img.style.marginRight = '5px';
+
+    cell.insertBefore(img, cell.firstChild);
+  }
+}
+
+// Call the function after the table has loaded
+window.addEventListener('load', () => {
+  addFlagsToCountryCells();
+});
 
         displayPlayerStats();
     </script>
