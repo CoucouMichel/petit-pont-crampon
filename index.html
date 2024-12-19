@@ -172,7 +172,8 @@ async function displayPlayerStats() {
         console.error("Erreur lors du chargement des suggestions :", error);
     }
 }
- // Function to update the highlight based on the current index
+
+    // Function to update the highlight based on the current index
 function updateHighlight(autocompleteList, index) {
     const items = autocompleteList.getElementsByClassName("suggestion-item");
     for (let i = 0; i < items.length; i++) {
@@ -182,33 +183,6 @@ function updateHighlight(autocompleteList, index) {
         items[index].classList.add("highlight"); // Add highlight to the current item
     }
 }
-
-// Event listener for input
-const input = document.getElementById("guess-input");
-input.addEventListener("input", () => showSuggestions(input.value)); // Update suggestions
-input.addEventListener("keydown", (event) => {
-    const autocompleteList = document.getElementById("autocomplete-list");
-    const items = autocompleteList.getElementsByClassName("suggestion-item");
-
-    if (event.key === "ArrowDown") {
-        if (currentIndex < items.length - 1) {
-            currentIndex++; // Move down
-            updateHighlight(autocompleteList, currentIndex);
-        }
-        event.preventDefault(); // Prevent the default action (scrolling)
-    } else if (event.key === "ArrowUp") {
-        if (currentIndex > 0) {
-            currentIndex--; // Move up
-            updateHighlight(autocompleteList, currentIndex);
-        }
-        event.preventDefault(); // Prevent the default action (scrolling)
-    } else if (event.key === "Enter") {
-        if (currentIndex >= 0 && currentIndex < items.length) {
-            // Trigger click event on the selected item
-            items[currentIndex].click();
-        }
-    }
-});       
     
     async function checkAnswer(input) {
             const answer = input.trim().toLowerCase();
@@ -268,13 +242,30 @@ input.addEventListener("keydown", (event) => {
             });
         }
 
+// Event listener for input
 const input = document.getElementById("guess-input");
-input.addEventListener("input", () => showSuggestions(input.value)); // Mise à jour des suggestions
-input.addEventListener("keyup", (event) => {
-    if (event.key === "Enter") {
-        checkAnswer(input.value);
-        input.value = ""; // Effacer la saisie
-        document.getElementById("autocomplete-list").innerHTML = ""; // Effacer la liste
+input.addEventListener("input", () => showSuggestions(input.value)); // Update suggestions
+input.addEventListener("keydown", (event) => {
+    const autocompleteList = document.getElementById("autocomplete-list");
+    const items = autocompleteList.getElementsByClassName("suggestion-item");
+
+    if (event.key === "ArrowDown") {
+        if (currentIndex < items.length - 1) {
+            currentIndex++; // Move down
+            updateHighlight(autocompleteList, currentIndex);
+        }
+        event.preventDefault(); // Prevent the default action (scrolling)
+    } else if (event.key === "ArrowUp") {
+        if (currentIndex > 0) {
+            currentIndex--; // Move up
+            updateHighlight(autocompleteList, currentIndex);
+        }
+        event.preventDefault(); // Prevent the default action (scrolling)
+    } else if (event.key === "Enter") {
+        if (currentIndex >= 0 && currentIndex < items.length) {
+            // Trigger click event on the selected item
+            items[currentIndex].click();
+        }
     }
 });
 
