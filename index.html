@@ -75,6 +75,15 @@
             const tableBody = document.getElementById('career-table-body');
             const countryMapping = await loadCountryMapping();
 
+  // Call addFlagsToCountryCells after the table rows have been added
+  addFlagsToCountryCells();
+}
+
+// Call displayPlayerStats to populate the table and add flags
+displayPlayerStats();
+
+const data = {};
+            
             tableBody.innerHTML = '';
 
             stats.forEach(stat => {
@@ -240,19 +249,6 @@ async function addFlagsToCountryCells() {
     cell.setAttribute('data-flag-added', 'true');
   }
 }
-
-// Modify displayPlayerStats to call addFlagsToCountryCells after rendering
-async function displayPlayerStats() {
-  // ... (your existing displayPlayerStats code) ...
-
-  // Call addFlagsToCountryCells after the table rows have been added
-  addFlagsToCountryCells();
-}
-
-// Call displayPlayerStats to populate the table and add flags
-displayPlayerStats();
-
-const data = {};
     
 // Start observing the document body for changes
 observer.observe(document.body, { childList: true, subtree: true });
