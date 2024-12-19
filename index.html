@@ -200,6 +200,8 @@ input.addEventListener("keyup", (event) => {
         document.getElementById("autocomplete-list").innerHTML = ""; // Effacer la liste
     }
 });
+    
+``javascript
 // Define the addFlagsToCountryCells function
 async function addFlagsToCountryCells() {
   const countryCells = Array.from(document.querySelectorAll('td.hidden.visible'));
@@ -217,7 +219,7 @@ async function addFlagsToCountryCells() {
     const img = document.createElement('img');
     img.src = flagUrl;
     img.alt = countryName;
-    img.style.width = '20px';
+    img.style.width = '30px';
     img.style.height = '20px';
     img.style.marginRight = '5px';
 
@@ -225,18 +227,14 @@ async function addFlagsToCountryCells() {
   }
 }
 
-// Call the function after the table has loaded
-if (document.readyState === 'complete') {
+// Call the function after the DOM content has loaded
+if (document.readyState === 'interactive' || document.readyState === 'complete') {
   addFlagsToCountryCells();
 } else {
-  window.addEventListener('load', () => {
+  document.addEventListener('DOMContentLoaded', () => {
     addFlagsToCountryCells();
   });
 }
-
-const data = {
-  isScriptLoaded: typeof addFlagsToCountryCells === 'function',
-};
 
         displayPlayerStats();
     </script>
