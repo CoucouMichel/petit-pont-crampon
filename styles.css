@@ -101,7 +101,7 @@ td {
     font-size: 13px
 }
 
-tr:not(:first-child) > td:first-child {
+td:first-child {
   color: lightgray;
 }
 
