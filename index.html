@@ -64,9 +64,22 @@
             return playersData[selectedPlayer];
         }
 
-        async function loadClubNameMapping() {
+ async function loadCountryMapping() {
     try {
-        const response = await fetch('./clubNameMapping.json'); // Ensure this path is correct
+        const response = await fetch('./country2letters.json'); // Path to your country mapping file
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json(); // Parse and return the JSON data
+    } catch (error) {
+        console.error("Error loading country mapping:", error);
+        return {}; // Return an empty object on error
+    }
+}
+
+async function loadClubNameMapping() {
+    try {
+        const response = await fetch('./clubNameMapping.json'); // Path to your club name mapping file
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
@@ -79,22 +92,21 @@
 
 async function displayPlayerStats() {
     const clubNameMapping = await loadClubNameMapping(); // Load the club name mappings
+    const countryMapping = await loadCountryMapping(); // Load the country mapping
 
     const stats = await selectRandomPlayer(); // Fetch the player stats
     const tableBody = document.getElementById('career-table-body'); // Get the table body element
-    const countryMapping = await loadClubsCountries(); // Load country abbreviation mapping
 
     tableBody.innerHTML = ''; // Clear existing rows
 
     stats.forEach(stat => {
-        // Skip if the season keyword appears
-        if (stat.season.toLowerCase().includes("season")) return;
+        if (stat.season.toLowerCase().includes("season")) return; // Skip if season keyword appears
 
         const fullCountryName = countryMapping[stat.country] || stat.country; // Get the full country name
         const flagUrl = `https://flagcdn.com/w20/${stat.country}.png`; // URL for the flag image
 
         // Use the clubNameMapping to change club names
-        const formattedClubName = clubNameMapping[stat.team] || stat.team; // Use the formatted name if found, else default to original
+        const formattedClubName = clubNameMapping[stat.team] || stat.team; // Use the formatted name if found
 
         const row = document.createElement('tr');
 
