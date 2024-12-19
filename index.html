@@ -81,6 +81,7 @@
                 if (stat.season.toLowerCase().includes("season")) return;
 
                 const fullCountryName = countryMapping[stat.country] || stat.country;
+                const flagUrl = `https://flagcdn.com/w20/${stat.country}.png`; // URL for the flag image
                 const row = document.createElement('tr');
                 row.innerHTML = `
                     <td>${stat.season}</td>
