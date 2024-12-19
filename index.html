@@ -158,13 +158,6 @@ async function displayPlayerStats() {
                 autocompleteList.innerHTML = ""; // Effacer la liste après un clic
                 checkAnswer(suggestion);
             });
-
-            // Add keyboard navigation support
-            listItem.addEventListener("mouseover", () => {
-                currentIndex = index; // Update current index on mouseover
-                updateHighlight(autocompleteList, currentIndex); // Update highlight
-            });
-            
             autocompleteList.appendChild(listItem);
         });
 
@@ -172,19 +165,7 @@ async function displayPlayerStats() {
         console.error("Erreur lors du chargement des suggestions :", error);
     }
 }
-
-    // Function to update the highlight based on the current index
-function updateHighlight(autocompleteList, index) {
-    const items = autocompleteList.getElementsByClassName("suggestion-item");
-    for (let i = 0; i < items.length; i++) {
-        items[i].classList.remove("highlight"); // Remove highlight from all items
-    }
-    if (index >= 0 && index < items.length) {
-        items[index].classList.add("highlight"); // Add highlight to the current item
-    }
-}
-    
-    async function checkAnswer(input) {
+        async function checkAnswer(input) {
             const answer = input.trim().toLowerCase();
             const feedback = document.getElementById("feedback");
             const countryMapping = await loadCountryMapping();
@@ -242,30 +223,13 @@ function updateHighlight(autocompleteList, index) {
             });
         }
 
-// Event listener for input
 const input = document.getElementById("guess-input");
-input.addEventListener("input", () => showSuggestions(input.value)); // Update suggestions
-input.addEventListener("keydown", (event) => {
-    const autocompleteList = document.getElementById("autocomplete-list");
-    const items = autocompleteList.getElementsByClassName("suggestion-item");
-
-    if (event.key === "ArrowDown") {
-        if (currentIndex < items.length - 1) {
-            currentIndex++; // Move down
-            updateHighlight(autocompleteList, currentIndex);
-        }
-        event.preventDefault(); // Prevent the default action (scrolling)
-    } else if (event.key === "ArrowUp") {
-        if (currentIndex > 0) {
-            currentIndex--; // Move up
-            updateHighlight(autocompleteList, currentIndex);
-        }
-        event.preventDefault(); // Prevent the default action (scrolling)
-    } else if (event.key === "Enter") {
-        if (currentIndex >= 0 && currentIndex < items.length) {
-            // Trigger click event on the selected item
-            items[currentIndex].click();
-        }
+input.addEventListener("input", () => showSuggestions(input.value)); // Mise à jour des suggestions
+input.addEventListener("keyup", (event) => {
+    if (event.key === "Enter") {
+        checkAnswer(input.value);
+        input.value = ""; // Effacer la saisie
+        document.getElementById("autocomplete-list").innerHTML = ""; // Effacer la liste
     }
 });
 
