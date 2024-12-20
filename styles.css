@@ -139,6 +139,15 @@ h1 {
   box-sizing: border-box;
 }
 
+.player-name-rectangle {
+    display: inline-block;
+    width: 10px;  /* Adjust the width of the rectangle as needed */
+    height: 20px; /* Adjust the height of the rectangle as needed */
+    background-color: var(--text-color); /* color of the rectangles */
+    margin-right: 3px; /* Adjust the spacing between rectangles as needed */
+    vertical-align: middle;
+}
+
 h2.ai-style-change-1 {
   position: fixed;
   top: 270px;
