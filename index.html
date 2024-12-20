@@ -90,10 +90,23 @@ async function loadClubNameMapping() {
     }
 }
 
+async function loadClubLogos() {
+    try {
+        const response = await fetch('./clubLogos.json'); // Adjust the path as necessary
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return await response.json(); // Parse and return the JSON data
+    } catch (error) {
+        console.error("Error loading club logos:", error);
+        return {}; // Return an empty object on error
+    }
+}
+    
 async function displayPlayerStats() {
     const clubNameMapping = await loadClubNameMapping(); // Load the club name mappings
     const countryMapping = await loadCountryMapping(); // Load the country mapping
-
+    const clubLogos = await loadClubLogos(); // Load the club logos
     const stats = await selectRandomPlayer(); // Fetch the player stats
     const tableBody = document.getElementById('career-table-body'); // Get the table body element
 
@@ -108,11 +121,17 @@ async function displayPlayerStats() {
         // Use the clubNameMapping to change club names
         const formattedClubName = clubNameMapping[stat.team] || stat.team; // Use the formatted name if found
 
+         // Get the logo URL from the clubLogos object
+        const logoUrl = clubLogos[stat.club] || ''; // Default to empty if not found
+        
         const row = document.createElement('tr');
 
-        row.innerHTML = `
-            <td>${stat.season}</td>
-            <td class="hidden" data-club="${formattedClubName}">${formattedClubName}</td>
+       row.innerHTML = `
+            <td>${stat.years}</td>
+            <td class="hidden" data-club="${stat.club}">
+                <img src="${logoUrl}" alt="${stat.club} logo" style="width: 20px; height: 20px; margin-right: 5px;"> 
+                ${stat.club}
+            </td>
             <td class="hidden" data-country="${fullCountryName}">
                 <img src="${flagUrl}" alt="${fullCountryName} flag" style="width: 20px; height: 15px; margin-right: 5px; vertical-align: middle;"> 
                 ${fullCountryName}
