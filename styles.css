@@ -155,7 +155,7 @@ h2.ai-style-change-1 {
 
 /* Style du tableau */
 table#career-table {
-  width: 90%; /* Increased width */
+  width: 90%;
   max-width: 700px;
   background-color: initial;
   z-index: 10;
@@ -210,12 +210,12 @@ td[data-club] {
 /* Rendre le tableau responsive */
 @media (max-width: 768px) {
   table#career-table {
-        width: 95%;
+    width: 95%;
          font-size: 11px;
     }
     
      th, td {
-         padding: 8px;
+           padding: 8px;
     }
 }
 
@@ -316,4 +316,14 @@ input#guess-input {
     background-color: var(--text-color);
     margin-right: 3px;
     vertical-align: middle;
+}
+
+/* Définir la largeur des colonnes */
+th:nth-child(1), td:nth-child(1) {
+    width: 20%; /* More width for the "Années" column */
+}
+
+th:nth-child(2), td:nth-child(2),
+th:nth-child(3), td:nth-child(3) {
+    width: 40%; /* Slightly less width for "Club" and "Pays" columns */
 }
