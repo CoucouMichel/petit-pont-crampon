@@ -143,7 +143,7 @@ h1 {
     display: inline-block;
     width: 10px;  /* Adjust the width of the rectangle as needed */
     height: 20px; /* Adjust the height of the rectangle as needed */
-    background-color: #f39c1; /* color of the rectangles */
+    background-color: #c8ff00; /* color of the rectangles */
     margin-right: 3px; /* Adjust the spacing between rectangles as needed */
     vertical-align: middle;
 }
