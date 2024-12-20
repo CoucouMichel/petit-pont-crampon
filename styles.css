@@ -94,7 +94,6 @@ button:disabled {
     list-style: none;
     border-radius: 0 0 5px 5px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* subtle shadow */
-    border-bottom: 1px solid #3f464d;
 }
 
 .suggestion-item {
@@ -103,7 +102,6 @@ button:disabled {
     transition: background-color 0.2s ease-in-out;
     color: #adbb62;
     font-size: 14px;
-    border-bottom: 1px solid #3f464d;
 }
 
 .suggestion-item:hover {
