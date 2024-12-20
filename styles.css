@@ -131,13 +131,13 @@ h1 {
 
 /* Conteneur du tableau */
 .global-container {
-    margin-top: 220px;
     width: 100%;
     padding: 0 10px;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-top: 220px
 }
 
 h2.ai-style-change-1 {
@@ -151,6 +151,8 @@ h2.ai-style-change-1 {
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative; /* Changed from fixed to relative */
+    top: 0px; /* Adjust as needed */
 }
 
 /* Style du tableau */
@@ -161,6 +163,8 @@ table#career-table {
   z-index: 10;
   border-collapse: collapse;
   margin-bottom: 20px;
+   position: relative; /* Changed from absolute to relative */
+    top: 0;  /* Adjust this value based on the h2's height and desired spacing */
 }
 
 /* Définir la largeur des colonnes */
@@ -319,18 +323,13 @@ input#guess-input {
 }
 
 /* Définir la largeur des colonnes */
-table#career-table {
-    table-layout: fixed;
-}
-
 th:nth-child(1), td:nth-child(1) {
-    min-width: 26%;
     width: 26%;
-    
+     min-width: 26%;
 }
 
 th:nth-child(2), td:nth-child(2),
 th:nth-child(3), td:nth-child(3) {
-    min-width: 37%;
     width: 37%;
+    min-width: 37%;
 }
