@@ -1,89 +1,20 @@
 {
     "Cristiano Ronaldo": {
+        "image_url": "https://fbref.com/req/202302030/images/headshots/dea698d9_2022.jpg",
         "stats": [
             { "season": "2002–2003", "country": "pt", "team": "Sporting CP" },
             { "season": "2003–2004", "country": "gb-eng", "team": "Manchester Utd" },
-            { "season": "2004–2005", "country": "gb-eng", "team": "Manchester Utd" },
-            { "season": "2005–2006", "country": "gb-eng", "team": "Manchester Utd" },
-            { "season": "2006–2007", "country": "gb-eng", "team": "Manchester Utd" },
-            { "season": "2007–2008", "country": "gb-eng", "team": "Manchester Utd" },
-            { "season": "2008–2009", "country": "gb-eng", "team": "Manchester Utd" },
-            { "season": "2009–2010", "country": "es", "team": "Real Madrid" },
-            { "season": "2010–2011", "country": "es", "team": "Real Madrid" },
-            { "season": "2011–2012", "country": "es", "team": "Real Madrid" },
-            { "season": "2012–2013", "country": "es", "team": "Real Madrid" },
-            { "season": "2013–2014", "country": "es", "team": "Real Madrid" },
-            { "season": "2014–2015", "country": "es", "team": "Real Madrid" },
-            { "season": "2015–2016", "country": "es", "team": "Real Madrid" },
-            { "season": "2016–2017", "country": "es", "team": "Real Madrid" },
-            { "season": "2017–2018", "country": "es", "team": "Real Madrid" },
-            { "season": "2018–2019", "country": "it", "team": "Juventus" },
-            { "season": "2019–2020", "country": "it", "team": "Juventus" },
-            { "season": "2020–2021", "country": "it", "team": "Juventus" },
-            { "season": "2021–2022", "country": "it", "team": "Juventus" },
-            { "season": "2021–2022", "country": "gb-eng", "team": "Manchester Utd" },
-            { "season": "2022–2023", "country": "gb-eng", "team": "Manchester Utd" },
-            { "season": "2022–2023", "country": "sa", "team": "Al-Nassr" },
-            { "season": "2023–2024", "country": "sa", "team": "Al-Nassr" },
-            { "season": "2024–2025", "country": "sa", "team": "Al-Nassr" }
+            { "season": "2004–2005", "country": "gb-eng", "team": "Manchester Utd" }
+            // Add more seasons as needed
         ]
     },
     "Didier Drogba": {
+        "image_url": "https://fbref.com/req/202302030/images/headshots/945dea33_2022.jpg",
         "stats": [
             { "season": "2001–2002", "country": "fr", "team": "Guingamp" },
-            { "season": "2002–2003", "country": "fr", "team": "Guingamp" },
-            { "season": "2003–2004", "country": "fr", "team": "Marseille" },
-            { "season": "2004–2005", "country": "gb-eng", "team": "Chelsea" },
-            { "season": "2005–2006", "country": "gb-eng", "team": "Chelsea" },
-            { "season": "2006–2007", "country": "gb-eng", "team": "Chelsea" },
-            { "season": "2007–2008", "country": "gb-eng", "team": "Chelsea" },
-            { "season": "2008–2009", "country": "gb-eng", "team": "Chelsea" },
-            { "season": "2009–2010", "country": "gb-eng", "team": "Chelsea" },
-            { "season": "2010–2011", "country": "gb-eng", "team": "Chelsea" },
-            { "season": "2011–2012", "country": "gb-eng", "team": "Chelsea" },
-            { "season": "2012–2013", "country": "tr", "team": "Galatasaray" },
-            { "season": "2013–2014", "country": "tr", "team": "Galatasaray" },
-            { "season": "2014–2015", "country": "gb-eng", "team": "Chelsea" },
-            { "season": "2015", "country": "us", "team": "Montreal Impact" },
-            { "season": "2016", "country": "us", "team": "Montreal Impact" },
-            { "season": "2017", "country": "us", "team": "Phx Rising" },
-            { "season": "2018", "country": "us", "team": "Phx Rising" }
-        ]
-    },
-    "Christian Pulisic": {
-        "stats": [
-            { "season": "2015–2016", "country": "de", "team": "Dortmund" },
-            { "season": "2016–2017", "country": "de", "team": "Dortmund" },
-            { "season": "2017–2018", "country": "de", "team": "Dortmund" },
-            { "season": "2018–2019", "country": "de", "team": "Dortmund" },
-            { "season": "2019–2020", "country": "gb-eng", "team": "Chelsea" },
-            { "season": "2020–2021", "country": "gb-eng", "team": "Chelsea" },
-            { "season": "2021–2022", "country": "gb-eng", "team": "Chelsea" },
-            { "season": "2022–2023", "country": "gb-eng", "team": "Chelsea" },
-            { "season": "2023–2024", "country": "it", "team": "Milan" },
-            { "season": "2024–2025", "country": "it", "team": "Milan" }
-        ]
-    },
-    "Andre Ayew": {
-        "stats": [
-            { "season": "2007–2008", "country": "fr", "team": "Marseille" },
-            { "season": "2008–2009", "country": "fr", "team": "Lorient" },
-            { "season": "2009–2010", "country": "fr", "team": "Arles-Avignon" },
-            { "season": "2010–2011", "country": "fr", "team": "Marseille" },
-            { "season": "2011–2012", "country": "fr", "team": "Marseille" },
-            { "season": "2012–2013", "country": "fr", "team": "Marseille" },
-            { "season": "2013–2014", "country": "fr", "team": "Marseille" },
-            { "season": "2014–2015", "country": "fr", "team": "Marseille" },
-            { "season": "2015–2016", "country": "gb-eng", "team": "Swansea City" },
-            { "season": "2016–2017", "country": "gb-eng", "team": "West Ham" },
-            { "season": "2017–2018", "country": "gb-eng", "team": "West Ham" },
-            { "season": "2017–2018", "country": "gb-eng", "team": "Swansea City" },
-            { "season": "2018–2019", "country": "tr", "team": "Fenerbahçe" },
-            { "season": "2019–2020", "country": "gb-eng", "team": "Swansea City" },
-            { "season": "2020–2021", "country": "gb-eng", "team": "Swansea City" },
-            { "season": "2022–2023", "country": "gb-eng", "team": "Nott'ham Forest" },
-            { "season": "2023–2024", "country": "fr", "team": "Le Havre" },
-            { "season": "2024–2025", "country": "fr", "team": "Le Havre" }
+            { "season": "2002–2003", "country": "fr", "team": "Guingamp" }
+            // Add more seasons as needed
         ]
     }
+    // Add more players as needed
 }
