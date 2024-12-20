@@ -86,6 +86,7 @@ button:disabled {
         top: 100%;
         left: 0;
         width: calc(100% - 0px);
+        border: 1px solid #ccc;
         border-top: none;
         z-index: 10; /* Ensure it's above other elements */
         background: white;
@@ -139,26 +140,21 @@ h1 {
   box-sizing: border-box;
 }
 
-.player-name-rectangle {
-    display: inline-block;
-    width: 10px;  /* Adjust the width of the rectangle as needed */
-    height: 20px; /* Adjust the height of the rectangle as needed */
-    background-color: #c8ff00; /* color of the rectangles */
-    margin-right: 3px; /* Adjust the spacing between rectangles as needed */
-    vertical-align: middle;
-}
-
 h2.ai-style-change-1 {
-  position: fixed;
-  top: 270px;
-  width: 100%;
-  background-color: transparent;
-  z-index: 50;
-  color: white;
-  text-align: left;
-  left: 50%;
-  transform: translateX(-50%);
-  margin-bottom: 0px;
+    position: fixed;
+    top: 270px;
+    width: 100%;
+    background-color: transparent;
+    z-index: 50;
+    color: white;
+    text-align: center;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-bottom: 0px;
+    white-space: nowrap;  /* prevent line breaks */
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 /* Style du tableau */
@@ -167,7 +163,7 @@ table#career-table {
   top: 70px;
   left: 50%;
   transform: translateX(-50%);
-  width: 450px;
+  width: 520px;
   background-color: initial;
   z-index: 10;
   padding-top: 30px;
@@ -303,9 +299,9 @@ th:nth-child(3), td:nth-child(3) {
 }
 /* Style pour afficher les tentatives */
 #attempts {
-    margin-top: -15px;
+    margin-top: -2px;
     color: var(--text-color);
-    font-size: 12px;
+    font-size: 14px;
 }
 /* Liste déroulante des suggestions */
 .autocomplete-suggestions {
@@ -365,4 +361,12 @@ th:nth-child(3), td:nth-child(3) {
     0%, 100% { background-color: black; }
     50% { background-color: lightcoral; }
     
+}
+.player-name-rectangle {
+    display: inline-block;
+    width: 10px;
+    height: 20px;
+    background-color: var(--text-color);
+    margin-right: 3px;
+    vertical-align: middle;
 }
