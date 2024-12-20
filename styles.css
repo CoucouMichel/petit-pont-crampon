@@ -142,7 +142,7 @@ h1 {
 
 h2.ai-style-change-1 {
     position: fixed;
-    top: 270px;
+    top: 240px;
     width: 100%;
     background-color: transparent;
     z-index: 50;
@@ -366,7 +366,7 @@ th:nth-child(3), td:nth-child(3) {
     display: inline-block;
     width: 10px;
     height: 20px;
-    background-color: var(--text-color);
+    background-color: #c8ff00;
     margin-right: 3px;
     vertical-align: middle;
 }
