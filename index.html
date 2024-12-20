@@ -51,271 +51,271 @@
 </body>
 
 <script>
-let selectedPlayer;
-let attempts = 0;
-let revealPlayerOnce = false;
+document.addEventListener('DOMContentLoaded', async () => {
+    let selectedPlayer;
+    let attempts = 0;
+    let revealPlayerOnce = false;
 
-let indiceButton;
-let carriereButton;
-let reponseButton;
-
-async function loadPlayerStats() {
-    const response = await fetch('./players_stats.json');
-    return response.json();
-}
-
-async function loadClubsCountries() {
-    const response = await fetch('./clubscountries.json');
-    return response.json();
-}
-
-async function selectRandomPlayer() {
-    const playersData = await loadPlayerStats();
-    const players = Object.keys(playersData);
-    selectedPlayer = players[Math.floor(Math.random() * players.length)];
-    return playersData[selectedPlayer];
-}
-
-async function loadCountryMapping() {
-    try {
-        const response = await fetch('./country2letters.json');
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
+    let indiceButton;
+    let carriereButton;
+    let reponseButton;
+    
+    async function loadPlayerStats() {
+        const response = await fetch('./players_stats.json');
         return response.json();
-    } catch (error) {
-        console.error("Error loading country mapping:", error);
-        return {};
     }
-}
-
-async function loadClubNameMapping() {
-    try {
-        const response = await fetch('./clubNameMapping.json');
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
+    
+    async function loadClubsCountries() {
+        const response = await fetch('./clubscountries.json');
         return response.json();
-    } catch (error) {
-        console.error("Error loading club name mapping:", error);
-        return {};
     }
-}
-
-async function loadClubLogos() {
-    try {
-        const response = await fetch('./clubLogos.json');
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return await response.json();
-    } catch (error) {
-        console.error("Error loading club logos:", error);
-        return {};
+    
+    async function selectRandomPlayer() {
+        const playersData = await loadPlayerStats();
+        const players = Object.keys(playersData);
+        selectedPlayer = players[Math.floor(Math.random() * players.length)];
+        return playersData[selectedPlayer];
     }
-}
-
-async function displayPlayerStats() {
-    const clubNameMapping = await loadClubNameMapping();
-    const countryMapping = await loadCountryMapping();
-    const clubLogos = await loadClubLogos();
-    const stats = await selectRandomPlayer();
-
-    const tableBody = document.getElementById('career-table-body');
-    tableBody.innerHTML = '';
-
-    if (!Array.isArray(stats)) {
-        console.error("Expected stats to be an array, but got:", stats);
-        return;
-    }
-
-    stats.forEach(stat => {
-        if (stat.season && stat.season.toLowerCase().includes("season")) return;
-
-        const fullCountryName = countryMapping[stat.country] || stat.country;
-        const flagUrl = `https://flagcdn.com/w20/${stat.country}.png`;
-        const formattedClubName = clubNameMapping[stat.team] || stat.team;
-        const logoUrl = clubLogos[stat.team] || '';
-
-        const row = document.createElement('tr');
-        row.innerHTML = `
-            <td>${stat.season}</td>
-            <td class="hidden" data-club="${stat.team}">
-                <img src="${logoUrl}" alt="${formattedClubName} logo" style="width: 20px; height: 20px; margin-right: 5px;"> 
-                ${formattedClubName}
-            </td>
-            <td class="hidden" data-country="${fullCountryName}">
-                <img src="${flagUrl}" alt="${fullCountryName} flag" style="width: 20px; height: 15px; margin-right: 5px; vertical-align: middle;"> 
-                ${fullCountryName}
-            </td>
-        `;
-        tableBody.appendChild(row);
-    });
-}
-
-async function showSuggestions(value) {
-    const autocompleteList = document.getElementById("autocomplete-list");
-    autocompleteList.innerHTML = "";
-
-    if (value.trim() === "") return;
-
-    try {
-        const data = await loadClubsCountries();
-        const suggestions = new Set();
-
-        for (let club in data) {
-            const country = data[club];
-            if (club.toLowerCase().includes(value.toLowerCase())) {
-                suggestions.add(club);
+    
+    async function loadCountryMapping() {
+        try {
+            const response = await fetch('./country2letters.json');
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
             }
-            if (country.toLowerCase().includes(value.toLowerCase())) {
-                suggestions.add(country);
-            }
+            return response.json();
+        } catch (error) {
+            console.error("Error loading country mapping:", error);
+            return {};
         }
-
-        const sortedSuggestions = Array.from(suggestions).sort();
-
-        sortedSuggestions.forEach(suggestion => {
-            const listItem = document.createElement("li");
-            listItem.textContent = suggestion;
-            listItem.classList.add("suggestion-item");
-            listItem.addEventListener("click", () => {
-                document.getElementById("guess-input").value = "";
-                autocompleteList.innerHTML = "";
-                checkAnswer(suggestion);
-            });
-            autocompleteList.appendChild(listItem);
+    }
+    
+    async function loadClubNameMapping() {
+        try {
+            const response = await fetch('./clubNameMapping.json');
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        } catch (error) {
+            console.error("Error loading club name mapping:", error);
+            return {};
+        }
+    }
+    
+    async function loadClubLogos() {
+        try {
+            const response = await fetch('./clubLogos.json');
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return await response.json();
+        } catch (error) {
+            console.error("Error loading club logos:", error);
+            return {};
+        }
+    }
+    
+    async function displayPlayerStats() {
+        const clubNameMapping = await loadClubNameMapping();
+        const countryMapping = await loadCountryMapping();
+        const clubLogos = await loadClubLogos();
+        const stats = await selectRandomPlayer();
+    
+        const tableBody = document.getElementById('career-table-body');
+        tableBody.innerHTML = '';
+    
+        if (!Array.isArray(stats)) {
+            console.error("Expected stats to be an array, but got:", stats);
+            return;
+        }
+    
+        stats.forEach(stat => {
+            if (stat.season && stat.season.toLowerCase().includes("season")) return;
+    
+            const fullCountryName = countryMapping[stat.country] || stat.country;
+            const flagUrl = `https://flagcdn.com/w20/${stat.country}.png`;
+            const formattedClubName = clubNameMapping[stat.team] || stat.team;
+            const logoUrl = clubLogos[stat.team] || '';
+    
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${stat.season}</td>
+                <td class="hidden" data-club="${stat.team}">
+                    <img src="${logoUrl}" alt="${formattedClubName} logo" style="width: 20px; height: 20px; margin-right: 5px;"> 
+                    ${formattedClubName}
+                </td>
+                <td class="hidden" data-country="${fullCountryName}">
+                    <img src="${flagUrl}" alt="${fullCountryName} flag" style="width: 20px; height: 15px; margin-right: 5px; vertical-align: middle;"> 
+                    ${fullCountryName}
+                </td>
+            `;
+            tableBody.appendChild(row);
         });
-
-    } catch (error) {
-        console.error("Erreur lors du chargement des suggestions :", error);
     }
-}
-
-async function checkAnswer(input) {
-    const answer = input.trim().toLowerCase();
-    const feedback = document.getElementById("feedback");
-    const countryMapping = await loadCountryMapping();
-    const reverseMapping = Object.fromEntries(
-        Object.entries(countryMapping).map(([abbr, fullName]) => [fullName.toLowerCase(), abbr.toLowerCase()])
-    );
-    let isCorrect = false;
-
-    if (answer === selectedPlayer.toLowerCase()) {
-        feedback.textContent = `Bingo ! Vous avez trouvé le joueur : ${selectedPlayer}`;
-        feedback.style.color = "green";
-        revealAllCells();
-        isCorrect = true;
-    } else {
-        feedback.textContent = '';
-        attempts++;
-        document.getElementById("attempts").textContent = `Tentatives : ${attempts}`;
+    
+    async function showSuggestions(value) {
+        const autocompleteList = document.getElementById("autocomplete-list");
+        autocompleteList.innerHTML = "";
+    
+        if (value.trim() === "") return;
+    
+        try {
+            const data = await loadClubsCountries();
+            const suggestions = new Set();
+    
+            for (let club in data) {
+                const country = data[club];
+                if (club.toLowerCase().includes(value.toLowerCase())) {
+                    suggestions.add(club);
+                }
+                if (country.toLowerCase().includes(value.toLowerCase())) {
+                    suggestions.add(country);
+                }
+            }
+    
+            const sortedSuggestions = Array.from(suggestions).sort();
+    
+            sortedSuggestions.forEach(suggestion => {
+                const listItem = document.createElement("li");
+                listItem.textContent = suggestion;
+                listItem.classList.add("suggestion-item");
+                listItem.addEventListener("click", () => {
+                    document.getElementById("guess-input").value = "";
+                    autocompleteList.innerHTML = "";
+                    checkAnswer(suggestion);
+                });
+                autocompleteList.appendChild(listItem);
+            });
+    
+        } catch (error) {
+            console.error("Erreur lors du chargement des suggestions :", error);
+        }
     }
-
-    const cells = document.querySelectorAll('td[data-country], td[data-club]');
-    cells.forEach(cell => {
-        const cellCountry = cell.getAttribute('data-country')?.toLowerCase();
-        const cellClub = cell.getAttribute('data-club')?.toLowerCase();
-
-        if (cellCountry === answer || reverseMapping[cellCountry] === answer || cellClub === answer) {
-            revealText(cell);
+    
+    async function checkAnswer(input) {
+        const answer = input.trim().toLowerCase();
+        const feedback = document.getElementById("feedback");
+        const countryMapping = await loadCountryMapping();
+        const reverseMapping = Object.fromEntries(
+            Object.entries(countryMapping).map(([abbr, fullName]) => [fullName.toLowerCase(), abbr.toLowerCase()])
+        );
+        let isCorrect = false;
+    
+        if (answer === selectedPlayer.toLowerCase()) {
+            feedback.textContent = `Bingo ! Vous avez trouvé le joueur : ${selectedPlayer}`;
+            feedback.style.color = "green";
+            revealAllCells();
             isCorrect = true;
+        } else {
+            feedback.textContent = '';
+            attempts++;
+            document.getElementById("attempts").textContent = `Tentatives : ${attempts}`;
+        }
+    
+        const cells = document.querySelectorAll('td[data-country], td[data-club]');
+        cells.forEach(cell => {
+            const cellCountry = cell.getAttribute('data-country')?.toLowerCase();
+            const cellClub = cell.getAttribute('data-club')?.toLowerCase();
+    
+            if (cellCountry === answer || reverseMapping[cellCountry] === answer || cellClub === answer) {
+                revealText(cell);
+                isCorrect = true;
+            }
+        });
+        blinkInput(isCorrect);
+    }
+    
+    function blinkInput(isCorrect) {
+        const inputField = document.getElementById("guess-input");
+        if (isCorrect) {
+            inputField.classList.add("blink-green");
+        } else {
+            inputField.classList.add("blink-red");
+        }
+        setTimeout(() => {
+            inputField.classList.remove("blink-green", "blink-red");
+        }, 500);
+    }
+    
+    function revealText(cell) {
+        cell.classList.remove('hidden');
+        cell.classList.add('visible');
+    }
+    
+    function revealAllCells() {
+        const allCells = document.querySelectorAll('#career-table-body td');
+        allCells.forEach(cell => {
+            cell.classList.remove('hidden');
+            cell.classList.add('visible');
+        });
+    }
+    
+    const input = document.getElementById("guess-input");
+    input.addEventListener("input", () => showSuggestions(input.value));
+    input.addEventListener("keyup", (event) => {
+        if (event.key === "Enter") {
+            checkAnswer(input.value);
+            input.value = "";
+            document.getElementById("autocomplete-list").innerHTML = "";
         }
     });
-    blinkInput(isCorrect);
-}
-
-function blinkInput(isCorrect) {
-    const inputField = document.getElementById("guess-input");
-    if (isCorrect) {
-        inputField.classList.add("blink-green");
-    } else {
-        inputField.classList.add("blink-red");
+    
+    function revealRandomClue() {
+        if (!selectedPlayer) return;
+    
+        const columnsToReveal = [1, 2];
+        const randomColumnIndex = Math.floor(Math.random() * columnsToReveal.length);
+        const columnIndex = columnsToReveal[randomColumnIndex];
+    
+        const allCells = document.querySelectorAll('#career-table-body tr td:nth-child(' + (columnIndex + 1) + ')');
+    
+        allCells.forEach(cell => {
+            cell.classList.remove('hidden');
+            cell.classList.add('visible');
+        });
+    
+        indiceButton.disabled = true;
+        indiceButton.classList.add("button-disabled");
     }
-    setTimeout(() => {
-        inputField.classList.remove("blink-green", "blink-red");
-    }, 500);
-}
-
-function revealText(cell) {
-    cell.classList.remove('hidden');
-    cell.classList.add('visible');
-}
-
-function revealAllCells() {
-    const allCells = document.querySelectorAll('#career-table-body td');
-    allCells.forEach(cell => {
-        cell.classList.remove('hidden');
-        cell.classList.add('visible');
-    });
-}
-
-
-const input = document.getElementById("guess-input");
-input.addEventListener("input", () => showSuggestions(input.value));
-input.addEventListener("keyup", (event) => {
-    if (event.key === "Enter") {
-        checkAnswer(input.value);
-        input.value = "";
-        document.getElementById("autocomplete-list").innerHTML = "";
+    
+    function revealAll() {
+        if (!selectedPlayer) return;
+    
+        const allCells = document.querySelectorAll('#career-table-body td');
+    
+        allCells.forEach(cell => {
+            cell.classList.remove('hidden');
+            cell.classList.add('visible');
+        });
+    
+        carriereButton.disabled = true;
+        carriereButton.classList.add("button-disabled");
     }
-});
-function revealRandomClue() {
-    if (!selectedPlayer) return;
-
-    const columnsToReveal = [1, 2];
-    const randomColumnIndex = Math.floor(Math.random() * columnsToReveal.length);
-    const columnIndex = columnsToReveal[randomColumnIndex];
-
-    const allCells = document.querySelectorAll('#career-table-body tr td:nth-child(' + (columnIndex + 1) + ')');
-
-    allCells.forEach(cell => {
-        cell.classList.remove('hidden');
-        cell.classList.add('visible');
-    });
-
-    indiceButton.disabled = true;
-    indiceButton.classList.add("button-disabled");
-}
-
-function revealAll() {
-    if (!selectedPlayer) return;
-
-    const allCells = document.querySelectorAll('#career-table-body td');
-
-    allCells.forEach(cell => {
-        cell.classList.remove('hidden');
-        cell.classList.add('visible');
-    });
-
-    carriereButton.disabled = true;
-    carriereButton.classList.add("button-disabled");
-}
-
-function revealPlayer() {
-    if (!selectedPlayer) return;
-
-    if (revealPlayerOnce) {
-        return;
+    
+    function revealPlayer() {
+        if (!selectedPlayer) return;
+    
+        if (revealPlayerOnce) {
+            return;
+        }
+    
+        const playerRow = document.querySelector('#career-table-body tr:first-child');
+        const firstCell = playerRow.querySelector('td:first-child');
+    
+        firstCell.classList.remove('hidden');
+        firstCell.classList.add('visible');
+    
+        revealPlayerOnce = true;
+        reponseButton.disabled = true;
+        reponseButton.classList.add("button-disabled");
     }
 
-    const playerRow = document.querySelector('#career-table-body tr:first-child');
-    const firstCell = playerRow.querySelector('td:first-child');
-
-    firstCell.classList.remove('hidden');
-    firstCell.classList.add('visible');
-
-    revealPlayerOnce = true;
-    reponseButton.disabled = true;
-    reponseButton.classList.add("button-disabled");
-}
-document.addEventListener('DOMContentLoaded', () => {
-        indiceButton = document.getElementById("indiceButton");
-        carriereButton = document.getElementById("carriereButton");
-        reponseButton = document.getElementById("reponseButton");
-
-
-        indiceButton.addEventListener("click", function () {
+     indiceButton = document.getElementById("indiceButton");
+     carriereButton = document.getElementById("carriereButton");
+     reponseButton = document.getElementById("reponseButton");
+    
+    indiceButton.addEventListener("click", function () {
             revealRandomClue();
         });
 
@@ -327,8 +327,9 @@ document.addEventListener('DOMContentLoaded', () => {
             revealAll();
             revealPlayer();
         });
-    
-    displayPlayerStats();
+        await displayPlayerStats();
+
+
 });
     </script>
 </body>
