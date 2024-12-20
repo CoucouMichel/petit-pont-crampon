@@ -65,12 +65,12 @@
             return response.json();
         }
     
-async function selectRandomPlayer() {
-    const response = await fetch('./players_stats.json'); // Adjust the path as necessary
-    const data = await response.json();
-    // Return an array of stats from all players
-    return Object.values(data).flatMap(player => player.stats); // Extract all stats into a single array
-}
+        async function selectRandomPlayer() {
+            const playersData = await loadPlayerStats();
+            const players = Object.keys(playersData);
+            selectedPlayer = players[Math.floor(Math.random() * players.length)];
+            return playersData[selectedPlayer];
+        }
     async function loadClubLogos() {
     try {
         const response = await fetch('./clubLogos.json'); // Adjust the path as necessary
