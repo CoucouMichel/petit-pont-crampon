@@ -5,7 +5,6 @@
             { "season": "2002–2003", "country": "pt", "team": "Sporting CP" },
             { "season": "2003–2004", "country": "gb-eng", "team": "Manchester Utd" },
             { "season": "2004–2005", "country": "gb-eng", "team": "Manchester Utd" }
-            // Add more seasons as needed
         ]
     },
     "Didier Drogba": {
@@ -13,8 +12,6 @@
         "stats": [
             { "season": "2001–2002", "country": "fr", "team": "Guingamp" },
             { "season": "2002–2003", "country": "fr", "team": "Guingamp" }
-            // Add more seasons as needed
         ]
     }
-    // Add more players as needed
 }
