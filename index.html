@@ -265,6 +265,55 @@ input.addEventListener("keyup", (event) => {
         input.value = ""; // Effacer la saisie
         document.getElementById("autocomplete-list").innerHTML = ""; // Effacer la liste
     }
+
+    // Function to reveal a random hint from columns 2 or 3
+function revealHint() {
+    const tableBody = document.getElementById('career-table-body');
+    const rows = tableBody.getElementsByTagName('tr');
+    const randomRow = rows[Math.floor(Math.random() * rows.length)];
+    const randomColumn = Math.random() < 0.5 ? 1 : 2; // Randomly choose column 2 (Club) or 3 (Country)
+    
+    // Reveal the chosen column
+    if (randomColumn === 1) {
+        const clubCell = randomRow.cells[1];
+        clubCell.classList.remove('hidden');
+    } else {
+        const countryCell = randomRow.cells[2];
+        countryCell.classList.remove('hidden');
+    }
+}
+
+// Function to reveal the entire table
+function revealCareer() {
+    const tableBody = document.getElementById('career-table-body');
+    const rows = tableBody.getElementsByTagName('tr');
+
+    for (let row of rows) {
+        row.cells[1].classList.remove('hidden'); // Reveal Club
+        row.cells[2].classList.remove('hidden'); // Reveal Country
+    }
+}
+
+// Function to reveal the entire table and the player
+function revealAnswer() {
+    const tableBody = document.getElementById('career-table-body');
+    const rows = tableBody.getElementsByTagName('tr');
+
+    for (let row of rows) {
+        row.cells[1].classList.remove('hidden'); // Reveal Club
+        row.cells[2].classList.remove('hidden'); // Reveal Country
+    }
+
+    // Reveal the player (you can implement this based on your logic)
+    // For example, if you have a currentPlayer variable, you can display it:
+    const currentPlayer = "Cristiano Ronaldo"; // Example placeholder
+    alert(`The player is: ${currentPlayer}`);
+}
+
+// Event listeners for the buttons
+document.getElementById('hint-button').addEventListener('click', revealHint);
+document.getElementById('career-button').addEventListener('click', revealCareer);
+document.getElementById('answer-button').addEventListener('click', revealAnswer);
 });
 
         displayPlayerStats();
