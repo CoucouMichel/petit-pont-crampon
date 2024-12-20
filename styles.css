@@ -158,7 +158,7 @@ h2.ai-style-change-1 {
 /* Style du tableau */
 table#career-table {
   position: absolute;
-  top: 70px;
+  top: 100px;
   left: 50%;
   transform: translateX(-50%);
   width: 520px;
@@ -212,6 +212,11 @@ td[data-country] {
 td[data-club] {
     visibility: hidden; /* Le texte reste invisible */
 }
+
+@media (max-width: 768px) {
+    h2.ai-style-change-1 {
+        top: 260px;
+    }
 
 /* Rendre le tableau responsive */
 @media (max-width: 768px) {
