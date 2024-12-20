@@ -47,16 +47,11 @@
         let attempts = 0;
 
         // Chargement des données depuis les fichiers JSON
-        async function fetchJSON(filePath) {
-            try {
-                const response = await fetch(filePath);
-                if (!response.ok) throw new Error(`Erreur HTTP : ${response.status}`);
-                return await response.json();
-            } catch (error) {
-                console.error(`Erreur de chargement du fichier ${filePath} :`, error);
-                return null;
-            }
-        }
+       // script.js
+async function loadClubsCountries() {
+    const response = await fetch('./clubscountries.json');
+    return response.json(); // Fetch and return the array of suggestions
+}
 
         // Sélectionne un joueur aléatoirement
         async function selectRandomPlayer() {
@@ -98,38 +93,47 @@
                 tableBody.appendChild(row);
             });
         }
-
+        
         // Gère les suggestions d'autocomplétion
-        async function showSuggestions(value) {
-            const autocompleteList = document.getElementById("autocomplete-list");
-            autocompleteList.innerHTML = ""; // Réinitialise les suggestions
+         copy
+javascript
 
-            if (!value.trim()) return;
+// script.js
+async function loadClubsCountries() {
+    const response = await fetch('./clubscountries.json');
+    return response.json(); // Fetch and return the array of suggestions
+}
 
-            const data = await fetchJSON('./clubscountries.json');
-            if (!data) return;
+async function showSuggestions(value) {
+    const autocompleteList = document.getElementById("autocomplete-list");
+    autocompleteList.innerHTML = ""; // Clear previous suggestions
 
-            const suggestions = new Set();
-            Object.entries(data).forEach(([club, country]) => {
-                if (club.toLowerCase().includes(value.toLowerCase()) || country.toLowerCase().includes(value.toLowerCase())) {
-                    suggestions.add(club);
-                    suggestions.add(country);
-                }
+    if (value.trim() === "") return; // Don't display anything if the input is empty
+
+    try {
+        const suggestions = await loadClubsCountries(); // Load data from the JSON
+
+        // Filter suggestions based on user input
+        const filteredSuggestions = suggestions.filter(suggestion =>
+            suggestion.toLowerCase().includes(value.toLowerCase())
+        );
+
+        // Add each suggestion to the list
+        filteredSuggestions.forEach(suggestion => {
+            const listItem = document.createElement("div");
+            listItem.textContent = suggestion;
+            listItem.classList.add("suggestion-item");
+            listItem.addEventListener("click", () => {
+                document.getElementById("guess-input").value = suggestion; // Set input value to the selected suggestion
+                autocompleteList.innerHTML = ""; // Clear the suggestion list after a click
             });
+            autocompleteList.appendChild(listItem);
+        });
 
-            Array.from(suggestions).sort().forEach(suggestion => {
-                const listItem = document.createElement("li");
-                listItem.textContent = suggestion;
-                listItem.classList.add("suggestion-item");
-                listItem.addEventListener("click", () => {
-                    document.getElementById("guess-input").value = "";
-                    autocompleteList.innerHTML = "";
-                    checkAnswer(suggestion);
-                });
-                autocompleteList.appendChild(listItem);
-            });
-        }
-
+    } catch (error) {
+        console.error("Error loading suggestions:", error);
+    }
+}
         // Vérifie si la réponse est correcte
         async function checkAnswer(input) {
             const answer = input.trim().toLowerCase();
