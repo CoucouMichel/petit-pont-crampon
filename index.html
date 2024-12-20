@@ -189,16 +189,18 @@
                      // Use the clubNameMapping to change club names
                     const formattedClubName = clubNameMapping[mergedStat.teamCode] || mergedStat.teamCode; // Use the formatted name if found
                    const logoUrl = clubLogos[mergedStat.teamCode] || '';
+                   
+                    const startSeason = mergedStat.startSeason;
+                    const endSeason = mergedStat.endSeason;
 
-
-                  const startSeason = mergedStat.startSeason;
-                  const endSeason = mergedStat.endSeason;
+                
+                  const formattedSeason = startSeason === endSeason ? startSeason : `${startSeason.split('-')[0]}-${endSeason.split('-')[0]}`
 
 
                    const row = document.createElement('tr');
 
                    row.innerHTML = `
-                       <td>${startSeason === endSeason ? startSeason : `${startSeason}-${endSeason}`}</td>
+                       <td>${formattedSeason}</td>
                         <td class="hidden" data-club="${mergedStat.teamCode}">
                                 <img src="${logoUrl}" alt="${formattedClubName} logo" style="width: 20px; height: 20px; margin-right: 5px;">
                                 ${formattedClubName}
