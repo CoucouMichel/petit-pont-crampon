@@ -27,8 +27,8 @@
             { "season": "2022–2023", "country": "sa", "team": "Al-Nassr" },
             { "season": "2023–2024", "country": "sa", "team": "Al-Nassr" },
             { "season": "2024–2025", "country": "sa", "team": "Al-Nassr" }
-        ],
-    },
+        ]
+    }
     "Didier Drogba": {
         "image_url": "https://fbref.com/req/202302030/images/headshots/945dea33_2022.jpg",
         "stats": [
@@ -50,7 +50,7 @@
             { "season": "2016", "country": "us", "team": "Montreal Impact" },
             { "season": "2017", "country": "us", "team": "Phx Rising" },
             { "season": "2018", "country": "us", "team": "Phx Rising" }
-        ],
+        ]
     },
     "Christian Pulisic": {
         "image_url": "None",
@@ -65,7 +65,7 @@
             { "season": "2022–2023", "country": "gb-eng", "team": "Chelsea" },
             { "season": "2023–2024", "country": "it", "team": "Milan" },
             { "season": "2024–2025", "country": "it", "team": "Milan" }
-        ],
+        ]
     },
     "Andre Ayew": {
         "image_url": "None",
@@ -88,6 +88,6 @@
             { "season": "2022–2023", "country": "gb-eng", "team": "Nott'ham Forest" },
             { "season": "2023–2024", "country": "fr", "team": "Le Havre" },
             { "season": "2024–2025", "country": "fr", "team": "Le Havre" }
-        ],
+        ]
     }
 }
