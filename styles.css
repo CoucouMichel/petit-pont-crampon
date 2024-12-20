@@ -31,6 +31,7 @@ body {
     color: var(--text-color); /* Texte blanc */
     z-index: 9999; /* Toujours au-dessus des autres éléments */
     padding: 20px; /* Ajoute un peu de marge intérieure */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Ombre pour le séparer du contenu */
     text-align: center;
     padding-left: 0; /* Removes the left padding */
     box-sizing: border-box; /* Ensures padding and border are included in the width */
@@ -85,6 +86,7 @@ button:disabled {
         top: 100%;
         left: 0;
         width: calc(100% - 0px);
+        border: 1px solid #ccc;
         border-top: none;
         z-index: 10; /* Ensure it's above other elements */
         background: white;
@@ -134,13 +136,13 @@ h1 {
     z-index: 12;
     margin-top: 0px;
     width: 100%;
-  padding: 0 10px;
-  box-sizing: border-box;
+    padding: 0 10px;
+    box-sizing: border-box;
 }
 
 h2.ai-style-change-1 {
     position: fixed;
-    top: 240px;
+    top: 270px;
     width: 100%;
     background-color: transparent;
     z-index: 50;
@@ -158,7 +160,7 @@ h2.ai-style-change-1 {
 /* Style du tableau */
 table#career-table {
   position: absolute;
-  top: 100px;
+  top: 70px;
   left: 50%;
   transform: translateX(-50%);
   width: 520px;
@@ -213,11 +215,6 @@ td[data-club] {
     visibility: hidden; /* Le texte reste invisible */
 }
 
-@media (max-width: 768px) {
-    h2.ai-style-change-1 {
-        top: 260px;
-    }
-
 /* Rendre le tableau responsive */
 @media (max-width: 768px) {
     table#career-table {
@@ -261,6 +258,12 @@ input#guess-input {
     padding: 10px; /* Ajouter du padding pour plus de confort */
     font-size: 14px; /* Taille de la police */
     margin-bottom: 20px; /* Espacement sous la barre de saisie */
+     border: 1px solid #c8ff0052; /* Bordure orange */
+    background-color: #161616; /* Fond bleu marine */
+    color: #949e71; /* Texte blanc */
+    text-align: center;
+    border-radius: 5px;
+    box-sizing: border-box;
 }
 #guess-input {
     width: 80%; /* Barre de saisie plus large */
@@ -272,6 +275,7 @@ input#guess-input {
     background-color: #161616; /* Fond bleu marine */
     color: #949e71; /* Texte blanc */
     text-align: center; /* Centre le texte dans la barre */
+    box-sizing: border-box;
 }
 
 #guess-input:focus {
@@ -369,7 +373,7 @@ th:nth-child(3), td:nth-child(3) {
     display: inline-block;
     width: 10px;
     height: 20px;
-    background-color: #c8ff00;
+    background-color: var(--text-color);
     margin-right: 3px;
     vertical-align: middle;
 }
