@@ -373,9 +373,26 @@ th:nth-child(3), td:nth-child(3) {
 #autofill-suggestion {
     position: absolute;
     top: 10px;
-        left: 10px; /* Modified from absolute left position */
-    pointer-events: none; /* Make it non-interactive */
+    left: 10px;
+    pointer-events: none;
     color: #49543b;
      white-space: nowrap;
      z-index: 0;
+}
+
+#guess-input {
+    width: 80%;
+    max-width: 400px;
+    padding: 10px;
+    font-size: 14px;
+    margin-bottom: 20px;
+    border: 1px solid #c8ff0052;
+    background-color: #161616;
+    color: #949e71;
+    text-align: left;
+    border-radius: 5px;
+    box-sizing: border-box;
+    position: relative; /* Make input position relative*/
+    z-index: 1;
+
 }
