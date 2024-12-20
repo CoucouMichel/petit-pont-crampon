@@ -24,9 +24,6 @@ body {
 
 /* Conteneur principal */
 .fixed-header {
-    position: fixed;
-    top: 0;
-    left: 0;
     width: 100%;
     background-color: var(--background-color);
     color: var(--text-color);
@@ -37,6 +34,8 @@ body {
     box-sizing: border-box;
     height: auto;
     padding-bottom: 20px;
+    position: relative; /* Changed to relative */
+    
 }
 
 button {
@@ -137,7 +136,6 @@ h1 {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 220px
 }
 
 h2.ai-style-change-1 {
@@ -152,9 +150,10 @@ h2.ai-style-change-1 {
     justify-content: center;
     align-items: center;
     position: relative;
-    top: 20px; /* Changed to a static value to fix it under header */
+     top: 0px;
 }
-    /* Style du tableau */
+
+/* Style du tableau */
 table#career-table {
   width: 90%;
   max-width: 700px;
@@ -163,7 +162,7 @@ table#career-table {
   border-collapse: collapse;
   margin-bottom: 20px;
   position: relative;
-  top: 20px; /* Change to be right under the h2*/
+    top: 0px;
 }
 
 /* Définir la largeur des colonnes */
@@ -324,7 +323,7 @@ input#guess-input {
 /* Définir la largeur des colonnes */
 th:nth-child(1), td:nth-child(1) {
     width: 26%;
-     min-width: 26%;
+    min-width: 26%;
 }
 
 th:nth-child(2), td:nth-child(2),
