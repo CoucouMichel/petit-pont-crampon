@@ -1,6 +1,5 @@
 {
     "Cristiano Ronaldo": {
-        "image_url": "https://fbref.com/req/202302030/images/headshots/dea698d9_2022.jpg",
         "stats": [
             { "season": "2002–2003", "country": "pt", "team": "Sporting CP" },
             { "season": "2003–2004", "country": "gb-eng", "team": "Manchester Utd" },
@@ -8,7 +7,6 @@
         ]
     },
     "Didier Drogba": {
-        "image_url": "https://fbref.com/req/202302030/images/headshots/945dea33_2022.jpg",
         "stats": [
             { "season": "2001–2002", "country": "fr", "team": "Guingamp" },
             { "season": "2002–2003", "country": "fr", "team": "Guingamp" }
