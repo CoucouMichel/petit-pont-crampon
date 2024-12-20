@@ -100,35 +100,40 @@
         }
 
         // Gère les suggestions d'autocomplétion
-        async function showSuggestions(value) {
-            const autocompleteList = document.getElementById("autocomplete-list");
-            autocompleteList.innerHTML = ""; // Réinitialise les suggestions
+async function showSuggestions(value) {
+    const autocompleteList = document.getElementById("autocomplete-list");
+    autocompleteList.innerHTML = ""; // Clear previous suggestions
 
-            if (!value.trim()) return;
+    if (value.trim() === "") return; // Don't display anything if the input is empty
 
-            const data = await fetchJSON('./clubscountries.json');
-            if (!data) return;
+    try {
+        const suggestions = await loadClubCountries(); // Load data from your JSON
 
-            const suggestions = new Set();
-            Object.entries(data).forEach(([club, country]) => {
-                if (club.toLowerCase().includes(value.toLowerCase()) || country.toLowerCase().includes(value.toLowerCase())) {
-                    suggestions.add(club);
-                    suggestions.add(country);
-                }
+        // Filter suggestions based on user input
+        const filteredSuggestions = suggestions.filter(suggestion =>
+            suggestion.club.toLowerCase().includes(value.toLowerCase()) // Adjust based on JSON structure
+        );
+
+        // Add each suggestion to the list
+        filteredSuggestions.forEach(suggestion => {
+            const listItem = document.createElement("div");
+            listItem.textContent = suggestion.club; // Use club name for display
+            listItem.classList.add("suggestion-item");
+            listItem.addEventListener("click", () => {
+                document.getElementById("guess-input").value = suggestion.club; // Set input value to the selected suggestion
+                autocompleteList.innerHTML = ""; // Clear the suggestion list after click
             });
+            autocompleteList.appendChild(listItem);
+        });
 
-            Array.from(suggestions).sort().forEach(suggestion => {
-                const listItem = document.createElement("li");
-                listItem.textContent = suggestion;
-                listItem.classList.add("suggestion-item");
-                listItem.addEventListener("click", () => {
-                    document.getElementById("guess-input").value = "";
-                    autocompleteList.innerHTML = "";
-                    checkAnswer(suggestion);
-                });
-                autocompleteList.appendChild(listItem);
-            });
-        }
+    } catch (error) {
+        console.error("Error loading suggestions:", error);
+    }
+}
+
+// Event listener for input
+const input = document.getElementById("guess-input");
+input.addEventListener("input", () => showSuggestions(input.value)); // Update suggestions
 
         // Vérifie si la réponse est correcte
         async function checkAnswer(input) {
