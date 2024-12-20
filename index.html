@@ -104,7 +104,6 @@ async function loadClubNameMapping() {
 }
 
 async function displayPlayerStats() {
-    
     const clubNameMapping = await loadClubNameMapping(); // Load the club name mappings
     const clubLogos = await loadClubLogos(); // Load the club logo URLs
     const countryMapping = await loadCountryMapping(); // Load the country mapping
@@ -121,17 +120,20 @@ async function displayPlayerStats() {
         const flagUrl = `https://flagcdn.com/w20/${stat.country}.png`; // URL for the flag image
 
         // Use the clubNameMapping to change club names
-        const formattedClubName = clubNameMapping[stat.team] || stat.team; // Use the formatted name if found
+        const formattedClubName = clubNameMapping[stat.team] ? clubNameMapping[stat.team].name : stat.team; // Use the formatted name if found
         const logoUrl = clubLogos[stat.team] || ''; // Default to empty if not found
+        console.log(`Fetching logo for: ${stat.team}, URL: ${logoUrl}`); // Debugging line
         
+                // Debugging output
+        console.log(`Fetching logo for: ${stat.team}, URL: ${logoUrl}`);
 
         const row = document.createElement('tr');
 
         row.innerHTML = `
             <td>${stat.season}</td>
             <td class="hidden" data-club="${stat.team}">
-                <img src="${logoUrl}" alt="${stat.team} logo" style="width: 20px; height: 20px; margin-right: 5px;">
-                ${clubNameMapping[stat.team] ? clubNameMapping[stat.team].name : stat.team} <!-- Use the formatted name -->
+                <img src="${logoUrl}" alt="${formattedClubName} logo" style="width: 20px; height: 20px; margin-right: 5px;">
+                ${formattedClubName}
             </td>
             <td class="hidden" data-country="${fullCountryName}">
                 <img src="${flagUrl}" alt="${fullCountryName} flag" style="width: 20px; height: 15px; margin-right: 5px; vertical-align: middle;"> 
