@@ -51,7 +51,7 @@
 </body>
 
 <script>
-      let selectedPlayer;
+let selectedPlayer;
 let attempts = 0;
 let revealPlayerOnce = false;
 
@@ -242,7 +242,7 @@ function revealText(cell) {
 }
 
 function revealAllCells() {
-    const allCells = document.querySelectorAll('td');
+    const allCells = document.querySelectorAll('#career-table-body td'); // Corrected selector
     allCells.forEach(cell => {
         cell.classList.add('visible');
     });
@@ -281,6 +281,7 @@ function revealRandomClue() {
     const randomColumnIndex = Math.floor(Math.random() * columnsToReveal.length);
     const columnIndex = columnsToReveal[randomColumnIndex];
 
+
     const allCells = document.querySelectorAll('#career-table-body tr td:nth-child(' + (columnIndex + 1) + ')');
 
     allCells.forEach(cell => {
@@ -293,9 +294,10 @@ function revealRandomClue() {
 
 
 function revealAll() {
-        if (!selectedPlayer) return;
-    document.querySelectorAll('#career-table-body tr td').forEach(cell => {
-            cell.classList.add('visible')
+    if (!selectedPlayer) return;
+    const allCells = document.querySelectorAll('#career-table-body td');
+    allCells.forEach(cell => {
+        cell.classList.add('visible')
     })
     carriereButton.disabled = true
     carriereButton.classList.add("button-disabled")
@@ -308,13 +310,10 @@ function revealPlayer() {
         return
     }
 
-    const nameCell = document.querySelector('table tr td:first-child');
-        
     const playerRow = document.querySelector('#career-table-body tr:first-child');
-    const firstCell = playerRow.querySelector('td:first-child')
+    const firstCell = playerRow.querySelector('td:first-child');
 
-    firstCell.classList.add('visible')
-
+    firstCell.classList.add('visible');
 
     revealPlayerOnce = true
     reponseButton.disabled = true
