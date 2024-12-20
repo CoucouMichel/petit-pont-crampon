@@ -55,9 +55,9 @@ let selectedPlayer;
 let attempts = 0;
 let revealPlayerOnce = false;
 
-const indiceButton = document.getElementById("indiceButton");
-const carriereButton = document.getElementById("carriereButton");
-const reponseButton = document.getElementById("reponseButton");
+let indiceButton;
+let carriereButton;
+let reponseButton;
 
 async function loadPlayerStats() {
     const response = await fetch('./players_stats.json');
@@ -242,7 +242,6 @@ function revealText(cell) {
     cell.classList.add('visible');
 }
 
-
 function revealAllCells() {
     const allCells = document.querySelectorAll('#career-table-body td');
     allCells.forEach(cell => {
@@ -250,6 +249,7 @@ function revealAllCells() {
         cell.classList.add('visible');
     });
 }
+
 
 const input = document.getElementById("guess-input");
 input.addEventListener("input", () => showSuggestions(input.value));
@@ -260,23 +260,6 @@ input.addEventListener("keyup", (event) => {
         document.getElementById("autocomplete-list").innerHTML = "";
     }
 });
-
-// Event listeners for the Indice button
-indiceButton.addEventListener("click", function () {
-    revealRandomClue();
-});
-
-// Event listeners for the Carrière button
-carriereButton.addEventListener("click", function () {
-    revealAll();
-});
-
-// Event listeners for the Réponse button
-reponseButton.addEventListener("click", function () {
-    revealAll();
-    revealPlayer();
-});
-
 function revealRandomClue() {
     if (!selectedPlayer) return;
 
@@ -294,7 +277,6 @@ function revealRandomClue() {
     indiceButton.disabled = true;
     indiceButton.classList.add("button-disabled");
 }
-
 
 function revealAll() {
     if (!selectedPlayer) return;
@@ -327,8 +309,27 @@ function revealPlayer() {
     reponseButton.disabled = true;
     reponseButton.classList.add("button-disabled");
 }
+document.addEventListener('DOMContentLoaded', () => {
+        indiceButton = document.getElementById("indiceButton");
+        carriereButton = document.getElementById("carriereButton");
+        reponseButton = document.getElementById("reponseButton");
 
-displayPlayerStats();
+
+        indiceButton.addEventListener("click", function () {
+            revealRandomClue();
+        });
+
+        carriereButton.addEventListener("click", function () {
+            revealAll();
+        });
+
+        reponseButton.addEventListener("click", function () {
+            revealAll();
+            revealPlayer();
+        });
+    
+    displayPlayerStats();
+});
     </script>
 </body>
 </html>
