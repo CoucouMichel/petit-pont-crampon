@@ -99,9 +99,6 @@ async function displayPlayerStats() {
 
     tableBody.innerHTML = ''; // Clear existing rows
 
-    stats.forEach(stat => {
-        if (stat.season.toLowerCase().includes("season")) return; // Skip if season keyword appears
-
         const fullCountryName = countryMapping[stat.country] || stat.country; // Get the full country name
         const flagUrl = `https://flagcdn.com/w20/${stat.country}.png`; // URL for the flag image
 
