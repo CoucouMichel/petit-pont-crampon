@@ -4,18 +4,180 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Petit Pont Crampon</title>
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        .global-container {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .fixed-header {
+            background-color: #fff;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .container {
+            width: 80%;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        h1, h2 {
+            color: #2c3e50;
+        }
+
+        p {
+            margin-bottom: 10px;
+        }
+
+        .input-container {
+            margin-bottom: 20px;
+        }
+
+        input[type="text"] {
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            width: calc(100% - 24px);
+            box-sizing: border-box;
+            margin-bottom: 10px;
+            font-size: 1em;
+        }
+
+       .autocomplete-suggestions {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: calc(100% - 0px);
+            border: 1px solid #ccc;
+            border-top: none;
+            z-index: 10; /* Ensure it's above other elements */
+            background: white;
+            max-height: 200px; /* Set maximum height */
+            overflow-y: auto; /* Allow vertical scrolling if needed */
+            padding: 0; /* Reset any default padding */
+            list-style: none;
+            border-radius: 0 0 5px 5px;
+        }
+        .suggestion-item {
+            padding: 10px;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .suggestion-item:hover {
+        background-color: #f0f0f0
+        }
+
+        #guess-feedback {
+            margin-top: 5px;
+            font-weight: bold;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        button {
+            padding: 10px 15px;
+            border: none;
+            background-color: #3498db;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        button:disabled {
+        background-color: #bdc3c7;
+        cursor: not-allowed;
+        }
+
+        .button-disabled {
+            background-color: #bdc3c7;
+            cursor: not-allowed;
+        }
+
+        .blink-green {
+            animation: blink-green 0.5s;
+        }
+
+        .blink-red {
+            animation: blink-red 0.5s;
+        }
+
+        @keyframes blink-green {
+            0%, 100% { background-color: inherit; }
+            50% { background-color: green; }
+        }
+
+        @keyframes blink-red {
+            0%, 100% { background-color: inherit; }
+            50% { background-color: red; }
+        }
+
+        .hidden {
+            opacity: 0;
+        }
+        .visible {
+            opacity: 1;
+            transition: opacity 0.3s ease-in-out;
+        }
+        .button-container {
+                display: flex;
+                justify-content: center;
+                gap: 10px; /* Adjust as needed */
+                margin: 10px 0; /* Spacing from the input and Tentative */
+        }
+
+    </style>
 </head>
 <body>
     <div class="global-container">
         <div class="fixed-header">
-    <h1>Petit Pont Crampon</h1>
-    <p>Démasquez le joueur mystère en trouvant les pays et les clubs dans lesquels il a joué !</p>
-    <div class="input-container" style="position: relative;">
-                <input 
-                    type="text" 
-                    id="guess-input" 
-                    placeholder="Tapez un pays, un club ou le nom du joueur mystère" 
+            <h1>Petit Pont Crampon</h1>
+            <p>Démasquez le joueur mystère en trouvant les pays et les clubs dans lesquels il a joué !</p>
+            <div class="input-container" style="position: relative;">
+                <input
+                    type="text"
+                    id="guess-input"
+                    placeholder="Tapez un pays, un club ou le nom du joueur mystère"
                     autocomplete="off"
                 >
                 <ul id="autocomplete-list" class="autocomplete-suggestions"></ul>
@@ -25,10 +187,10 @@
             <p id="attempts">Tentatives : 0</p>
             <p id="feedback"></p>
              <!-- Button Container -->
-        <div class="button-container">
-            <button class="button" id="hint-button">Indice</button>
-            <button class="button" id="career-button">Carrière</button>
-            <button class="button" id="answer-button">Réponse</button>
+            <div class="button-container">
+                <button id="indiceButton">Indice</button>
+                <button id="carriereButton">Carrière</button>
+                <button id="reponseButton">Réponse</button>
             </div>
         </div>
 
@@ -48,289 +210,291 @@
             </table>
         </div>
     </div>
-</body>
-
-<script>
-document.addEventListener('DOMContentLoaded', async () => {
-    let selectedPlayer;
-    let attempts = 0;
-    let revealPlayerOnce = false;
-
-    let indiceButton;
-    let carriereButton;
-    let reponseButton;
     
-    async function loadPlayerStats() {
-        const response = await fetch('./players_stats.json');
-        return response.json();
-    }
-    
-    async function loadClubsCountries() {
-        const response = await fetch('./clubscountries.json');
-        return response.json();
-    }
-    
-    async function selectRandomPlayer() {
-        const playersData = await loadPlayerStats();
-        const players = Object.keys(playersData);
-        selectedPlayer = players[Math.floor(Math.random() * players.length)];
-        return playersData[selectedPlayer];
-    }
-    
-    async function loadCountryMapping() {
-        try {
-            const response = await fetch('./country2letters.json');
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
+    <script>
+        let selectedPlayer;
+        let attempts = 0;
+        let revealPlayerOnce = false;
+        
+        async function loadPlayerStats() {
+            const response = await fetch('./players_stats.json');
             return response.json();
-        } catch (error) {
-            console.error("Error loading country mapping:", error);
-            return {};
         }
-    }
-    
-    async function loadClubNameMapping() {
-        try {
-            const response = await fetch('./clubNameMapping.json');
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
+        
+        async function loadClubsCountries() {
+            const response = await fetch('./clubscountries.json');
             return response.json();
-        } catch (error) {
-            console.error("Error loading club name mapping:", error);
-            return {};
         }
-    }
-    
-    async function loadClubLogos() {
-        try {
-            const response = await fetch('./clubLogos.json');
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return await response.json();
-        } catch (error) {
-            console.error("Error loading club logos:", error);
-            return {};
+        async function selectRandomPlayer() {
+            const playersData = await loadPlayerStats();
+            const players = Object.keys(playersData);
+            selectedPlayer = players[Math.floor(Math.random() * players.length)];
+            return playersData[selectedPlayer];
         }
-    }
-    
-    async function displayPlayerStats() {
-        const clubNameMapping = await loadClubNameMapping();
-        const countryMapping = await loadCountryMapping();
-        const clubLogos = await loadClubLogos();
-        const stats = await selectRandomPlayer();
-    
-        const tableBody = document.getElementById('career-table-body');
-        tableBody.innerHTML = '';
-    
-        if (!Array.isArray(stats)) {
-            console.error("Expected stats to be an array, but got:", stats);
-            return;
-        }
-    
-        stats.forEach(stat => {
-            if (stat.season && stat.season.toLowerCase().includes("season")) return;
-    
-            const fullCountryName = countryMapping[stat.country] || stat.country;
-            const flagUrl = `https://flagcdn.com/w20/${stat.country}.png`;
-            const formattedClubName = clubNameMapping[stat.team] || stat.team;
-            const logoUrl = clubLogos[stat.team] || '';
-    
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td>${stat.season}</td>
-                <td class="hidden" data-club="${stat.team}">
-                    <img src="${logoUrl}" alt="${formattedClubName} logo" style="width: 20px; height: 20px; margin-right: 5px;"> 
-                    ${formattedClubName}
-                </td>
-                <td class="hidden" data-country="${fullCountryName}">
-                    <img src="${flagUrl}" alt="${fullCountryName} flag" style="width: 20px; height: 15px; margin-right: 5px; vertical-align: middle;"> 
-                    ${fullCountryName}
-                </td>
-            `;
-            tableBody.appendChild(row);
-        });
-    }
-    
-    async function showSuggestions(value) {
-        const autocompleteList = document.getElementById("autocomplete-list");
-        autocompleteList.innerHTML = "";
-    
-        if (value.trim() === "") return;
-    
-        try {
-            const data = await loadClubsCountries();
-            const suggestions = new Set();
-    
-            for (let club in data) {
-                const country = data[club];
-                if (club.toLowerCase().includes(value.toLowerCase())) {
-                    suggestions.add(club);
+        
+        async function loadCountryMapping() {
+            try {
+                const response = await fetch('./country2letters.json'); // Path to your country mapping file
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
                 }
-                if (country.toLowerCase().includes(value.toLowerCase())) {
-                    suggestions.add(country);
-                }
+                return response.json(); // Parse and return the JSON data
+            } catch (error) {
+                console.error("Error loading country mapping:", error);
+                return {}; // Return an empty object on error
             }
-    
-            const sortedSuggestions = Array.from(suggestions).sort();
-    
-            sortedSuggestions.forEach(suggestion => {
-                const listItem = document.createElement("li");
-                listItem.textContent = suggestion;
-                listItem.classList.add("suggestion-item");
-                listItem.addEventListener("click", () => {
-                    document.getElementById("guess-input").value = "";
-                    autocompleteList.innerHTML = "";
-                    checkAnswer(suggestion);
-                });
-                autocompleteList.appendChild(listItem);
+        }
+        
+        async function loadClubNameMapping() {
+            try {
+                const response = await fetch('./clubNameMapping.json'); // Path to your club name mapping file
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json(); // Parse and return the JSON data
+            } catch (error) {
+                console.error("Error loading club name mapping:", error);
+                return {}; // Return an empty object on error
+            }
+        }
+        
+        async function loadClubLogos() {
+            try {
+                const response = await fetch('./clubLogos.json'); // Adjust the path as necessary
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return await response.json(); // Parse and return the JSON data
+            } catch (error) {
+                console.error("Error loading club logos:", error);
+                return {}; // Return an empty object on error
+            }
+        }
+        
+        async function displayPlayerStats() {
+            const clubNameMapping = await loadClubNameMapping(); // Load the club name mappings
+            const countryMapping = await loadCountryMapping(); // Load the country mapping
+            const clubLogos = await loadClubLogos(); // Load the club logos
+            const stats = await selectRandomPlayer(); // Fetch the player stats
+        
+            const tableBody = document.getElementById('career-table-body'); // Get the table body element
+        
+            tableBody.innerHTML = ''; // Clear existing rows
+        
+            // Check if stats is an array
+            if (!Array.isArray(stats)) {
+                console.error("Expected stats to be an array, but got:", stats);
+                return; // Exit the function if stats is not an array
+            }
+        
+            stats.forEach(stat => {
+                // Skip if the season keyword appears
+                if (stat.season && stat.season.toLowerCase().includes("season")) return;
+        
+                const fullCountryName = countryMapping[stat.country] || stat.country; // Get the full country name
+                const flagUrl = `https://flagcdn.com/w20/${stat.country}.png`; // URL for the flag image
+        
+                // Use the clubNameMapping to change club names
+                const formattedClubName = clubNameMapping[stat.team] || stat.team; // Use the formatted name if found
+                const logoUrl = clubLogos[stat.team] || ''; // Default to empty if not found
+        
+                // Log the data for debugging
+                console.log(`Fetching logo for: ${stat.team}, URL: ${logoUrl}`);
+        
+                const row = document.createElement('tr');
+        
+                row.innerHTML = `
+                    <td>${stat.season}</td>
+                    <td class="hidden" data-club="${stat.team}">
+                        <img src="${logoUrl}" alt="${formattedClubName} logo" style="width: 20px; height: 20px; margin-right: 5px;">
+                        ${formattedClubName}
+                    </td>
+                    <td class="hidden" data-country="${fullCountryName}">
+                        <img src="${flagUrl}" alt="${fullCountryName} flag" style="width: 20px; height: 15px; margin-right: 5px; vertical-align: middle;">
+                        ${fullCountryName}
+                    </td>
+                `;
+        
+                tableBody.appendChild(row); // Append the row to the table body
             });
-    
-        } catch (error) {
-            console.error("Erreur lors du chargement des suggestions :", error);
         }
-    }
-    
-    async function checkAnswer(input) {
-        const answer = input.trim().toLowerCase();
-        const feedback = document.getElementById("feedback");
-        const countryMapping = await loadCountryMapping();
-        const reverseMapping = Object.fromEntries(
-            Object.entries(countryMapping).map(([abbr, fullName]) => [fullName.toLowerCase(), abbr.toLowerCase()])
-        );
-        let isCorrect = false;
-    
-        if (answer === selectedPlayer.toLowerCase()) {
-            feedback.textContent = `Bingo ! Vous avez trouvé le joueur : ${selectedPlayer}`;
-            feedback.style.color = "green";
-            revealAllCells();
-            isCorrect = true;
-        } else {
-            feedback.textContent = '';
-            attempts++;
-            document.getElementById("attempts").textContent = `Tentatives : ${attempts}`;
+        
+        async function showSuggestions(value) {
+            const autocompleteList = document.getElementById("autocomplete-list");
+            autocompleteList.innerHTML = ""; // Réinitialiser la liste
+        
+            if (value.trim() === "") return; // Ne rien afficher si l'entrée est vide
+        
+            try {
+                const data = await loadClubsCountries(); // Charger les données depuis le JSON
+                const suggestions = new Set();
+        
+                for (let club in data) {
+                    const country = data[club];
+        
+                    // Rechercher dans les clubs et les pays
+                    if (club.toLowerCase().includes(value.toLowerCase())) {
+                        suggestions.add(club);
+                    }
+                    if (country.toLowerCase().includes(value.toLowerCase())) {
+                        suggestions.add(country);
+                    }
+                }
+        
+                // Trier les suggestions
+                const sortedSuggestions = Array.from(suggestions).sort();
+        
+                // Ajouter chaque suggestion à la liste
+                sortedSuggestions.forEach(suggestion => {
+                    const listItem = document.createElement("li");
+                    listItem.textContent = suggestion;
+                    listItem.classList.add("suggestion-item");
+                    listItem.addEventListener("click", () => {
+                        document.getElementById("guess-input").value = "";
+                        autocompleteList.innerHTML = ""; // Effacer la liste après un clic
+                        checkAnswer(suggestion);
+                    });
+                    autocompleteList.appendChild(listItem);
+                });
+        
+            } catch (error) {
+                console.error("Erreur lors du chargement des suggestions :", error);
+            }
         }
-    
-        const cells = document.querySelectorAll('td[data-country], td[data-club]');
-        cells.forEach(cell => {
-            const cellCountry = cell.getAttribute('data-country')?.toLowerCase();
-            const cellClub = cell.getAttribute('data-club')?.toLowerCase();
-    
-            if (cellCountry === answer || reverseMapping[cellCountry] === answer || cellClub === answer) {
-                revealText(cell);
+        async function checkAnswer(input) {
+            const answer = input.trim().toLowerCase();
+            const feedback = document.getElementById("feedback");
+            const countryMapping = await loadCountryMapping();
+            const reverseMapping = Object.fromEntries(
+                Object.entries(countryMapping).map(([abbr, fullName]) => [fullName.toLowerCase(), abbr.toLowerCase()])
+            );
+        
+            let isCorrect = false;
+        
+            if (answer === selectedPlayer.toLowerCase()) {
+                feedback.textContent = `Bingo ! Vous avez trouvé le joueur : ${selectedPlayer}`;
+                feedback.style.color = "green";
+                revealAllCells();
                 isCorrect = true;
+            } else {
+                feedback.textContent = '';
+                attempts++;
+                document.getElementById("attempts").textContent = `Tentatives : ${attempts}`;
+            }
+        
+            const cells = document.querySelectorAll('td[data-country], td[data-club]');
+            cells.forEach(cell => {
+                const cellCountry = cell.getAttribute('data-country')?.toLowerCase();
+                const cellClub = cell.getAttribute('data-club')?.toLowerCase();
+        
+                if (cellCountry === answer || reverseMapping[cellCountry] === answer || cellClub === answer) {
+                    revealText(cell);
+                    isCorrect = true;
+                }
+            });
+        
+            blinkInput(isCorrect);
+        }
+        
+        function blinkInput(isCorrect) {
+            const inputField = document.getElementById("guess-input");
+            if (isCorrect) {
+                inputField.classList.add("blink-green");
+            } else {
+                inputField.classList.add("blink-red");
+            }
+            setTimeout(() => {
+                inputField.classList.remove("blink-green", "blink-red");
+            }, 500);
+        }
+        
+        function revealText(cell) {
+            cell.classList.add('visible');
+        }
+        
+        function revealAllCells() {
+            const allCells = document.querySelectorAll('td');
+            allCells.forEach(cell => {
+                cell.classList.add('visible');
+            });
+        }
+        
+        const input = document.getElementById("guess-input");
+        input.addEventListener("input", () => showSuggestions(input.value)); // Mise à jour des suggestions
+        input.addEventListener("keyup", (event) => {
+            if (event.key === "Enter") {
+                checkAnswer(input.value);
+                input.value = ""; // Effacer la saisie
+                document.getElementById("autocomplete-list").innerHTML = ""; // Effacer la liste
             }
         });
-        blinkInput(isCorrect);
-    }
-    
-    function blinkInput(isCorrect) {
-        const inputField = document.getElementById("guess-input");
-        if (isCorrect) {
-            inputField.classList.add("blink-green");
-        } else {
-            inputField.classList.add("blink-red");
-        }
-        setTimeout(() => {
-            inputField.classList.remove("blink-green", "blink-red");
-        }, 500);
-    }
-    
-    function revealText(cell) {
-        cell.classList.remove('hidden');
-        cell.classList.add('visible');
-    }
-    
-    function revealAllCells() {
-        const allCells = document.querySelectorAll('#career-table-body td');
-        allCells.forEach(cell => {
-            cell.classList.remove('hidden');
-            cell.classList.add('visible');
-        });
-    }
-    
-    const input = document.getElementById("guess-input");
-    input.addEventListener("input", () => showSuggestions(input.value));
-    input.addEventListener("keyup", (event) => {
-        if (event.key === "Enter") {
-            checkAnswer(input.value);
-            input.value = "";
-            document.getElementById("autocomplete-list").innerHTML = "";
-        }
-    });
-    
-    function revealRandomClue() {
-        if (!selectedPlayer) return;
-    
-        const columnsToReveal = [1, 2];
-        const randomColumnIndex = Math.floor(Math.random() * columnsToReveal.length);
-        const columnIndex = columnsToReveal[randomColumnIndex];
-    
-        const allCells = document.querySelectorAll('#career-table-body tr td:nth-child(' + (columnIndex + 1) + ')');
-    
-        allCells.forEach(cell => {
-            cell.classList.remove('hidden');
-            cell.classList.add('visible');
-        });
-    
-        indiceButton.disabled = true;
-        indiceButton.classList.add("button-disabled");
-    }
-    
-    function revealAll() {
-        if (!selectedPlayer) return;
-    
-        const allCells = document.querySelectorAll('#career-table-body td');
-    
-        allCells.forEach(cell => {
-            cell.classList.remove('hidden');
-            cell.classList.add('visible');
-        });
-    
-        carriereButton.disabled = true;
-        carriereButton.classList.add("button-disabled");
-    }
-    
-    function revealPlayer() {
-        if (!selectedPlayer) return;
-    
-        if (revealPlayerOnce) {
-            return;
-        }
-    
-        const playerRow = document.querySelector('#career-table-body tr:first-child');
-        const firstCell = playerRow.querySelector('td:first-child');
-    
-        firstCell.classList.remove('hidden');
-        firstCell.classList.add('visible');
-    
-        revealPlayerOnce = true;
-        reponseButton.disabled = true;
-        reponseButton.classList.add("button-disabled");
-    }
-
-     indiceButton = document.getElementById("indiceButton");
-     carriereButton = document.getElementById("carriereButton");
-     reponseButton = document.getElementById("reponseButton");
-    
-    indiceButton.addEventListener("click", function () {
+        
+        displayPlayerStats();
+        
+        const indiceButton = document.getElementById("indiceButton");
+        const carriereButton = document.getElementById("carriereButton");
+        const reponseButton = document.getElementById("reponseButton");
+        
+        indiceButton.addEventListener("click", function () {
             revealRandomClue();
         });
-
+        
         carriereButton.addEventListener("click", function () {
             revealAll();
         });
-
+        
         reponseButton.addEventListener("click", function () {
             revealAll();
             revealPlayer();
         });
-        await displayPlayerStats();
-
-
-});
+        
+        function revealRandomClue() {
+            if (!selectedPlayer) return;
+        
+            const columnsToReveal = [1, 2];
+            const randomColumnIndex = Math.floor(Math.random() * columnsToReveal.length);
+            const columnIndex = columnsToReveal[randomColumnIndex];
+        
+        
+            const allCells = document.querySelectorAll('#career-table-body tr td:nth-child('+(columnIndex+1)+')');
+        
+            allCells.forEach( (cell, index) => {
+            cell.classList.add('visible')
+        });
+        
+            indiceButton.disabled = true
+            indiceButton.classList.add("button-disabled")
+        
+        }
+        
+        function revealAll() {
+            if (!selectedPlayer) return;
+        
+            document.querySelectorAll('#career-table-body tr td').forEach(cell => {
+            cell.classList.add('visible')
+        })
+        
+            carriereButton.disabled = true
+            carriereButton.classList.add("button-disabled")
+        }
+        
+        function revealPlayer() {
+            if(!selectedPlayer) return;
+        
+            if (revealPlayerOnce) {
+                    return
+            }
+        
+            const playerRow = document.querySelector('#career-table-body tr:first-child');
+             const nameCell = playerRow.querySelector('td:first-child');
+        
+            nameCell.classList.add('visible')
+        
+            revealPlayerOnce = true
+            reponseButton.disabled = true
+            reponseButton.classList.add("button-disabled")
+        
+        }
     </script>
 </body>
 </html>
