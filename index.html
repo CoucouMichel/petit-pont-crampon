@@ -290,7 +290,7 @@
                 cell.classList.add('visible');
             });
         }
-    const input = document.getElementById("guess-input");
+       const input = document.getElementById("guess-input");
         input.addEventListener("input",  async () => {
             const value = input.value
                await showSuggestions(value);
@@ -301,7 +301,9 @@
                    
              const suggestionText = suggestion.substring(value.length);
 
-              autofillSuggestion.textContent = suggestionText;
+             autofillSuggestion.textContent = suggestionText;
+
+             
       });
           input.addEventListener("keyup", (event) => {
               if (event.key === "Enter") {
