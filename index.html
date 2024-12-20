@@ -66,10 +66,23 @@
         }
     
         async function selectRandomPlayer() {
-            const playersData = await loadPlayerStats();
-            const players = Object.keys(playersData);
-            selectedPlayer = players[Math.floor(Math.random() * players.length)];
-            return playersData[selectedPlayer];
+    const response = await fetch('./players_stats.json'); // Adjust the path as necessary
+    const data = await response.json();
+
+    // Get an array of player keys
+    const playerNames = Object.keys(data);
+    
+    // Select a random player
+    const randomIndex = Math.floor(Math.random() * playerNames.length);
+    const randomPlayer = playerNames[randomIndex];
+    
+    // Return the player data
+    return {
+        name: randomPlayer,
+        stats: data[randomPlayer].stats, // Return stats for the selected player
+        image_url: data[randomPlayer].image_url // Include image URL if needed
+    };
+}
         }
     async function loadClubLogos() {
     try {
@@ -115,18 +128,14 @@ async function displayPlayerStats() {
     const clubLogos = await loadClubLogos(); // Load the club logo URLs
     const countryMapping = await loadCountryMapping(); // Load the country mapping
 
-    const stats = await selectRandomPlayer(); // Fetch the player stats
-        console.log("Stats fetched:", stats); // Debugging line
+    const playerData = await selectRandomPlayer(); // Fetch a random player
+    const stats = playerData.stats; // Get the stats for the selected player
+    console.log("Stats fetched:", stats); // Debugging line
 
-    if (!Array.isArray(stats)) {
-        console.error("Expected stats to be an array, but got:", stats);
-        return; // Exit the function if stats is not an array
-    }
-    
     const tableBody = document.getElementById('career-table-body'); // Get the table body element
-
     tableBody.innerHTML = ''; // Clear existing rows
 
+    // Display stats for the selected player
     stats.forEach(stat => {
         if (stat.season.toLowerCase().includes("season")) return; // Skip if season keyword appears
 
@@ -136,21 +145,19 @@ async function displayPlayerStats() {
         // Use the clubNameMapping to change club names
         const formattedClubName = clubNameMapping[stat.team] ? clubNameMapping[stat.team].name : stat.team; // Use the formatted name if found
         const logoUrl = clubLogos[stat.team] || ''; // Default to empty if not found
+
         console.log(`Fetching logo for: ${stat.team}, URL: ${logoUrl}`); // Debugging line
-        
-                // Debugging output
-        console.log(`Fetching logo for: ${stat.team}, URL: ${logoUrl}`);
 
         const row = document.createElement('tr');
 
         row.innerHTML = `
             <td>${stat.season}</td>
             <td class="hidden" data-club="${stat.team}">
-                <img src="${logoUrl}" alt="${formattedClubName} logo" style="width: 20px; height: 20px; margin-right: 5px;">
+                <img src="${logoUrl}" alt="${formattedClubName} logo">
                 ${formattedClubName}
             </td>
             <td class="hidden" data-country="${fullCountryName}">
-                <img src="${flagUrl}" alt="${fullCountryName} flag" style="width: 20px; height: 15px; margin-right: 5px; vertical-align: middle;"> 
+                <img src="${flagUrl}" alt="${fullCountryName} flag" style="width: 20px; height: 15px; margin-right: 5px;"> 
                 ${fullCountryName}
             </td>
         `;
