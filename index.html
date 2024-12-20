@@ -1,333 +1,446 @@
-/* Définir les couleurs principales */
-:root {
-    --primary-color: #c8ff00;  /* Couleur primaire (bleu foncé) */
-    --secondary-color: #f39c12; /* Yellow */
-    --background-color: #13171f; /* Black */
-    --text-color: #ffffff; /* Texte blanc */
-    --highlight-color: c8ff00; /* Rouge pour survol ou messages d'erreur */
-    --success-color: #2ecc71; /* Vert pour le succès */
-}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Petit Pont Crampon</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="global-container">
+        <div class="fixed-header">
+            <h1>Petit Pont Crampon</h1>
+            <p>Démasquez le joueur mystère en trouvant les pays et les clubs dans lesquels il a joué !</p>
+            <div class="input-container" style="position: relative;">
+                <input
+                    type="text"
+                    id="guess-input"
+                    placeholder="Tapez un pays, un club ou le nom du joueur mystère"
+                    autocomplete="off"
+                >
+                <ul id="autocomplete-list" class="autocomplete-suggestions"></ul>
+                <div id="guess-feedback"></div>
+            </div>
+            
+            <p id="attempts">Tentatives : 0</p>
+            <p id="feedback"></p>
+             <!-- Button Container -->
+            <div class="button-container">
+                <button id="indiceClubButton">Indice Club</button>
+                 <button id="indiceCountryButton">Indice Pays</button>
+                <button id="carriereButton">Carrière</button>
+                <button id="reponseButton">Réponse</button>
+            </div>
+        </div>
 
-/* Corps de la page */
-body {
-    font-family: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
-    background-color: var(--background-color);
-    color: var(--text-color);
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    text-align: center;
-}
-
-/* Conteneur principal */
-.fixed-header {
-    width: 100%;
-    background-color: var(--background-color);
-    color: var(--text-color);
-    z-index: 9999;
-    padding: 20px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
-    text-align: center;
-    box-sizing: border-box;
-    height: auto;
-    padding-bottom: 20px;
-    position: relative; /* Changed to relative */
+        <div class="container">
+             <h2 class="ai-style-change-1" id="player-name-display"></h2>
+            <table id="career-table">
+                <thead>
+                    <tr>
+                        <th>Années</th>
+                        <th>Club</th>
+                        <th>Pays</th>
+                    </tr>
+                </thead>
+                <tbody id="career-table-body">
+                    <!-- Les lignes du tableau seront ajoutées dynamiquement -->
+                </tbody>
+            </table>
+        </div>
+    </div>
     
-}
-
-button {
-    padding: 10px 15px;
-    border: none;
-    background-color: #3498db;
-    color: white;
-    cursor: pointer;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-}
-
-button:hover {
-    background-color: #2980b9;
-}
-
-button:disabled {
-  background-color: #bdc3c7;
-  cursor: not-allowed;
-}
-
-.button-disabled {
-    background-color: #bdc3c7;
-    cursor: not-allowed;
-}
-
-.blink-green {
-    animation: blink-green 0.5s;
-}
-
-.blink-red {
-    animation: blink-red 0.5s;
-}
-
-@keyframes blink-green {
-    0%, 100% { background-color: inherit; }
-    50% { background-color: green; }
-}
-
-@keyframes blink-red {
-    0%, 100% { background-color: inherit; }
-    50% { background-color: red; }
-}
-
-.autocomplete-suggestions {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: calc(100% - 0px);
-    border-top: none;
-    z-index: 10;
-    background: white;
-    max-height: 200px;
-    overflow-y: auto;
-    padding: 0;
-    list-style: none;
-    border-radius: 0 0 5px 5px;
-}
-
-.suggestion-item {
-    padding: 10px;
-    cursor: pointer;
-    transition: background-color 0.2s ease-in-out;
-    border-bottom: 1px solid #ddd;
-}
-
-.suggestion-item:hover {
-    background-color: #f0f0f0
-}
-
-.hidden {
-    opacity: 0;
-}
-
-.visible {
-    opacity: 1;
-}
-
-.button-container {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin: 10px 0;
-}
-
-/* Titre */
-h1 {
-    font-size: 24px;
-    color: #c8ff00;
-    margin-bottom: 10px;
-}
-
-/* Conteneur du tableau */
-.global-container {
-    width: 100%;
-    padding: 0 10px;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-h2.ai-style-change-1 {
-    width: 100%;
-    background-color: transparent;
-    z-index: 50;
-    color: white;
-    text-align: center;
-    margin-bottom: 10px;
-    white-space: nowrap;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-     top: 0px;
-}
-
-/* Style du tableau */
-table#career-table {
-  width: 90%;
-  max-width: 700px;
-  background-color: initial;
-  z-index: 10;
-  border-collapse: collapse;
-  margin-bottom: 20px;
-  position: relative;
-    top: 0px;
-}
-
-/* Définir la largeur des colonnes */
-th, td {
-    padding: 12px 15px;
-    font-size: 12px;
-    color: var(--text-color);
-    word-wrap: break-word;
+    <script>
+        let selectedPlayer;
+        let attempts = 0;
+        let revealPlayerOnce = false;
+         const playerNameDisplay = document.getElementById("player-name-display");
     
-}
+        const globalContainer = document.querySelector('.global-container');
+        const fixedHeader = document.querySelector('.fixed-header');
 
-th {
-    background-color: #13171f;
-    color: #c8ff00;
-    font-weight: bold;
-    font-size: 16px;
-    text-align: center;
-}
+         function adjustGlobalContainerMargin() {
+            globalContainer.style.marginTop = `${fixedHeader.offsetHeight}px`;
+         }
 
-td {
-    background-color: #13171f;
-    color: var(--text-color);
-    font-size: 13px
-}
+        
+        async function loadPlayerStats() {
+            const response = await fetch('./players_stats.json');
+            return response.json();
+        }
+        
+        async function loadClubsCountries() {
+            const response = await fetch('./clubscountries.json');
+            return response.json();
+        }
+        async function selectRandomPlayer() {
+            const playersData = await loadPlayerStats();
+            const players = Object.keys(playersData);
+            selectedPlayer = players[Math.floor(Math.random() * players.length)];
+            return playersData[selectedPlayer];
+        }
+        
+        async function loadCountryMapping() {
+            try {
+                const response = await fetch('./country2letters.json'); // Path to your country mapping file
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json(); // Parse and return the JSON data
+            } catch (error) {
+                console.error("Error loading country mapping:", error);
+                return {}; // Return an empty object on error
+            }
+        }
+        
+        async function loadClubNameMapping() {
+            try {
+                const response = await fetch('./clubNameMapping.json'); // Path to your club name mapping file
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json(); // Parse and return the JSON data
+            } catch (error) {
+                console.error("Error loading club name mapping:", error);
+                return {}; // Return an empty object on error
+            }
+        }
+        
+        async function loadClubLogos() {
+            try {
+                const response = await fetch('./clubLogos.json'); // Adjust the path as necessary
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return await response.json(); // Parse and return the JSON data
+            } catch (error) {
+                console.error("Error loading club logos:", error);
+                return {}; // Return an empty object on error
+            }
+        }
+        
+ async function displayPlayerStats() {
+            const clubNameMapping = await loadClubNameMapping();
+            const countryMapping = await loadCountryMapping();
+            const clubLogos = await loadClubLogos();
+            const stats = await selectRandomPlayer();
 
-/* Masquer le texte de la cellule, mais garder la couleur de fond */
-td.hidden {
-    visibility: hidden;
-    text-align: center;
-}
+            playerNameDisplay.innerHTML = "";
+             if(selectedPlayer) {
+                  for (let i = 0; i < selectedPlayer.length; i++) {
+                       if (selectedPlayer[i] === " ") {
+                          const space = document.createElement("span")
+                          space.innerHTML = " "
+                          playerNameDisplay.appendChild(space)
+                       } else {
+                         const rectangle = document.createElement("span");
+                         rectangle.classList.add("player-name-rectangle");
+                         playerNameDisplay.appendChild(rectangle);
+                        }
+                 }
+             }
 
-/* Lorsque la cellule est révélée */
-td.visible {
-    visibility: visible !important;
-}
+            adjustGlobalContainerMargin();
+            window.addEventListener('resize', adjustGlobalContainerMargin);
 
-/* Pour la colonne des pays, appliquer un fond bleu marine et garder la structure */
-td[data-country] {
-    visibility: hidden;
-}
+            const tableBody = document.getElementById('career-table-body');
+            tableBody.innerHTML = '';
 
-/* Pour la colonne des clubs, appliquer la couleur de fond appropriée */
-td[data-club] {
-    visibility: hidden;
-}
+            if (!Array.isArray(stats)) {
+                console.error("Expected stats to be an array, but got:", stats);
+                return;
+            }
+            
+             let mergedStats = [];
+            let currentMerged = null;
 
-/* Rendre le tableau responsive */
-@media (max-width: 768px) {
-  table#career-table {
-    width: 95%;
-         font-size: 11px;
-    }
+            for (const stat of stats) {
+                if (stat.season && stat.season.toLowerCase().includes("season")) continue;
+                const formattedClubName = clubNameMapping[stat.team] || stat.team;
+                const fullCountryName = countryMapping[stat.country] || stat.country;
+                 
+             if (currentMerged && currentMerged.team === formattedClubName && currentMerged.country === fullCountryName) {
+                 currentMerged.endSeason = stat.season;
+
+                } else {
+                    if(currentMerged) {
+                       mergedStats.push(currentMerged)
+                    }
+                   currentMerged = {
+                      startSeason: stat.season,
+                      endSeason: stat.season,
+                      team: formattedClubName,
+                       country:fullCountryName,
+                       teamCode: stat.team,
+                        countryCode: stat.country
+                   }
+
+                }
+
+            }
+
+
+             if(currentMerged) {
+                   mergedStats.push(currentMerged)
+            }
+            
+
+
+            for (const mergedStat of mergedStats) {
+                const fullCountryName = countryMapping[mergedStat.countryCode] || mergedStat.countryCode;
+                const flagUrl = `https://flagcdn.com/w20/${mergedStat.countryCode}.png`;
+                
+                    // Use the clubNameMapping to change club names
+                const formattedClubName = clubNameMapping[mergedStat.teamCode] || mergedStat.teamCode;
+                const logoUrl = clubLogos[mergedStat.teamCode] || '';
+
+                const startSeason = mergedStat.startSeason;
+                const endSeason = mergedStat.endSeason;
+                let formattedSeason;
+
+
+                 if (startSeason === endSeason) {
+                      formattedSeason =  startSeason.substring(0,9)
+                    } else {
+                       formattedSeason = `${startSeason.substring(0, 4)}-${endSeason.substring(endSeason.length - 4)}`;
+                 }
+            
+              
+
+                   const row = document.createElement('tr');
+
+                   row.innerHTML = `
+                       <td>${formattedSeason}</td>
+                        <td class="hidden" data-club="${mergedStat.teamCode}">
+                                <img src="${logoUrl}" alt="${formattedClubName} logo" style="width: 20px; height: 20px; margin-right: 5px;">
+                                ${formattedClubName}
+                            </td>
+                           <td class="hidden" data-country="${fullCountryName}">
+                                <img src="${flagUrl}" alt="${fullCountryName} flag" style="width: 20px; height: 15px; margin-right: 5px; vertical-align: middle;">
+                                ${fullCountryName}
+                            </td>
+                   `;
+                tableBody.appendChild(row);
+
+        }
+}
+        
+        async function showSuggestions(value) {
+            const autocompleteList = document.getElementById("autocomplete-list");
+            autocompleteList.innerHTML = ""; // Réinitialiser la liste
+        
+            if (value.trim() === "") return; // Ne rien afficher si l'entrée est vide
+        
+            try {
+                const data = await loadClubsCountries(); // Charger les données depuis le JSON
+                const suggestions = new Set();
+        
+                for (let club in data) {
+                    const country = data[club];
+        
+                    // Rechercher dans les clubs et les pays
+                    if (club.toLowerCase().includes(value.toLowerCase())) {
+                        suggestions.add(club);
+                    }
+                    if (country.toLowerCase().includes(value.toLowerCase())) {
+                        suggestions.add(country);
+                    }
+                }
+        
+                // Trier les suggestions
+                const sortedSuggestions = Array.from(suggestions).sort();
+        
+                // Ajouter chaque suggestion à la liste
+                sortedSuggestions.forEach(suggestion => {
+                    const listItem = document.createElement("li");
+                    listItem.textContent = suggestion;
+                    listItem.classList.add("suggestion-item");
+                    listItem.addEventListener("click", () => {
+                        document.getElementById("guess-input").value = "";
+                        autocompleteList.innerHTML = ""; // Effacer la liste après un clic
+                        checkAnswer(suggestion);
+                    });
+                    autocompleteList.appendChild(listItem);
+                });
+        
+            } catch (error) {
+                console.error("Erreur lors du chargement des suggestions :", error);
+            }
+        }
+        async function checkAnswer(input) {
+            const answer = input.trim().toLowerCase();
+            const feedback = document.getElementById("feedback");
+            const countryMapping = await loadCountryMapping();
+            const reverseMapping = Object.fromEntries(
+                Object.entries(countryMapping).map(([abbr, fullName]) => [fullName.toLowerCase(), abbr.toLowerCase()])
+            );
+        
+            let isCorrect = false;
+        
+            if (answer === selectedPlayer.toLowerCase()) {
+                
+                playerNameDisplay.textContent = selectedPlayer;
+                revealAllCells();
+                isCorrect = true;
+            } else {
+                feedback.textContent = '';
+                attempts++;
+                document.getElementById("attempts").textContent = `Tentatives : ${attempts}`;
+            }
+        
+            const cells = document.querySelectorAll('td[data-country], td[data-club]');
+            cells.forEach(cell => {
+                const cellCountry = cell.getAttribute('data-country')?.toLowerCase();
+                const cellClub = cell.getAttribute('data-club')?.toLowerCase();
+        
+                if (cellCountry === answer || reverseMapping[cellCountry] === answer || cellClub === answer) {
+                    revealText(cell);
+                    isCorrect = true;
+                }
+            });
+        
+            blinkInput(isCorrect);
+        }
+        
+        function blinkInput(isCorrect) {
+            const inputField = document.getElementById("guess-input");
+            if (isCorrect) {
+                inputField.classList.add("blink-green");
+            } else {
+                inputField.classList.add("blink-red");
+            }
+            setTimeout(() => {
+                inputField.classList.remove("blink-green", "blink-red");
+            }, 500);
+        }
+        
+        function revealText(cell) {
+            cell.classList.add('visible');
+        }
+        
+        function revealAllCells() {
+            const allCells = document.querySelectorAll('td');
+            allCells.forEach(cell => {
+                cell.classList.add('visible');
+            });
+        }
+        
+        const input = document.getElementById("guess-input");
+        input.addEventListener("input", () => showSuggestions(input.value)); // Mise à jour des suggestions
+        input.addEventListener("keyup", (event) => {
+            if (event.key === "Enter") {
+                checkAnswer(input.value);
+                input.value = ""; // Effacer la saisie
+                document.getElementById("autocomplete-list").innerHTML = ""; // Effacer la liste
+            }
+        });
+        
+        displayPlayerStats();
+        
+         const indiceClubButton = document.getElementById("indiceClubButton");
+        const indiceCountryButton = document.getElementById("indiceCountryButton");
+        const carriereButton = document.getElementById("carriereButton");
+        const reponseButton = document.getElementById("reponseButton");
     
-     th, td {
-           padding: 8px;
-    }
-}
-
-/* Centrer la barre de saisie */
-body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    margin: 0;
-    flex-direction: column;
-}
-
-/* Centrer la barre de saisie */
-input#guess-input {
-    width: 80%;
-    max-width: 400px;
-    padding: 10px;
-    font-size: 14px;
-    margin-bottom: 20px;
-    border: 1px solid #c8ff0052;
-    background-color: #161616;
-    color: #949e71;
-    text-align: center;
-    border-radius: 5px;
-    box-sizing: border-box;
-}
-
-#guess-input:focus {
-    border-color: #949e71;
-    outline: none;
-}
-
-/* Style pour afficher les tentatives */
-#attempts {
-    margin-top: -2px;
-    color: var(--text-color);
-    font-size: 14px;
-}
-
-/* Liste déroulante des suggestions */
-.autocomplete-suggestions {
-    position: absolute;
-    background-color: #28333d;
-    max-height: 150px;
-    overflow-y: auto;
-    z-index: 1000;
-    width: 100%;
-    margin-top: -20px;
-    list-style: none;
-    padding: 0;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.autocomplete-suggestions li {
-    padding: 10px;
-    cursor: pointer;
-    background-color: #161616;
-    color: #adbb62;
-    border-bottom: 1px solid #3f464d;
-}
-
-.autocomplete-suggestions li:last-child {
-    border-bottom: none;
-}
-
-.autocomplete-suggestions li:hover {
-    background-color: #111e2b;
-    color: #c8ff00;
-    font-weight: bold;
-    border-radius: 5px;
-}
-
-/* Clignotement vert */
-.blink-green {
-    animation: blink-green 0.8s ease;
-}
-
-@keyframes blink-green {
-    0%, 100% { background-color: black; }
-    50% { background-color: lightgreen; }
-}
-
-/* Clignotement rouge */
-.blink-red {
-    animation: blink-red 0.8s ease;
-}
-
-@keyframes blink-red {
-    0%, 100% { background-color: black; }
-    50% { background-color: lightcoral; }
     
-}
-.player-name-rectangle {
-    display: inline-block;
-    width: 10px;
-    height: 20px;
-    background-color: var(--text-color);
-    margin-right: 3px;
-    vertical-align: middle;
-}
+        indiceClubButton.addEventListener("click", function () {
+            revealRandomClueClub();
+        });
+        
+        indiceCountryButton.addEventListener("click", function () {
+            revealRandomClueCountry();
+        });
+    
+        carriereButton.addEventListener("click", function () {
+            revealAll();
+        });
+        
+        reponseButton.addEventListener("click", function () {
+            revealPlayer();
+        });
+        
+    function revealRandomClueClub() {
+           if (!selectedPlayer) return;
+          
+            let availableCells = [];
 
-/* Définir la largeur des colonnes */
-th:nth-child(1), td:nth-child(1) {
-    width: 26%;
-    min-width: 26%;
-}
+            // Get all hidden cells in the Club column
+             document.querySelectorAll('#career-table-body tr').forEach((row, rowIndex) => {
+                      const cell = row.querySelector(`td:nth-child(2).hidden`);
+                      if (cell) {
+                         availableCells.push({row: rowIndex, column: 1, cell});
+                    }
+                });
 
-th:nth-child(2), td:nth-child(2),
-th:nth-child(3), td:nth-child(3) {
-    width: 37%;
-    min-width: 37%;
-}
+                if (availableCells.length > 0) {
+                     const randomIndex = Math.floor(Math.random() * availableCells.length);
+                     const {cell} = availableCells[randomIndex];
+
+                      cell.classList.add('visible');
+                       // Remove the cell from available cells
+                       availableCells.splice(randomIndex, 1)
+                   
+                } else {
+                    indiceClubButton.disabled = true;
+                    indiceClubButton.classList.add("button-disabled");
+                }
+
+
+        }
+    function revealRandomClueCountry() {
+           if (!selectedPlayer) return;
+          
+            let availableCells = [];
+
+            // Get all hidden cells in the Country column
+             document.querySelectorAll('#career-table-body tr').forEach((row, rowIndex) => {
+                      const cell = row.querySelector(`td:nth-child(3).hidden`);
+                      if (cell) {
+                         availableCells.push({row: rowIndex, column: 2, cell});
+                    }
+                });
+
+                if (availableCells.length > 0) {
+                     const randomIndex = Math.floor(Math.random() * availableCells.length);
+                     const {cell} = availableCells[randomIndex];
+
+                      cell.classList.add('visible');
+                       // Remove the cell from available cells
+                      availableCells.splice(randomIndex, 1)
+                  
+                } else {
+                   indiceCountryButton.disabled = true;
+                   indiceCountryButton.classList.add("button-disabled");
+                }
+
+
+        }
+        
+        
+        function revealAll() {
+            if (!selectedPlayer) return;
+        
+            document.querySelectorAll('#career-table-body tr td').forEach(cell => {
+            cell.classList.add('visible')
+        })
+        
+            carriereButton.disabled = true
+            carriereButton.classList.add("button-disabled")
+        }
+        
+         function revealPlayer() {
+             if (!selectedPlayer) return;
+
+            if (revealPlayerOnce) return;
+          
+            playerNameDisplay.textContent = selectedPlayer;
+            revealAllCells();
+
+            revealPlayerOnce = true;
+            reponseButton.disabled = true;
+            reponseButton.classList.add("button-disabled");
+        }
+         window.addEventListener('load', adjustGlobalContainerMargin);
+    </script>
+</body>
+</html>
