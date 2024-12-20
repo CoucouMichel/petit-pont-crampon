@@ -108,29 +108,38 @@ async function displayPlayerStats() {
     const countryMapping = await loadCountryMapping(); // Load the country mapping
     const clubLogos = await loadClubLogos(); // Load the club logos
     const stats = await selectRandomPlayer(); // Fetch the player stats
+
     const tableBody = document.getElementById('career-table-body'); // Get the table body element
 
     tableBody.innerHTML = ''; // Clear existing rows
 
+    // Check if stats is an array
+    if (!Array.isArray(stats)) {
+        console.error("Expected stats to be an array, but got:", stats);
+        return; // Exit the function if stats is not an array
+    }
+
     stats.forEach(stat => {
-        if (stat.season.toLowerCase().includes("season")) return; // Skip if season keyword appears
+        // Skip if the season keyword appears
+        if (stat.season && stat.season.toLowerCase().includes("season")) return;
 
         const fullCountryName = countryMapping[stat.country] || stat.country; // Get the full country name
         const flagUrl = `https://flagcdn.com/w20/${stat.country}.png`; // URL for the flag image
 
         // Use the clubNameMapping to change club names
-        const formattedClubName = clubNameMapping[stat.team] || stat.team; // Use the formatted name if found
-
-         // Get the logo URL from the clubLogos object
+        const formattedClubName = clubNameMapping[stat.club] || stat.club; // Use the formatted name if found
         const logoUrl = clubLogos[stat.club] || ''; // Default to empty if not found
-        
+
+        // Log the data for debugging
+        console.log(`Fetching logo for: ${stat.club}, URL: ${logoUrl}`);
+
         const row = document.createElement('tr');
 
-       row.innerHTML = `
-            <td>${stat.years}</td>
+        row.innerHTML = `
+            <td>${stat.season}</td>
             <td class="hidden" data-club="${stat.club}">
-                <img src="${logoUrl}" alt="${stat.club} logo" style="width: 20px; height: 20px; margin-right: 5px;"> 
-                ${stat.club}
+                <img src="${logoUrl}" alt="${formattedClubName} logo" style="width: 20px; height: 20px; margin-right: 5px;"> 
+                ${formattedClubName}
             </td>
             <td class="hidden" data-country="${fullCountryName}">
                 <img src="${flagUrl}" alt="${fullCountryName} flag" style="width: 20px; height: 15px; margin-right: 5px; vertical-align: middle;"> 
