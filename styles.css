@@ -157,14 +157,14 @@ h2.ai-style-change-1 {
 /* Style du tableau */
 table#career-table {
   width: 90%;
-  max-width: 600px;  /* Updated max-width */
+  max-width: 600px;
   background-color: initial;
   z-index: 10;
   border-collapse: collapse;
   margin-bottom: 20px;
   position: relative;
     top: 0px;
-    table-layout: fixed; /* Add table layout fixed */
+    table-layout: fixed;
 }
 
 /* Définir la largeur des colonnes */
@@ -173,7 +173,7 @@ th, td {
     font-size: 12px;
     color: var(--text-color);
     word-wrap: break-word;
-    
+    vertical-align: middle; /* Add vertical alignment */
 }
 
 th {
@@ -204,11 +204,13 @@ td.visible {
 /* Pour la colonne des pays, appliquer un fond bleu marine et garder la structure */
 td[data-country] {
     visibility: hidden;
+      vertical-align: middle; /* Add vertical alignment to countries*/
 }
 
 /* Pour la colonne des clubs, appliquer la couleur de fond appropriée */
 td[data-club] {
-    visibility: hidden;
+    visibility: hidden; /* Le texte reste invisible */
+    vertical-align: middle; /* Add vertical alignment to clubs*/
 }
 
 /* Rendre le tableau responsive */
