@@ -238,12 +238,15 @@ function blinkInput(isCorrect) {
 }
 
 function revealText(cell) {
+    cell.classList.remove('hidden');
     cell.classList.add('visible');
 }
 
+
 function revealAllCells() {
-    const allCells = document.querySelectorAll('#career-table-body td'); // Corrected selector
+    const allCells = document.querySelectorAll('#career-table-body td');
     allCells.forEach(cell => {
+        cell.classList.remove('hidden');
         cell.classList.add('visible');
     });
 }
@@ -281,43 +284,48 @@ function revealRandomClue() {
     const randomColumnIndex = Math.floor(Math.random() * columnsToReveal.length);
     const columnIndex = columnsToReveal[randomColumnIndex];
 
-
     const allCells = document.querySelectorAll('#career-table-body tr td:nth-child(' + (columnIndex + 1) + ')');
 
     allCells.forEach(cell => {
+        cell.classList.remove('hidden');
         cell.classList.add('visible');
     });
 
-    indiceButton.disabled = true
-    indiceButton.classList.add("button-disabled")
+    indiceButton.disabled = true;
+    indiceButton.classList.add("button-disabled");
 }
 
 
 function revealAll() {
     if (!selectedPlayer) return;
+
     const allCells = document.querySelectorAll('#career-table-body td');
+
     allCells.forEach(cell => {
-        cell.classList.add('visible')
-    })
-    carriereButton.disabled = true
-    carriereButton.classList.add("button-disabled")
+        cell.classList.remove('hidden');
+        cell.classList.add('visible');
+    });
+
+    carriereButton.disabled = true;
+    carriereButton.classList.add("button-disabled");
 }
 
 function revealPlayer() {
     if (!selectedPlayer) return;
 
     if (revealPlayerOnce) {
-        return
+        return;
     }
 
     const playerRow = document.querySelector('#career-table-body tr:first-child');
     const firstCell = playerRow.querySelector('td:first-child');
 
+    firstCell.classList.remove('hidden');
     firstCell.classList.add('visible');
 
-    revealPlayerOnce = true
-    reponseButton.disabled = true
-    reponseButton.classList.add("button-disabled")
+    revealPlayerOnce = true;
+    reponseButton.disabled = true;
+    reponseButton.classList.add("button-disabled");
 }
 
 displayPlayerStats();
