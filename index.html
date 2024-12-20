@@ -58,11 +58,16 @@
             return response.json();
         }
         async function selectRandomPlayer() {
-            const playersData = await loadPlayerStats();
-            const players = Object.keys(playersData);
-            selectedPlayer = players[Math.floor(Math.random() * players.length)];
-            return playersData[selectedPlayer];
-        }
+    try {
+        const response = await fetch('./players_stats.json'); // Adjust the path as necessary
+        const data = await response.json();
+        console.log("Players data fetched:", data); // Debugging line
+        return data; // Ensure this is an array of player stats
+    } catch (error) {
+        console.error("Error fetching players stats:", error);
+        return []; // Return an empty array on error
+    }
+}
 
      async function loadClubLogos() {
     try {
@@ -109,6 +114,13 @@ async function displayPlayerStats() {
     const countryMapping = await loadCountryMapping(); // Load the country mapping
 
     const stats = await selectRandomPlayer(); // Fetch the player stats
+        console.log("Stats fetched:", stats); // Debugging line
+
+    if (!Array.isArray(stats)) {
+        console.error("Expected stats to be an array, but got:", stats);
+        return; // Exit the function if stats is not an array
+    }
+    
     const tableBody = document.getElementById('career-table-body'); // Get the table body element
 
     tableBody.innerHTML = ''; // Clear existing rows
