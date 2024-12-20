@@ -364,3 +364,17 @@ th:nth-child(3), td:nth-child(3) {
      width: 37%; /* Slightly less width for "Club" and "Pays" columns */
     min-width: 37%;
 }
+.autofill-container {
+    position: relative;
+    display: inline-block; /* Ensure container is inline */
+    width: 100%;
+}
+
+#autofill-suggestion {
+    position: absolute;
+        top: 10px;
+    left: 10px;
+    pointer-events: none; /* Make it non-interactive */
+     color: #49543b; /* Change to a different color, maybe grey */
+     z-index: 0;
+}
