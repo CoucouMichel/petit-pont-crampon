@@ -302,28 +302,29 @@
             blinkInput(isCorrect);
         }
 
-  function morphPlayerName() {
-            const nameDisplay = document.getElementById('player-name-display');
-            nameDisplay.innerHTML = "";
-            
-            if (selectedPlayer) {
-                  for (let i = 0; i < selectedPlayer.length; i++) {
-                   const letter = selectedPlayer[i]
-                        const rectangle = document.createElement("span");
-                         rectangle.classList.add("player-name-rectangle");
-                       if(letter === " ") {
-                           rectangle.innerHTML = " "
-                           
-                       }  else {
-                            rectangle.setAttribute('data-letter', letter);
-                            }
-
-                    nameDisplay.appendChild(rectangle);
-                   setTimeout(() => {
-                   rectangle.classList.add("morph");
-                   }, 0);
-                   }
+      function morphPlayerName() {
+        const nameDisplay = document.getElementById('player-name-display');
+        nameDisplay.innerHTML = "";
+        
+        if (selectedPlayer) {
+            for (let i = 0; i < selectedPlayer.length; i++) {
+             const letter = selectedPlayer[i]
+                    const rectangle = document.createElement("span");
+                     rectangle.classList.add("player-name-rectangle");
+                   if(letter === " ") {
+                       rectangle.innerHTML = " "
+                       
+                   }  else {
+                       rectangle.setAttribute('data-letter', letter);
+                        }
+                nameDisplay.appendChild(rectangle);
+                
+                  setTimeout(() => {
+                      rectangle.classList.add("morph");
+                  }, 0)
+               
             }
+        }
     }
         
         function blinkInput(isCorrect) {
