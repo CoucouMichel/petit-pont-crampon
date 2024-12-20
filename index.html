@@ -34,7 +34,7 @@
         </div>
 
         <div class="container">
-            <h2>Carrière du joueur</h2>
+             <h2 class="ai-style-change-1" id="player-name-display"></h2>
             <table id="career-table">
                 <thead>
                     <tr>
@@ -54,6 +54,7 @@
         let selectedPlayer;
         let attempts = 0;
         let revealPlayerOnce = false;
+         const playerNameDisplay = document.getElementById("player-name-display");
     
         
         async function loadPlayerStats() {
@@ -116,6 +117,18 @@
             const countryMapping = await loadCountryMapping(); // Load the country mapping
             const clubLogos = await loadClubLogos(); // Load the club logos
             const stats = await selectRandomPlayer(); // Fetch the player stats
+         
+             // Initial display as rectangles
+             playerNameDisplay.innerHTML = "";
+            if(selectedPlayer) {
+                 for (let i = 0; i < selectedPlayer.length; i++) {
+                  const rectangle = document.createElement("span");
+                   rectangle.classList.add("player-name-rectangle");
+                   playerNameDisplay.appendChild(rectangle);
+                }
+            }
+
+
         
             const tableBody = document.getElementById('career-table-body'); // Get the table body element
         
@@ -214,6 +227,7 @@
             if (answer === selectedPlayer.toLowerCase()) {
                 feedback.textContent = `Bingo ! Vous avez trouvé le joueur : ${selectedPlayer}`;
                 feedback.style.color = "green";
+                 playerNameDisplay.textContent = selectedPlayer; // Display the player's name
                 revealAllCells();
                 isCorrect = true;
             } else {
@@ -371,7 +385,7 @@
             
              feedback.textContent = `Bingo ! Vous avez trouvé le joueur : ${selectedPlayer}`;
              feedback.style.color = "green";
-
+              playerNameDisplay.textContent = selectedPlayer; // Display the player's name
             revealAllCells();
 
             revealPlayerOnce = true;
