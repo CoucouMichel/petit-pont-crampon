@@ -122,9 +122,15 @@
              playerNameDisplay.innerHTML = "";
             if(selectedPlayer) {
                  for (let i = 0; i < selectedPlayer.length; i++) {
-                  const rectangle = document.createElement("span");
-                   rectangle.classList.add("player-name-rectangle");
-                   playerNameDisplay.appendChild(rectangle);
+                      if (selectedPlayer[i] === " ") {
+                         const space = document.createElement("span")
+                         space.innerHTML = " "
+                         playerNameDisplay.appendChild(space)
+                      } else {
+                        const rectangle = document.createElement("span");
+                        rectangle.classList.add("player-name-rectangle");
+                        playerNameDisplay.appendChild(rectangle);
+                       }
                 }
             }
 
@@ -225,9 +231,8 @@
             let isCorrect = false;
         
             if (answer === selectedPlayer.toLowerCase()) {
-                feedback.textContent = `Bingo ! Vous avez trouvé le joueur : ${selectedPlayer}`;
-                feedback.style.color = "green";
-                 playerNameDisplay.textContent = selectedPlayer; // Display the player's name
+                
+                playerNameDisplay.textContent = selectedPlayer;
                 revealAllCells();
                 isCorrect = true;
             } else {
@@ -380,12 +385,8 @@
              if (!selectedPlayer) return;
 
             if (revealPlayerOnce) return;
-
-            const feedback = document.getElementById("feedback");
-            
-             feedback.textContent = `Bingo ! Vous avez trouvé le joueur : ${selectedPlayer}`;
-             feedback.style.color = "green";
-              playerNameDisplay.textContent = selectedPlayer; // Display the player's name
+          
+            playerNameDisplay.textContent = selectedPlayer; // Display the player's name
             revealAllCells();
 
             revealPlayerOnce = true;
