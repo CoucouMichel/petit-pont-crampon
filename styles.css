@@ -20,6 +20,7 @@ body {
     align-items: center;
     min-height: 100vh;
     text-align: center;
+    margin-top: -290px;
 }
 
 /* Conteneur principal */
