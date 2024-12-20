@@ -282,27 +282,30 @@
         });
         
         reponseButton.addEventListener("click", function () {
-            revealAll();
             revealPlayer();
         });
         
-        function revealRandomClue() {
+       function revealRandomClue() {
             if (!selectedPlayer) return;
-        
+
             const columnsToReveal = [1, 2];
             const randomColumnIndex = Math.floor(Math.random() * columnsToReveal.length);
             const columnIndex = columnsToReveal[randomColumnIndex];
-        
-        
-            const allCells = document.querySelectorAll('#career-table-body tr td:nth-child('+(columnIndex+1)+')');
-        
-            allCells.forEach( (cell, index) => {
-            cell.classList.add('visible')
-        });
-        
-            indiceButton.disabled = true
-            indiceButton.classList.add("button-disabled")
-        
+
+            const rows = document.querySelectorAll('#career-table-body tr');
+            if (rows.length > 0) {
+                const randomIndex = Math.floor(Math.random() * rows.length);
+                const randomRow = rows[randomIndex];
+                const cellToReveal = randomRow.querySelector(`td:nth-child(${columnIndex + 1})`);
+
+                if(cellToReveal) {
+                    cellToReveal.classList.add('visible');
+                     indiceButton.disabled = true;
+                    indiceButton.classList.add("button-disabled");
+                }
+
+
+            }
         }
         
         function revealAll() {
@@ -316,22 +319,21 @@
             carriereButton.classList.add("button-disabled")
         }
         
-        function revealPlayer() {
-            if(!selectedPlayer) return;
-        
-            if (revealPlayerOnce) {
-                    return
-            }
-        
-            const playerRow = document.querySelector('#career-table-body tr:first-child');
-             const nameCell = playerRow.querySelector('td:first-child');
-        
-            nameCell.classList.add('visible')
-        
-            revealPlayerOnce = true
-            reponseButton.disabled = true
-            reponseButton.classList.add("button-disabled")
-        
+         function revealPlayer() {
+            if (!selectedPlayer) return;
+          
+            if (revealPlayerOnce) return;
+
+            const feedback = document.getElementById("feedback");
+            
+             feedback.textContent = `Bingo ! Vous avez trouvé le joueur : ${selectedPlayer}`;
+             feedback.style.color = "green";
+
+            revealAllCells();
+
+            revealPlayerOnce = true;
+            reponseButton.disabled = true;
+            reponseButton.classList.add("button-disabled");
         }
     </script>
 </body>
