@@ -151,11 +151,10 @@ h2.ai-style-change-1 {
     display: flex;
     justify-content: center;
     align-items: center;
-    position: relative; /* Changed from fixed to relative */
-    top: 0px; /* Adjust as needed */
+    position: relative;
+    top: 20px; /* Changed to a static value to fix it under header */
 }
-
-/* Style du tableau */
+    /* Style du tableau */
 table#career-table {
   width: 90%;
   max-width: 700px;
@@ -163,8 +162,8 @@ table#career-table {
   z-index: 10;
   border-collapse: collapse;
   margin-bottom: 20px;
-   position: relative; /* Changed from absolute to relative */
-    top: 0;  /* Adjust this value based on the h2's height and desired spacing */
+  position: relative;
+  top: 20px; /* Change to be right under the h2*/
 }
 
 /* Définir la largeur des colonnes */
