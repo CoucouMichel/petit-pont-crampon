@@ -9,9 +9,9 @@
 <body>
     <div class="global-container">
         <div class="fixed-header">
-            <h1>Petit Pont Crampon</h1>
-            <p>Démasquez le joueur mystère en trouvant les pays et les clubs dans lesquels il a joué !</p>
-            <div class="input-container">
+    <h1>Petit Pont Crampon</h1>
+    <p>Démasquez le joueur mystère en trouvant les pays et les clubs dans lesquels il a joué !</p>
+    <div class="input-container" style="position: relative;">
                 <input 
                     type="text" 
                     id="guess-input" 
@@ -21,6 +21,7 @@
                 <ul id="autocomplete-list" class="autocomplete-suggestions"></ul>
                 <div id="guess-feedback"></div>
             </div>
+            
             <p id="attempts">Tentatives : 0</p>
             <p id="feedback"></p>
         </div>
@@ -41,107 +42,139 @@
             </table>
         </div>
     </div>
+</body>
 
-    <script>
-        let selectedPlayer = null;
+<script>
+        let selectedPlayer;
         let attempts = 0;
 
-        // Chargement des données depuis les fichiers JSON
-        async function fetchJSON(filePath) {
-            try {
-                const response = await fetch(filePath);
-                if (!response.ok) throw new Error(`Erreur HTTP : ${response.status}`);
-                return await response.json();
-            } catch (error) {
-                console.error(`Erreur de chargement du fichier ${filePath} :`, error);
-                return null;
-            }
+        async function loadPlayerStats() {
+            const response = await fetch('./players_stats.json');
+            return response.json();
         }
 
-        // Sélectionne un joueur aléatoirement
+        async function loadClubsCountries() {
+            const response = await fetch('./clubscountries.json');
+            return response.json();
+        }
         async function selectRandomPlayer() {
-            const playersData = await fetchJSON('./players_stats.json');
-            if (!playersData) return null;
-
+            const playersData = await loadPlayerStats();
             const players = Object.keys(playersData);
             selectedPlayer = players[Math.floor(Math.random() * players.length)];
             return playersData[selectedPlayer];
         }
 
-        // Affiche les stats du joueur sélectionné
-        async function displayPlayerStats() {
-            const stats = await selectRandomPlayer();
-            if (!stats) {
-                console.error("Aucun joueur sélectionné.");
-                return;
-            }
-
-            const countryMapping = await fetchJSON('./country2letters.json') || {};
-            const clubNameMapping = await fetchJSON('./clubNameMapping.json') || {};
-            const tableBody = document.getElementById('career-table-body');
-
-            tableBody.innerHTML = ''; // Vide le tableau existant
-
-            stats.forEach(stat => {
-                const fullCountryName = countryMapping[stat.country] || stat.country;
-                const formattedClubName = clubNameMapping[stat.team] || stat.team;
-
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${stat.season}</td>
-                    <td class="hidden" data-club="${formattedClubName}">${formattedClubName}</td>
-                    <td class="hidden" data-country="${fullCountryName}">
-                        <img src="https://flagcdn.com/w20/${stat.country}.png" alt="${fullCountryName} flag" style="width: 20px; height: 15px; margin-right: 5px; vertical-align: middle;">
-                        ${fullCountryName}
-                    </td>
-                `;
-                tableBody.appendChild(row);
-            });
+ async function loadCountryMapping() {
+    try {
+        const response = await fetch('./country2letters.json'); // Path to your country mapping file
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
         }
+        return response.json(); // Parse and return the JSON data
+    } catch (error) {
+        console.error("Error loading country mapping:", error);
+        return {}; // Return an empty object on error
+    }
+}
 
-        // Gère les suggestions d'autocomplétion
-async function showSuggestions(value) {
+async function loadClubNameMapping() {
+    try {
+        const response = await fetch('./clubNameMapping.json'); // Path to your club name mapping file
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json(); // Parse and return the JSON data
+    } catch (error) {
+        console.error("Error loading club name mapping:", error);
+        return {}; // Return an empty object on error
+    }
+}
+
+async function displayPlayerStats() {
+    const clubNameMapping = await loadClubNameMapping(); // Load the club name mappings
+    const countryMapping = await loadCountryMapping(); // Load the country mapping
+
+    const stats = await selectRandomPlayer(); // Fetch the player stats
+    const tableBody = document.getElementById('career-table-body'); // Get the table body element
+
+    tableBody.innerHTML = ''; // Clear existing rows
+
+    stats.forEach(stat => {
+        if (stat.season.toLowerCase().includes("season")) return; // Skip if season keyword appears
+
+        const fullCountryName = countryMapping[stat.country] || stat.country; // Get the full country name
+        const flagUrl = `https://flagcdn.com/w20/${stat.country}.png`; // URL for the flag image
+
+        // Use the clubNameMapping to change club names
+        const formattedClubName = clubNameMapping[stat.team] || stat.team; // Use the formatted name if found
+
+        const row = document.createElement('tr');
+
+        row.innerHTML = `
+            <td>${stat.season}</td>
+            <td class="hidden" data-club="${formattedClubName}">${formattedClubName}</td>
+            <td class="hidden" data-country="${fullCountryName}">
+                <img src="${flagUrl}" alt="${fullCountryName} flag" style="width: 20px; height: 15px; margin-right: 5px; vertical-align: middle;"> 
+                ${fullCountryName}
+            </td>
+        `;
+
+        tableBody.appendChild(row); // Append the row to the table body
+    });
+}
+
+       async function showSuggestions(value) {
     const autocompleteList = document.getElementById("autocomplete-list");
-    autocompleteList.innerHTML = ""; // Clear previous suggestions
+    autocompleteList.innerHTML = ""; // Réinitialiser la liste
 
-    if (value.trim() === "") return; // Don't display anything if the input is empty
+    if (value.trim() === "") return; // Ne rien afficher si l'entrée est vide
 
     try {
-        const suggestions = await loadClubCountries(); // Load data from your JSON
+        const data = await loadClubsCountries(); // Charger les données depuis le JSON
+        const suggestions = new Set();
 
-        // Filter suggestions based on user input
-        const filteredSuggestions = suggestions.filter(suggestion =>
-            suggestion.club.toLowerCase().includes(value.toLowerCase()) // Adjust based on JSON structure
-        );
+        for (let club in data) {
+            const country = data[club];
 
-        // Add each suggestion to the list
-        filteredSuggestions.forEach(suggestion => {
-            const listItem = document.createElement("div");
-            listItem.textContent = suggestion.club; // Use club name for display
+            // Rechercher dans les clubs et les pays
+            if (club.toLowerCase().includes(value.toLowerCase())) {
+                suggestions.add(club);
+            }
+            if (country.toLowerCase().includes(value.toLowerCase())) {
+                suggestions.add(country);
+            }
+        }
+
+        // Trier les suggestions
+        const sortedSuggestions = Array.from(suggestions).sort();
+
+        // Ajouter chaque suggestion à la liste
+        sortedSuggestions.forEach(suggestion => {
+            const listItem = document.createElement("li");
+            listItem.textContent = suggestion;
             listItem.classList.add("suggestion-item");
             listItem.addEventListener("click", () => {
-                document.getElementById("guess-input").value = suggestion.club; // Set input value to the selected suggestion
-                autocompleteList.innerHTML = ""; // Clear the suggestion list after click
+                document.getElementById("guess-input").value = "";
+                autocompleteList.innerHTML = ""; // Effacer la liste après un clic
+                checkAnswer(suggestion);
             });
             autocompleteList.appendChild(listItem);
         });
 
     } catch (error) {
-        console.error("Error loading suggestions:", error);
+        console.error("Erreur lors du chargement des suggestions :", error);
     }
 }
-
-// Event listener for input
-const input = document.getElementById("guess-input");
-input.addEventListener("input", () => showSuggestions(input.value)); // Update suggestions
-
-        // Vérifie si la réponse est correcte
         async function checkAnswer(input) {
             const answer = input.trim().toLowerCase();
             const feedback = document.getElementById("feedback");
-            const countryMapping = await fetchJSON('./country2letters.json') || {};
+            const countryMapping = await loadCountryMapping();
+            const reverseMapping = Object.fromEntries(
+                Object.entries(countryMapping).map(([abbr, fullName]) => [fullName.toLowerCase(), abbr.toLowerCase()])
+            );
 
             let isCorrect = false;
+
             if (answer === selectedPlayer.toLowerCase()) {
                 feedback.textContent = `Bingo ! Vous avez trouvé le joueur : ${selectedPlayer}`;
                 feedback.style.color = "green";
@@ -153,11 +186,13 @@ input.addEventListener("input", () => showSuggestions(input.value)); // Update s
                 document.getElementById("attempts").textContent = `Tentatives : ${attempts}`;
             }
 
-            document.querySelectorAll('td[data-country], td[data-club]').forEach(cell => {
+            const cells = document.querySelectorAll('td[data-country], td[data-club]');
+            cells.forEach(cell => {
                 const cellCountry = cell.getAttribute('data-country')?.toLowerCase();
                 const cellClub = cell.getAttribute('data-club')?.toLowerCase();
-                if (cellCountry === answer || cellClub === answer) {
-                    cell.classList.add('visible');
+
+                if (cellCountry === answer || reverseMapping[cellCountry] === answer || cellClub === answer) {
+                    revealText(cell);
                     isCorrect = true;
                 }
             });
@@ -165,32 +200,39 @@ input.addEventListener("input", () => showSuggestions(input.value)); // Update s
             blinkInput(isCorrect);
         }
 
-        // Ajoute un effet de clignotement à l'input
         function blinkInput(isCorrect) {
             const inputField = document.getElementById("guess-input");
-            inputField.classList.add(isCorrect ? "blink-green" : "blink-red");
+            if (isCorrect) {
+                inputField.classList.add("blink-green");
+            } else {
+                inputField.classList.add("blink-red");
+            }
             setTimeout(() => {
                 inputField.classList.remove("blink-green", "blink-red");
             }, 500);
         }
 
-        // Révèle toutes les cellules du tableau
-        function revealAllCells() {
-            document.querySelectorAll('td').forEach(cell => cell.classList.add('visible'));
+        function revealText(cell) {
+            cell.classList.add('visible');
         }
 
-        // Initialise les événements
-        const input = document.getElementById("guess-input");
-        input.addEventListener("input", () => showSuggestions(input.value));
-        input.addEventListener("keyup", (event) => {
-            if (event.key === "Enter") {
-                checkAnswer(input.value);
-                input.value = "";
-                document.getElementById("autocomplete-list").innerHTML = "";
-            }
-        });
+        function revealAllCells() {
+            const allCells = document.querySelectorAll('td');
+            allCells.forEach(cell => {
+                cell.classList.add('visible');
+            });
+        }
 
-        // Charge les stats du joueur à la fin
+const input = document.getElementById("guess-input");
+input.addEventListener("input", () => showSuggestions(input.value)); // Mise à jour des suggestions
+input.addEventListener("keyup", (event) => {
+    if (event.key === "Enter") {
+        checkAnswer(input.value);
+        input.value = ""; // Effacer la saisie
+        document.getElementById("autocomplete-list").innerHTML = ""; // Effacer la liste
+    }
+});
+
         displayPlayerStats();
     </script>
 </body>
