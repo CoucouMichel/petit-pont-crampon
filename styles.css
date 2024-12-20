@@ -18,24 +18,23 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh; /* Ensure the body covers the full viewport height */
     text-align: center;
 }
+
 /* Conteneur principal */
 .fixed-header {
-    position: fixed; /* Fixe l'élément en haut de la page */
+    position: fixed;
     top: 0;
     left: 0;
-    width: 100%; /* Prend toute la largeur */
-    background-color: var(--background-color); /* Fond similaire au reste de la page */
-    color: var(--text-color); /* Texte blanc */
-    z-index: 9999; /* Toujours au-dessus des autres éléments */
-    padding: 20px; /* Ajoute un peu de marge intérieure */
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Ombre pour le séparer du contenu */
+    width: 100%;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    z-index: 9999;
+    padding: 20px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
     text-align: center;
-    padding-left: 0; /* Removes the left padding */
-    box-sizing: border-box; /* Ensures padding and border are included in the width */
-    right: 0; /* Removes any right offset */
+    box-sizing: border-box;
     height: 220px;
 }
 
@@ -82,45 +81,46 @@ button:disabled {
 }
 
 .autocomplete-suggestions {
-        position: absolute;
-        top: 100%;
-        left: 0;
-        width: calc(100% - 0px);
-        border: 1px solid #ccc;
-        border-top: none;
-        z-index: 10; /* Ensure it's above other elements */
-        background: white;
-        max-height: 200px; /* Set maximum height */
-        overflow-y: auto; /* Allow vertical scrolling if needed */
-        padding: 0; /* Reset any default padding */
-        list-style: none;
-        border-radius: 0 0 5px 5px;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: calc(100% - 0px);
+    border: 1px solid #ccc;
+    border-top: none;
+    z-index: 10;
+    background: white;
+    max-height: 200px;
+    overflow-y: auto;
+    padding: 0;
+    list-style: none;
+    border-radius: 0 0 5px 5px;
+}
 
-    }
-    .suggestion-item {
-        padding: 10px;
-        cursor: pointer;
-        transition: background-color 0.2s ease-in-out;
-        border-bottom: 1px solid #ddd;
-    }
+.suggestion-item {
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+    border-bottom: 1px solid #ddd;
+}
 
-    .suggestion-item:hover {
-      background-color: #f0f0f0
-    }
+.suggestion-item:hover {
+    background-color: #f0f0f0
+}
 
-        .hidden {
-            opacity: 0; /* Make elements invisible */
-        }
+.hidden {
+    opacity: 0;
+}
 
-        .visible {
-            opacity: 1; /* Make elements visible */
-        }
-        .button-container {
-                display: flex;
-                justify-content: center;
-                gap: 10px; /* Adjust as needed */
-                margin: 10px 0; /* Spacing from the input and Tentative */
-        }
+.visible {
+    opacity: 1;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 10px 0;
+}
 
 /* Titre */
 h1 {
@@ -131,51 +131,45 @@ h1 {
 
 /* Conteneur du tableau */
 .global-container {
-    position: absolute;
-    top: 220px;
-    z-index: 12;
-    margin-top: 0px;
+    margin-top: 220px; /* Push the global container below the fixed header */
     width: 100%;
     padding: 0 10px;
     box-sizing: border-box;
+    display: flex;
+     flex-direction: column;
+    align-items: center;
 }
 
 h2.ai-style-change-1 {
-    position: fixed;
-    top: 270px;
     width: 100%;
     background-color: transparent;
     z-index: 50;
     color: white;
     text-align: center;
-    left: 50%;
-    transform: translateX(-50%);
-    margin-bottom: 0px;
-    white-space: nowrap;  /* prevent line breaks */
+    margin-bottom: 10px;
+    white-space: nowrap;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
+
 /* Style du tableau */
 table#career-table {
-  position: absolute;
-  top: 70px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 520px;
+  width: 95%;
   background-color: initial;
   z-index: 10;
-  padding-top: 30px;
   border-collapse: collapse;
+  margin-bottom: 20px; /* Add some space below the table */
+
 }
 
 /* Définir la largeur des colonnes */
 th, td {
     padding: 12px 15px;
     font-size: 12px;
-    color: var(--text-color); /* Texte en blanc pour toutes les cellules */
-        word-wrap: break-word;  /* or word-break: break-all; */
+    color: var(--text-color);
+    word-wrap: break-word;
     
 }
 
@@ -189,134 +183,87 @@ th {
 
 td {
     background-color: #13171f;
-    color: var(--text-color);  /* Texte en blanc */
+    color: var(--text-color);
     font-size: 13px
 }
 
 /* Masquer le texte de la cellule, mais garder la couleur de fond */
 td.hidden {
-    visibility: hidden; /* Masque le texte tout en gardant la couleur de fond */
-    position: relative;
+    visibility: hidden;
     text-align: center;
 }
 
 /* Lorsque la cellule est révélée */
 td.visible {
-    visibility: visible !important; /* Force la visibilité de la cellule */
+    visibility: visible !important;
 }
 
 /* Pour la colonne des pays, appliquer un fond bleu marine et garder la structure */
 td[data-country] {
-    visibility: hidden; /* Le texte reste invisible */
+    visibility: hidden;
 }
 
 /* Pour la colonne des clubs, appliquer la couleur de fond appropriée */
 td[data-club] {
-    visibility: hidden; /* Le texte reste invisible */
+    visibility: hidden;
 }
 
 /* Rendre le tableau responsive */
 @media (max-width: 768px) {
-    table#career-table {
-        width: 95%;
-        font-size: 12px;
-    }
+  table#career-table {
+    width: 95%;
+     font-size: 11px;
+  }
     
     th, td {
-      padding: 8px;
-         font-size: 11px;
-    }
-    
-   
-    .global-container {
-    margin-top: 0px; /* Or a smaller positive value */
-    }
-    
-      h2.ai-style-change-1 {
-          top: 250px;
-    }
-    
-    table#career-table {
-        top: 40px;
+         padding: 8px;
     }
 }
-    
+
 /* Centrer la barre de saisie */
 body {
     display: flex;
-    justify-content: center; /* Centre horizontalement */
-    align-items: center; /* Centre verticalement */
-    height: 100vh; /* Hauteur de l'écran pour centrer verticalement */
-    margin: 0; /* Enlève toute marge par défaut du body */
-    flex-direction: column; /* Les éléments sont centrés verticalement aussi */
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    flex-direction: column;
 }
 
 /* Centrer la barre de saisie */
 input#guess-input {
-    width: 80%; /* Fixe une largeur pour la barre de saisie */
-    max-width: 400px; /* Limite la largeur maximale */
-    padding: 10px; /* Ajouter du padding pour plus de confort */
-    font-size: 14px; /* Taille de la police */
-    margin-bottom: 20px; /* Espacement sous la barre de saisie */
-     border: 1px solid #c8ff0052; /* Bordure orange */
-    background-color: #161616; /* Fond bleu marine */
-    color: #949e71; /* Texte blanc */
+    width: 80%;
+    max-width: 400px;
+    padding: 10px;
+    font-size: 14px;
+    margin-bottom: 20px;
+    border: 1px solid #c8ff0052;
+    background-color: #161616;
+    color: #949e71;
     text-align: center;
     border-radius: 5px;
     box-sizing: border-box;
 }
-#guess-input {
-    width: 80%; /* Barre de saisie plus large */
-    max-width: 400px; /* Largeur maximale */
-    padding: 10px; /* Espacement interne */
-    font-size: 14px; /* Texte plus grand */
-    border-radius: 5px; /* Coins arrondis */
-    border: 1px solid #c8ff0052; /* Bordure orange */
-    background-color: #161616; /* Fond bleu marine */
-    color: #949e71; /* Texte blanc */
-    text-align: center; /* Centre le texte dans la barre */
-    box-sizing: border-box;
-}
 
 #guess-input:focus {
-    border-color: #949e71; /* Change la couleur de bordure au focus */
-    outline: none; /* Supprime la bordure par défaut */
+    border-color: #949e71;
+    outline: none;
 }
 
-
-<!-- Ajoutez ce bloc juste avant la liste des mauvaises réponses -->
-<p id="attempts">Tentatives : 0</p>
-
-
-/* Liste des mauvaises réponses */
-#incorrect-guesses {
-    margin-top: 20px;
-    color: var(--highlight-color);
-    font-size: 12px;
-}
-
-/* Définir la largeur des colonnes */
-th:nth-child(1), td:nth-child(1) {
-    width: 24%; /* Réduire la largeur de la colonne "Années" */
-}
-
-th:nth-child(2), td:nth-child(2),
-th:nth-child(3), td:nth-child(3) {
-    width: 38%; /* Répartir la largeur entre les colonnes "Club" et "Pays" */
-}
 /* Style pour afficher les tentatives */
 #attempts {
     margin-top: -2px;
     color: var(--text-color);
     font-size: 14px;
 }
+
 /* Liste déroulante des suggestions */
 .autocomplete-suggestions {
     position: absolute;
     background-color: #28333d;
     max-height: 150px;
     overflow-y: auto;
-    z-index: 1000; /* Priorité sur les autres éléments */
+    z-index: 1000;
     width: 100%;
     margin-top: -20px;
     list-style: none;
@@ -343,11 +290,6 @@ th:nth-child(3), td:nth-child(3) {
     border-radius: 5px;
 }
 
-/* Empêche le tableau d'interférer */
-.container table {
-    position: relative;
-    z-index: 1; /* Tableau en dessous */
-}
 
 /* Clignotement vert */
 .blink-green {
