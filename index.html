@@ -53,6 +53,8 @@
         let selectedPlayer;
         let attempts = 0;
         let revealPlayerOnce = false;
+        let revealedCells = []; // To keep track of revealed cells
+
         
         async function loadPlayerStats() {
             const response = await fetch('./players_stats.json');
@@ -118,6 +120,7 @@
             const tableBody = document.getElementById('career-table-body'); // Get the table body element
         
             tableBody.innerHTML = ''; // Clear existing rows
+            revealedCells = []; // Reset revealed cells array
         
             // Check if stats is an array
             if (!Array.isArray(stats)) {
@@ -285,27 +288,36 @@
             revealPlayer();
         });
         
-       function revealRandomClue() {
+        function revealRandomClue() {
             if (!selectedPlayer) return;
 
             const columnsToReveal = [1, 2];
-            const randomColumnIndex = Math.floor(Math.random() * columnsToReveal.length);
-            const columnIndex = columnsToReveal[randomColumnIndex];
+            let availableCells = [];
 
-            const rows = document.querySelectorAll('#career-table-body tr');
-            if (rows.length > 0) {
-                const randomIndex = Math.floor(Math.random() * rows.length);
-                const randomRow = rows[randomIndex];
-                const cellToReveal = randomRow.querySelector(`td:nth-child(${columnIndex + 1})`);
+            // Get all hidden cells in columns 2 or 3
+             document.querySelectorAll('#career-table-body tr').forEach((row, rowIndex) => {
+                columnsToReveal.forEach(columnIndex => {
+                     const cell = row.querySelector(`td:nth-child(${columnIndex + 1}).hidden`);
+                      if (cell) {
+                         availableCells.push({row: rowIndex, column: columnIndex, cell});
+                    }
+                });
+             });
 
-                if(cellToReveal) {
-                    cellToReveal.classList.add('visible');
-                     indiceButton.disabled = true;
-                    indiceButton.classList.add("button-disabled");
+
+                if (availableCells.length > 0) {
+                     const randomIndex = Math.floor(Math.random() * availableCells.length);
+                     const {cell} = availableCells[randomIndex];
+                    
+                      cell.classList.add('visible');
+
+                      // Remove the cell from available cells
+                    availableCells.splice(randomIndex, 1)
+                } else {
+                indiceButton.disabled = true;
+                indiceButton.classList.add("button-disabled");
                 }
-
-
-            }
+           
         }
         
         function revealAll() {
@@ -319,9 +331,9 @@
             carriereButton.classList.add("button-disabled")
         }
         
-         function revealPlayer() {
-            if (!selectedPlayer) return;
-          
+        function revealPlayer() {
+             if (!selectedPlayer) return;
+
             if (revealPlayerOnce) return;
 
             const feedback = document.getElementById("feedback");
