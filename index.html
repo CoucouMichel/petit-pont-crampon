@@ -71,9 +71,6 @@ async function selectRandomPlayer() {
     // Return an array of stats from all players
     return Object.values(data).flatMap(player => player.stats); // Extract all stats into a single array
 }
-    }
-}
-
     async function loadClubLogos() {
     try {
         const response = await fetch('./clubLogos.json'); // Adjust the path as necessary
