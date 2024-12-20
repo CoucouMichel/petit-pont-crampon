@@ -49,55 +49,22 @@
         let attempts = 0;
 
         async function loadPlayerStats() {
-              try {
-        const response = await fetch('./players_stats.json'); // Adjust the path as necessary
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
+            const response = await fetch('./players_stats.json');
+            return response.json();
         }
-        return await response.json(); // Parse and return JSON data
-    } catch (error) {
-        console.error("Error loading player stats:", error);
-        return {}; // Return an empty object on error
-    }
-}
+
         async function loadClubsCountries() {
             const response = await fetch('./clubscountries.json');
             return response.json();
         }
-    
         async function selectRandomPlayer() {
-    const response = await fetch('./players_stats.json'); // Adjust the path as necessary
-    const data = await response.json();
+            const playersData = await loadPlayerStats();
+            const players = Object.keys(playersData);
+            selectedPlayer = players[Math.floor(Math.random() * players.length)];
+            return playersData[selectedPlayer];
+        }
 
-    // Get an array of player keys
-    const playerNames = Object.keys(data);
-    
-    // Select a random player
-    const randomIndex = Math.floor(Math.random() * playerNames.length);
-    const randomPlayer = playerNames[randomIndex];
-    
-    // Return the player data
-    return {
-        name: randomPlayer,
-        stats: data[randomPlayer].stats, // Return stats for the selected player
-        image_url: data[randomPlayer].image_url // Include image URL if needed
-    };
-}
-        }
-    async function loadClubLogos() {
-    try {
-        const response = await fetch('./clubLogos.json'); // Adjust the path as necessary
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return await response.json(); // Parse and return JSON data
-    } catch (error) {
-        console.error("Error loading club logos:", error);
-        return {}; // Return an empty object on error
-    }
-}
-    
-    async function loadCountryMapping() {
+ async function loadCountryMapping() {
     try {
         const response = await fetch('./country2letters.json'); // Path to your country mapping file
         if (!response.ok) {
@@ -125,17 +92,13 @@ async function loadClubNameMapping() {
 
 async function displayPlayerStats() {
     const clubNameMapping = await loadClubNameMapping(); // Load the club name mappings
-    const clubLogos = await loadClubLogos(); // Load the club logo URLs
     const countryMapping = await loadCountryMapping(); // Load the country mapping
 
-    const playerData = await selectRandomPlayer(); // Fetch a random player
-    const stats = playerData.stats; // Get the stats for the selected player
-    console.log("Stats fetched:", stats); // Debugging line
-
+    const stats = await selectRandomPlayer(); // Fetch the player stats
     const tableBody = document.getElementById('career-table-body'); // Get the table body element
+
     tableBody.innerHTML = ''; // Clear existing rows
 
-    // Display stats for the selected player
     stats.forEach(stat => {
         if (stat.season.toLowerCase().includes("season")) return; // Skip if season keyword appears
 
@@ -143,21 +106,15 @@ async function displayPlayerStats() {
         const flagUrl = `https://flagcdn.com/w20/${stat.country}.png`; // URL for the flag image
 
         // Use the clubNameMapping to change club names
-        const formattedClubName = clubNameMapping[stat.team] ? clubNameMapping[stat.team].name : stat.team; // Use the formatted name if found
-        const logoUrl = clubLogos[stat.team] || ''; // Default to empty if not found
-
-        console.log(`Fetching logo for: ${stat.team}, URL: ${logoUrl}`); // Debugging line
+        const formattedClubName = clubNameMapping[stat.team] || stat.team; // Use the formatted name if found
 
         const row = document.createElement('tr');
 
         row.innerHTML = `
             <td>${stat.season}</td>
-            <td class="hidden" data-club="${stat.team}">
-                <img src="${logoUrl}" alt="${formattedClubName} logo">
-                ${formattedClubName}
-            </td>
+            <td class="hidden" data-club="${formattedClubName}">${formattedClubName}</td>
             <td class="hidden" data-country="${fullCountryName}">
-                <img src="${flagUrl}" alt="${fullCountryName} flag" style="width: 20px; height: 15px; margin-right: 5px;"> 
+                <img src="${flagUrl}" alt="${fullCountryName} flag" style="width: 20px; height: 15px; margin-right: 5px; vertical-align: middle;"> 
                 ${fullCountryName}
             </td>
         `;
