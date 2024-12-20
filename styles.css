@@ -18,7 +18,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh; /* Ensure the body covers the full viewport height */
+    min-height: 100vh;
     text-align: center;
 }
 
@@ -35,8 +35,8 @@ body {
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
     text-align: center;
     box-sizing: border-box;
-    height: auto; /* Changed to auto to fit content */
-     padding-bottom: 20px;
+    height: auto;
+    padding-bottom: 20px;
 }
 
 button {
@@ -132,12 +132,11 @@ h1 {
 
 /* Conteneur du tableau */
 .global-container {
-    margin-top: 220px; /* Push the global container below the fixed header */
     width: 100%;
     padding: 0 10px;
     box-sizing: border-box;
     display: flex;
-     flex-direction: column;
+    flex-direction: column;
     align-items: center;
 }
 
@@ -154,10 +153,9 @@ h2.ai-style-change-1 {
     align-items: center;
 }
 
-
 /* Style du tableau */
 table#career-table {
-  width: 90%; /* Increased width */
+  width: 90%;
   background-color: initial;
   z-index: 10;
   border-collapse: collapse;
@@ -211,12 +209,12 @@ td[data-club] {
 /* Rendre le tableau responsive */
 @media (max-width: 768px) {
   table#career-table {
-        width: 95%; /* Make it take 95% of the width */
+    width: 95%;
          font-size: 11px;
     }
     
      th, td {
-         padding: 8px;
+           padding: 8px;
     }
 }
 
@@ -289,7 +287,6 @@ input#guess-input {
     font-weight: bold;
     border-radius: 5px;
 }
-
 
 /* Clignotement vert */
 .blink-green {
