@@ -86,7 +86,6 @@ button:disabled {
     top: 100%;
     left: 0;
     width: calc(100% - 0px);
-    border: 1px solid #ccc;
     border-top: none;
     z-index: 10;
     background: white;
@@ -132,6 +131,7 @@ h1 {
 
 /* Conteneur du tableau */
 .global-container {
+    margin-top: 220px;
     width: 100%;
     padding: 0 10px;
     box-sizing: border-box;
@@ -155,7 +155,8 @@ h2.ai-style-change-1 {
 
 /* Style du tableau */
 table#career-table {
-  width: 90%;
+  width: 90%; /* Increased width */
+  max-width: 700px;
   background-color: initial;
   z-index: 10;
   border-collapse: collapse;
@@ -209,12 +210,12 @@ td[data-club] {
 /* Rendre le tableau responsive */
 @media (max-width: 768px) {
   table#career-table {
-    width: 95%;
+        width: 95%;
          font-size: 11px;
     }
     
      th, td {
-           padding: 8px;
+         padding: 8px;
     }
 }
 
