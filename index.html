@@ -47,11 +47,16 @@
         let attempts = 0;
 
         // Chargement des données depuis les fichiers JSON
-       // script.js
-async function loadClubsCountries() {
-    const response = await fetch('./clubscountries.json');
-    return response.json(); // Fetch and return the array of suggestions
-}
+        async function fetchJSON(filePath) {
+            try {
+                const response = await fetch(filePath);
+                if (!response.ok) throw new Error(`Erreur HTTP : ${response.status}`);
+                return await response.json();
+            } catch (error) {
+                console.error(`Erreur de chargement du fichier ${filePath} :`, error);
+                return null;
+            }
+        }
 
         // Sélectionne un joueur aléatoirement
         async function selectRandomPlayer() {
@@ -93,47 +98,38 @@ async function loadClubsCountries() {
                 tableBody.appendChild(row);
             });
         }
-        
+
         // Gère les suggestions d'autocomplétion
-         copy
-javascript
+        async function showSuggestions(value) {
+            const autocompleteList = document.getElementById("autocomplete-list");
+            autocompleteList.innerHTML = ""; // Réinitialise les suggestions
 
-// script.js
-async function loadClubsCountries() {
-    const response = await fetch('./clubscountries.json');
-    return response.json(); // Fetch and return the array of suggestions
-}
+            if (!value.trim()) return;
 
-async function showSuggestions(value) {
-    const autocompleteList = document.getElementById("autocomplete-list");
-    autocompleteList.innerHTML = ""; // Clear previous suggestions
+            const data = await fetchJSON('./clubscountries.json');
+            if (!data) return;
 
-    if (value.trim() === "") return; // Don't display anything if the input is empty
-
-    try {
-        const suggestions = await loadClubsCountries(); // Load data from the JSON
-
-        // Filter suggestions based on user input
-        const filteredSuggestions = suggestions.filter(suggestion =>
-            suggestion.toLowerCase().includes(value.toLowerCase())
-        );
-
-        // Add each suggestion to the list
-        filteredSuggestions.forEach(suggestion => {
-            const listItem = document.createElement("div");
-            listItem.textContent = suggestion;
-            listItem.classList.add("suggestion-item");
-            listItem.addEventListener("click", () => {
-                document.getElementById("guess-input").value = suggestion; // Set input value to the selected suggestion
-                autocompleteList.innerHTML = ""; // Clear the suggestion list after a click
+            const suggestions = new Set();
+            Object.entries(data).forEach(([club, country]) => {
+                if (club.toLowerCase().includes(value.toLowerCase()) || country.toLowerCase().includes(value.toLowerCase())) {
+                    suggestions.add(club);
+                    suggestions.add(country);
+                }
             });
-            autocompleteList.appendChild(listItem);
-        });
 
-    } catch (error) {
-        console.error("Error loading suggestions:", error);
-    }
-}
+            Array.from(suggestions).sort().forEach(suggestion => {
+                const listItem = document.createElement("li");
+                listItem.textContent = suggestion;
+                listItem.classList.add("suggestion-item");
+                listItem.addEventListener("click", () => {
+                    document.getElementById("guess-input").value = "";
+                    autocompleteList.innerHTML = "";
+                    checkAnswer(suggestion);
+                });
+                autocompleteList.appendChild(listItem);
+            });
+        }
+
         // Vérifie si la réponse est correcte
         async function checkAnswer(input) {
             const answer = input.trim().toLowerCase();
