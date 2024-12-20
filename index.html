@@ -26,7 +26,8 @@
             <p id="feedback"></p>
              <!-- Button Container -->
             <div class="button-container">
-                <button id="indiceButton">Indice</button>
+                <button id="indiceClubButton">Indice Club</button>
+                 <button id="indiceCountryButton">Indice Pays</button>
                 <button id="carriereButton">Carrière</button>
                 <button id="reponseButton">Réponse</button>
             </div>
@@ -53,8 +54,7 @@
         let selectedPlayer;
         let attempts = 0;
         let revealPlayerOnce = false;
-        let revealedCells = []; // To keep track of revealed cells
-
+    
         
         async function loadPlayerStats() {
             const response = await fetch('./players_stats.json');
@@ -120,7 +120,6 @@
             const tableBody = document.getElementById('career-table-body'); // Get the table body element
         
             tableBody.innerHTML = ''; // Clear existing rows
-            revealedCells = []; // Reset revealed cells array
         
             // Check if stats is an array
             if (!Array.isArray(stats)) {
@@ -272,14 +271,20 @@
         
         displayPlayerStats();
         
-        const indiceButton = document.getElementById("indiceButton");
+         const indiceClubButton = document.getElementById("indiceClubButton");
+        const indiceCountryButton = document.getElementById("indiceCountryButton");
         const carriereButton = document.getElementById("carriereButton");
         const reponseButton = document.getElementById("reponseButton");
-        
-        indiceButton.addEventListener("click", function () {
-            revealRandomClue();
+    
+    
+        indiceClubButton.addEventListener("click", function () {
+            revealRandomClueClub();
         });
         
+        indiceCountryButton.addEventListener("click", function () {
+            revealRandomClueCountry();
+        });
+    
         carriereButton.addEventListener("click", function () {
             revealAll();
         });
@@ -288,37 +293,63 @@
             revealPlayer();
         });
         
-        function revealRandomClue() {
-            if (!selectedPlayer) return;
-
-            const columnsToReveal = [1, 2];
+    function revealRandomClueClub() {
+           if (!selectedPlayer) return;
+          
             let availableCells = [];
 
-            // Get all hidden cells in columns 2 or 3
+            // Get all hidden cells in the Club column
              document.querySelectorAll('#career-table-body tr').forEach((row, rowIndex) => {
-                columnsToReveal.forEach(columnIndex => {
-                     const cell = row.querySelector(`td:nth-child(${columnIndex + 1}).hidden`);
+                      const cell = row.querySelector(`td:nth-child(2).hidden`);
                       if (cell) {
-                         availableCells.push({row: rowIndex, column: columnIndex, cell});
+                         availableCells.push({row: rowIndex, column: 1, cell});
                     }
                 });
-             });
-
 
                 if (availableCells.length > 0) {
                      const randomIndex = Math.floor(Math.random() * availableCells.length);
                      const {cell} = availableCells[randomIndex];
-                    
-                      cell.classList.add('visible');
 
-                      // Remove the cell from available cells
-                    availableCells.splice(randomIndex, 1)
+                      cell.classList.add('visible');
+                       // Remove the cell from available cells
+                       availableCells.splice(randomIndex, 1)
+                   
                 } else {
-                indiceButton.disabled = true;
-                indiceButton.classList.add("button-disabled");
+                    indiceClubButton.disabled = true;
+                    indiceClubButton.classList.add("button-disabled");
                 }
-           
+
+
         }
+    function revealRandomClueCountry() {
+           if (!selectedPlayer) return;
+          
+            let availableCells = [];
+
+            // Get all hidden cells in the Country column
+             document.querySelectorAll('#career-table-body tr').forEach((row, rowIndex) => {
+                      const cell = row.querySelector(`td:nth-child(3).hidden`);
+                      if (cell) {
+                         availableCells.push({row: rowIndex, column: 2, cell});
+                    }
+                });
+
+                if (availableCells.length > 0) {
+                     const randomIndex = Math.floor(Math.random() * availableCells.length);
+                     const {cell} = availableCells[randomIndex];
+
+                      cell.classList.add('visible');
+                       // Remove the cell from available cells
+                      availableCells.splice(randomIndex, 1)
+                  
+                } else {
+                   indiceCountryButton.disabled = true;
+                   indiceCountryButton.classList.add("button-disabled");
+                }
+
+
+        }
+        
         
         function revealAll() {
             if (!selectedPlayer) return;
@@ -331,7 +362,7 @@
             carriereButton.classList.add("button-disabled")
         }
         
-        function revealPlayer() {
+         function revealPlayer() {
              if (!selectedPlayer) return;
 
             if (revealPlayerOnce) return;
