@@ -338,8 +338,17 @@
             });
         }
         
-        const input = document.getElementById("guess-input");
-input.addEventListener("input", () => showSuggestions(input.value));
+       const input = document.getElementById("guess-input");
+input.addEventListener("input", () => {
+    showSuggestions(input.value);
+
+    const autocompleteList = document.getElementById("autocomplete-list");
+     const firstItem = autocompleteList.querySelector(".suggestion-item");
+        if(firstItem) {
+           firstItem.classList.add("selected")
+        }
+
+});
 input.addEventListener("keydown", (event) => {
     const autocompleteList = document.getElementById("autocomplete-list");
         const items = autocompleteList.querySelectorAll('.suggestion-item');
