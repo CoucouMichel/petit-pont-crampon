@@ -7,47 +7,45 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="global-container">
-        <div class="fixed-header">
-            <h1>Petit Pont Crampon</h1>
-            <p>Démasquez le joueur mystère en trouvant les pays et les clubs dans lesquels il a joué !</p>
-            <div class="input-container" style="position: relative;">
-                <input
-                    type="text"
-                    id="guess-input"
-                    placeholder="Tapez un pays, un club ou le nom du joueur mystère"
-                    autocomplete="off"
-                >
-                <ul id="autocomplete-list" class="autocomplete-suggestions"></ul>
-                <div id="guess-feedback"></div>
-            </div>
-            
-            <p id="attempts">Tentatives : 0</p>
-            <p id="feedback"></p>
-             <!-- Button Container -->
-            <div class="button-container">
-                <button id="indiceClubButton">Indice Club</button>
-                 <button id="indiceCountryButton">Indice Pays</button>
-                <button id="carriereButton">Carrière</button>
-                <button id="reponseButton">Réponse</button>
-            </div>
+    <div class="fixed-header">
+        <h1>Petit Pont Crampon</h1>
+        <p>Démasquez le joueur mystère en trouvant les pays et les clubs dans lesquels il a joué !</p>
+        <div class="input-container" style="position: relative;">
+            <input
+                type="text"
+                id="guess-input"
+                placeholder="Tapez un pays, un club ou le nom du joueur mystère"
+                autocomplete="off"
+            >
+            <ul id="autocomplete-list" class="autocomplete-suggestions"></ul>
+            <div id="guess-feedback"></div>
         </div>
+        
+        <p id="attempts">Tentatives : 0</p>
+        <p id="feedback"></p>
+            <!-- Button Container -->
+        <div class="button-container">
+            <button id="indiceClubButton">Indice Club</button>
+                <button id="indiceCountryButton">Indice Pays</button>
+            <button id="carriereButton">Carrière</button>
+            <button id="reponseButton">Réponse</button>
+        </div>
+    </div>
 
-        <div class="container">
-             <h2 class="ai-style-change-1" id="player-name-display"></h2>
-            <table id="career-table">
-                <thead>
-                    <tr>
-                        <th>Années</th>
-                        <th>Club</th>
-                        <th>Pays</th>
-                    </tr>
-                </thead>
-                <tbody id="career-table-body">
-                    <!-- Les lignes du tableau seront ajoutées dynamiquement -->
-                </tbody>
-            </table>
-        </div>
+    <div class="global-container">
+        <h2 class="ai-style-change-1" id="player-name-display"></h2>
+        <table id="career-table">
+            <thead>
+                <tr>
+                    <th>Années</th>
+                    <th>Club</th>
+                    <th>Pays</th>
+                </tr>
+            </thead>
+            <tbody id="career-table-body">
+                <!-- Les lignes du tableau seront ajoutées dynamiquement -->
+            </tbody>
+        </table>
     </div>
     
     <script>
@@ -56,6 +54,13 @@
         let revealPlayerOnce = false;
          const playerNameDisplay = document.getElementById("player-name-display");
     
+         const globalContainer = document.querySelector('.global-container');
+        const fixedHeader = document.querySelector('.fixed-header');
+
+         function adjustGlobalContainerMargin() {
+            globalContainer.style.marginTop = `${fixedHeader.offsetHeight}px`;
+         }
+
         
         async function loadPlayerStats() {
             const response = await fetch('./players_stats.json');
@@ -134,6 +139,8 @@
                 }
             }
 
+           adjustGlobalContainerMargin();
+           window.addEventListener('resize', adjustGlobalContainerMargin)
 
         
             const tableBody = document.getElementById('career-table-body'); // Get the table body element
@@ -393,6 +400,7 @@
             reponseButton.disabled = true;
             reponseButton.classList.add("button-disabled");
         }
+        window.addEventListener('load', adjustGlobalContainerMargin);
     </script>
 </body>
 </html>
