@@ -49,33 +49,38 @@
         let attempts = 0;
 
         async function loadPlayerStats() {
-            const response = await fetch('./players_stats.json');
-            return response.json();
+              try {
+        const response = await fetch('./players_stats.json'); // Adjust the path as necessary
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
         }
-
+        return await response.json(); // Parse and return JSON data
+    } catch (error) {
+        console.error("Error loading player stats:", error);
+        return {}; // Return an empty object on error
+    }
+}
         async function loadClubsCountries() {
             const response = await fetch('./clubscountries.json');
             return response.json();
         }
-        async function selectRandomPlayer() {
-    try {
-        const response = await fetch('./players_stats.json'); // Adjust the path as necessary
-        const data = await response.json();
-        console.log("Players data fetched:", data); // Debugging line
-        return data; // Ensure this is an array of player stats
-    } catch (error) {
-        console.error("Error fetching players stats:", error);
-        return []; // Return an empty array on error
+    
+async function selectRandomPlayer() {
+    const response = await fetch('./players_stats.json'); // Adjust the path as necessary
+    const data = await response.json();
+    // Return an array of stats from all players
+    return Object.values(data).flatMap(player => player.stats); // Extract all stats into a single array
+}
     }
 }
 
-     async function loadClubLogos() {
+    async function loadClubLogos() {
     try {
-        const response = await fetch('./clubLogos.json'); // Ensure the path is correct
+        const response = await fetch('./clubLogos.json'); // Adjust the path as necessary
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
-        return response.json(); // Parse and return the JSON data
+        return await response.json(); // Parse and return JSON data
     } catch (error) {
         console.error("Error loading club logos:", error);
         return {}; // Return an empty object on error
