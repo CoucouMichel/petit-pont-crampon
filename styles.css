@@ -39,6 +39,13 @@ body {
     height: 220px;
 }
 
+.buttons-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px; /* Adjust as needed */
+    margin: 10px 0; /* Spacing from the input and Tentative */
+}
+
 /* Titre */
 h1 {
     font-size: 24px;
