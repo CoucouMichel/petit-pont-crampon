@@ -391,9 +391,28 @@
             revealAll();
         });
         
-        reponseButton.addEventListener("click", function () {
+         reponseButton.addEventListener("click", function () {
             revealPlayer();
         });
+        
+         function revealPlayer() {
+             if (!selectedPlayer) return;
+
+            if (revealPlayerOnce) return;
+             
+            morphPlayerName();
+        
+                setTimeout(() => {
+                    playerNameDisplay.textContent = selectedPlayer;
+                      revealAllCells();
+                      
+                }, 0)
+              
+
+            revealPlayerOnce = true;
+            reponseButton.disabled = true;
+            reponseButton.classList.add("button-disabled");
+        }
         
     function revealRandomClueClub() {
            if (!selectedPlayer) return;
