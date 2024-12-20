@@ -366,15 +366,16 @@ th:nth-child(3), td:nth-child(3) {
 }
 .autofill-container {
     position: relative;
-    display: inline-block; /* Ensure container is inline */
+    display: inline-block;
     width: 100%;
 }
 
 #autofill-suggestion {
     position: absolute;
-        top: 10px;
-    left: 10px;
+    top: 10px;
+        left: 10px; /* Modified from absolute left position */
     pointer-events: none; /* Make it non-interactive */
-     color: #49543b; /* Change to a different color, maybe grey */
+    color: #49543b;
+     white-space: nowrap;
      z-index: 0;
 }
