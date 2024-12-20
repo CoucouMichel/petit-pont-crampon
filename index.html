@@ -391,7 +391,7 @@
             reponseButton.classList.add("button-disabled");
         }
         
-    function revealRandomClueClub() {
+     function revealRandomClueClub() {
            if (!selectedPlayer) return;
           
             let availableCells = [];
@@ -406,18 +406,21 @@
 
                 if (availableCells.length > 0) {
                      const randomIndex = Math.floor(Math.random() * availableCells.length);
-                     const {cell} = availableCells[randomIndex];
+                     const {row, cell} = availableCells[randomIndex];
 
                       cell.classList.add('visible');
                        // Remove the cell from available cells
                        availableCells.splice(randomIndex, 1)
-                   
+                  
+                    const countryCell = row.querySelector('td:nth-child(3).hidden')
+                    if (countryCell) {
+                        countryCell.classList.add('visible')
+                    }
+
                 } else {
                     indiceClubButton.disabled = true;
                     indiceClubButton.classList.add("button-disabled");
                 }
-
-
         }
     function revealRandomClueCountry() {
            if (!selectedPlayer) return;
