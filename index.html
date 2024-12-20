@@ -24,13 +24,6 @@
             
             <p id="attempts">Tentatives : 0</p>
             <p id="feedback"></p>
-             <!-- Button Container -->
-        <div class="button-container">
-            <button class="button" id="hint-button">Indice</button>
-            <button class="button" id="career-button">Carrière</button>
-            <button class="button" id="answer-button">Réponse</button>
-            </div>
-        </div>
         </div>
 
         <div class="container">
@@ -56,22 +49,55 @@
         let attempts = 0;
 
         async function loadPlayerStats() {
-            const response = await fetch('./players_stats.json');
-            return response.json();
+              try {
+        const response = await fetch('./players_stats.json'); // Adjust the path as necessary
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
         }
-
+        return await response.json(); // Parse and return JSON data
+    } catch (error) {
+        console.error("Error loading player stats:", error);
+        return {}; // Return an empty object on error
+    }
+}
         async function loadClubsCountries() {
             const response = await fetch('./clubscountries.json');
             return response.json();
         }
+    
         async function selectRandomPlayer() {
-            const playersData = await loadPlayerStats();
-            const players = Object.keys(playersData);
-            selectedPlayer = players[Math.floor(Math.random() * players.length)];
-            return playersData[selectedPlayer];
-        }
+    const response = await fetch('./players_stats.json'); // Adjust the path as necessary
+    const data = await response.json();
 
- async function loadCountryMapping() {
+    // Get an array of player keys
+    const playerNames = Object.keys(data);
+    
+    // Select a random player
+    const randomIndex = Math.floor(Math.random() * playerNames.length);
+    const randomPlayer = playerNames[randomIndex];
+    
+    // Return the player data
+    return {
+        name: randomPlayer,
+        stats: data[randomPlayer].stats, // Return stats for the selected player
+        image_url: data[randomPlayer].image_url // Include image URL if needed
+    };
+}
+        }
+    async function loadClubLogos() {
+    try {
+        const response = await fetch('./clubLogos.json'); // Adjust the path as necessary
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return await response.json(); // Parse and return JSON data
+    } catch (error) {
+        console.error("Error loading club logos:", error);
+        return {}; // Return an empty object on error
+    }
+}
+    
+    async function loadCountryMapping() {
     try {
         const response = await fetch('./country2letters.json'); // Path to your country mapping file
         if (!response.ok) {
@@ -97,59 +123,41 @@ async function loadClubNameMapping() {
     }
 }
 
-async function loadClubLogos() {
-    try {
-        const response = await fetch('./clubLogos.json'); // Adjust the path as necessary
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return await response.json(); // Parse and return the JSON data
-    } catch (error) {
-        console.error("Error loading club logos:", error);
-        return {}; // Return an empty object on error
-    }
-}
-    
 async function displayPlayerStats() {
     const clubNameMapping = await loadClubNameMapping(); // Load the club name mappings
+    const clubLogos = await loadClubLogos(); // Load the club logo URLs
     const countryMapping = await loadCountryMapping(); // Load the country mapping
-    const clubLogos = await loadClubLogos(); // Load the club logos
-    const stats = await selectRandomPlayer(); // Fetch the player stats
+
+    const playerData = await selectRandomPlayer(); // Fetch a random player
+    const stats = playerData.stats; // Get the stats for the selected player
+    console.log("Stats fetched:", stats); // Debugging line
 
     const tableBody = document.getElementById('career-table-body'); // Get the table body element
-
     tableBody.innerHTML = ''; // Clear existing rows
 
-    // Check if stats is an array
-    if (!Array.isArray(stats)) {
-        console.error("Expected stats to be an array, but got:", stats);
-        return; // Exit the function if stats is not an array
-    }
-
+    // Display stats for the selected player
     stats.forEach(stat => {
-        // Skip if the season keyword appears
-        if (stat.season && stat.season.toLowerCase().includes("season")) return;
+        if (stat.season.toLowerCase().includes("season")) return; // Skip if season keyword appears
 
         const fullCountryName = countryMapping[stat.country] || stat.country; // Get the full country name
         const flagUrl = `https://flagcdn.com/w20/${stat.country}.png`; // URL for the flag image
 
         // Use the clubNameMapping to change club names
-        const formattedClubName = clubNameMapping[stat.team] || stat.team; // Use the formatted name if found
+        const formattedClubName = clubNameMapping[stat.team] ? clubNameMapping[stat.team].name : stat.team; // Use the formatted name if found
         const logoUrl = clubLogos[stat.team] || ''; // Default to empty if not found
 
-        // Log the data for debugging
-        console.log(`Fetching logo for: ${stat.team}, URL: ${logoUrl}`);
+        console.log(`Fetching logo for: ${stat.team}, URL: ${logoUrl}`); // Debugging line
 
         const row = document.createElement('tr');
 
         row.innerHTML = `
             <td>${stat.season}</td>
             <td class="hidden" data-club="${stat.team}">
-                <img src="${logoUrl}" alt="${formattedClubName} logo" style="width: 20px; height: 20px; margin-right: 5px;"> 
+                <img src="${logoUrl}" alt="${formattedClubName} logo">
                 ${formattedClubName}
             </td>
             <td class="hidden" data-country="${fullCountryName}">
-                <img src="${flagUrl}" alt="${fullCountryName} flag" style="width: 20px; height: 15px; margin-right: 5px; vertical-align: middle;"> 
+                <img src="${flagUrl}" alt="${fullCountryName} flag" style="width: 20px; height: 15px; margin-right: 5px;"> 
                 ${fullCountryName}
             </td>
         `;
@@ -266,47 +274,9 @@ input.addEventListener("keyup", (event) => {
         input.value = ""; // Effacer la saisie
         document.getElementById("autocomplete-list").innerHTML = ""; // Effacer la liste
     }
-
-    // Function to reveal a random hint from columns 2 or 3
-    function revealHint() {
-        const tableBody = document.getElementById('career-table-body');
-        const rows = tableBody.getElementsByTagName('tr');
-        const randomRow = rows[Math.floor(Math.random() * rows.length)];
-        const randomColumn = Math.random() < 0.5 ? 1 : 2;
-
-        if (randomColumn === 1) randomRow.cells[1].classList.remove('hidden');
-        else randomRow.cells[2].classList.remove('hidden');
-    }
-
-    function revealCareer() {
-        const tableBody = document.getElementById('career-table-body');
-        const rows = tableBody.getElementsByTagName('tr');
-
-        for (let row of rows) {
-            row.cells[1].classList.remove('hidden');
-            row.cells[2].classList.remove('hidden');
-        }
-    }
-
-    function revealAnswer() {
-        const tableBody = document.getElementById('career-table-body');
-        const rows = tableBody.getElementsByTagName('tr');
-
-        for (let row of rows) {
-            row.cells[1].classList.remove('hidden');
-            row.cells[2].classList.remove('hidden');
-        }
-
-        alert(`The player is: ${selectedPlayer || "Unknown"}`);
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-        document.getElementById('hint-button').addEventListener('click', revealHint);
-        document.getElementById('career-button').addEventListener('click', revealCareer);
-        document.getElementById('answer-button').addEventListener('click', revealAnswer);
+});
 
         displayPlayerStats();
-    });       
     </script>
 </body>
 </html>
