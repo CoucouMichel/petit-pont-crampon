@@ -220,48 +220,48 @@
             }
     }
     
-      async function showSuggestions(value) {
-            const autocompleteList = document.getElementById("autocomplete-list");
-            autocompleteList.innerHTML = ""; // Réinitialiser la liste
+        async function showSuggestions(value) {
+    const autocompleteList = document.getElementById("autocomplete-list");
+    autocompleteList.innerHTML = "";
 
-            if (value.trim() === "") return; // Ne rien afficher si l'entrée est vide
+    if (value.trim() === "") return;
 
-            try {
-                const data = await loadClubsCountries(); // Charger les données depuis le JSON
-                const suggestions = new Set();
+    try {
+        const data = await loadClubsCountries();
+        const suggestions = new Set();
+        const normalizedValue = value.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 
-                for (let club in data) {
-                    const country = data[club];
+        for (let club in data) {
+            const country = data[club];
+            const normalizedClub = club.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+            const normalizedCountry = country.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 
-                    // Rechercher dans les clubs et les pays
-                    if (club.toLowerCase().includes(value.toLowerCase())) {
-                        suggestions.add(club);
-                    }
-                    if (country.toLowerCase().includes(value.toLowerCase())) {
-                        suggestions.add(country);
-                    }
-                }
-
-                // Trier les suggestions
-                const sortedSuggestions = Array.from(suggestions).sort();
-                 currentSuggestions = sortedSuggestions
-                // Ajouter chaque suggestion à la liste
-                sortedSuggestions.forEach(suggestion => {
-                    const listItem = document.createElement("li");
-                    listItem.textContent = suggestion;
-                    listItem.classList.add("suggestion-item");
-                    listItem.addEventListener("click", () => {
-                        document.getElementById("guess-input").value = "";
-                        autocompleteList.innerHTML = ""; // Effacer la liste après un clic
-                        checkAnswer(suggestion);
-                    });
-                    autocompleteList.appendChild(listItem);
-                });
-
-            } catch (error) {
-                console.error("Erreur lors du chargement des suggestions :", error);
+            if (normalizedClub.toLowerCase().includes(normalizedValue.toLowerCase())) {
+                suggestions.add(club);
+            }
+            if (normalizedCountry.toLowerCase().includes(normalizedValue.toLowerCase())) {
+                suggestions.add(country);
             }
         }
+
+        const sortedSuggestions = Array.from(suggestions).sort();
+
+        sortedSuggestions.forEach(suggestion => {
+            const listItem = document.createElement("li");
+            listItem.textContent = suggestion;
+            listItem.classList.add("suggestion-item");
+            listItem.addEventListener("click", () => {
+                document.getElementById("guess-input").value = "";
+                autocompleteList.innerHTML = "";
+                checkAnswer(suggestion);
+            });
+            autocompleteList.appendChild(listItem);
+        });
+
+    } catch (error) {
+        console.error("Erreur lors du chargement des suggestions :", error);
+    }
+}
 
        async function checkAnswer(input) {
     const answer = input.trim().toLowerCase();
