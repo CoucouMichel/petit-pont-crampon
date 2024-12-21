@@ -320,6 +320,45 @@
                 cell.classList.add('visible');
             });
         }
+
+  const input = document.getElementById("guess-input");
+        input.addEventListener("input", async () => {
+            const value = input.value;
+             await showSuggestions(value);
+
+            const autocompleteList = document.getElementById("autocomplete-list");
+            const firstItem = autocompleteList.querySelector(".suggestion-item");
+            
+            if (firstItem) {
+                const normalizedValue = value.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+                const normalizedFirstItemText = firstItem.textContent.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+                if (normalizedFirstItemText.toLowerCase().startsWith(normalizedValue.toLowerCase())) {
+                    firstItem.classList.add("selected");
+                    } else {
+                    firstItem.classList.remove("selected");
+                   }
+               
+            }
+
+
+        });
+        input.addEventListener("keyup", (event) => {
+            const autocompleteList = document.getElementById("autocomplete-list");
+                if (event.key === "Enter") {
+                    if (autocompleteList.querySelector('.suggestion-item.selected')) {
+                        const selectedSuggestion = autocompleteList.querySelector('.suggestion-item.selected');
+                    checkAnswer(selectedSuggestion.textContent);
+                      input.value = ""; // Effacer la saisie
+                    autocompleteList.innerHTML = ""; // Effacer la liste
+                    } else {
+                        checkAnswer(input.value);
+                       input.value = ""; // Effacer la saisie
+                        document.getElementById("autocomplete-list").innerHTML = ""; // Effacer la liste
+                    }
+                 event.preventDefault();
+              }
+        });
+
         
  async function showSuggestions(value) {
     const autocompleteList = document.getElementById("autocomplete-list");
