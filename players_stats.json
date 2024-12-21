@@ -78,21 +78,6 @@
         { "season": "2023–2024", "country": "fr", "team": "Le Havre" },
         { "season": "2024–2025", "country": "fr", "team": "Le Havre" }
     ],
-    "Ronaldinho": [
-        { "season": "2001–2002", "country": "fr", "team": "Paris S-G" },
-        { "season": "2002–2003", "country": "fr", "team": "Paris S-G" },
-        { "season": "2003–2004", "country": "es", "team": "Barcelona" },
-        { "season": "2004–2005", "country": "es", "team": "Barcelona" },
-        { "season": "2005–2006", "country": "es", "team": "Barcelona" },
-        { "season": "2006–2007", "country": "es", "team": "Barcelona" },
-        { "season": "2007–2008", "country": "es", "team": "Barcelona" },
-        { "season": "2008–2009", "country": "it", "team": "Milan" },
-        { "season": "2009–2010", "country": "it", "team": "Milan" },
-        { "season": "2010–2011", "country": "it", "team": "Milan" },
-        { "season": "2014", "country": "br", "team": "Atlético Mineiro" },
-        { "season": "2014–2015", "country": "mx", "team": "Querétaro" },
-        { "season": "2015", "country": "br", "team": "Fluminense" }
-    ],
     "Alessandro Nesta": [
         { "season": "1993–1994", "country": "it", "team": "Lazio" },
         { "season": "1994–1995", "country": "it", "team": "Lazio" },
