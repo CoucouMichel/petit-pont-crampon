@@ -355,7 +355,7 @@
             revealPlayer();
         });
         
-    function revealRandomClueClub() {
+  function revealRandomClueClub() {
            if (!selectedPlayer) return;
           
             let availableCells = [];
@@ -364,13 +364,15 @@
              document.querySelectorAll('#career-table-body tr').forEach((row, rowIndex) => {
                       const cell = row.querySelector(`td:nth-child(2).hidden`);
                       if (cell) {
-                         availableCells.push({row: rowIndex, column: 1, cell});
+                         availableCells.push({row, rowIndex, cell});
                     }
                 });
 
                 if (availableCells.length > 0) {
                      const randomIndex = Math.floor(Math.random() * availableCells.length);
-                     const {row, cell} = availableCells[randomIndex];
+                    const randomCell = availableCells[randomIndex];
+                    const row = randomCell.row;
+                     const cell = randomCell.cell;
 
                       cell.classList.add('visible');
                        // Remove the cell from available cells
