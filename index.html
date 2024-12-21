@@ -270,62 +270,63 @@
                 console.error("Erreur lors du chargement des suggestions :", error);
             }
         }
- async function checkAnswer(input) {
-            const answer = input.trim().toLowerCase();
-            const feedback = document.getElementById("feedback");
-            const countryMapping = await loadCountryMapping();
-            const reverseMapping = Object.fromEntries(
-                Object.entries(countryMapping).map(([abbr, fullName]) => [fullName.toLowerCase(), abbr.toLowerCase()])
-            );
-            let isCorrect = false;
+async function checkAnswer(input) {
+    const answer = input.trim().toLowerCase();
+    const feedback = document.getElementById("feedback");
+    const countryMapping = await loadCountryMapping();
+    const reverseMapping = Object.fromEntries(
+        Object.entries(countryMapping).map(([abbr, fullName]) => [fullName.toLowerCase(), abbr.toLowerCase()])
+    );
+    let isCorrect = false;
 
-            const clubNameMapping = await loadClubNameMapping();
-            const originalClubMapping = Object.fromEntries(
-                Object.entries(clubNameMapping).map(([original, formatted]) => [formatted.toLowerCase(), original.toLowerCase()])
-            );
+    const clubNameMapping = await loadClubNameMapping();
+    const originalClubMapping = Object.fromEntries(
+        Object.entries(clubNameMapping).map(([original, formatted]) => [formatted.toLowerCase(), original.toLowerCase()])
+    );
 
+    let checkAnswerValue = answer
 
-            let checkAnswerValue = answer
+    if (originalClubMapping[answer]) {
+        checkAnswerValue = originalClubMapping[answer]
+    }
 
-            if (originalClubMapping[answer]) {
-                checkAnswerValue = originalClubMapping[answer]
-            }
+    if (checkAnswerValue === selectedPlayer.toLowerCase()) {
+        playerNameDisplay.textContent = selectedPlayer;
+            revealAllCells();
+            score += 50;
+            updateScoreDisplay()
+        isCorrect = true;
+    } else {
+        feedback.textContent = '';
+        attempts++;
+        document.getElementById("attempts").textContent = `Tentatives : ${attempts}`;
+    }
 
-            if (checkAnswerValue === selectedPlayer.toLowerCase()) {
-                 playerNameDisplay.textContent = selectedPlayer;
-                revealAllCells();
-                score += 50;
-                   updateScoreDisplay();
-                isCorrect = true;
-            } else {
-                feedback.textContent = '';
-                attempts++;
-                document.getElementById("attempts").textContent = `Tentatives : ${attempts}`;
-            }
+ const cells = document.querySelectorAll('td[data-country], td[data-club]');
 
-          const cells = document.querySelectorAll('td[data-country], td[data-club]');
+  for (const cell of cells) {
+        const cellCountry = cell.getAttribute('data-country')?.toLowerCase();
+        const cellClub = cell.getAttribute('data-club')?.toLowerCase();
 
-            for (const cell of cells) {
-                const cellCountry = cell.getAttribute('data-country')?.toLowerCase();
-                const cellClub = cell.getAttribute('data-club')?.toLowerCase();
-
-                 if(cellClub === checkAnswerValue) {
-                     const countryCell = cell.parentElement.querySelector('td[data-country].hidden');
-                      if (countryCell) {
-                           revealText(countryCell);
-                            score += 20;
-                           updateScoreDisplay()
-                         isCorrect = true;
-                     }
-                }
-                 if (cellCountry === answer || reverseMapping[cellCountry] === answer) {
-                    revealText(cell);
-                    score += 10;
+         if(cellClub === checkAnswerValue) {
+             revealText(cell);
+               const countryCell = cell.parentElement.querySelector('td[data-country].hidden')
+              if(countryCell) {
+                   revealText(countryCell);
+                   score += 20;
                        updateScoreDisplay()
-                     isCorrect = true;
-                 }
+
+              }
+               isCorrect = true;
+
+         } else if (cellCountry === answer || reverseMapping[cellCountry] === answer ) {
+                    revealText(cell);
+                   score += 10;
+                       updateScoreDisplay()
+                   isCorrect = true;
+              }
           }
-            blinkInput(isCorrect);
+    blinkInput(isCorrect);
 }
         
        function revealAllCells() {
