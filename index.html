@@ -278,68 +278,60 @@ async function checkAnswer(input) {
           
             let matchingClubCell = null;
             let matchingClubCountry = null;
+          const tableBody = document.getElementById('career-table-body');
+            const rows = tableBody.querySelectorAll('tr');
 
-
-        const tableBody = document.getElementById('career-table-body');
-        const rows = tableBody.querySelectorAll('tr');
-
-
-            
-       for (const row of rows) {
-                const clubCell = row.querySelector('td[data-club]');
-               
-                    if(clubCell) {
-                            const cellClub = clubCell.getAttribute('data-club')?.toLowerCase()
-                        if (clubCountries[answer] && matchingClubCell === null) {
-                              const correctCountry = clubCountries[answer].toLowerCase();
-                              const cellCountry = row.querySelector('td[data-country]')?.getAttribute('data-country')?.toLowerCase();
-
-                             if(reverseMapping[cellCountry] === correctCountry || cellCountry === correctCountry) {
-                                     matchingClubCell = clubCell;
-                                     
-                                       const logoUrl = clubLogos[answer] || '';
-                                     const formattedClub =  clubNameMapping[answer] || answer
-
-                                      matchingClubCell.innerHTML = `<img src="${logoUrl}" alt="${formattedClub} logo" style="width: 20px; height: 20px; margin-right: 5px;"> ${formattedClub}`;
-                                       revealText(matchingClubCell);
-                                       matchingClubCell.classList.add('country-match');
-                                      
-                                   const countryCell = row.querySelector('td[data-country].hidden');
-                                    if(countryCell) {
-                                       revealText(countryCell);
-                                      isCorrect = true;
-                                 }
-                            }
-                        }
-                  }
-
-            }
-
-
-
+           
             if (answer === selectedPlayer.toLowerCase()) {
                 
-                playerNameDisplay.textContent = selectedPlayer;
+                 playerNameDisplay.textContent = selectedPlayer;
                 revealAllCells();
                 isCorrect = true;
             } else {
                  feedback.textContent = '';
-                attempts++;
-                document.getElementById("attempts").textContent = `Tentatives : ${attempts}`;
+                  attempts++;
+                  document.getElementById("attempts").textContent = `Tentatives : ${attempts}`;
+                    
+                      for (const row of rows) {
+                              const clubCell = row.querySelector('td[data-club]');
+                             if(clubCell) {
+                                const cellClub = clubCell.getAttribute('data-club')?.toLowerCase()
+                                if(clubCountries[answer] && matchingClubCell === null) {
+                                        const correctCountry = clubCountries[answer].toLowerCase()
+                                         const cellCountry = row.querySelector('td[data-country]')?.getAttribute('data-country')?.toLowerCase();
+                                      
+                                       if (reverseMapping[cellCountry] === correctCountry || cellCountry === correctCountry) {
+                                             matchingClubCell = clubCell;
+                                                const logoUrl = clubLogos[answer] || '';
+                                                const formattedClub =  clubNameMapping[answer] || answer
+                                               matchingClubCell.innerHTML = `<img src="${logoUrl}" alt="${formattedClub} logo" style="width: 20px; height: 20px; margin-right: 5px;"> ${formattedClub}`;
+                                                revealText(matchingClubCell);
+                                                matchingClubCell.classList.add('country-match');
+                                                isCorrect = true;
 
+                                         const countryCell = row.querySelector('td[data-country].hidden')
+                                         if(countryCell) {
+                                              revealText(countryCell);
+                                              isCorrect = true;
+
+                                         }
+                                    }
+                                }
+                             }
+                       }
+                    
            }
 
                const cells = document.querySelectorAll('td[data-country], td[data-club]');
-            cells.forEach(cell => {
-                const cellCountry = cell.getAttribute('data-country')?.toLowerCase();
-                const cellClub = cell.getAttribute('data-club')?.toLowerCase();
-
+              cells.forEach(cell => {
+                 const cellCountry = cell.getAttribute('data-country')?.toLowerCase();
+               const cellClub = cell.getAttribute('data-club')?.toLowerCase();
                 if (cellCountry === answer || reverseMapping[cellCountry] === answer || cellClub === answer) {
-                    revealText(cell);
-                    isCorrect = true;
+                     revealText(cell);
+                     isCorrect = true;
                 }
             });
-          
+        
             blinkInput(isCorrect);
         }
 
