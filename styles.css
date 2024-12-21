@@ -211,6 +211,19 @@ td.country-match {
     background-color: #4b4b4b; /* Change background color */
 }
 
+.temp-club-box {
+  position: absolute; /* Position absolutely on top of the table cell */
+  background-color: #4b4b4b; /* Background color */
+  padding: 5px 10px; /* Padding for better spacing */
+  border-radius: 4px; /* Rounded corners */
+  z-index: 10; /* Ensure it's above the table cells */
+  white-space: nowrap; /* Prevent text wrapping */
+    left: 0;
+    top: 0;
+    transform: translate(-10%, -10%)
+
+}
+
 /* Pour la colonne des pays, appliquer un fond bleu marine et garder la structure */
 td[data-country] {
     visibility: hidden;
