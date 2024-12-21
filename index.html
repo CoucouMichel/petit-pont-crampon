@@ -267,7 +267,7 @@
                 console.error("Erreur lors du chargement des suggestions :", error);
             }
         }
-  async function checkAnswer(input) {
+   async function checkAnswer(input) {
             const answer = input.trim().toLowerCase();
             const feedback = document.getElementById("feedback");
             const countryMapping = await loadCountryMapping();
