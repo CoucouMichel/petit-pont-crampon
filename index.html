@@ -264,77 +264,78 @@
     }
 }
 
-   async function checkAnswer(input) {
-    console.log("checkAnswer was called");
-    const answer = input.trim().toLowerCase();
-     console.log("Input:", answer)
-    const feedback = document.getElementById("feedback");
-     console.log("feedback:", feedback)
-    const countryMapping = await loadCountryMapping();
-    console.log("countryMapping:", countryMapping)
-    const reverseMapping = Object.fromEntries(
-        Object.entries(countryMapping).map(([abbr, fullName]) => [fullName.toLowerCase(), abbr.toLowerCase()])
-    );
-     console.log("reverseMapping:", reverseMapping)
-    let isCorrect = false;
-    const clubNameMapping = await loadClubNameMapping();
-    console.log("clubNameMapping:", clubNameMapping)
-    const clubCountries = await loadClubsCountries();
-    console.log("clubCountries:", clubCountries)
-    const clubLogos = await loadClubLogos();
-     console.log("clubLogos:", clubLogos)
-    const countryFeedback = document.getElementById('country-feedback');
-     console.log("countryFeedback:", countryFeedback)
-    countryFeedback.textContent = "";
-      console.log("countryFeedback.textContent:", countryFeedback.textContent)
+      async function checkAnswer(input) {
+        console.log("checkAnswer was called");
+        const answer = input.trim().toLowerCase();
+        console.log("Input:", answer);
+         const feedback = document.getElementById("feedback");
+          console.log("feedback:", feedback)
+        const countryMapping = await loadCountryMapping();
+        console.log("countryMapping:", countryMapping)
+        const reverseMapping = Object.fromEntries(
+            Object.entries(countryMapping).map(([abbr, fullName]) => [fullName.toLowerCase(), abbr.toLowerCase()])
+        );
+       console.log("reverseMapping:", reverseMapping)
+        let isCorrect = false;
+         const clubNameMapping = await loadClubNameMapping();
+        console.log("clubNameMapping:", clubNameMapping)
+        const clubCountries = await loadClubsCountries();
+        console.log("clubCountries:", clubCountries)
+        const clubLogos = await loadClubLogos();
+       console.log("clubLogos:", clubLogos)
+      const countryFeedback = document.getElementById('country-feedback');
+        console.log("countryFeedback:", countryFeedback)
+        countryFeedback.textContent = "";
+           console.log("countryFeedback.textContent:", countryFeedback.textContent)
 
-   if (answer === selectedPlayer.toLowerCase()) {
-         console.log("Correct answer");
-          playerNameDisplay.textContent = selectedPlayer;
-         revealAllCells();
-        isCorrect = true;
-    } else {
-         console.log("Wrong answer");
-        feedback.textContent = '';
-         attempts++;
-          document.getElementById("attempts").textContent = `Tentatives : ${attempts}`;
-          
-         if (clubCountries[answer]) {
-                const inputCountry = clubCountries[answer].toLowerCase();
-                console.log("Input Country", inputCountry)
+       if (answer === selectedPlayer.toLowerCase()) {
+            console.log("Correct answer");
+             playerNameDisplay.textContent = selectedPlayer;
+            revealAllCells();
+           isCorrect = true;
+
+        } else {
+             console.log("Wrong answer");
+               feedback.textContent = '';
+                attempts++;
+                 document.getElementById("attempts").textContent = `Tentatives : ${attempts}`;
+
                 const tableBody = document.getElementById('career-table-body');
-                  const rows = tableBody.querySelectorAll('tr');
+                 const rows = tableBody.querySelectorAll('tr');
+                 
                  for (const row of rows) {
-                      const countryCell = row.querySelector('td[data-country]');
-                     
-                     if(countryCell) {
-                        const cellCountryCode = countryCell.getAttribute('data-country')?.toLowerCase();
-                           const cellCountryName = countryMapping[cellCountryCode]?.toLowerCase()
-                           console.log("Cell Country Code:", cellCountryCode, "Cell Country Name:", cellCountryName)
-                          if (cellCountryName === inputCountry) {
-                                 countryFeedback.textContent = "Wrong team, but right country!";
-                                  isCorrect = true;
-                                   console.log("Match found");
-                               }
-                            }
-                      }
-                } else {
-                    console.log("No country for input found")
-                }
-          }
+                        const clubCell = row.querySelector('td[data-club]');
+                            if(clubCell) {
+                                 const cellClub = clubCell.getAttribute('data-club')?.toLowerCase();
 
-     const cells = document.querySelectorAll('td[data-country], td[data-club]');
-     cells.forEach(cell => {
-          const cellCountry = cell.getAttribute('data-country')?.toLowerCase();
-          const cellClub = cell.getAttribute('data-club')?.toLowerCase();
-           if (cellCountry === answer || reverseMapping[cellCountry] === answer || cellClub === answer) {
-                 revealText(cell);
-                 isCorrect = true;
+                                  if(clubCountries[cellClub]) {
+                                      const correctCountry = clubCountries[cellClub].toLowerCase()
+                                        
+                                         if(clubCountries[answer]) {
+                                               const inputCountry = clubCountries[answer].toLowerCase()
+                                            if (inputCountry === correctCountry) {
+                                                    countryFeedback.textContent = "Wrong team, but right country!";
+                                                     isCorrect = true;
+                                                }
+
+                                         }
+                                  }
+                           }
+                   }
+            
+        }
+
+       const cells = document.querySelectorAll('td[data-country], td[data-club]');
+           cells.forEach(cell => {
+             const cellCountry = cell.getAttribute('data-country')?.toLowerCase();
+             const cellClub = cell.getAttribute('data-club')?.toLowerCase();
+            if (cellCountry === answer || reverseMapping[cellCountry] === answer || cellClub === answer) {
+                  revealText(cell);
+                  isCorrect = true;
              }
 
-       });
-    
-        blinkInput(isCorrect);
+        });
+          blinkInput(isCorrect);
 }
         
         function blinkInput(isCorrect) {
