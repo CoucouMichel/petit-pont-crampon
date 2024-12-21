@@ -331,7 +331,7 @@
         }
 
     const input = document.getElementById("guess-input");
-        input.addEventListener("input", async () => {
+         input.addEventListener("input", async () => {
             const value = input.value;
              await showSuggestions(value);
 
@@ -339,16 +339,13 @@
             const firstItem = autocompleteList.querySelector(".suggestion-item");
             
             if (firstItem && value.trim() !== "") {
-                const normalizedValue = value.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-                const normalizedFirstItemText = firstItem.textContent.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-                if (normalizedFirstItemText.toLowerCase().startsWith(normalizedValue.toLowerCase())) {
                      firstItem.classList.add("selected");
-                     } else {
-                     firstItem.classList.remove("selected");
-                 }
             } else if (firstItem) {
                  firstItem.classList.remove("selected");
             }
+
+
+        });
 
 
         });
