@@ -207,7 +207,8 @@ td.visible {
 }
 
 td.country-match {
-    background-color: #4b4b4b; /* Change background color */
+    background-color: #4b4b4b !important;
+    visibility: visible !important;
 }
 
 .temp-club-box {
