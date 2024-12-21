@@ -425,8 +425,8 @@
             document.getElementById('score').textContent = `Score : ${score}`;
         });
         
-    function revealRandomClueClub() {
-            if (!selectedPlayer) return;
+      function revealRandomClueClub() {
+           if (!selectedPlayer) return;
           
            indiceClubButton.disabled = true;
             indiceClubButton.classList.add("button-disabled");
@@ -441,47 +441,44 @@
                     }
                 });
 
+
                 if (availableCells.length > 0) {
-                     let randomCell;
-                   let tries = 0;
-                  do {
-                      const randomIndex = Math.floor(Math.random() * availableCells.length);
-                     randomCell = availableCells[randomIndex];
-                      tries++;
+                    let randomCell;
+                    let tries = 0;
+                    do {
+                        const randomIndex = Math.floor(Math.random() * availableCells.length);
+                       randomCell = availableCells[randomIndex];
+                        tries++;
+                      } while (tries < 100 && !randomCell.cell.classList.contains("hidden"))
 
-                  } while (tries < 100 && !randomCell.cell.classList.contains("hidden"))
+                      if (randomCell && randomCell.cell.classList.contains("hidden")) {
+                            const row = randomCell.row;
+                             const cell = randomCell.cell;
+                              cell.classList.remove('hidden');
+                             cell.classList.add('visible');
 
-                    if(randomCell && randomCell.cell.classList.contains("hidden")) {
-                        const row = randomCell.row;
-                         const cell = randomCell.cell;
+                              availableCells = availableCells.filter((c,index) => index != availableCells.indexOf(randomCell) )
 
-                            cell.classList.remove('hidden');
-                            cell.classList.add('visible');
-
-                            availableCells = availableCells.filter(c => c !== randomCell)
-                
-                            const countryCell = row.querySelector('td:nth-child(3).hidden')
-                                if (countryCell) {
-                                     countryCell.classList.remove('hidden');
-                                     countryCell.classList.add('visible');
-                               }
-
-                              score -= 25;
+                          const countryCell = row.querySelector('td:nth-child(3).hidden');
+                          if (countryCell) {
+                                countryCell.classList.remove('hidden');
+                                   countryCell.classList.add('visible');
+                            }
+                                 score -= 25;
                          document.getElementById('score').textContent = `Score : ${score}`;
-                           }
-                     indiceClubButton.disabled = false
-                    indiceClubButton.classList.remove("button-disabled")
+                      }
+                       
+                 indiceClubButton.disabled = false;
+                   indiceClubButton.classList.remove("button-disabled");
                 } else {
                     indiceClubButton.classList.add("button-disabled");
                 }
-
-
         }
     function revealRandomClueCountry() {
           if (!selectedPlayer) return;
         
            indiceCountryButton.disabled = true;
-            indiceCountryButton.classList.add("button-disabled");
+           indiceCountryButton.classList.add("button-disabled");
 
             let availableCells = [];
 
@@ -493,35 +490,30 @@
                     }
                 });
 
-                if (availableCells.length > 0) {
-                    let randomCell;
-                   let tries = 0;
-                    do {
-                         const randomIndex = Math.floor(Math.random() * availableCells.length);
-                        randomCell = availableCells[randomIndex];
-                       tries++;
-
-                      } while (tries < 100 && !randomCell.cell.classList.contains("hidden"))
-                    
+            if (availableCells.length > 0) {
+                let randomCell;
+                let tries = 0;
+                  do {
+                      const randomIndex = Math.floor(Math.random() * availableCells.length);
+                       randomCell = availableCells[randomIndex];
+                      tries++;
+                     } while (tries < 100 && !randomCell.cell.classList.contains("hidden"))
+                
                     if(randomCell && randomCell.cell.classList.contains("hidden")) {
                         const row = randomCell.row;
                        const cell = randomCell.cell;
-                            cell.classList.remove('hidden');
-                            cell.classList.add('visible');
-                             availableCells = availableCells.filter(c => c !== randomCell)
-                          
-                           score -= 10;
-                         document.getElementById('score').textContent = `Score : ${score}`;
-                   }
-                         indiceCountryButton.disabled = false;
-                         indiceCountryButton.classList.remove("button-disabled");
-
-                   }  else {
-                       indiceCountryButton.classList.add("button-disabled");
+                             cell.classList.remove('hidden');
+                             cell.classList.add('visible');
+                                 availableCells = availableCells.filter((c,index) => index != availableCells.indexOf(randomCell) )
+                                  score -= 10;
+                              document.getElementById('score').textContent = `Score : ${score}`;
+                     }
+                     indiceCountryButton.disabled = false;
+                      indiceCountryButton.classList.remove("button-disabled");
+                }  else {
+                     indiceCountryButton.classList.add("button-disabled");
                 }
-
-
-        }
+    }
         
         function revealAll() {
             if (!selectedPlayer) return;
