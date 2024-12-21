@@ -121,11 +121,11 @@
             }
         }
         
-        async function displayPlayerStats() {
-            const clubNameMapping = await loadClubNameMapping(); // Load the club name mappings
-            const countryMapping = await loadCountryMapping(); // Load the country mapping
-            const clubLogos = await loadClubLogos(); // Load the club logos
-            const stats = await selectRandomPlayer(); // Fetch the player stats
+         async function displayPlayerStats() {
+            const clubNameMapping = await loadClubNameMapping();
+            const countryMapping = await loadCountryMapping();
+            const clubLogos = await loadClubLogos();
+            const stats = await selectRandomPlayer();
          
              // Initial display as rectangles
              playerNameDisplay.innerHTML = "";
@@ -147,16 +147,15 @@
             window.addEventListener('resize', adjustGlobalContainerMargin);
 
         
-            const tableBody = document.getElementById('career-table-body'); // Get the table body element
-        
-            tableBody.innerHTML = ''; // Clear existing rows
-        
+            const tableBody = document.getElementById('career-table-body');
+            tableBody.innerHTML = '';
+           
+           
             // Check if stats is an array
             if (!Array.isArray(stats)) {
                 console.error("Expected stats to be an array, but got:", stats);
                 return; // Exit the function if stats is not an array
             }
-        
             let mergedStats = [];
             let currentMerged = null;
 
@@ -180,43 +179,41 @@
                        teamCode: stat.team,
                         countryCode: stat.country
                     }
-               }
+
+                }
             }
 
 
-         if(currentMerged) {
-                 mergedStats.push(currentMerged)
+            if(currentMerged) {
+                mergedStats.push(currentMerged)
             }
 
 
             for (const mergedStat of mergedStats) {
                   const fullCountryName = countryMapping[mergedStat.countryCode] || mergedStat.countryCode;
                    const flagUrl = `https://flagcdn.com/w20/${mergedStat.countryCode}.png`;
-                  
-                     // Use the clubNameMapping to change club names
-                    const formattedClubName = clubNameMapping[mergedStat.teamCode] || mergedStat.teamCode;
+                   const formattedClubName = clubNameMapping[mergedStat.teamCode] || mergedStat.teamCode;
                    const logoUrl = clubLogos[mergedStat.teamCode] || '';
-                  const startSeason = mergedStat.startSeason;
-                    const endSeason = mergedStat.endSeason;
+                   const startSeason = mergedStat.startSeason;
+                   const endSeason = mergedStat.endSeason;
+                   const formattedSeason = startSeason === endSeason
+                   ? startSeason.substring(0,4)
+                   : `${startSeason.substring(0, 4)}-${endSeason.substring(endSeason.length - 4)}`;
 
-                 const formattedSeason = startSeason === endSeason
-                ? startSeason.substring(0,9)
-                : `${startSeason.substring(0, 4)}-${endSeason.substring(endSeason.length - 4)}`;
-             
-                    const row = document.createElement('tr');
-
-                   row.innerHTML = `
+                     const row = document.createElement('tr');
+                 console.log("Creating row:", mergedStat, "Country Code", mergedStat.countryCode) //Log the data here
+                    row.innerHTML = `
                        <td>${formattedSeason}</td>
                         <td class="hidden" data-club="${mergedStat.teamCode}">
                                 <img src="${logoUrl}" alt="${formattedClubName} logo" style="width: 20px; height: 20px; margin-right: 5px;">
                                 ${formattedClubName}
                             </td>
-                            <td class="hidden" data-country="${fullCountryName}">
+                            <td class="hidden" data-country="${mergedStat.countryCode}">
                                   <img src="${flagUrl}" alt="${fullCountryName} flag" style="width: 20px; height: 15px; margin-right: 5px; vertical-align: middle;">
                             ${fullCountryName}
                              </td>
                    `;
-                 tableBody.appendChild(row);
+                    tableBody.appendChild(row);
 
             }
     }
