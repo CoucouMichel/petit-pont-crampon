@@ -284,6 +284,7 @@
                 Object.entries(clubNameMapping).map(([original, formatted]) => [formatted.toLowerCase(), original.toLowerCase()])
             );
 
+
             let checkAnswerValue = answer
 
             if (originalClubMapping[answer]) {
@@ -294,38 +295,38 @@
                  playerNameDisplay.textContent = selectedPlayer;
                 revealAllCells();
                 score += 50;
-                document.getElementById('score').textContent = `Score : ${score}`;
+                   updateScoreDisplay();
                 isCorrect = true;
-             } else {
-                  feedback.textContent = '';
-                 attempts++;
-                 document.getElementById("attempts").textContent = `Tentatives : ${attempts}`;
+            } else {
+                feedback.textContent = '';
+                attempts++;
+                document.getElementById("attempts").textContent = `Tentatives : ${attempts}`;
             }
 
-            const cells = document.querySelectorAll('td[data-country], td[data-club]');
+          const cells = document.querySelectorAll('td[data-country], td[data-club]');
 
-              for (const cell of cells) {
-                  const cellCountry = cell.getAttribute('data-country')?.toLowerCase();
+            for (const cell of cells) {
+                const cellCountry = cell.getAttribute('data-country')?.toLowerCase();
                 const cellClub = cell.getAttribute('data-club')?.toLowerCase();
-                if(cellClub === checkAnswerValue) {
-                      revealText(cell);
-                    const countryCell = cell.parentElement.querySelector('td[data-country].hidden')
-                   if(countryCell) {
-                         revealText(countryCell);
-                          score += 20;
-                         document.getElementById('score').textContent = `Score : ${score}`;
-                   }
-                 isCorrect = true;
-                } else if (cellCountry === answer || reverseMapping[cellCountry] === answer ) {
-                        revealText(cell);
-                       score += 10;
-                       document.getElementById('score').textContent = `Score : ${score}`;
-                      isCorrect = true;
-                   }
-              }
 
+                 if(cellClub === checkAnswerValue) {
+                     const countryCell = cell.parentElement.querySelector('td[data-country].hidden');
+                      if (countryCell) {
+                           revealText(countryCell);
+                            score += 20;
+                           updateScoreDisplay()
+                         isCorrect = true;
+                     }
+                }
+                 if (cellCountry === answer || reverseMapping[cellCountry] === answer) {
+                    revealText(cell);
+                    score += 10;
+                       updateScoreDisplay()
+                     isCorrect = true;
+                 }
+          }
             blinkInput(isCorrect);
-        }
+}
         
        function revealAllCells() {
             const allCells = document.querySelectorAll('td');
@@ -426,7 +427,7 @@
         });
         
          function revealRandomClueClub() {
-            if (!selectedPlayer) return;
+           if (!selectedPlayer) return;
           
            indiceClubButton.disabled = true;
             indiceClubButton.classList.add("button-disabled");
@@ -440,36 +441,32 @@
                          availableCells.push({row, rowIndex, cell});
                     }
                 });
-         availableCells = availableCells.filter(item => item.cell.classList.contains('hidden') && !item.cell.classList.contains('visible'));
-                    console.log("Available Club Cells:", availableCells)
-
 
                 if (availableCells.length > 0) {
                      const randomIndex = Math.floor(Math.random() * availableCells.length);
-                     const randomCell = availableCells[randomIndex];
-                     const row = randomCell.row;
+                    const randomCell = availableCells[randomIndex];
+                    const row = randomCell.row;
                      const cell = randomCell.cell;
 
                       cell.classList.remove('hidden');
                       cell.classList.add('visible');
                        availableCells.splice(randomIndex, 1)
-
-                   const countryCell = row.querySelector('td:nth-child(3).hidden')
+                  
+                    const countryCell = row.querySelector('td:nth-child(3).hidden')
                     if (countryCell) {
                         countryCell.classList.remove('hidden');
-                       countryCell.classList.add('visible');
-
-                  }
-                     score -= 25;
-                       document.getElementById('score').textContent = `Score : ${score}`;
+                         countryCell.classList.add('visible');
+                    }
+                         score -= 25
+                         updateScoreDisplay()
                 }
                
                 indiceClubButton.disabled = false;
                  indiceClubButton.classList.remove("button-disabled");
 
         }
-    function revealRandomClueCountry() {
-           if (!selectedPlayer) return;
+     function revealRandomClueCountry() {
+          if (!selectedPlayer) return;
         
            indiceCountryButton.disabled = true;
             indiceCountryButton.classList.add("button-disabled");
@@ -483,23 +480,31 @@
                          availableCells.push({row, rowIndex, cell});
                     }
                 });
-             availableCells = availableCells.filter(item => item.cell.classList.contains('hidden') && !item.cell.classList.contains('visible'));
-                console.log("Available Country Cells:", availableCells)
+
                 if (availableCells.length > 0) {
                      const randomIndex = Math.floor(Math.random() * availableCells.length);
-                    const randomCell = availableCells[randomIndex];
-                    const row = randomCell.row;
-                    const cell = randomCell.cell;
+                     const randomCell = availableCells[randomIndex];
+                     const row = randomCell.row;
+                      const cell = randomCell.cell;
                       cell.classList.remove('hidden');
-                       cell.classList.add('visible');
-                       availableCells.splice(randomIndex, 1)
-                       score -= 10;
-                    document.getElementById('score').textContent = `Score : ${score}`;
-                }
-               
-                 indiceCountryButton.disabled = false;
-                  indiceCountryButton.classList.remove("button-disabled");
+                      cell.classList.add('visible');
+                      availableCells.splice(randomIndex, 1)
+                         score -= 10
+                        updateScoreDisplay()
+                  }
+                
+                   indiceCountryButton.disabled = false;
+                    indiceCountryButton.classList.remove("button-disabled");
     }
+    
+    function updateScoreDisplay() {
+        const scoreDisplay = document.getElementById('score');
+        scoreDisplay.textContent = `Score : ${score}`;
+          scoreDisplay.classList.add('highlight');
+            setTimeout(() => {
+                scoreDisplay.classList.remove('highlight');
+            }, 300)
+        }
         
         function revealAll() {
             if (!selectedPlayer) return;
