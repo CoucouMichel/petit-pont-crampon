@@ -270,20 +270,21 @@
             const reverseMapping = Object.fromEntries(
                 Object.entries(countryMapping).map(([abbr, fullName]) => [fullName.toLowerCase(), abbr.toLowerCase()])
             );
-        
             let isCorrect = false;
 
              const clubNameMapping = await loadClubNameMapping();
         
            let matchingCountryCell = null;
             let matchingClubCell = null;
-            
+              let matchingClubCountry = null;
+
           const cells = document.querySelectorAll('td[data-country], td[data-club]');
             cells.forEach(cell => {
-                 const cellCountry = cell.getAttribute('data-country')?.toLowerCase();
-                const cellClub = cell.getAttribute('data-club')?.toLowerCase();
-                    if (cellClub === answer ) {
-                       matchingClubCell = cell
+                  const cellCountry = cell.getAttribute('data-country')?.toLowerCase();
+                 const cellClub = cell.getAttribute('data-club')?.toLowerCase();
+                    if (cellClub === answer) {
+                       matchingClubCell = cell;
+                       matchingClubCountry = cellCountry
                     }
                       if (reverseMapping[cellCountry] === answer) {
                          matchingCountryCell = cell
@@ -299,31 +300,42 @@
                  feedback.textContent = '';
                 attempts++;
                  document.getElementById("attempts").textContent = `Tentatives : ${attempts}`;
-
-                if (matchingClubCell) {
+              
+                    if (matchingClubCell) {
+                        const clubLogos = await loadClubLogos();
+                          const formattedClubName = await loadClubNameMapping();
+                       
+                        const logoUrl = clubLogos[answer] || '';
+                             const formattedClub = formattedClubName[answer] || answer
+                         matchingClubCell.innerHTML =  `<img src="${logoUrl}" alt="${formattedClub} logo" style="width: 20px; height: 20px; margin-right: 5px;">  ${formattedClub}`;
                        revealText(matchingClubCell);
-                      matchingClubCell.classList.add('country-match');
-                        isCorrect = true;
-                      } else  if (matchingCountryCell) {
+                       matchingClubCell.classList.add('country-match');
+                       isCorrect = true;
+
+                        
+                           const countryCell = matchingClubCell.parentElement.querySelector('td:nth-child(3).hidden')
+
+                         if (countryCell) {
+                              revealText(countryCell)
+                              isCorrect = true;
+                          }
+                 } else  if (matchingCountryCell) {
                        revealText(matchingCountryCell);
-                      matchingCountryCell.classList.add('country-match');
-                      isCorrect = true;
+                       matchingCountryCell.classList.add('country-match');
+                        isCorrect = true;
                 }
              }
 
-          
-           cells.forEach(cell => {
-            const cellCountry = cell.getAttribute('data-country')?.toLowerCase();
-               const cellClub = cell.getAttribute('data-club')?.toLowerCase();
+             cells.forEach(cell => {
+                const cellCountry = cell.getAttribute('data-country')?.toLowerCase();
+                const cellClub = cell.getAttribute('data-club')?.toLowerCase();
            if (cellCountry === answer || reverseMapping[cellCountry] === answer || cellClub === answer) {
                 revealText(cell);
-               isCorrect = true;
+                 isCorrect = true;
               }
 
              });
-          
             blinkInput(isCorrect);
-
        
         }
         
