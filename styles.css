@@ -20,7 +20,7 @@ body {
     align-items: center;
     min-height: 100vh;
     text-align: center;
-     flex-direction: column;
+    flex-direction: column;
 }
 
 /* Conteneur principal */
@@ -36,6 +36,7 @@ body {
     padding-bottom: 20px;
     position: relative;
 }
+
 
 button {
     padding: 10px 15px;
@@ -391,4 +392,20 @@ th:nth-child(3), td:nth-child(3) {
         display: inline;
         color: white;
         font-size: 20px;
+}
+.info-window {
+    position: absolute;
+     top: calc(100% + 10px); /* Adjust as needed, to appear right below the icon */
+    left: 0;
+    transform: translateX(0%);
+    background-color: #303030;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    width: 300px;
+    text-align: left;
+        z-index: 99;
+        max-height: 300px;
+        overflow-y: scroll; /* Added scrollbar if needed */
 }
