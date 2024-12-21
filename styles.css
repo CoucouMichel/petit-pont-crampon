@@ -215,6 +215,23 @@ td[data-club] {
      th, td {
            padding: 8px;
     }
+     
+     .input-container {
+         position: fixed;
+        top: 10px;
+        left: 50%;
+         transform: translateX(-50%);
+        z-index: 1000;
+         width: 100%;
+        padding: 0 10px;
+         box-sizing: border-box;
+           background-color: var(--background-color);
+        
+    }
+     #guess-input {
+        width: 100%;
+        max-width: none;
+    }
 }
 
 /* Centrer la barre de saisie */
@@ -240,6 +257,11 @@ input#guess-input {
     text-align: center;
     border-radius: 5px;
     box-sizing: border-box;
+}
+
+.input-container {
+    margin-bottom: 20px;
+    position: relative; /* needed for absolute positioning */
 }
 
 #guess-input:focus {
