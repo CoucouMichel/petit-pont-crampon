@@ -207,6 +207,10 @@ td.visible {
     visibility: visible !important;
 }
 
+td.country-match {
+    background-color: #4b4b4b; /* Change background color */
+}
+
 /* Pour la colonne des pays, appliquer un fond bleu marine et garder la structure */
 td[data-country] {
     visibility: hidden;
