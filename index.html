@@ -47,7 +47,6 @@
                     <!-- Les lignes du tableau seront ajoutées dynamiquement -->
                 </tbody>
             </table>
-            <p id="country-feedback" style="color: red; margin-top: 10px;"></p>
         </div>
     </div>
     
@@ -121,11 +120,11 @@
             }
         }
         
-         async function displayPlayerStats() {
-            const clubNameMapping = await loadClubNameMapping();
-            const countryMapping = await loadCountryMapping();
-            const clubLogos = await loadClubLogos();
-            const stats = await selectRandomPlayer();
+        async function displayPlayerStats() {
+            const clubNameMapping = await loadClubNameMapping(); // Load the club name mappings
+            const countryMapping = await loadCountryMapping(); // Load the country mapping
+            const clubLogos = await loadClubLogos(); // Load the club logos
+            const stats = await selectRandomPlayer(); // Fetch the player stats
          
              // Initial display as rectangles
              playerNameDisplay.innerHTML = "";
@@ -147,15 +146,16 @@
             window.addEventListener('resize', adjustGlobalContainerMargin);
 
         
-            const tableBody = document.getElementById('career-table-body');
-            tableBody.innerHTML = '';
-           
-           
+            const tableBody = document.getElementById('career-table-body'); // Get the table body element
+        
+            tableBody.innerHTML = ''; // Clear existing rows
+        
             // Check if stats is an array
             if (!Array.isArray(stats)) {
                 console.error("Expected stats to be an array, but got:", stats);
                 return; // Exit the function if stats is not an array
             }
+        
             let mergedStats = [];
             let currentMerged = null;
 
@@ -179,41 +179,43 @@
                        teamCode: stat.team,
                         countryCode: stat.country
                     }
-
-                }
+               }
             }
 
 
-            if(currentMerged) {
-                mergedStats.push(currentMerged)
+         if(currentMerged) {
+                 mergedStats.push(currentMerged)
             }
 
 
             for (const mergedStat of mergedStats) {
                   const fullCountryName = countryMapping[mergedStat.countryCode] || mergedStat.countryCode;
                    const flagUrl = `https://flagcdn.com/w20/${mergedStat.countryCode}.png`;
-                   const formattedClubName = clubNameMapping[mergedStat.teamCode] || mergedStat.teamCode;
+                  
+                     // Use the clubNameMapping to change club names
+                    const formattedClubName = clubNameMapping[mergedStat.teamCode] || mergedStat.teamCode;
                    const logoUrl = clubLogos[mergedStat.teamCode] || '';
-                   const startSeason = mergedStat.startSeason;
-                   const endSeason = mergedStat.endSeason;
-                   const formattedSeason = startSeason === endSeason
-                   ? startSeason.substring(0,9)
-                   : `${startSeason.substring(0, 4)}-${endSeason.substring(endSeason.length - 4)}`;
+                  const startSeason = mergedStat.startSeason;
+                    const endSeason = mergedStat.endSeason;
 
-                     const row = document.createElement('tr');
-                 console.log("Creating row:", mergedStat, "Country Code", mergedStat.countryCode) //Log the data here
-                    row.innerHTML = `
+                 const formattedSeason = startSeason === endSeason
+                ? startSeason.substring(0,9)
+                : `${startSeason.substring(0, 4)}-${endSeason.substring(endSeason.length - 4)}`;
+             
+                    const row = document.createElement('tr');
+
+                   row.innerHTML = `
                        <td>${formattedSeason}</td>
                         <td class="hidden" data-club="${mergedStat.teamCode}">
                                 <img src="${logoUrl}" alt="${formattedClubName} logo" style="width: 20px; height: 20px; margin-right: 5px;">
                                 ${formattedClubName}
                             </td>
-                            <td class="hidden" data-country="${mergedStat.countryCode}">
+                            <td class="hidden" data-country="${fullCountryName}">
                                   <img src="${flagUrl}" alt="${fullCountryName} flag" style="width: 20px; height: 15px; margin-right: 5px; vertical-align: middle;">
                             ${fullCountryName}
                              </td>
                    `;
-                    tableBody.appendChild(row);
+                 tableBody.appendChild(row);
 
             }
     }
@@ -261,80 +263,40 @@
             }
         }
 
-     async function checkAnswer(input) {
+        async function checkAnswer(input) {
             const answer = input.trim().toLowerCase();
             const feedback = document.getElementById("feedback");
             const countryMapping = await loadCountryMapping();
             const reverseMapping = Object.fromEntries(
                 Object.entries(countryMapping).map(([abbr, fullName]) => [fullName.toLowerCase(), abbr.toLowerCase()])
             );
+
             let isCorrect = false;
-             const clubNameMapping = await loadClubNameMapping();
-            const clubCountries = await loadClubsCountries();
-                const clubToCountry = await loadClubToCountry();
 
-            const countryFeedback = document.getElementById('country-feedback');
-            countryFeedback.textContent = "";
-
-             if (answer === selectedPlayer.toLowerCase()) {
-                   playerNameDisplay.textContent = selectedPlayer;
-                    revealAllCells();
-                    isCorrect = true;
-            } else {
-                 feedback.textContent = '';
-                  attempts++;
-                 document.getElementById("attempts").textContent = `Tentatives : ${attempts}`;
-                const matchingCountryCode = await getMatchingCountryCode(answer, countryMapping, reverseMapping, clubToCountry);
-
-                 if (matchingCountryCode) {
-                      countryFeedback.textContent = "Wrong team, but right country!";
-                      isCorrect = true;
-                  }
-
-            }
-             const cells = document.querySelectorAll('td[data-country], td[data-club]');
-            cells.forEach(cell => {
-            const cellCountry = cell.getAttribute('data-country')?.toLowerCase();
-               const cellClub = cell.getAttribute('data-club')?.toLowerCase();
-           if (cellCountry === answer || reverseMapping[cellCountry] === answer || cellClub === answer) {
-                revealText(cell);
+            if (answer === selectedPlayer.toLowerCase()) {
+                
+                playerNameDisplay.textContent = selectedPlayer;
+                revealAllCells();
                 isCorrect = true;
+            } else {
+                feedback.textContent = '';
+                attempts++;
+                document.getElementById("attempts").textContent = `Tentatives : ${attempts}`;
             }
 
-           });
+            const cells = document.querySelectorAll('td[data-country], td[data-club]');
+            cells.forEach(cell => {
+                const cellCountry = cell.getAttribute('data-country')?.toLowerCase();
+                const cellClub = cell.getAttribute('data-club')?.toLowerCase();
+
+                if (cellCountry === answer || reverseMapping[cellCountry] === answer || cellClub === answer) {
+                    revealText(cell);
+                    isCorrect = true;
+                }
+            });
+
             blinkInput(isCorrect);
         }
-
- async function getMatchingCountryCode(answer, countryMapping, reverseMapping, clubToCountry) {
-        if (clubToCountry[answer]) {
-            const inputCountryCode = clubToCountry[answer].toLowerCase();
-             const tableBody = document.getElementById('career-table-body');
-              const rows = tableBody.querySelectorAll('tr');
-             for (const row of rows) {
-               const countryCell = row.querySelector('td[data-country]');
-                    if(countryCell) {
-                      const cellCountryCode = countryCell.getAttribute('data-country')?.toLowerCase();
-                        if (cellCountryCode === inputCountryCode) {
-                               return  cellCountryCode;
-                           }
-                   }
-                }
-
-         }
-         return null
- }
-async function loadClubToCountry() {
-    try {
-        const response = await fetch('./club2country.json');
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    } catch (error) {
-        console.error("Error loading club to country mapping:", error);
-        return {};
-    }
-}
         
         function blinkInput(isCorrect) {
             const inputField = document.getElementById("guess-input");
