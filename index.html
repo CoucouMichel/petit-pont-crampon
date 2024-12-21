@@ -264,7 +264,7 @@
     }
 }
 
-     async function checkAnswer(input) {
+   async function checkAnswer(input) {
     const answer = input.trim().toLowerCase();
     const feedback = document.getElementById("feedback");
     const countryMapping = await loadCountryMapping();
@@ -273,25 +273,46 @@
     );
     let isCorrect = false;
 
-    if (answer === selectedPlayer.toLowerCase()) {
+    const clubNameMapping = await loadClubNameMapping();
+    const originalClubMapping = Object.fromEntries(
+        Object.entries(clubNameMapping).map(([original, formatted]) => [formatted.toLowerCase(), original.toLowerCase()])
+    );
+
+
+    let checkAnswerValue = answer
+
+    if (originalClubMapping[answer]) {
+        checkAnswerValue = originalClubMapping[answer]
+    }
+
+    if (checkAnswerValue === selectedPlayer.toLowerCase()) {
          playerNameDisplay.textContent = selectedPlayer;
             revealAllCells();
-             isCorrect = true;
+            isCorrect = true;
     } else {
         feedback.textContent = '';
         attempts++;
         document.getElementById("attempts").textContent = `Tentatives : ${attempts}`;
     }
 
-    const cells = document.querySelectorAll('td[data-country], td[data-club]');
-    cells.forEach(cell => {
+  const cells = document.querySelectorAll('td[data-country], td[data-club]');
+
+    for (const cell of cells) {
         const cellCountry = cell.getAttribute('data-country')?.toLowerCase();
         const cellClub = cell.getAttribute('data-club')?.toLowerCase();
-          if (cellCountry === answer || reverseMapping[cellCountry] === answer || cellClub === answer) {
+
+         if(cellClub === checkAnswerValue) {
+             const countryCell = cell.parentElement.querySelector('td[data-country].hidden');
+              if (countryCell) {
+                    revealText(countryCell);
+                    isCorrect = true;
+                 }
+          }
+          if (cellCountry === answer || reverseMapping[cellCountry] === answer || cellClub === checkAnswerValue) {
              revealText(cell);
               isCorrect = true;
-        }
-    });
+          }
+    }
     blinkInput(isCorrect);
 }
         
