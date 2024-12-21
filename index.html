@@ -22,8 +22,19 @@
                 <div id="guess-feedback"></div>
             </div>
             
-            <p id="score">Score : 0</p>
-            <p id="attempts">Tentatives : 0</p>
+             <p id="score">Score : 100 <span id="info-icon" style="cursor: pointer; font-size: 15px; margin-left: 5px; vertical-align: middle;">ⓘ</span></p>
+   <div id="info-window" class="info-window hidden">
+    <h3>Point System</h3>
+    <ul>
+        <li>Finding the mystery player: 50 points + 5 points for each hidden cell.</li>
+        <li>Correct Country: 10 points.</li>
+        <li>Correct Club: 20 points.</li>
+        <li>Using Indice Club: -25 points.</li>
+        <li>Using Indice Pays: -10 points.</li>
+       <li>Using Carrière : Score goes to zero.</li>
+        <li>Using Réponse : Score goes to zero.</li>
+    </ul>
+</div>
             <p id="feedback"></p>
              <!-- Button Container -->
             <div class="button-container">
