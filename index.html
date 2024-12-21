@@ -340,7 +340,7 @@ async function checkAnswer(input) {
     blinkInput(isCorrect);
 }
         
-       function revealAllCells() {
+function revealAllCells() {
             const allCells = document.querySelectorAll('td');
             allCells.forEach(cell => {
                 cell.classList.add('visible');
@@ -348,7 +348,7 @@ async function checkAnswer(input) {
             
             if(revealPlayerOnce === false) {
                  score +=  document.querySelectorAll('#career-table-body td.hidden').length * 5
-                 document.getElementById('score').textContent = `Score : ${score}`;
+                   updateScoreDisplay()
            }
       }
         
@@ -368,15 +368,25 @@ async function checkAnswer(input) {
             cell.classList.add('visible');
         }
         
-        function revealAllCells() {
+              function revealAllCells() {
             const allCells = document.querySelectorAll('td');
             allCells.forEach(cell => {
                 cell.classList.add('visible');
             });
-             
-            score +=  document.querySelectorAll('#career-table-body td.hidden').length * 5
-             document.getElementById('score').textContent = `Score : ${score}`;
+            
+            if(revealPlayerOnce === false) {
+                 score +=  document.querySelectorAll('#career-table-body td.hidden').length * 5
+                   updateScoreDisplay()
+
+           }
         }
+const infoIcon = document.getElementById("info-icon");
+        const infoWindow = document.getElementById("info-window");
+
+
+         infoIcon.addEventListener('click', () => {
+        infoWindow.classList.toggle('hidden');
+         });
         
   const input = document.getElementById("guess-input");
         input.addEventListener("input", async () => {
@@ -542,13 +552,7 @@ async function checkAnswer(input) {
             reponseButton.classList.add("button-disabled");
         }
 
-        const infoIcon = document.getElementById("info-icon");
-        const infoWindow = document.getElementById("info-window");
 
-
-         infoIcon.addEventListener('click', () => {
-        infoWindow.classList.toggle('hidden');
-         });
         displayPlayerStats();
     </script>
 </body>
