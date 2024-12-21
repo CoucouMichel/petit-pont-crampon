@@ -47,6 +47,7 @@
                     <!-- Les lignes du tableau seront ajoutées dynamiquement -->
                 </tbody>
             </table>
+            <p id="country-feedback" style="color: red; margin-top: 10px;"></p>
         </div>
     </div>
     
@@ -263,7 +264,7 @@
             }
         }
 
-    async function checkAnswer(input) {
+     async function checkAnswer(input) {
             const answer = input.trim().toLowerCase();
             const feedback = document.getElementById("feedback");
             const countryMapping = await loadCountryMapping();
@@ -273,49 +274,50 @@
             let isCorrect = false;
              const clubNameMapping = await loadClubNameMapping();
             const clubCountries = await loadClubsCountries();
+            const clubLogos = await loadClubLogos();
+          
+              const countryFeedback = document.getElementById('country-feedback');
+            countryFeedback.textContent = ""
 
 
-        
-            if (answer === selectedPlayer.toLowerCase()) {
-                  playerNameDisplay.textContent = selectedPlayer;
-                 revealAllCells();
-                 isCorrect = true;
+             if (answer === selectedPlayer.toLowerCase()) {
+                   playerNameDisplay.textContent = selectedPlayer;
+                    revealAllCells();
+                    isCorrect = true;
             } else {
                 feedback.textContent = '';
-                 attempts++;
-                  document.getElementById("attempts").textContent = `Tentatives : ${attempts}`;
+                attempts++;
+                document.getElementById("attempts").textContent = `Tentatives : ${attempts}`;
 
-                    if (clubCountries[answer]) {
-                         const inputCountry = clubCountries[answer].toLowerCase();
+                 if (clubCountries[answer]) {
+                       const inputCountry = clubCountries[answer].toLowerCase();
+                           const tableBody = document.getElementById('career-table-body');
+                           const rows = tableBody.querySelectorAll('tr');
 
-                         const cells = document.querySelectorAll('td[data-country]');
-                        cells.forEach(cell => {
-                           const cellCountry = cell.getAttribute('data-country')?.toLowerCase();
-                         if (reverseMapping[cellCountry] === inputCountry || cellCountry === inputCountry) {
-                                const clubCell = cell.previousElementSibling; // Get the club cell on the left
+                           for (const row of rows) {
+                                const countryCell = row.querySelector('td[data-country]');
+                                if (countryCell) {
+                                        const cellCountry = countryCell.getAttribute('data-country')?.toLowerCase();
+                                     if(reverseMapping[cellCountry] === inputCountry || cellCountry === inputCountry) {
 
-                              if(clubCell) {
-                                 clubCell.classList.add('country-match');
-                                    isCorrect = true;
-                                  }
-                              revealText(cell);
-
-                           }
-                         });
-                     }
+                                             countryFeedback.textContent = "Wrong team, but right country!";
+                                             isCorrect = true;
+                                    }
+                               }
+                            }
+                      }
            }
 
-           const cells = document.querySelectorAll('td[data-country], td[data-club]');
-           cells.forEach(cell => {
-            const cellCountry = cell.getAttribute('data-country')?.toLowerCase();
-            const cellClub = cell.getAttribute('data-club')?.toLowerCase();
-         if (cellCountry === answer || reverseMapping[cellCountry] === answer || cellClub === answer) {
-                 revealText(cell);
+         const cells = document.querySelectorAll('td[data-country], td[data-club]');
+            cells.forEach(cell => {
+                const cellCountry = cell.getAttribute('data-country')?.toLowerCase();
+               const cellClub = cell.getAttribute('data-club')?.toLowerCase();
+            if (cellCountry === answer || reverseMapping[cellCountry] === answer || cellClub === answer) {
+                revealText(cell);
                 isCorrect = true;
-            }
+              }
 
-            });
-          
+         });
             blinkInput(isCorrect);
         }
         
