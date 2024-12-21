@@ -267,7 +267,7 @@
                 console.error("Erreur lors du chargement des suggestions :", error);
             }
         }
- async function checkAnswer(input) {
+  async function checkAnswer(input) {
             const answer = input.trim().toLowerCase();
             const feedback = document.getElementById("feedback");
             const countryMapping = await loadCountryMapping();
@@ -281,6 +281,7 @@
                 Object.entries(clubNameMapping).map(([original, formatted]) => [formatted.toLowerCase(), original.toLowerCase()])
             );
 
+
             let checkAnswerValue = answer
 
             if (originalClubMapping[answer]) {
@@ -291,36 +292,41 @@
                  playerNameDisplay.textContent = selectedPlayer;
                 revealAllCells();
                 score += 50;
-                document.getElementById('score').textContent = `Score : ${score}`;
+                updateScoreDisplay()
                 isCorrect = true;
-             } else {
+            } else {
+               if(feedback) {
                   feedback.textContent = '';
-                 attempts++;
-                 document.getElementById("attempts").textContent = `Tentatives : ${attempts}`;
+              }
+                attempts++;
+                 const attemptsElement = document.getElementById("attempts");
+                if(attemptsElement) {
+                    attemptsElement.textContent = `Tentatives : ${attempts}`;
+                }
             }
 
             const cells = document.querySelectorAll('td[data-country], td[data-club]');
 
-              for (const cell of cells) {
-                  const cellCountry = cell.getAttribute('data-country')?.toLowerCase();
+            for (const cell of cells) {
+                const cellCountry = cell.getAttribute('data-country')?.toLowerCase();
                 const cellClub = cell.getAttribute('data-club')?.toLowerCase();
-                if(cellClub === checkAnswerValue) {
-                      revealText(cell);
-                    const countryCell = cell.parentElement.querySelector('td[data-country].hidden')
-                   if(countryCell) {
-                         revealText(countryCell);
-                          score += 20;
-                         document.getElementById('score').textContent = `Score : ${score}`;
-                   }
-                 isCorrect = true;
-                } else if (cellCountry === answer || reverseMapping[cellCountry] === answer ) {
+
+                 if(cellClub === checkAnswerValue) {
+                     const countryCell = cell.parentElement.querySelector('td[data-country].hidden');
+                      if (countryCell) {
+                            revealText(countryCell);
+                             score += 20;
+                           updateScoreDisplay()
+                           isCorrect = true;
+                       }
+                 }
+                  else if (cellCountry === answer || reverseMapping[cellCountry] === answer ) {
                         revealText(cell);
-                       score += 10;
-                       document.getElementById('score').textContent = `Score : ${score}`;
-                      isCorrect = true;
+                        score += 10;
+                          updateScoreDisplay()
+                         isCorrect = true;
                    }
               }
-
             blinkInput(isCorrect);
         }
         
