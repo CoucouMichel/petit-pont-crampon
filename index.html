@@ -264,39 +264,48 @@
 }
 
         async function checkAnswer(input) {
-            const answer = input.trim().toLowerCase();
-            const feedback = document.getElementById("feedback");
-            const countryMapping = await loadCountryMapping();
-            const reverseMapping = Object.fromEntries(
-                Object.entries(countryMapping).map(([abbr, fullName]) => [fullName.toLowerCase(), abbr.toLowerCase()])
-            );
+    const answer = input.trim().toLowerCase();
+    const feedback = document.getElementById("feedback");
+    const countryMapping = await loadCountryMapping();
+    const reverseMapping = Object.fromEntries(
+        Object.entries(countryMapping).map(([abbr, fullName]) => [fullName.toLowerCase(), abbr.toLowerCase()])
+    );
+    let isCorrect = false;
 
-            let isCorrect = false;
+    const clubNameMapping = await loadClubNameMapping();
+    const originalClubMapping = Object.fromEntries(
+        Object.entries(clubNameMapping).map(([original, formatted]) => [formatted.toLowerCase(), original.toLowerCase()])
+    );
 
-            if (answer === selectedPlayer.toLowerCase()) {
-                
-                playerNameDisplay.textContent = selectedPlayer;
-                revealAllCells();
-                isCorrect = true;
-            } else {
-                feedback.textContent = '';
-                attempts++;
-                document.getElementById("attempts").textContent = `Tentatives : ${attempts}`;
-            }
 
-            const cells = document.querySelectorAll('td[data-country], td[data-club]');
-            cells.forEach(cell => {
-                const cellCountry = cell.getAttribute('data-country')?.toLowerCase();
-                const cellClub = cell.getAttribute('data-club')?.toLowerCase();
+    let checkAnswerValue = answer
 
-                if (cellCountry === answer || reverseMapping[cellCountry] === answer || cellClub === answer) {
-                    revealText(cell);
-                    isCorrect = true;
-                }
-            });
+    if (originalClubMapping[answer]) {
+        checkAnswerValue = originalClubMapping[answer]
+    }
 
-            blinkInput(isCorrect);
+    if (checkAnswerValue === selectedPlayer.toLowerCase()) {
+         playerNameDisplay.textContent = selectedPlayer;
+            revealAllCells();
+             isCorrect = true;
+    } else {
+        feedback.textContent = '';
+        attempts++;
+        document.getElementById("attempts").textContent = `Tentatives : ${attempts}`;
+    }
+
+    const cells = document.querySelectorAll('td[data-country], td[data-club]');
+    cells.forEach(cell => {
+        const cellCountry = cell.getAttribute('data-country')?.toLowerCase();
+        const cellClub = cell.getAttribute('data-club')?.toLowerCase();
+          if (cellCountry === answer || reverseMapping[cellCountry] === answer || cellClub === checkAnswerValue) {
+             revealText(cell);
+              isCorrect = true;
         }
+    });
+
+    blinkInput(isCorrect);
+}
         
         function blinkInput(isCorrect) {
             const inputField = document.getElementById("guess-input");
