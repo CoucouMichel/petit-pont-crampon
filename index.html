@@ -197,7 +197,7 @@
                    const startSeason = mergedStat.startSeason;
                    const endSeason = mergedStat.endSeason;
                    const formattedSeason = startSeason === endSeason
-                   ? startSeason.substring(0,4)
+                   ? startSeason.substring(0,9)
                    : `${startSeason.substring(0, 4)}-${endSeason.substring(endSeason.length - 4)}`;
 
                      const row = document.createElement('tr');
