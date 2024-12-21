@@ -220,7 +220,7 @@
             }
     }
     
-        async function showSuggestions(value) {
+ async function showSuggestions(value) {
     const autocompleteList = document.getElementById("autocomplete-list");
     autocompleteList.innerHTML = "";
 
@@ -321,15 +321,48 @@
             });
         }
         
-        const input = document.getElementById("guess-input");
-        input.addEventListener("input", () => showSuggestions(input.value)); // Mise à jour des suggestions
-        input.addEventListener("keyup", (event) => {
-             if (event.key === "Enter") {
-                checkAnswer(input.value);
-                input.value = ""; // Effacer la saisie
-                 document.getElementById("autocomplete-list").innerHTML = ""; // Effacer la liste
+ async function showSuggestions(value) {
+    const autocompleteList = document.getElementById("autocomplete-list");
+    autocompleteList.innerHTML = "";
+
+    if (value.trim() === "") return;
+
+    try {
+        const data = await loadClubsCountries();
+        const suggestions = new Set();
+        const normalizedValue = value.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+
+        for (let club in data) {
+            const country = data[club];
+            const normalizedClub = club.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+            const normalizedCountry = country.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+
+            if (normalizedClub.toLowerCase().includes(normalizedValue.toLowerCase())) {
+                suggestions.add(club);
             }
-         });
+            if (normalizedCountry.toLowerCase().includes(normalizedValue.toLowerCase())) {
+                suggestions.add(country);
+            }
+        }
+
+        const sortedSuggestions = Array.from(suggestions).sort();
+
+        sortedSuggestions.forEach(suggestion => {
+            const listItem = document.createElement("li");
+            listItem.textContent = suggestion;
+            listItem.classList.add("suggestion-item");
+            listItem.addEventListener("click", () => {
+                document.getElementById("guess-input").value = "";
+                autocompleteList.innerHTML = "";
+                checkAnswer(suggestion);
+            });
+            autocompleteList.appendChild(listItem);
+        });
+
+    } catch (error) {
+        console.error("Erreur lors du chargement des suggestions :", error);
+    }
+}
         
         displayPlayerStats();
         
