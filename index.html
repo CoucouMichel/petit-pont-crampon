@@ -426,60 +426,53 @@
         });
         
          function revealRandomClueClub() {
-    if (!selectedPlayer) return;
+            if (!selectedPlayer) return;
+          
+           indiceClubButton.disabled = true;
+            indiceClubButton.classList.add("button-disabled");
+          
+            let availableCells = [];
 
-    indiceClubButton.disabled = true;
-    indiceClubButton.classList.add("button-disabled");
+            // Get all hidden cells in the Club column
+             document.querySelectorAll('#career-table-body tr').forEach((row, rowIndex) => {
+                      const cell = row.querySelector(`td:nth-child(2).hidden`);
+                      if (cell) {
+                         availableCells.push({row, rowIndex, cell});
+                    }
+                });
+         availableCells = availableCells.filter(item => item.cell.classList.contains('hidden') && !item.cell.classList.contains('visible'));
+                    console.log("Available Club Cells:", availableCells)
 
-    let availableCells = [];
 
-    // Get all hidden cells in the Club column
-    document.querySelectorAll('#career-table-body tr').forEach((row, rowIndex) => {
-        const cell = row.querySelector(`td:nth-child(2).hidden`);
-        if (cell) {
-            availableCells.push({row, rowIndex, cell});
+                if (availableCells.length > 0) {
+                     const randomIndex = Math.floor(Math.random() * availableCells.length);
+                     const randomCell = availableCells[randomIndex];
+                     const row = randomCell.row;
+                     const cell = randomCell.cell;
+
+                      cell.classList.remove('hidden');
+                      cell.classList.add('visible');
+                       availableCells.splice(randomIndex, 1)
+
+                   const countryCell = row.querySelector('td:nth-child(3).hidden')
+                    if (countryCell) {
+                        countryCell.classList.remove('hidden');
+                       countryCell.classList.add('visible');
+
+                  }
+                     score -= 25;
+                       document.getElementById('score').textContent = `Score : ${score}`;
+                }
+               
+                indiceClubButton.disabled = false;
+                 indiceClubButton.classList.remove("button-disabled");
+
         }
-    });
-        
-        availableCells = availableCells.filter(item => item.cell.classList.contains('hidden'));
-        console.log("Available Club Cells:", availableCells)
-
-        if (availableCells.length > 0) {
-            const randomIndex = Math.floor(Math.random() * availableCells.length);
-            const randomCell = availableCells[randomIndex];
-                const row = randomCell.row;
-                 const cell = randomCell.cell;
-
-
-           cell.classList.remove('hidden');
-             cell.classList.add('visible');
-               availableCells.splice(randomIndex, 1);
-
-
-                const countryCell = row.querySelector('td:nth-child(3).hidden')
-                if (countryCell) {
-                    countryCell.classList.remove('hidden');
-                    countryCell.classList.add('visible');
-                   
-                 }
-                score -= 25;
-                document.getElementById('score').textContent = `Score : ${score}`;
-                
-              
-             }
-           
-       
-           indiceClubButton.disabled = false;
-           indiceClubButton.classList.remove("button-disabled");
-
-
-    }
-
- function revealRandomClueCountry() {
-        if (!selectedPlayer) return;
+    function revealRandomClueCountry() {
+           if (!selectedPlayer) return;
         
            indiceCountryButton.disabled = true;
-           indiceCountryButton.classList.add("button-disabled");
+            indiceCountryButton.classList.add("button-disabled");
 
             let availableCells = [];
 
@@ -490,25 +483,22 @@
                          availableCells.push({row, rowIndex, cell});
                     }
                 });
-              availableCells = availableCells.filter(item => item.cell.classList.contains('hidden'));
+             availableCells = availableCells.filter(item => item.cell.classList.contains('hidden') && !item.cell.classList.contains('visible'));
                 console.log("Available Country Cells:", availableCells)
-
                 if (availableCells.length > 0) {
                      const randomIndex = Math.floor(Math.random() * availableCells.length);
                     const randomCell = availableCells[randomIndex];
-                     const row = randomCell.row;
-                      const cell = randomCell.cell;
-                    cell.classList.remove('hidden');
-                    cell.classList.add('visible');
-                         availableCells.splice(randomIndex, 1)
-
-                        score -= 10;
-                       document.getElementById('score').textContent = `Score : ${score}`;
+                    const row = randomCell.row;
+                    const cell = randomCell.cell;
+                      cell.classList.remove('hidden');
+                       cell.classList.add('visible');
+                       availableCells.splice(randomIndex, 1)
+                       score -= 10;
+                    document.getElementById('score').textContent = `Score : ${score}`;
                 }
                
                  indiceCountryButton.disabled = false;
-                 indiceCountryButton.classList.remove("button-disabled");
-
+                  indiceCountryButton.classList.remove("button-disabled");
     }
         
         function revealAll() {
