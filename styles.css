@@ -423,6 +423,6 @@ th:nth-child(3), td:nth-child(3) {
     font-weight: bold;
      background-color: rgba(52, 152, 219, 0.2); /* Add background color */
         padding: 5px 10px; /* Add some padding */
-        border: 2px solid rgba(52, 152, 219, 0.6); /* Add a border */
+        border: 1px solid rgba(52, 152, 219, 0.6); /* Add a border */
         border-radius: 5px; /* Slightly rounded corners */
 }
