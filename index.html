@@ -412,7 +412,7 @@
             document.getElementById('score').textContent = `Score : ${score}`;
         });
         
-  function revealRandomClueClub() {
+ function revealRandomClueClub() {
            if (!selectedPlayer) return;
           
            indiceClubButton.disabled = true;
@@ -440,15 +440,14 @@
                     const countryCell = row.querySelector('td:nth-child(3).hidden')
                     if (countryCell) {
                         countryCell.classList.add('visible');
-                          score -= 25;
-                         document.getElementById('score').textContent = `Score : ${score}`;
-
                     }
+                       score -= 25;
 
                 }
               
                 indiceClubButton.disabled = false;
-                 indiceClubButton.classList.remove("button-disabled");
+                indiceClubButton.classList.remove("button-disabled");
+                document.getElementById('score').textContent = `Score : ${score}`;
 
 
         }
@@ -475,13 +474,12 @@
                       cell.classList.add('visible');
                        // Remove the cell from available cells
                       availableCells.splice(randomIndex, 1)
-                          score -= 10;
-                         document.getElementById('score').textContent = `Score : ${score}`;
-                   
+                            score -= 10;
                 }
                 
                    indiceCountryButton.disabled = false;
                    indiceCountryButton.classList.remove("button-disabled");
+                     document.getElementById('score').textContent = `Score : ${score}`;
     }
         
         function revealAll() {
