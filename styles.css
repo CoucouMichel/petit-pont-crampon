@@ -79,38 +79,6 @@ button:disabled {
     50% { background-color: red; }
 }
 
-.autocomplete-suggestions {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: calc(100% - 0px);
-    border-top: none;
-    z-index: 10;
-    background-color: #28333d; /* Change to your color*/
-    max-height: 200px;
-    overflow-y: auto;
-    padding: 0;
-    list-style: none;
-    border-radius: 0 0 5px 5px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* subtle shadow */
-}
-
-.suggestion-item {
-    padding: 12px; /* Add padding */
-    cursor: pointer;
-    transition: background-color 0.2s ease-in-out;
-    color: #adbb62;
-    font-size: 14px;
-}
-
-.suggestion-item:hover {
-    background-color: #3a444e;  /* Make it a little ligther */
-}
-
-.autocomplete-suggestions li:last-child .suggestion-item {
-    border-bottom: none; /*Remove last border*/
-}
-
 .hidden {
     opacity: 0;
 }
@@ -285,39 +253,6 @@ input#guess-input {
     font-size: 14px;
 }
 
-/* Liste déroulante des suggestions */
-.autocomplete-suggestions {
-    position: absolute;
-    background-color: #28333d;
-    max-height: 150px;
-    overflow-y: auto;
-    z-index: 1000;
-    width: 100%;
-    margin-top: -20px;
-    list-style: none;
-    padding: 0;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.autocomplete-suggestions li {
-    padding: 10px;
-    cursor: pointer;
-    background-color: #161616;
-    color: #adbb62;
-    border-bottom: 1px solid #3f464d;
-}
-
-.autocomplete-suggestions li:last-child {
-    border-bottom: none;
-}
-
-.autocomplete-suggestions li:hover {
-    background-color: #111e2b;
-    color: #c8ff00;
-    font-weight: bold;
-    border-radius: 5px;
-}
-
 /* Clignotement vert */
 .blink-green {
     animation: blink-green 0.8s ease;
@@ -411,4 +346,46 @@ th:nth-child(3), td:nth-child(3) {
     position: relative; /* Make input position relative*/
     z-index: 1;
 
+}
+
+.autocomplete-suggestions {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: calc(100% - 0px);
+    border-top: none;
+    z-index: 10;
+    background-color: #28333d;
+    max-height: 200px;
+    overflow-y: auto;
+    padding: 0;
+    list-style: none;
+    border-radius: 0 0 5px 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    margin-top: -20px;
+}
+
+
+.suggestion-item {
+    padding: 12px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+    color: #adbb62;
+    font-size: 14px;
+    border-bottom: 1px solid #3f464d;
+}
+
+.suggestion-item:hover {
+    background-color: #3a444e;
+}
+
+.autocomplete-suggestions li:last-child .suggestion-item {
+    border-bottom: none;
+}
+
+.suggestion-item.selected {
+        background-color: #111e2b;
+    color: #c8ff00;
+        font-weight: bold;
+        border-radius: 5px;
 }
