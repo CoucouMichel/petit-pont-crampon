@@ -330,8 +330,8 @@
             });
         }
 
-    const input = document.getElementById("guess-input");
-         input.addEventListener("input", async () => {
+      const input = document.getElementById("guess-input");
+        input.addEventListener("input", async () => {
             const value = input.value;
              await showSuggestions(value);
 
@@ -339,7 +339,9 @@
             const firstItem = autocompleteList.querySelector(".suggestion-item");
             
             if (firstItem && value.trim() !== "") {
-                     firstItem.classList.add("selected");
+                 const items = autocompleteList.querySelectorAll('.suggestion-item');
+                     items.forEach(item => item.classList.remove("selected"))
+                    firstItem.classList.add("selected");
             } else if (firstItem) {
                  firstItem.classList.remove("selected");
             }
@@ -347,8 +349,6 @@
 
         });
 
-
-        });
   input.addEventListener("keyup", (event) => {
             const autocompleteList = document.getElementById("autocomplete-list");
                 if (event.key === "Enter") {
