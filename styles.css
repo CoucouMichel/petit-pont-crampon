@@ -20,13 +20,14 @@ body {
     align-items: center;
     min-height: 100vh;
     text-align: center;
-     flex-direction: column;
-     transform: translateY(-330px); /* Changed from -280px to -330px */
+    flex-direction: column;
+    transform: translateY(-330px);
 }
 
 /* Conteneur principal */
 .fixed-header {
     width: 100%;
+    background-color: var(--background-color);
     color: var(--text-color);
     z-index: 9999;
     padding: 20px;
@@ -79,12 +80,48 @@ button:disabled {
     50% { background-color: red; }
 }
 
-.hidden {
-    opacity: 0;
+.autocomplete-suggestions {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 0px);
+    border-top: none;
+    z-index: 10;
+    background-color: #28333d;
+    max-height: 200px;
+    overflow-y: auto;
+    padding: 0;
+    list-style: none;
+    border-radius: 0 0 5px 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    margin-top: -20px;
+    width: 80%;
+    max-width: 400px;
 }
 
-.visible {
-    opacity: 1;
+.suggestion-item {
+    padding: 12px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+    color: #adbb62;
+    font-size: 14px;
+    border-bottom: 1px solid #3f464d;
+}
+
+.suggestion-item:hover {
+    background-color: #3a444e;
+}
+
+.autocomplete-suggestions li:last-child .suggestion-item {
+    border-bottom: none;
+}
+
+.suggestion-item.selected {
+        background-color: #111e2b;
+    color: #c8ff00;
+        font-weight: bold;
+        border-radius: 5px;
 }
 
 .button-container {
@@ -99,7 +136,7 @@ h1 {
     font-size: 24px;
     color: #c8ff00;
     margin-bottom: 10px;
-    margin-top: 0px;
+     margin-top: 0px;
 }
 
 /* Conteneur du tableau */
@@ -110,8 +147,9 @@ h1 {
     display: flex;
     flex-direction: column;
     align-items: center;
-    
+      margin-top: 220px;
 }
+
 
 h2.ai-style-change-1 {
     width: 100%;
@@ -125,13 +163,13 @@ h2.ai-style-change-1 {
     justify-content: center;
     align-items: center;
     position: relative;
-     top: -15px;
+     top: 0px;
 }
 
 /* Style du tableau */
 table#career-table {
   width: 90%;
-  max-width: 600px;
+  max-width: 700px;
   background-color: initial;
   z-index: 10;
   border-collapse: collapse;
@@ -147,7 +185,7 @@ th, td {
     font-size: 12px;
     color: var(--text-color);
     word-wrap: break-word;
-    vertical-align: middle; /* Add vertical alignment */
+    vertical-align: middle;
 }
 
 th {
@@ -175,34 +213,16 @@ td.visible {
     visibility: visible !important;
 }
 
-td.country-match {
-    background-color: #4b4b4b !important;
-    visibility: visible !important;
-}
-
-.temp-club-box {
-  position: absolute; /* Position absolutely on top of the table cell */
-  background-color: #4b4b4b; /* Background color */
-  padding: 5px 10px; /* Padding for better spacing */
-  border-radius: 4px; /* Rounded corners */
-  z-index: 10; /* Ensure it's above the table cells */
-  white-space: nowrap; /* Prevent text wrapping */
-    left: 0;
-    top: 0;
-    transform: translate(-10%, -10%)
-
-}
-
 /* Pour la colonne des pays, appliquer un fond bleu marine et garder la structure */
 td[data-country] {
     visibility: hidden;
-      vertical-align: middle; /* Add vertical alignment to countries*/
+    vertical-align: middle;
 }
 
 /* Pour la colonne des clubs, appliquer la couleur de fond appropriée */
 td[data-club] {
-    visibility: hidden; /* Le texte reste invisible */
-    vertical-align: middle; /* Add vertical alignment to clubs*/
+    visibility: hidden;
+     vertical-align: middle;
 }
 
 /* Rendre le tableau responsive */
@@ -214,23 +234,6 @@ td[data-club] {
     
      th, td {
            padding: 8px;
-    }
-     
-     .input-container {
-         position: fixed;
-        top: 10px;
-        left: 50%;
-         transform: translateX(-50%);
-        z-index: 1000;
-         width: 100%;
-        padding: 0 10px;
-         box-sizing: border-box;
-           background-color: var(--background-color);
-        
-    }
-     #guess-input {
-        width: 100%;
-        max-width: none;
     }
 }
 
@@ -259,21 +262,62 @@ input#guess-input {
     box-sizing: border-box;
 }
 
-.input-container {
-    margin-bottom: 20px;
-    position: relative; /* needed for absolute positioning */
-}
-
 #guess-input:focus {
     border-color: #949e71;
     outline: none;
 }
 
+
+/* Définir la largeur des colonnes */
+th:nth-child(1), td:nth-child(1) {
+    width: 26%;
+    min-width: 26%;
+}
+
+th:nth-child(2), td:nth-child(2),
+th:nth-child(3), td:nth-child(3) {
+    width: 37%;
+    min-width: 37%;
+}
 /* Style pour afficher les tentatives */
 #attempts {
     margin-top: -2px;
     color: var(--text-color);
     font-size: 14px;
+}
+/* Liste déroulante des suggestions */
+.autocomplete-suggestions {
+    position: absolute;
+    background-color: #28333d;
+    max-height: 150px;
+    overflow-y: auto;
+    z-index: 1000;
+    width: 100%;
+    margin-top: -20px;
+    list-style: none;
+    padding: 0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.autocomplete-suggestions li {
+    padding: 10px;
+    cursor: pointer;
+    background-color: #161616;
+    color: #adbb62;
+    border-bottom: 1px solid #3f464d;
+}
+
+.autocomplete-suggestions li:last-child {
+    border-bottom: none;
+}
+
+.autocomplete-suggestions li:hover {
+    background-color: #111e2b;
+    color: #c8ff00;
+    font-weight: bold;
+    border-radius: 5px;
 }
 
 /* Clignotement vert */
@@ -301,18 +345,18 @@ input#guess-input {
     width: 15px;
     height: 30px;
     background-color: var(--text-color);
-    margin-right: 3px;
+    margin-right: 6px;
     vertical-align: middle;
-    transition: all 0.5s ease; /* Added transition for smooth morphing */
+        transition: all 0.5s ease; /* Added transition for smooth morphing */
     border-radius: 2px
+    margin-top: -30px;
 }
-
 .player-name-rectangle.morph {
-  width: auto;
+    width: auto;
     height: auto;
-    padding: 0px 10px; /* Adding padding for better spacing */
-    border-radius: 0px; /* Removing the border radius */
-    margin-right: 0px; /* Removing right margin */
+    padding: 0px 10px;
+    border-radius: 0px;
+    margin-right: 0px;
     margin-top: 0px;
      background-color: transparent;
     display: inline;
@@ -324,96 +368,6 @@ input#guess-input {
         display: inline;
         color: white;
         font-size: 20px; /* Adjust font size if you wish */
-
-}
-
-/* Définir la largeur des colonnes */
-th:nth-child(1), td:nth-child(1) {
-    width: 26%; /* More width for the "Années" column */
-    min-width: 26%;
-}
-
-th:nth-child(2), td:nth-child(2),
-th:nth-child(3), td:nth-child(3) {
-     width: 37%; /* Slightly less width for "Club" and "Pays" columns */
-    min-width: 37%;
-}
-.autofill-container {
-    position: relative;
-    display: inline-block;
-    width: 100%;
-}
-
-#autofill-suggestion {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    pointer-events: none;
-    color: #49543b;
-     white-space: nowrap;
-     z-index: 0;
-}
-
-#guess-input {
-    width: 80%;
-    max-width: 400px;
-    padding: 10px;
-    font-size: 14px;
-    margin-bottom: 20px;
-    border: 1px solid #c8ff0052;
-    background-color: #161616;
-    color: #949e71;
-    text-align: left;
-    border-radius: 5px;
-    box-sizing: border-box;
-    position: relative; /* Make input position relative*/
-    z-index: 1;
-
-}
-
-.autocomplete-suggestions {
-    position: absolute;
-    top: 100%;
-    left: 50%; /* set to 50% for centering */
-    transform: translateX(-50%); /* Translate it back to its center */
-    width: calc(100% - 0px);
-    border-top: none;
-    z-index: 10;
-    background-color: #28333d;
-    max-height: 200px;
-    overflow-y: auto;
-    padding: 0;
-    list-style: none;
-    border-radius: 0 0 5px 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    margin-top: -20px;
-    width: 80%;
-    max-width: 400px;
-}
-
-
-.suggestion-item {
-    padding: 12px;
-    cursor: pointer;
-    transition: background-color 0.2s ease-in-out;
-    color: #adbb62;
-    font-size: 14px;
-    border-bottom: 1px solid #3f464d;
-}
-
-.suggestion-item:hover {
-    background-color: #3a444e;
-}
-
-.autocomplete-suggestions li:last-child .suggestion-item {
-    border-bottom: none;
-}
-
-.suggestion-item.selected {
-        background-color: #111e2b;
-    color: #c8ff00;
-        font-weight: bold;
-        border-radius: 5px;
 }
 
 #score {
@@ -422,7 +376,7 @@ th:nth-child(3), td:nth-child(3) {
     font-size: 20px;
     font-weight: bold;
     transition: color 0.3s ease-in-out;
-     display: inline-block;
+    display: inline-block;
 }
 #score.highlight {
     color: var(--success-color);
