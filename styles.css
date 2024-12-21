@@ -20,8 +20,7 @@ body {
     align-items: center;
     min-height: 100vh;
     text-align: center;
-    flex-direction: column;
-    transform: translateY(-330px);
+     flex-direction: column;
 }
 
 /* Conteneur principal */
@@ -147,7 +146,7 @@ h1 {
     display: flex;
     flex-direction: column;
     align-items: center;
-      margin-top: 220px;
+     margin-top: 0px; /* Adjust to control spacing */
 }
 
 
@@ -163,7 +162,7 @@ h2.ai-style-change-1 {
     justify-content: center;
     align-items: center;
     position: relative;
-     top: 0px;
+    top: 0px;
 }
 
 /* Style du tableau */
@@ -222,7 +221,7 @@ td[data-country] {
 /* Pour la colonne des clubs, appliquer la couleur de fond appropriée */
 td[data-club] {
     visibility: hidden;
-     vertical-align: middle;
+    vertical-align: middle;
 }
 
 /* Rendre le tableau responsive */
@@ -234,6 +233,9 @@ td[data-club] {
     
      th, td {
            padding: 8px;
+    }
+       h2.ai-style-change-1 {
+          top: 0px; /* Make h2 appear higher on mobile */
     }
 }
 
@@ -267,11 +269,24 @@ input#guess-input {
     outline: none;
 }
 
+/* Style pour afficher les tentatives */
+#attempts {
+    margin-top: -2px;
+    color: var(--text-color);
+    font-size: 14px;
+}
+
+/* Liste des mauvaises réponses */
+#incorrect-guesses {
+    margin-top: 20px;
+    color: var(--highlight-color);
+    font-size: 12px;
+}
 
 /* Définir la largeur des colonnes */
 th:nth-child(1), td:nth-child(1) {
     width: 26%;
-    min-width: 26%;
+     min-width: 26%;
 }
 
 th:nth-child(2), td:nth-child(2),
@@ -320,6 +335,12 @@ th:nth-child(3), td:nth-child(3) {
     border-radius: 5px;
 }
 
+/* Empêche le tableau d'interférer */
+.container table {
+    position: relative;
+    z-index: 1; /* Tableau en dessous */
+}
+
 /* Clignotement vert */
 .blink-green {
     animation: blink-green 0.8s ease;
@@ -347,10 +368,12 @@ th:nth-child(3), td:nth-child(3) {
     background-color: var(--text-color);
     margin-right: 6px;
     vertical-align: middle;
-        transition: all 0.5s ease; /* Added transition for smooth morphing */
-    border-radius: 2px
+    transition: all 0.5s ease;
+    border-radius: 2px;
     margin-top: -30px;
+
 }
+
 .player-name-rectangle.morph {
     width: auto;
     height: auto;
@@ -363,46 +386,9 @@ th:nth-child(3), td:nth-child(3) {
 }
 
 .player-name-rectangle.morph::after {
-    content: attr(data-letter); /* Using the data-letter attribute to display the letter */
+    content: attr(data-letter);
     font-weight: bold;
         display: inline;
         color: white;
-        font-size: 20px; /* Adjust font size if you wish */
-}
-
-#score {
-    margin-top: -2px;
-    color: var(--primary-color);
-    font-size: 20px;
-    font-weight: bold;
-    transition: color 0.3s ease-in-out;
-    display: inline-block;
-}
-#score.highlight {
-    color: var(--success-color);
-}
-
-.info-window {
-    position: absolute;
-     top: 100%;
-    left: 0;
-    transform: translateX(0%);
-    background-color: #303030;
-    color: white;
-    padding: 10px;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    width: 300px;
-    text-align: left;
-     z-index: 99;
-}
- .info-window h3{
-    margin-top: 0;
-    text-align: center;
-}
-.info-window ul {
-  padding-left: 20px;
-}
-.info-window.hidden {
-    display: none;
+        font-size: 20px;
 }
