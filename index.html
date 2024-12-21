@@ -264,7 +264,7 @@
     }
 }
 
-  async function checkAnswer(input) {
+ async function checkAnswer(input) {
             const answer = input.trim().toLowerCase();
             const feedback = document.getElementById("feedback");
             const countryMapping = await loadCountryMapping();
@@ -276,51 +276,48 @@
             const clubCountries = await loadClubsCountries();
             const clubLogos = await loadClubLogos();
           
-           const countryFeedback = document.getElementById('country-feedback');
+            const countryFeedback = document.getElementById('country-feedback');
            countryFeedback.textContent = "";
 
-
-           if (answer === selectedPlayer.toLowerCase()) {
-                
-               playerNameDisplay.textContent = selectedPlayer;
+          if (answer === selectedPlayer.toLowerCase()) {
+                 playerNameDisplay.textContent = selectedPlayer;
                 revealAllCells();
-                 isCorrect = true;
+               isCorrect = true;
             } else {
-                 feedback.textContent = '';
-                attempts++;
+                feedback.textContent = '';
+                  attempts++;
                  document.getElementById("attempts").textContent = `Tentatives : ${attempts}`;
-            
-                    if (clubCountries[answer]) {
-                        const inputCountry = clubCountries[answer].toLowerCase();
-                         const tableBody = document.getElementById('career-table-body');
-                       const rows = tableBody.querySelectorAll('tr');
-                       
-                         for(const row of rows) {
-                            const countryCell = row.querySelector('td[data-country]');
-                            if (countryCell) {
+
+                 if (clubCountries[answer]) {
+                       const inputCountry = clubCountries[answer].toLowerCase();
+                    const tableBody = document.getElementById('career-table-body');
+                      const rows = tableBody.querySelectorAll('tr');
+                      
+                         for (const row of rows) {
+                             const countryCell = row.querySelector('td[data-country]');
+                              if(countryCell) {
                                  const cellCountryCode = countryCell.getAttribute('data-country')?.toLowerCase();
-                                 const cellCountryName = countryMapping[cellCountryCode]?.toLowerCase()
-
+                                  const cellCountryName = countryMapping[cellCountryCode]?.toLowerCase()
                                    if (cellCountryName === inputCountry) {
-                                         revealText(countryCell);
-                                         countryFeedback.textContent = "Wrong team, but right country!";
-                                          isCorrect = true
-                                  }
-                              }
-                        }
-                    }
-            }
+                                        countryFeedback.textContent = "Wrong team, but right country!";
+                                           console.log("Match found!");
+                                           isCorrect = true
+                                   }
+                               }
+                           }
+                  }
+          }
 
-             const cells = document.querySelectorAll('td[data-country], td[data-club]');
-              cells.forEach(cell => {
-                 const cellCountry = cell.getAttribute('data-country')?.toLowerCase();
+           const cells = document.querySelectorAll('td[data-country], td[data-club]');
+             cells.forEach(cell => {
+                const cellCountry = cell.getAttribute('data-country')?.toLowerCase();
                const cellClub = cell.getAttribute('data-club')?.toLowerCase();
                if (cellCountry === answer || reverseMapping[cellCountry] === answer || cellClub === answer) {
-                    revealText(cell);
-                     isCorrect = true;
-               }
+                     revealText(cell);
+                       isCorrect = true;
+                 }
             });
-        
+         
             blinkInput(isCorrect);
         }
         
