@@ -10,18 +10,18 @@
 
 /* Corps de la page */
 body {
-  font-family: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
-  background-color: var(--background-color);
-  color: var(--text-color);
-  margin: 0;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start; /* Changed to align items to the top */
-  min-height: 100vh;
-  text-align: center;
-  flex-direction: column;
-    transform: translateY(-280px); /* Shift all elements upward */
+    font-family: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    text-align: center;
+     flex-direction: column;
+     transform: translateY(-330px); /* Changed from -280px to -330px */
 }
 
 /* Conteneur principal */
