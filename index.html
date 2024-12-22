@@ -267,14 +267,24 @@
                 console.error("Erreur lors du chargement des suggestions :", error);
             }
         }
-  function updateScoreDisplay() {
-            const scoreDisplay = document.getElementById('score');
-            scoreDisplay.textContent = `Score : ${score}`;
-              scoreDisplay.classList.add('highlight');
-               setTimeout(() => {
-                   scoreDisplay.classList.remove('highlight');
-                }, 300);
-         }
+    function updateScoreDisplay(previousScore = null) {
+        const scoreDisplay = document.getElementById('score');
+         scoreDisplay.textContent = `Score : ${score}`;
+
+         if(previousScore !== null && score < previousScore) {
+             scoreDisplay.classList.add('highlight-decrease');
+             setTimeout(() => {
+              scoreDisplay.classList.remove('highlight-decrease');
+            }, 300)
+          } else {
+           scoreDisplay.classList.add('highlight');
+            setTimeout(() => {
+                scoreDisplay.classList.remove('highlight');
+            }, 300)
+          }
+
+       
+        }
 
   async function checkAnswer(input) {
             const answer = input.trim().toLowerCase();
