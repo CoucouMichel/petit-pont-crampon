@@ -433,11 +433,11 @@
             }
    }
     
-    function revealRandomClueClub() {
+     function revealRandomClueClub() {
             if (!selectedPlayer) return;
           
-           indiceClubButton.disabled = true;
-            indiceClubButton.classList.add("button-disabled");
+            indiceClubButton.disabled = true;
+           indiceClubButton.classList.add("button-disabled");
           
             let availableCells = [];
 
@@ -448,34 +448,36 @@
                          availableCells.push({row, rowIndex, cell});
                     }
                 });
-                
-          availableCells = availableCells.filter(item => item.cell.classList.contains('hidden') && !item.cell.classList.contains('visible'));
+                availableCells = availableCells.filter(item => item.cell.classList.contains('hidden') && !item.cell.classList.contains('visible'));
 
-                if (availableCells.length > 0) {
-                     const randomIndex = Math.floor(Math.random() * availableCells.length);
-                     const randomCell = availableCells[randomIndex];
-                     const row = randomCell.row;
-                     const cell = randomCell.cell;
-                      cell.classList.remove('hidden');
-                      cell.classList.add('visible');
-                       availableCells.splice(randomIndex, 1)
+                if (availableCells.length === 0) {
+                   indiceClubButton.classList.add("button-disabled");
+                     updateCountryButtonState();
+                    return
+                 } 
+               
+                   const randomIndex = Math.floor(Math.random() * availableCells.length);
+                    const randomCell = availableCells[randomIndex];
+                    const row = randomCell.row;
+                   const cell = randomCell.cell;
+                   
+                     cell.classList.remove('hidden');
+                    cell.classList.add('visible');
+                      availableCells.splice(randomIndex, 1)
                   
                     const countryCell = row.querySelector('td:nth-child(3).hidden')
                     if (countryCell) {
-                        countryCell.classList.remove('hidden');
-                       countryCell.classList.add('visible');
+                      countryCell.classList.remove('hidden');
+                         countryCell.classList.add('visible');
                     }
-                          score -= 25
-                          updateScoreDisplay()
-                    
-                      indiceClubButton.disabled = false;
-                      indiceClubButton.classList.remove("button-disabled");
+                     score -= 25
+                        updateScoreDisplay()
+                
+                indiceClubButton.disabled = false;
+                indiceClubButton.classList.remove("button-disabled");
+                   updateCountryButtonState()
 
-                } else {
-                   indiceClubButton.classList.add("button-disabled");
-                }
 
-            updateCountryButtonState()
         }
     function revealRandomClueCountry() {
           if (!selectedPlayer) return;
@@ -492,24 +494,27 @@
                          availableCells.push({row, rowIndex, cell});
                     }
                 });
-           availableCells = availableCells.filter(item => item.cell.classList.contains('hidden') && !item.cell.classList.contains('visible'));
-                if (availableCells.length > 0) {
-                   const randomIndex = Math.floor(Math.random() * availableCells.length);
-                     const randomCell = availableCells[randomIndex];
-                     const row = randomCell.row;
-                      const cell = randomCell.cell;
-                       cell.classList.remove('hidden');
-                      cell.classList.add('visible');
-                           availableCells.splice(randomIndex, 1)
+      availableCells = availableCells.filter(item => item.cell.classList.contains('hidden') && !item.cell.classList.contains('visible'));
 
-                        score -= 10
-                           updateScoreDisplay()
-                       indiceCountryButton.disabled = false;
-                       indiceCountryButton.classList.remove("button-disabled");
-                }  else {
+                if (availableCells.length === 0) {
                    indiceCountryButton.classList.add("button-disabled");
-                }
-           updateCountryButtonState()
+                   updateCountryButtonState();
+                    return
+                 } 
+           
+                    const randomIndex = Math.floor(Math.random() * availableCells.length);
+                     const randomCell = availableCells[randomIndex];
+                    const row = randomCell.row;
+                     const cell = randomCell.cell;
+                      cell.classList.remove('hidden');
+                       cell.classList.add('visible');
+                       availableCells.splice(randomIndex, 1)
+                         score -= 10;
+                          updateScoreDisplay()
+
+                     indiceCountryButton.disabled = false;
+                       indiceCountryButton.classList.remove("button-disabled");
+                      updateCountryButtonState();
     }
 
      function revealAll() {
