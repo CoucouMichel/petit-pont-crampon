@@ -282,7 +282,7 @@ input#guess-input {
     width: 15px;
     height: 25px;
     background-color: var(--text-color);
-    margin-right: 3px;
+    margin-right: 1px;
     vertical-align: middle;
     transition: all 0.5s ease; /* Added transition for smooth morphing */
     border-radius: 2px;
