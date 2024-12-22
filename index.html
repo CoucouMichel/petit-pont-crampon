@@ -426,8 +426,8 @@
            updateScoreDisplay()
         });
         
-    function revealRandomClueClub() {
-           if (!selectedPlayer) return;
+      function revealRandomClueClub() {
+            if (!selectedPlayer) return;
           
            indiceClubButton.disabled = true;
             indiceClubButton.classList.add("button-disabled");
@@ -455,14 +455,15 @@
                     const countryCell = row.querySelector('td:nth-child(3).hidden')
                     if (countryCell) {
                         countryCell.classList.remove('hidden');
-                       countryCell.classList.add('visible');
+                         countryCell.classList.add('visible');
                     }
-                         score -= 25
-                          updateScoreDisplay()
-                }
-               
-                indiceClubButton.disabled = false;
+                     score -= 25
+                         updateScoreDisplay()
+                      indiceClubButton.disabled = false;
                  indiceClubButton.classList.remove("button-disabled");
+                } else {
+                     indiceClubButton.classList.add("button-disabled");
+                }
 
 
         }
@@ -481,22 +482,27 @@
                          availableCells.push({row, rowIndex, cell});
                     }
                 });
-
+                
                 if (availableCells.length > 0) {
-                     const randomIndex = Math.floor(Math.random() * availableCells.length);
-                     const {row, cell} = availableCells[randomIndex];
-
+                   const randomIndex = Math.floor(Math.random() * availableCells.length);
+                    const randomCell = availableCells[randomIndex];
+                    const row = randomCell.row;
+                      const cell = randomCell.cell;
                       cell.classList.remove('hidden');
                        cell.classList.add('visible');
-                       availableCells.splice(randomIndex, 1)
-                         score -= 10
+                        availableCells.splice(randomIndex, 1)
+                       score -= 10
                          updateScoreDisplay()
+
+                     indiceCountryButton.disabled = false;
+                    indiceCountryButton.classList.remove("button-disabled");
                    
+                } else {
+                      indiceCountryButton.classList.add("button-disabled");
                 }
-                
-                   indiceCountryButton.disabled = false;
-                   indiceCountryButton.classList.remove("button-disabled");
-    }
+
+
+        }
     function revealAll() {
             if (!selectedPlayer) return;
         
