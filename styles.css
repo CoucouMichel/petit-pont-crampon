@@ -2,9 +2,9 @@
 :root {
     --primary-color: #c8ff00;  /* Couleur primaire (bleu foncé) */
     --secondary-color: #f39c12; /* Yellow */
-    --background-color: #242629; /* Black */
+    --background-color: #191919; /* Black */
     --text-color: #ffffff; /* Texte blanc */
-    --highlight-color: c8ff00; /* Rouge pour survol ou messages d'erreur */
+    --highlight-color: #c8ff00; /* Rouge pour survol ou messages d'erreur */
     --success-color: #2ecc71; /* Vert pour le succès */
 }
 
@@ -131,7 +131,7 @@ h2.ai-style-change-1 {
 
 /* Style du tableau */
 table#career-table {
-  width: 90%;
+  width: 100%;
   max-width: 600px;
   background-color: initial;
   z-index: 10;
@@ -153,7 +153,6 @@ th, td {
 }
 
 th {
-    background-color: #242629;
     color: #c8ff00;
     font-weight: bold;
     font-size: 16px;
@@ -161,7 +160,6 @@ th {
 }
 
 td {
-    background-color: #242629;
     color: var(--text-color);
     font-size: 13px
 }
