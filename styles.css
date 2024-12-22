@@ -1,10 +1,10 @@
 /* Définir les couleurs principales */
 :root {
-    --primary-color: #FFF055;  /* Couleur primaire (bleu foncé) */
+    --primary-color: #c8ff00;  /* Couleur primaire (bleu foncé) */
     --secondary-color: #f39c12; /* Yellow */
-    --background-color: #191919; /* Black */
+    --background-color: #242629; /* Black */
     --text-color: #ffffff; /* Texte blanc */
-    --highlight-color: #c8ff00; /* Rouge pour survol ou messages d'erreur */
+    --highlight-color: c8ff00; /* Rouge pour survol ou messages d'erreur */
     --success-color: #2ecc71; /* Vert pour le succès */
 }
 
@@ -40,8 +40,8 @@ body {
 button {
     padding: 10px 15px;
     border: none;
-    background-color: #fff055;
-    color: #191919;
+    background-color: #3498db;
+    color: white;
     cursor: pointer;
     border-radius: 5px;
     transition: background-color 0.3s ease;
@@ -49,7 +49,7 @@ button {
 }
 
 button:hover {
-    background-color: #f39c12;
+    background-color: #2980b9;
 }
 
 button:disabled {
@@ -98,7 +98,7 @@ button:disabled {
 /* Titre */
 h1 {
     font-size: 24px;
-    color: #FFF055;
+    color: #c8ff00;
     margin-bottom: 10px;
     margin-top: 0px;
 }
@@ -131,7 +131,7 @@ h2.ai-style-change-1 {
 
 /* Style du tableau */
 table#career-table {
-  width: 100%;
+  width: 90%;
   max-width: 600px;
   background-color: initial;
   z-index: 10;
@@ -153,13 +153,15 @@ th, td {
 }
 
 th {
-    color: #FFF055;
+    background-color: #242629;
+    color: #c8ff00;
     font-weight: bold;
     font-size: 16px;
     text-align: center;
 }
 
 td {
+    background-color: #242629;
     color: var(--text-color);
     font-size: 13px
 }
@@ -209,8 +211,8 @@ td[data-club] {
 @media (max-width: 768px) {
   table#career-table {
     width: 100%;
-    font-size: 11px;
-    left: 10px;
+         font-size: 11px;
+      left: 12px
     }
     
      th, td {
@@ -234,7 +236,7 @@ input#guess-input {
     max-width: 400px;
     padding: 10px;
     font-size: 14px;
-    border: 1px solid #fff055;
+    border: 1px solid #c8ff0052;
     background-color: #161616;
     color: #949e71;
     text-align: center;
@@ -308,14 +310,14 @@ input#guess-input {
 
 /* Définir la largeur des colonnes */
 th:nth-child(1), td:nth-child(1) {
-    width: 20%; /* More width for the "Années" column */
+    width: 26%; /* More width for the "Années" column */
     min-width: 26%;
 }
 
 th:nth-child(2), td:nth-child(2),
 th:nth-child(3), td:nth-child(3) {
-     width: 40%; /* Slightly less width for "Club" and "Pays" columns */
-    min-width: 40%;
+     width: 37%; /* Slightly less width for "Club" and "Pays" columns */
+    min-width: 37%;
 }
 .autofill-container {
     position: relative;
@@ -337,7 +339,7 @@ th:nth-child(3), td:nth-child(3) {
     width: 80%;
     max-width: 400px;
     padding: 10px;
-    font-size: 12px;
+    font-size: 14px;
     margin-bottom: 20px;
     border: 1px solid #c8ff0052;
     background-color: #161616;
