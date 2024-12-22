@@ -415,5 +415,5 @@ th:nth-child(3), td:nth-child(3) {
 
 /* New class for decrease highlight */
 #score.highlight-decrease {
-    color: var(--highlight-color);
+    color: #d22e2e;
 }
