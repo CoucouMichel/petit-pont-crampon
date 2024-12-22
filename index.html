@@ -497,7 +497,23 @@
                    indiceCountryButton.disabled = false;
                    indiceCountryButton.classList.remove("button-disabled");
     }
+    function revealAll() {
+            if (!selectedPlayer) return;
         
+            document.querySelectorAll('#career-table-body tr td').forEach(cell => {
+            cell.classList.add('visible')
+        })
+        
+            carriereButton.disabled = true
+            carriereButton.classList.add("button-disabled")
+             score = 0
+               updateScoreDisplay()
+        }
+
+          carriereButton.addEventListener("click", function () {
+             revealAll();
+            
+        });
         
          function revealPlayer() {
             if (!selectedPlayer) return;
