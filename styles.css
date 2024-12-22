@@ -338,7 +338,7 @@ th:nth-child(3), td:nth-child(3) {
     width: 80%;
     max-width: 400px;
     padding: 10px;
-    font-size: 14px;
+    font-size: 12px;
     margin-bottom: 20px;
     border: 1px solid #c8ff0052;
     background-color: #161616;
@@ -400,8 +400,18 @@ th:nth-child(3), td:nth-child(3) {
     color: var(--text-color);
     font-size: 20px;
     font-weight: bold;
-     background-color: rgba(52, 152, 219, 0.2); /* Add background color */
-        padding: 5px 10px; /* Add some padding */
-        border: 1px solid rgba(52, 152, 219, 0.6); /* Add a border */
-        border-radius: 5px; /* Slightly rounded corners */
+    background-color: rgba(52, 152, 219, 0.2);
+    padding: 5px 10px;
+    border: 1px solid rgba(52, 152, 219, 0.6);
+    border-radius: 5px;
+    display: inline-block; /* To center using inline block */
+    max-width: 150px; /* Max width of the box*/
+     white-space: nowrap; /* To prevent the box from breaking into multiple lines */
+    text-align: center;
+     position: relative;
+         left: 50%; /* Center horizontally */
+    transform: translateX(-50%); /* Move back half of its width */
+}
+#score.highlight {
+    color: var(--success-color);
 }
