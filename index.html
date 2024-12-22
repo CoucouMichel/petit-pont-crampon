@@ -338,10 +338,18 @@
                      updateScoreDisplay()
                      isCorrect = true;
                 }
-           }
+       if (cellClub && cell.classList.contains('hidden')) {
+                allClubsRevealed = false;
+            }
 
-            blinkInput(isCorrect);
+    }
+        if(allClubsRevealed) {
+             indiceClubButton.classList.add("button-disabled");
+           indiceCountryButton.classList.add("button-disabled");
+
         }
+    blinkInput(isCorrect);
+}
         
         function blinkInput(isCorrect) {
             const inputField = document.getElementById("guess-input");
