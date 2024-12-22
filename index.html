@@ -469,7 +469,7 @@
                        countryCell.classList.add('visible');
                      }
                           score -= 25;
-                           updateScoreDisplay()
+                           updateScoreDisplay(previousScore)
                      }
 
                     
@@ -519,7 +519,7 @@
                          cell.classList.add('visible');
                         availableCells.splice(randomIndex, 1)
                          score -= 10
-                         updateScoreDisplay()
+                         updateScoreDisplay(previousScore)
                  }
                    let availableCellsAfter = [];
 
