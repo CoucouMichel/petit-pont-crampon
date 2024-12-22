@@ -153,7 +153,7 @@ th, td {
 }
 
 th {
-    background-color: #13171f;
+    background-color: #242629;
     color: #c8ff00;
     font-weight: bold;
     font-size: 16px;
@@ -161,7 +161,7 @@ th {
 }
 
 td {
-    background-color: #13171f;
+    background-color: #242629;
     color: var(--text-color);
     font-size: 13px
 }
