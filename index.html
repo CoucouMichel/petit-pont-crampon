@@ -434,7 +434,7 @@
    }
     
     function revealRandomClueClub() {
-           if (!selectedPlayer) return;
+            if (!selectedPlayer) return;
           
            indiceClubButton.disabled = true;
             indiceClubButton.classList.add("button-disabled");
@@ -448,13 +448,14 @@
                          availableCells.push({row, rowIndex, cell});
                     }
                 });
+                
+          availableCells = availableCells.filter(item => item.cell.classList.contains('hidden') && !item.cell.classList.contains('visible'));
 
                 if (availableCells.length > 0) {
                      const randomIndex = Math.floor(Math.random() * availableCells.length);
-                    const randomCell = availableCells[randomIndex];
-                    const row = randomCell.row;
+                     const randomCell = availableCells[randomIndex];
+                     const row = randomCell.row;
                      const cell = randomCell.cell;
-
                       cell.classList.remove('hidden');
                       cell.classList.add('visible');
                        availableCells.splice(randomIndex, 1)
@@ -464,15 +465,17 @@
                         countryCell.classList.remove('hidden');
                        countryCell.classList.add('visible');
                     }
-                         score -= 25
-                           updateScoreDisplay()
+                          score -= 25
+                          updateScoreDisplay()
+                    
+                      indiceClubButton.disabled = false;
+                      indiceClubButton.classList.remove("button-disabled");
 
+                } else {
+                   indiceClubButton.classList.add("button-disabled");
                 }
-                
-                 
-            indiceClubButton.disabled = false;
-                 indiceClubButton.classList.remove("button-disabled");
-                updateCountryButtonState()
+
+            updateCountryButtonState()
         }
     function revealRandomClueCountry() {
           if (!selectedPlayer) return;
@@ -489,23 +492,24 @@
                          availableCells.push({row, rowIndex, cell});
                     }
                 });
-
+           availableCells = availableCells.filter(item => item.cell.classList.contains('hidden') && !item.cell.classList.contains('visible'));
                 if (availableCells.length > 0) {
-                     const randomIndex = Math.floor(Math.random() * availableCells.length);
+                   const randomIndex = Math.floor(Math.random() * availableCells.length);
                      const randomCell = availableCells[randomIndex];
                      const row = randomCell.row;
                       const cell = randomCell.cell;
-                      cell.classList.remove('hidden');
-                       cell.classList.add('visible');
-                         availableCells.splice(randomIndex, 1)
+                       cell.classList.remove('hidden');
+                      cell.classList.add('visible');
+                           availableCells.splice(randomIndex, 1)
+
                         score -= 10
                            updateScoreDisplay()
-                    
+                       indiceCountryButton.disabled = false;
+                       indiceCountryButton.classList.remove("button-disabled");
+                }  else {
+                   indiceCountryButton.classList.add("button-disabled");
                 }
-                   indiceCountryButton.disabled = false;
-                     indiceCountryButton.classList.remove("button-disabled");
-
-                      updateCountryButtonState()
+           updateCountryButtonState()
     }
 
      function revealAll() {
