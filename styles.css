@@ -40,7 +40,7 @@ body {
 button {
     padding: 10px 15px;
     border: none;
-    background-color: #3498db;
+    background-color: #DFE2DB;
     color: white;
     cursor: pointer;
     border-radius: 5px;
@@ -49,7 +49,7 @@ button {
 }
 
 button:hover {
-    background-color: #2980b9;
+    background-color: #898988;
 }
 
 button:disabled {
@@ -58,7 +58,7 @@ button:disabled {
 }
 
 .button-disabled {
-    background-color: #bdc3c7;
+    background-color: #b67b7b;
     cursor: not-allowed;
 }
 
