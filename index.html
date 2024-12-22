@@ -276,7 +276,7 @@
                 }, 300);
          }
 
-   async function checkAnswer(input) {
+  async function checkAnswer(input) {
             const answer = input.trim().toLowerCase();
             const feedback = document.getElementById("feedback");
             const countryMapping = await loadCountryMapping();
@@ -314,28 +314,32 @@
                }
             }
 
-          const cells = document.querySelectorAll('td[data-country], td[data-club]');
+            const cells = document.querySelectorAll('td[data-country], td[data-club]');
 
-           for (const cell of cells) {
+            for (const cell of cells) {
                 const cellCountry = cell.getAttribute('data-country')?.toLowerCase();
-               const cellClub = cell.getAttribute('data-club')?.toLowerCase();
+                 const cellClub = cell.getAttribute('data-club')?.toLowerCase();
 
-                if(cellClub === checkAnswerValue) {
-                     const countryCell = cell.parentElement.querySelector('td[data-country].hidden');
-                     if (countryCell) {
-                           revealText(countryCell);
-                            score += 20;
-                           updateScoreDisplay()
-                          isCorrect = true;
-                      }
-                }
-                 else if (cellCountry === answer || reverseMapping[cellCountry] === answer ) {
-                    revealText(cell);
-                       score += 10;
+
+                if (cellClub === checkAnswerValue) {
+                     revealText(cell);
+                    const countryCell = cell.parentElement.querySelector('td[data-country].hidden');
+                     if(countryCell) {
+                         revealText(countryCell);
+                         score += 20;
                           updateScoreDisplay()
-                      isCorrect = true;
+                     }
+                       isCorrect = true;
+
                 }
-             }
+                else if (cellCountry === answer || reverseMapping[cellCountry] === answer ) {
+                     revealText(cell);
+                    score += 10;
+                     updateScoreDisplay()
+                     isCorrect = true;
+                }
+           }
+
             blinkInput(isCorrect);
         }
         
