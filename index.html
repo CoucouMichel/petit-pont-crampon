@@ -538,9 +538,112 @@
                     indiceCountryButton.classList.remove("button-disabled");
 
                  }
-        }
+        } function revealRandomClueClub() {
+            if (!selectedPlayer) return;
+          
+           indiceClubButton.disabled = true;
+            indiceClubButton.classList.add("button-disabled");
+          
+            let availableCells = [];
 
-        function revealAll() {
+            // Get all hidden cells in the Club column
+             document.querySelectorAll('#career-table-body tr').forEach((row, rowIndex) => {
+                      const cell = row.querySelector(`td:nth-child(2).hidden`);
+                      if (cell) {
+                         availableCells.push({row, rowIndex, cell});
+                    }
+                });
+         
+        
+                if (availableCells.length > 0) {
+                     const randomIndex = Math.floor(Math.random() * availableCells.length);
+                     const randomCell = availableCells[randomIndex];
+                     const row = randomCell.row;
+                    const cell = randomCell.cell;
+
+                     cell.classList.remove('hidden');
+                     cell.classList.add('visible');
+                      availableCells.splice(randomIndex, 1)
+                  
+                    const countryCell = row.querySelector('td:nth-child(3).hidden')
+                    if (countryCell) {
+                        countryCell.classList.remove('hidden');
+                       countryCell.classList.add('visible');
+                     }
+                        const previousScore = score
+                         score -= 25;
+                            updateScoreDisplay(previousScore)
+                     }
+
+                    
+            
+        
+               let availableCellsAfter = [];
+
+                 document.querySelectorAll('#career-table-body tr').forEach((row, rowIndex) => {
+                      const cell = row.querySelector(`td:nth-child(2).hidden`);
+                      if (cell) {
+                         availableCellsAfter.push({row, rowIndex, cell});
+                    }
+                });
+
+               availableCellsAfter = availableCellsAfter.filter(item => item.cell.classList.contains('hidden') && !item.cell.classList.contains('visible'));
+                if(availableCellsAfter.length === 0 ) {
+                   indiceClubButton.classList.add("button-disabled");
+                  } else {
+                    indiceClubButton.disabled = false;
+                    indiceClubButton.classList.remove("button-disabled");
+                }
+            }
+    function revealRandomClueCountry() {
+          if (!selectedPlayer) return;
+        
+           indiceCountryButton.disabled = true;
+            indiceCountryButton.classList.add("button-disabled");
+
+            let availableCells = [];
+
+            // Get all hidden cells in the Country column
+             document.querySelectorAll('#career-table-body tr').forEach((row, rowIndex) => {
+                      const cell = row.querySelector(`td:nth-child(3).hidden`);
+                      if (cell) {
+                         availableCells.push({row, rowIndex, cell});
+                    }
+                });
+
+
+          if (availableCells.length > 0) {
+                     const randomIndex = Math.floor(Math.random() * availableCells.length);
+                     const randomCell = availableCells[randomIndex];
+                     const row = randomCell.row;
+                      const cell = randomCell.cell;
+                     
+                        cell.classList.remove('hidden');
+                         cell.classList.add('visible');
+                        availableCells.splice(randomIndex, 1)
+                         const previousScore = score;
+                         score -= 10;
+                           updateScoreDisplay(previousScore);
+                 }
+                   let availableCellsAfter = [];
+
+            document.querySelectorAll('#career-table-body tr').forEach((row, rowIndex) => {
+                      const cell = row.querySelector(`td:nth-child(3).hidden`);
+                      if (cell) {
+                         availableCellsAfter.push({row, rowIndex, cell});
+                    }
+                });
+            availableCellsAfter = availableCellsAfter.filter(item => item.cell.classList.contains('hidden') && !item.cell.classList.contains('visible'));
+
+                 if(availableCellsAfter.length === 0) {
+                      indiceCountryButton.classList.add("button-disabled");
+                 } else {
+                     indiceCountryButton.disabled = false;
+                    indiceCountryButton.classList.remove("button-disabled");
+
+                 }
+        }
+ function revealAll() {
             if (!selectedPlayer) return;
         
             document.querySelectorAll('#career-table-body tr td').forEach(cell => {
@@ -548,18 +651,20 @@
         })
             carriereButton.disabled = true
             carriereButton.classList.add("button-disabled")
-           indiceClubButton.disabled = true;
+           reponseButton.disabled = true
+            reponseButton.classList.add("button-disabled")
+             indiceClubButton.disabled = true;
             indiceClubButton.classList.add("button-disabled");
             indiceCountryButton.disabled = true;
-            indiceCountryButton.classList.add("button-disabled");
+           indiceCountryButton.classList.add("button-disabled");
 
         
         
              score = 0
-               updateScoreDisplay()
+             updateScoreDisplay()
         }
         
-         function revealPlayer() {
+        function revealPlayer() {
             if (!selectedPlayer) return;
 
             if (revealPlayerOnce) return;
@@ -568,15 +673,15 @@
             revealAllCells();
 
             revealPlayerOnce = true;
-             reponseButton.disabled = true
-            reponseButton.classList.add("button-disabled")
-           carriereButton.disabled = true
-           carriereButton.classList.add("button-disabled")
-               indiceClubButton.disabled = true;
+            reponseButton.disabled = true;
+            reponseButton.classList.add("button-disabled");
+             carriereButton.disabled = true
+             carriereButton.classList.add("button-disabled");
+            indiceClubButton.disabled = true;
             indiceClubButton.classList.add("button-disabled");
               indiceCountryButton.disabled = true;
             indiceCountryButton.classList.add("button-disabled");
-       }
+         }
         displayPlayerStats();
     </script>
 </body>
