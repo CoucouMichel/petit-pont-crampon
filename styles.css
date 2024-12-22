@@ -208,7 +208,7 @@ td[data-club] {
 /* Rendre le tableau responsive */
 @media (max-width: 768px) {
   table#career-table {
-    width: 95%;
+    width: 100%;
          font-size: 11px;
     }
     
