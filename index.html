@@ -482,7 +482,7 @@
                     indiceClubButton.classList.remove("button-disabled");
                 }
             }
-    function revealRandomClueCountry() {
+     function revealRandomClueCountry() {
           if (!selectedPlayer) return;
         
            indiceCountryButton.disabled = true;
@@ -497,38 +497,28 @@
                          availableCells.push({row, rowIndex, cell});
                     }
                 });
-
-
-          if (availableCells.length > 0) {
+              availableCells = availableCells.filter(item => item.cell.classList.contains('hidden') && !item.cell.classList.contains('visible'));
+        
+                if (availableCells.length > 0) {
                      const randomIndex = Math.floor(Math.random() * availableCells.length);
                     const randomCell = availableCells[randomIndex];
-                     const row = randomCell.row;
-                      const cell = randomCell.cell;
-                     
-                        cell.classList.remove('hidden');
-                         cell.classList.add('visible');
-                        availableCells.splice(randomIndex, 1)
+                    const row = randomCell.row;
+                     const cell = randomCell.cell;
+                      cell.classList.remove('hidden');
+                       cell.classList.add('visible');
+                       availableCells.splice(randomIndex, 1)
                          score -= 10
                          updateScoreDisplay()
-                 }
-                   let availableCellsAfter = [];
-
-            document.querySelectorAll('#career-table-body tr').forEach((row, rowIndex) => {
-                      const cell = row.querySelector(`td:nth-child(3).hidden`);
-                      if (cell) {
-                         availableCellsAfter.push({row, rowIndex, cell});
-                    }
-                });
-            availableCellsAfter = availableCellsAfter.filter(item => item.cell.classList.contains('hidden') && !item.cell.classList.contains('visible'));
-
-                 if(availableCellsAfter.length === 0) {
-                      indiceCountryButton.classList.add("button-disabled");
-                 } else {
                      indiceCountryButton.disabled = false;
                     indiceCountryButton.classList.remove("button-disabled");
-
+                } else {
+                      indiceCountryButton.classList.add("button-disabled");
                  }
-        }
+
+        if (indiceClubButton.classList.contains('button-disabled')) {
+              indiceCountryButton.classList.add("button-disabled");
+          }
+}
 
         function revealAll() {
             if (!selectedPlayer) return;
