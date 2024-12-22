@@ -140,7 +140,7 @@ table#career-table {
   position: relative;
     top: 0px;
     table-layout: fixed;
-    margin-top: 30px;
+    margin-top: -25px;
 }
 
 /* Définir la largeur des colonnes */
@@ -285,7 +285,6 @@ input#guess-input {
     vertical-align: middle;
     transition: all 0.5s ease; /* Added transition for smooth morphing */
     border-radius: 2px;
-    margin-top: -40px;
 }
 
 .player-name-rectangle.morph {
