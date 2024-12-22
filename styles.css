@@ -1,6 +1,6 @@
 /* Définir les couleurs principales */
 :root {
-    --primary-color: #c8ff00;  /* Couleur primaire (bleu foncé) */
+    --primary-color: #FFF055;  /* Couleur primaire (bleu foncé) */
     --secondary-color: #f39c12; /* Yellow */
     --background-color: #191919; /* Black */
     --text-color: #ffffff; /* Texte blanc */
@@ -98,7 +98,7 @@ button:disabled {
 /* Titre */
 h1 {
     font-size: 24px;
-    color: #c8ff00;
+    color: ##FFF055;
     margin-bottom: 10px;
     margin-top: 0px;
 }
@@ -153,7 +153,7 @@ th, td {
 }
 
 th {
-    color: #c8ff00;
+    color: #FFF055;
     font-weight: bold;
     font-size: 16px;
     text-align: center;
