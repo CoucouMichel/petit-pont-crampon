@@ -27,6 +27,9 @@
         { "season": "2024–2025", "country": "sa", "team": "Al-Nassr" }
     ],
     "Didier Drogba": [
+        { "season": "1998-1999", "country": "fr", "team": "Le Mans" },
+        { "season": "1999-2000", "country": "fr", "team": "Le Mans" },
+        { "season": "2000-2001", "country": "fr", "team": "Le Mans" },
         { "season": "2001–2002", "country": "fr", "team": "Guingamp" },
         { "season": "2002–2003", "country": "fr", "team": "Guingamp" },
         { "season": "2003–2004", "country": "fr", "team": "Marseille" },
