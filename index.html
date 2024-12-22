@@ -223,7 +223,7 @@
             }
     }
     
- async function showSuggestions(value) {
+  async function showSuggestions(value) {
             const autocompleteList = document.getElementById("autocomplete-list");
             autocompleteList.innerHTML = ""; // Réinitialiser la liste
 
@@ -378,6 +378,7 @@ const input = document.getElementById("guess-input");
         input.addEventListener("input", async () => {
             const value = input.value;
              await showSuggestions(value);
+            console.log("Current Suggestions after showSuggestion:", currentSuggestions)
 
             const autocompleteList = document.getElementById("autocomplete-list");
             const firstItem = autocompleteList.querySelector(".suggestion-item");
@@ -389,22 +390,25 @@ const input = document.getElementById("guess-input");
             } else if (firstItem) {
                  firstItem.classList.remove("selected");
             }
+
+
         });
-  input.addEventListener("keyup", (event) => {
+
+          input.addEventListener("keyup", (event) => {
             const autocompleteList = document.getElementById("autocomplete-list");
                 if (event.key === "Enter") {
                     if (autocompleteList.querySelector('.suggestion-item.selected')) {
                         const selectedSuggestion = autocompleteList.querySelector('.suggestion-item.selected');
                     checkAnswer(selectedSuggestion.textContent);
-                      input.value = "";
-                     autocompleteList.innerHTML = "";
+                       input.value = "";
+                        autocompleteList.innerHTML = "";
                 } else {
                         checkAnswer(input.value);
-                         input.value = "";
-                       document.getElementById("autocomplete-list").innerHTML = "";
+                        input.value = "";
+                        document.getElementById("autocomplete-list").innerHTML = "";
                     }
                 event.preventDefault();
-            }
+             }
         });
         
          const indiceClubButton = document.getElementById("indiceClubButton");
