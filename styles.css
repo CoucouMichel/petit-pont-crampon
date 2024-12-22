@@ -2,7 +2,7 @@
 :root {
     --primary-color: #c8ff00;  /* Couleur primaire (bleu foncé) */
     --secondary-color: #f39c12; /* Yellow */
-    --background-color: #13171f; /* Black */
+    --background-color: #242629; /* Black */
     --text-color: #ffffff; /* Texte blanc */
     --highlight-color: c8ff00; /* Rouge pour survol ou messages d'erreur */
     --success-color: #2ecc71; /* Vert pour le succès */
