@@ -209,7 +209,8 @@ td[data-club] {
 @media (max-width: 768px) {
   table#career-table {
     width: 100%;
-         font-size: 11px;
+    font-size: 11px;
+    left: 10px;
     }
     
      th, td {
