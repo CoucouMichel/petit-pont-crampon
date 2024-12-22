@@ -50,7 +50,7 @@
     </div>
     
   <script>
-let selectedPlayer;
+      let selectedPlayer;
         let attempts = 0;
         let revealPlayerOnce = false;
         let score = 100; // Initialize score variable
@@ -59,7 +59,6 @@ let selectedPlayer;
         
         const globalContainer = document.querySelector('.global-container');
         const fixedHeader = document.querySelector('.fixed-header');
-        let revealedCells = [];
 
          function adjustGlobalContainerMargin() {
             globalContainer.style.marginTop = `${fixedHeader.offsetHeight}px`;
@@ -152,9 +151,8 @@ let selectedPlayer;
             const tableBody = document.getElementById('career-table-body'); // Get the table body element
         
             tableBody.innerHTML = ''; // Clear existing rows
-           revealPlayerOnce = false
-            revealedCells = [];
-
+            revealPlayerOnce = false //reset the value
+            
             // Check if stats is an array
             if (!Array.isArray(stats)) {
                 console.error("Expected stats to be an array, but got:", stats);
@@ -211,7 +209,7 @@ let selectedPlayer;
 
                    row.innerHTML = `
                        <td>${formattedSeason}</td>
-                        <td class="hidden" data-club="${stat.team}">
+                        <td class="hidden" data-club="${mergedStat.teamCode}">
                                 <img src="${logoUrl}" alt="${formattedClubName} logo" style="width: 20px; height: 20px; margin-right: 5px;">
                                 ${formattedClubName}
                             </td>
@@ -221,10 +219,11 @@ let selectedPlayer;
                              </td>
                    `;
                  tableBody.appendChild(row);
+
             }
     }
     
-      async function showSuggestions(value) {
+  async function showSuggestions(value) {
             const autocompleteList = document.getElementById("autocomplete-list");
             autocompleteList.innerHTML = ""; // Réinitialiser la liste
 
@@ -268,7 +267,26 @@ let selectedPlayer;
                 console.error("Erreur lors du chargement des suggestions :", error);
             }
         }
- async function checkAnswer(input) {
+    function updateScoreDisplay(previousScore = null) {
+        const scoreDisplay = document.getElementById('score');
+         scoreDisplay.textContent = `Score : ${score}`;
+
+         if(previousScore !== null && score < previousScore) {
+             scoreDisplay.classList.add('highlight-decrease');
+             setTimeout(() => {
+              scoreDisplay.classList.remove('highlight-decrease');
+            }, 300)
+          } else {
+           scoreDisplay.classList.add('highlight');
+            setTimeout(() => {
+                scoreDisplay.classList.remove('highlight');
+            }, 300)
+          }
+
+       
+        }
+
+   async function checkAnswer(input) {
             const answer = input.trim().toLowerCase();
             const feedback = document.getElementById("feedback");
             const countryMapping = await loadCountryMapping();
@@ -293,48 +311,41 @@ let selectedPlayer;
                  playerNameDisplay.textContent = selectedPlayer;
                 revealAllCells();
                 score += 50;
-                 updateScoreDisplay()
-                 document.getElementById("guess-input").disabled = true;
+                updateScoreDisplay()
                 isCorrect = true;
             } else {
-                  if(feedback) {
-                    feedback.textContent = '';
+                if(feedback) {
+                  feedback.textContent = '';
                }
-                 attempts++;
+                attempts++;
                 const attemptsElement = document.getElementById("attempts");
                 if(attemptsElement) {
-                  attemptsElement.textContent = `Tentatives : ${attempts}`;
+                   attemptsElement.textContent = `Tentatives : ${attempts}`;
                 }
-             }
+            }
 
-         const cells = document.querySelectorAll('td[data-country], td[data-club]');
-          for (const cell of cells) {
-                 const cellCountry = cell.getAttribute('data-country')?.toLowerCase();
+            const cells = document.querySelectorAll('td[data-country], td[data-club]');
+
+            for (const cell of cells) {
+                const cellCountry = cell.getAttribute('data-country')?.toLowerCase();
                 const cellClub = cell.getAttribute('data-club')?.toLowerCase();
 
-                 if(cellClub === checkAnswerValue && !revealedCells.includes(cellClub)) {
+                 if(cellClub === checkAnswerValue) {
                      const countryCell = cell.parentElement.querySelector('td[data-country].hidden');
-                       if (countryCell) {
+                      if (countryCell) {
                             revealText(countryCell);
                              score += 20;
-                             updateScoreDisplay()
-                            isCorrect = true;
-                             revealedCells.push(cellClub);
-
-                        }
-                  }
-                   else if (cellCountry === answer || reverseMapping[cellCountry] === answer ) {
+                           updateScoreDisplay()
+                           isCorrect = true;
+                       }
+                 }
+                  else if (cellCountry === answer || reverseMapping[cellCountry] === answer ) {
                         revealText(cell);
                         score += 10;
-                            updateScoreDisplay()
-                         isCorrect = true;
-
-                      if(!revealedCells.includes(cellCountry)) {
-                           revealedCells.push(cellCountry);
-                       }
-                   }
-         }
-       
+                        updateScoreDisplay()
+                       isCorrect = true;
+                  }
+            }
             blinkInput(isCorrect);
         }
         
@@ -363,11 +374,11 @@ let selectedPlayer;
             score +=  document.querySelectorAll('#career-table-body td.hidden').length * 5
              updateScoreDisplay()
         }
-        
-  const input = document.getElementById("guess-input");
+const input = document.getElementById("guess-input");
         input.addEventListener("input", async () => {
             const value = input.value;
              await showSuggestions(value);
+            console.log("Current Suggestions after showSuggestion:", currentSuggestions)
 
             const autocompleteList = document.getElementById("autocomplete-list");
             const firstItem = autocompleteList.querySelector(".suggestion-item");
@@ -379,23 +390,26 @@ let selectedPlayer;
             } else if (firstItem) {
                  firstItem.classList.remove("selected");
             }
+
+
         });
-        input.addEventListener("keyup", (event) => {
-              const autocompleteList = document.getElementById("autocomplete-list");
+
+          input.addEventListener("keyup", (event) => {
+            const autocompleteList = document.getElementById("autocomplete-list");
                 if (event.key === "Enter") {
                     if (autocompleteList.querySelector('.suggestion-item.selected')) {
                         const selectedSuggestion = autocompleteList.querySelector('.suggestion-item.selected');
                     checkAnswer(selectedSuggestion.textContent);
-                      input.value = "";
-                     autocompleteList.innerHTML = "";
+                       input.value = "";
+                        autocompleteList.innerHTML = "";
                 } else {
                         checkAnswer(input.value);
-                         input.value = "";
-                       document.getElementById("autocomplete-list").innerHTML = "";
+                        input.value = "";
+                        document.getElementById("autocomplete-list").innerHTML = "";
                     }
                 event.preventDefault();
-              }
-          });
+             }
+        });
         
          const indiceClubButton = document.getElementById("indiceClubButton");
         const indiceCountryButton = document.getElementById("indiceCountryButton");
@@ -416,13 +430,115 @@ let selectedPlayer;
             updateScoreDisplay()
         });
         
-         reponseButton.addEventListener("click", function () {
+        reponseButton.addEventListener("click", function () {
            revealPlayer();
              score = 0
-            updateScoreDisplay()
+           updateScoreDisplay()
         });
         
-function revealRandomClueClub() {
+     function revealRandomClueClub() {
+            if (!selectedPlayer) return;
+          
+           indiceClubButton.disabled = true;
+            indiceClubButton.classList.add("button-disabled");
+          
+            let availableCells = [];
+
+            // Get all hidden cells in the Club column
+             document.querySelectorAll('#career-table-body tr').forEach((row, rowIndex) => {
+                      const cell = row.querySelector(`td:nth-child(2).hidden`);
+                      if (cell) {
+                         availableCells.push({row, rowIndex, cell});
+                    }
+                });
+         
+        
+                if (availableCells.length > 0) {
+                     const randomIndex = Math.floor(Math.random() * availableCells.length);
+                     const randomCell = availableCells[randomIndex];
+                     const row = randomCell.row;
+                    const cell = randomCell.cell;
+
+                     cell.classList.remove('hidden');
+                     cell.classList.add('visible');
+                      availableCells.splice(randomIndex, 1)
+                  
+                    const countryCell = row.querySelector('td:nth-child(3).hidden')
+                    if (countryCell) {
+                        countryCell.classList.remove('hidden');
+                       countryCell.classList.add('visible');
+                     }
+                          score -= 25;
+                           updateScoreDisplay()
+                     }
+
+                    
+            
+        
+               let availableCellsAfter = [];
+
+                 document.querySelectorAll('#career-table-body tr').forEach((row, rowIndex) => {
+                      const cell = row.querySelector(`td:nth-child(2).hidden`);
+                      if (cell) {
+                         availableCellsAfter.push({row, rowIndex, cell});
+                    }
+                });
+
+               availableCellsAfter = availableCellsAfter.filter(item => item.cell.classList.contains('hidden') && !item.cell.classList.contains('visible'));
+                if(availableCellsAfter.length === 0 ) {
+                   indiceClubButton.classList.add("button-disabled");
+                  } else {
+                    indiceClubButton.disabled = false;
+                    indiceClubButton.classList.remove("button-disabled");
+                }
+            }
+    function revealRandomClueCountry() {
+          if (!selectedPlayer) return;
+        
+           indiceCountryButton.disabled = true;
+            indiceCountryButton.classList.add("button-disabled");
+
+            let availableCells = [];
+
+            // Get all hidden cells in the Country column
+             document.querySelectorAll('#career-table-body tr').forEach((row, rowIndex) => {
+                      const cell = row.querySelector(`td:nth-child(3).hidden`);
+                      if (cell) {
+                         availableCells.push({row, rowIndex, cell});
+                    }
+                });
+
+
+          if (availableCells.length > 0) {
+                     const randomIndex = Math.floor(Math.random() * availableCells.length);
+                    const randomCell = availableCells[randomIndex];
+                     const row = randomCell.row;
+                      const cell = randomCell.cell;
+                     
+                        cell.classList.remove('hidden');
+                         cell.classList.add('visible');
+                        availableCells.splice(randomIndex, 1)
+                         score -= 10
+                         updateScoreDisplay()
+                 }
+                   let availableCellsAfter = [];
+
+            document.querySelectorAll('#career-table-body tr').forEach((row, rowIndex) => {
+                      const cell = row.querySelector(`td:nth-child(3).hidden`);
+                      if (cell) {
+                         availableCellsAfter.push({row, rowIndex, cell});
+                    }
+                });
+            availableCellsAfter = availableCellsAfter.filter(item => item.cell.classList.contains('hidden') && !item.cell.classList.contains('visible'));
+
+                 if(availableCellsAfter.length === 0) {
+                      indiceCountryButton.classList.add("button-disabled");
+                 } else {
+                     indiceCountryButton.disabled = false;
+                    indiceCountryButton.classList.remove("button-disabled");
+
+                 }
+        } function revealRandomClueClub() {
             if (!selectedPlayer) return;
           
            indiceClubButton.disabled = true;
@@ -456,7 +572,7 @@ function revealRandomClueClub() {
                      }
                         const previousScore = score
                          score -= 25;
-                           updateScoreDisplay(previousScore)
+                            updateScoreDisplay(previousScore)
                      }
 
                     
@@ -505,7 +621,7 @@ function revealRandomClueClub() {
                         cell.classList.remove('hidden');
                          cell.classList.add('visible');
                         availableCells.splice(randomIndex, 1)
-                       const previousScore = score;
+                         const previousScore = score;
                          score -= 10;
                            updateScoreDisplay(previousScore);
                  }
@@ -527,21 +643,7 @@ function revealRandomClueClub() {
 
                  }
         }
-    function updateScoreDisplay(previousScore = null) {
-        const scoreDisplay = document.getElementById('score');
-        scoreDisplay.textContent = `Score : ${score}`;
-          scoreDisplay.classList.add('highlight-decrease');
-           setTimeout(() => {
-            scoreDisplay.classList.remove('highlight-decrease');
-             }, 300);
-            if(score > previousScore) {
-                scoreDisplay.classList.add('highlight');
-              setTimeout(() => {
-               scoreDisplay.classList.remove('highlight');
-            }, 300);
-           }
-       }
-         function revealAll() {
+ function revealAll() {
             if (!selectedPlayer) return;
         
             document.querySelectorAll('#career-table-body tr td').forEach(cell => {
@@ -553,13 +655,12 @@ function revealRandomClueClub() {
             reponseButton.classList.add("button-disabled")
              indiceClubButton.disabled = true;
             indiceClubButton.classList.add("button-disabled")
-             indiceCountryButton.disabled = true;
-            indiceCountryButton.classList.add("button-disabled")
-
+              indiceCountryButton.disabled = true;
+           indiceCountryButton.classList.add("button-disabled")
         
         
-             const previousScore = score;
-             score = 0;
+           const previousScore = score
+             score = 0
                updateScoreDisplay(previousScore)
         }
         
@@ -575,17 +676,16 @@ function revealRandomClueClub() {
             reponseButton.disabled = true
             reponseButton.classList.add("button-disabled")
            carriereButton.disabled = true
-           carriereButton.classList.add("button-disabled")
-             indiceClubButton.disabled = true;
+          carriereButton.classList.add("button-disabled")
+             indiceClubButton.disabled = true
             indiceClubButton.classList.add("button-disabled")
               indiceCountryButton.disabled = true
-            indiceCountryButton.classList.add("button-disabled")
-             const previousScore = score;
-              score = 0;
-             updateScoreDisplay(previousScore);
+             indiceCountryButton.classList.add("button-disabled")
+               const previousScore = score
+               score = 0
+               updateScoreDisplay(previousScore)
         }
         displayPlayerStats();
     </script>
 </body>
 </html>
-
