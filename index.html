@@ -286,7 +286,7 @@
        
         }
 
-   async function checkAnswer(input) {
+ async function checkAnswer(input) {
             const answer = input.trim().toLowerCase();
             const feedback = document.getElementById("feedback");
             const countryMapping = await loadCountryMapping();
@@ -321,14 +321,15 @@
                 const attemptsElement = document.getElementById("attempts");
                 if(attemptsElement) {
                    attemptsElement.textContent = `Tentatives : ${attempts}`;
-                }
+               }
             }
 
             const cells = document.querySelectorAll('td[data-country], td[data-club]');
 
             for (const cell of cells) {
                 const cellCountry = cell.getAttribute('data-country')?.toLowerCase();
-                const cellClub = cell.getAttribute('data-club')?.toLowerCase();
+                 const cellClub = cell.getAttribute('data-club')?.toLowerCase();
+
 
                 if (cellClub === checkAnswerValue) {
                      revealText(cell);
@@ -339,15 +340,16 @@
                           updateScoreDisplay()
                      }
                        isCorrect = true;
-                       }
-                 }
-                  else if (cellCountry === answer || reverseMapping[cellCountry] === answer ) {
-                        revealText(cell);
-                        score += 10;
-                        updateScoreDisplay()
-                       isCorrect = true;
-                  }
-            }
+
+                }
+                else if (cellCountry === answer || reverseMapping[cellCountry] === answer ) {
+                     revealText(cell);
+                    score += 10;
+                     updateScoreDisplay()
+                     isCorrect = true;
+                }
+           }
+
             blinkInput(isCorrect);
         }
         
