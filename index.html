@@ -330,13 +330,15 @@
                 const cellCountry = cell.getAttribute('data-country')?.toLowerCase();
                 const cellClub = cell.getAttribute('data-club')?.toLowerCase();
 
-                 if(cellClub === checkAnswerValue) {
-                     const countryCell = cell.parentElement.querySelector('td[data-country].hidden');
-                      if (countryCell) {
-                            revealText(countryCell);
-                             score += 20;
-                           updateScoreDisplay()
-                           isCorrect = true;
+                if (cellClub === checkAnswerValue) {
+                     revealText(cell);
+                    const countryCell = cell.parentElement.querySelector('td[data-country].hidden');
+                     if(countryCell) {
+                         revealText(countryCell);
+                         score += 20;
+                          updateScoreDisplay()
+                     }
+                       isCorrect = true;
                        }
                  }
                   else if (cellCountry === answer || reverseMapping[cellCountry] === answer ) {
