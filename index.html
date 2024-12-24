@@ -309,16 +309,11 @@
                  revealAllCells();
                 isCorrect = true;
             document.getElementById("guess-input").disabled = true;
-            } else {
-                if(feedback) {
-                    feedback.textContent = '';
-                }
-                 attempts++;
-                 const attemptsElement = document.getElementById("attempts");
-                 if(attemptsElement) {
-                      attemptsElement.textContent = `Tentatives : ${attempts}`;
-                 }
-            }
+               } else {
+        feedback.textContent = '';
+        attempts++;
+        document.getElementById("attempts").textContent = `Tentatives : ${attempts}`;
+    }
 
             const cells = document.querySelectorAll('td[data-country], td[data-club]');
 
