@@ -307,9 +307,8 @@
             if (checkAnswerValue === selectedPlayer.toLowerCase()) {
                  playerNameDisplay.textContent = selectedPlayer;
                  revealAllCells();
-                score += 50;
-                 updateScoreDisplay(score-50);
                 isCorrect = true;
+            document.getElementById("guess-input").disabled = true;
             } else {
                 if(feedback) {
                     feedback.textContent = '';
@@ -327,23 +326,17 @@
                 const cellCountry = cell.getAttribute('data-country')?.toLowerCase();
                 const cellClub = cell.getAttribute('data-club')?.toLowerCase();
 
-                if (cellClub === checkAnswerValue) {
-                   const countryCell = cell.parentElement.querySelector('td[data-country].hidden');
-                    if (countryCell) {
-                        revealText(countryCell);
-                         score += 20;
-                          updateScoreDisplay(score - 20);
-                    }
-                    revealText(cell)
-                     isCorrect = true;
-                }
-                else if (cellCountry === answer || reverseMapping[cellCountry] === answer) {
-                    revealText(cell);
-                    score += 10;
-                    updateScoreDisplay(score - 10)
-                    isCorrect = true;
-              }
-
+                 if(cellClub === checkAnswerValue) {
+                     const countryCell = cell.parentElement.querySelector('td[data-country].hidden');
+                      if (countryCell) {
+                            revealText(countryCell);
+                           isCorrect = true;
+                       }
+                 }
+                  else if (cellCountry === answer || reverseMapping[cellCountry] === answer ) {
+                        revealText(cell);
+                      isCorrect = true;
+                 }
             }
             blinkInput(isCorrect);
         }
