@@ -325,11 +325,7 @@
                 
                 let bonusScore = 0;
                 const tableBody = document.getElementById('career-table-body');
-                const hiddenCells = tableBody.querySelectorAll('td.hidden')
-                    if(attempts === 1) {
-                        bonusScore =  (hiddenCells?.length || 0) * 5;
-                     }
-                        const previousScore = score;
+                const previousScore = score;
                    score = score - (attempts -1) * 0.1;
                    if(score < 0) score = 0;
                    score = score + bonusScore;
@@ -480,7 +476,7 @@
                        countryCell.classList.add('visible');
                      }
                           const previousScore = score;
-                          score -= Math.round((95 * 0.6666666666) * tableSize) / 100
+                          score -= Math.round((95 * 0.6666666666) / tableSize)
                            updateScoreDisplay(previousScore);
                  }
                let availableCellsAfter = [];
@@ -527,7 +523,7 @@
                          cell.classList.add('visible');
                         availableCells.splice(randomIndex, 1)
                           const previousScore = score;
-                        score -= Math.round((95 * 0.3333333333) * tableSize) / 100;
+                        score -= Math.round((95 * 0.3333333333) / tableSize);
                           updateScoreDisplay(previousScore);
                     
                  }
