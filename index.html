@@ -187,7 +187,7 @@
             adjustGlobalContainerMargin();
             window.addEventListener('resize', adjustGlobalContainerMargin);
 
-         document.getElementById('score').textContent = `Score : ${score.toFixed(2)}`;
+                    document.getElementById('score').innerHTML = `Score : ${score.toFixed(2)} <span id="info-icon" style="cursor: pointer; font-size: 15px; margin-left: 5px; vertical-align: middle;">ⓘ</span>`;
 
         
             const tableBody = document.getElementById('career-table-body'); // Get the table body element
