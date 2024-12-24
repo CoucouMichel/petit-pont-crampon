@@ -440,6 +440,62 @@ const input = document.getElementById("guess-input");
            updateScoreDisplay()
         });
         
+     function revealRandomClueClub() {
+            if (!selectedPlayer) return;
+          
+           indiceClubButton.disabled = true;
+            indiceClubButton.classList.add("button-disabled");
+          
+            let availableCells = [];
+
+            // Get all hidden cells in the Club column
+             document.querySelectorAll('#career-table-body tr').forEach((row, rowIndex) => {
+                      const cell = row.querySelector(`td:nth-child(2).hidden`);
+                      if (cell) {
+                         availableCells.push({row, rowIndex, cell});
+                    }
+                });
+         
+        
+                if (availableCells.length > 0) {
+                     const randomIndex = Math.floor(Math.random() * availableCells.length);
+                     const randomCell = availableCells[randomIndex];
+                     const row = randomCell.row;
+                    const cell = randomCell.cell;
+
+                     cell.classList.remove('hidden');
+                     cell.classList.add('visible');
+                      availableCells.splice(randomIndex, 1)
+                  
+                    const countryCell = row.querySelector('td:nth-child(3).hidden')
+                    if (countryCell) {
+                        countryCell.classList.remove('hidden');
+                       countryCell.classList.add('visible');
+                     }
+                          score -= 25;
+                           updateScoreDisplay()
+                     }
+
+                    
+            
+        
+               let availableCellsAfter = [];
+
+                 document.querySelectorAll('#career-table-body tr').forEach((row, rowIndex) => {
+                      const cell = row.querySelector(`td:nth-child(2).hidden`);
+                      if (cell) {
+                         availableCellsAfter.push({row, rowIndex, cell});
+                    }
+                });
+
+               availableCellsAfter = availableCellsAfter.filter(item => item.cell.classList.contains('hidden') && !item.cell.classList.contains('visible'));
+                if(availableCellsAfter.length === 0 ) {
+                   indiceClubButton.classList.add("button-disabled");
+                  } else {
+                    indiceClubButton.disabled = false;
+                    indiceClubButton.classList.remove("button-disabled");
+                }
+            }
     function revealRandomClueCountry() {
           if (!selectedPlayer) return;
         
@@ -486,7 +542,7 @@ const input = document.getElementById("guess-input");
                     indiceCountryButton.classList.remove("button-disabled");
 
                  }
-        function revealRandomClueClub() {
+        } function revealRandomClueClub() {
             if (!selectedPlayer) return;
           
            indiceClubButton.disabled = true;
@@ -507,23 +563,26 @@ const input = document.getElementById("guess-input");
                      const randomIndex = Math.floor(Math.random() * availableCells.length);
                      const randomCell = availableCells[randomIndex];
                      const row = randomCell.row;
-                     const cell = randomCell.cell;
+                    const cell = randomCell.cell;
 
-                      cell.classList.remove('hidden');
-                      cell.classList.add('visible');
-                       availableCells.splice(randomIndex, 1)
+                     cell.classList.remove('hidden');
+                     cell.classList.add('visible');
+                      availableCells.splice(randomIndex, 1)
                   
                     const countryCell = row.querySelector('td:nth-child(3).hidden')
                     if (countryCell) {
                         countryCell.classList.remove('hidden');
                        countryCell.classList.add('visible');
                      }
-                           const previousScore = score
-                         score -=  Math.round((95 * 0.6666666666) * tableSize)/100
+                        const previousScore = score
+                         score -= 25;
                             updateScoreDisplay(previousScore)
                      }
-                
-                 let availableCellsAfter = [];
+
+                    
+            
+        
+               let availableCellsAfter = [];
 
                  document.querySelectorAll('#career-table-body tr').forEach((row, rowIndex) => {
                       const cell = row.querySelector(`td:nth-child(2).hidden`);
