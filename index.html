@@ -53,7 +53,7 @@
     let selectedPlayer;
     let attempts = 0;
     let revealPlayerOnce = false;
-    let score = 100; // Initialize score variable
+    let score = 95; // Initialize score variable
     const playerNameDisplay = document.getElementById("player-name-display");
     let currentSuggestions = [];
     const globalContainer = document.querySelector('.global-container');
@@ -145,13 +145,13 @@
             adjustGlobalContainerMargin();
             window.addEventListener('resize', adjustGlobalContainerMargin);
 
-         document.getElementById('score').textContent = `Score : ${score}`;
+            score = 95; // Reset the score to 95
+         updateScoreDisplay();
 
-        
-            const tableBody = document.getElementById('career-table-body'); // Get the table body element
-        
+        const tableBody = document.getElementById('career-table-body'); // Get the table body element
             tableBody.innerHTML = ''; // Clear existing rows
             revealPlayerOnce = false //reset the value
+            revealedCells = [];
             
             // Check if stats is an array
             if (!Array.isArray(stats)) {
@@ -310,19 +310,29 @@
             if (checkAnswerValue === selectedPlayer.toLowerCase()) {
                  playerNameDisplay.textContent = selectedPlayer;
                 revealAllCells();
-                score += 50;
-                updateScoreDisplay()
-                isCorrect = true;
+
+                        let bonusScore = 0;
+        const tableBody = document.getElementById('career-table-body');
+         const hiddenCells = tableBody.querySelectorAll('td.hidden')
+         bonusScore =  (hiddenCells?.length || 0) * 5;
+            
+            
+        if(attempts > 1) {
+              let malusScore = 0;
+            malusScore =  (hiddenCells?.length || 0) * (attempts -1) * 0.1
+                score = score + bonusScore - malusScore
+        } else {
+             score +=  bonusScore
+        }
+       updateScoreDisplay()
+       isCorrect = true;
             } else {
                 if(feedback) {
                   feedback.textContent = '';
                }
-                attempts++;
-                const attemptsElement = document.getElementById("attempts");
-                if(attemptsElement) {
-                   attemptsElement.textContent = `Tentatives : ${attempts}`;
-               }
-            }
+             attempts++;
+             document.getElementById("attempts").textContent = `Tentatives : ${attempts}`;
+    }
 
             const cells = document.querySelectorAll('td[data-country], td[data-club]');
 
@@ -331,24 +341,18 @@
                  const cellClub = cell.getAttribute('data-club')?.toLowerCase();
 
 
-                if (cellClub === checkAnswerValue) {
-                     revealText(cell);
-                    const countryCell = cell.parentElement.querySelector('td[data-country].hidden');
-                     if(countryCell) {
-                         revealText(countryCell);
-                         score += 20;
-                          updateScoreDisplay()
-                     }
-                       isCorrect = true;
-
-                }
-                else if (cellCountry === answer || reverseMapping[cellCountry] === answer ) {
-                     revealText(cell);
-                    score += 10;
-                     updateScoreDisplay()
-                     isCorrect = true;
+if(cellClub === checkAnswerValue) {
+            const countryCell = cell.parentElement.querySelector('td[data-country].hidden');
+            if (countryCell) {
+                    revealText(countryCell);
+                    isCorrect = true;
                 }
            }
+        else if (cellCountry === answer || reverseMapping[cellCountry] === answer) {
+             revealText(cell);
+             isCorrect = true;
+         }
+    }
 
             blinkInput(isCorrect);
         }
