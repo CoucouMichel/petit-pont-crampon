@@ -278,6 +278,11 @@
                     listItem.addEventListener("click", () => {
                         document.getElementById("guess-input").value = "";
                         autocompleteList.innerHTML = ""; // Effacer la liste après un clic
+                         attempts++;
+                    const attemptsElement = document.getElementById("attempts");
+                         if(attemptsElement) {
+                                attemptsElement.textContent = `Tentatives : ${attempts}`;
+                        }
                         checkAnswer(suggestion);
                     });
                     autocompleteList.appendChild(listItem);
