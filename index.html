@@ -83,24 +83,25 @@
             globalContainer.style.marginTop = `${fixedHeader.offsetHeight}px`;
          }
 
-        const infoIcon = document.getElementById("info-icon");
-const infoWindow = document.getElementById("info-window");
-const closeInfo = document.getElementById("close-info");
+  const infoIcon = document.getElementById("info-icon");
+        const infoWindow = document.getElementById("info-window");
+        const closeInfo = document.getElementById("close-info");
 
-infoIcon.addEventListener('click', (event) => {
-    event.stopPropagation();  // Prevent event bubbling
-    infoWindow.classList.toggle('hidden');
-});
 
-closeInfo.addEventListener("click", () => {
-  infoWindow.classList.add("hidden");
-});
+        infoIcon.addEventListener("click", (event) => {
+                event.stopPropagation();
+                infoWindow.classList.toggle("hidden");
+         });
+         closeInfo.addEventListener("click", (event) => {
+                infoWindow.classList.add("hidden");
+             event.stopPropagation();
+         });
 
-document.addEventListener("click", (event) => {
-    if (!infoWindow.contains(event.target) && event.target !== infoIcon) {
-        infoWindow.classList.add("hidden");
-      }
-});
+     document.addEventListener("click", (event) => {
+            if (!infoWindow.contains(event.target) && event.target !== infoIcon) {
+             infoWindow.classList.add("hidden")
+            }
+       });
 
         
         async function loadPlayerStats() {
@@ -499,7 +500,7 @@ document.addEventListener("click", (event) => {
                        countryCell.classList.add('visible');
                      }
                           const previousScore = score;
-                          score -= Math((95 * 0.6666666666) / tableSize)
+                          score -= Math.abs((95 * 0.6666666666) / tableSize)
                            updateScoreDisplay(previousScore);
                  }
                let availableCellsAfter = [];
@@ -546,7 +547,7 @@ document.addEventListener("click", (event) => {
                          cell.classList.add('visible');
                         availableCells.splice(randomIndex, 1)
                           const previousScore = score;
-                        score -= Math((95 * 0.3333333333) / tableSize);
+                        score -= Math.abs((95 * 0.3333333333) / tableSize);
                           updateScoreDisplay(previousScore);
                     
                  }
