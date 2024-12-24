@@ -440,7 +440,7 @@ const input = document.getElementById("guess-input");
            updateScoreDisplay()
         });
         
-      function revealRandomClueClub() {
+     function revealRandomClueClub() {
             if (!selectedPlayer) return;
           
            indiceClubButton.disabled = true;
@@ -472,31 +472,16 @@ const input = document.getElementById("guess-input");
                         countryCell.classList.remove('hidden');
                        countryCell.classList.add('visible');
                      }
-                       const previousScore = score;
-                         score -= Math.round((95 * 0.6666666666) * tableSize) / 100;
-                           updateScoreDisplay(previousScore)
-                     }
+                        const previousScore = score
+                         score -= Math.round((95 * 0.6666666666) * tableSize) / 100
+                         updateScoreDisplay(previousScore);
+                        indiceClubButton.disabled = false;
+                          indiceClubButton.classList.remove("button-disabled");
+                   } else {
+                       indiceClubButton.classList.add("button-disabled");
+                 }
 
-                    
-            
-        
-               let availableCellsAfter = [];
-
-                 document.querySelectorAll('#career-table-body tr').forEach((row, rowIndex) => {
-                      const cell = row.querySelector(`td:nth-child(2).hidden`);
-                      if (cell) {
-                         availableCellsAfter.push({row, rowIndex, cell});
-                    }
-                });
-
-               availableCellsAfter = availableCellsAfter.filter(item => item.cell.classList.contains('hidden') && !item.cell.classList.contains('visible'));
-                if(availableCellsAfter.length === 0 ) {
-                   indiceClubButton.classList.add("button-disabled");
-                  } else {
-                    indiceClubButton.disabled = false;
-                    indiceClubButton.classList.remove("button-disabled");
-                }
-            }
+        }
     function revealRandomClueCountry() {
           if (!selectedPlayer) return;
         
@@ -523,27 +508,17 @@ const input = document.getElementById("guess-input");
                         cell.classList.remove('hidden');
                          cell.classList.add('visible');
                         availableCells.splice(randomIndex, 1)
-                     const previousScore = score;
-                      score -=  Math.round((95 * 0.3333333333) * tableSize)/ 100
-                        updateScoreDisplay(previousScore);
-                 }
-                   let availableCellsAfter = [];
+                        const previousScore = score;
+                         score -=  Math.round((95 * 0.3333333333) * tableSize) / 100;
+                           updateScoreDisplay(previousScore);
+                   
+                        indiceCountryButton.disabled = false;
+                        indiceCountryButton.classList.remove("button-disabled");
 
-            document.querySelectorAll('#career-table-body tr').forEach((row, rowIndex) => {
-                      const cell = row.querySelector(`td:nth-child(3).hidden`);
-                      if (cell) {
-                         availableCellsAfter.push({row, rowIndex, cell});
-                    }
-                });
-            availableCellsAfter = availableCellsAfter.filter(item => item.cell.classList.contains('hidden') && !item.cell.classList.contains('visible'));
-
-                 if(availableCellsAfter.length === 0) {
-                      indiceCountryButton.classList.add("button-disabled");
                  } else {
-                     indiceCountryButton.disabled = false;
-                    indiceCountryButton.classList.remove("button-disabled");
+                       indiceCountryButton.classList.add("button-disabled");
+                  }
 
-                 }
         }
  function revealAll() {
             if (!selectedPlayer) return;
