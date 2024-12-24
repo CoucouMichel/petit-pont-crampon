@@ -83,6 +83,18 @@
             globalContainer.style.marginTop = `${fixedHeader.offsetHeight}px`;
          }
 
+         const infoIcon = document.getElementById("info-icon");
+        const infoWindow = document.getElementById("info-window");
+        const closeInfo = document.getElementById("close-info");
+
+
+        infoIcon.addEventListener('click', () => {
+        infoWindow.classList.toggle('hidden');
+         });
+           closeInfo.addEventListener("click", () => {
+             infoWindow.classList.add("hidden");
+          });
+
         
         async function loadPlayerStats() {
             const response = await fetch('./players_stats.json');
