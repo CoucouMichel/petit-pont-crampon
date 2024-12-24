@@ -410,7 +410,6 @@ th:nth-child(3), td:nth-child(3) {
     text-align: center;
      position: relative;
          left: 50%; /* Center horizontally */
-    transform: translateX(-50%); /* Move back half of its width */
 }
 #score.highlight {
     color: var(--success-color);
@@ -419,4 +418,48 @@ th:nth-child(3), td:nth-child(3) {
 /* New class for decrease highlight */
 #score.highlight-decrease {
     color: #d22e2e;
+}
+
+.info-window {
+    position: absolute;
+     top: calc(100% + 10px); /* Adjust as needed, to appear right below the icon */
+    left: 0;
+    background-color: #303030;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    width: 300px;
+    text-align: left;
+    z-index: 99;
+        max-height: 300px;
+        overflow-y: auto;
+}
+
+.info-window h3{
+    margin-top: 0;
+    text-align: center;
+}
+.info-window ul {
+  padding-left: 20px;
+}
+
+.info-window.hidden {
+    display: none;
+}
+
+.info-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.close-info {
+    cursor: pointer;
+    font-size: 20px;
+     padding: 3px 6px;
+        border-radius: 50%;
+        transition: background-color 0.2s ease-in-out;
+}
+.close-info:hover {
+        background-color: #28333d;
 }
