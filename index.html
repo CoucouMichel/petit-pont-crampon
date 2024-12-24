@@ -49,16 +49,16 @@
         </div>
     </div>
     
-  <script>
-    let selectedPlayer;
-    let attempts = 0;
-    let revealPlayerOnce = false;
-    let score = 95; // Initialize score variable
-    const playerNameDisplay = document.getElementById("player-name-display");
-    let currentSuggestions = [];
-    const globalContainer = document.querySelector('.global-container');
-    const fixedHeader = document.querySelector('.fixed-header');
-    let tableSize = 0
+    <script>
+      let selectedPlayer;
+        let attempts = 0;
+        let revealPlayerOnce = false;
+        let score = 100; // Initialize score variable
+         const playerNameDisplay = document.getElementById("player-name-display");
+         let currentSuggestions = [];
+        
+        const globalContainer = document.querySelector('.global-container');
+        const fixedHeader = document.querySelector('.fixed-header');
 
          function adjustGlobalContainerMargin() {
             globalContainer.style.marginTop = `${fixedHeader.offsetHeight}px`;
@@ -145,13 +145,14 @@
             adjustGlobalContainerMargin();
             window.addEventListener('resize', adjustGlobalContainerMargin);
 
-            score = 95; // Reset the score to 95
-         updateScoreDisplay();
+         document.getElementById('score').textContent = `Score : ${score.toFixed(2)}`;
 
-        const tableBody = document.getElementById('career-table-body'); // Get the table body element
+        
+            const tableBody = document.getElementById('career-table-body'); // Get the table body element
+        
             tableBody.innerHTML = ''; // Clear existing rows
             revealPlayerOnce = false //reset the value
-            revealedCells = [];
+             revealedCells = [];
             
             // Check if stats is an array
             if (!Array.isArray(stats)) {
@@ -223,7 +224,7 @@
             }
     }
     
-  async function showSuggestions(value) {
+      async function showSuggestions(value) {
             const autocompleteList = document.getElementById("autocomplete-list");
             autocompleteList.innerHTML = ""; // Réinitialiser la liste
 
@@ -269,24 +270,20 @@
         }
     function updateScoreDisplay(previousScore = null) {
         const scoreDisplay = document.getElementById('score');
-         scoreDisplay.textContent = `Score : ${score}`;
-
+         scoreDisplay.textContent = `Score : ${score.toFixed(2)}`;
          if(previousScore !== null && score < previousScore) {
-             scoreDisplay.classList.add('highlight-decrease');
+              scoreDisplay.classList.add('highlight-decrease');
+               setTimeout(() => {
+                  scoreDisplay.classList.remove('highlight-decrease');
+                }, 300);
+         } else {
+             scoreDisplay.classList.add('highlight');
              setTimeout(() => {
-              scoreDisplay.classList.remove('highlight-decrease');
-            }, 300)
-          } else {
-           scoreDisplay.classList.add('highlight');
-            setTimeout(() => {
-                scoreDisplay.classList.remove('highlight');
-            }, 300)
+                  scoreDisplay.classList.remove('highlight');
+                }, 300);
           }
-
-       
-        }
-
- async function checkAnswer(input) {
+    }
+    async function checkAnswer(input) {
             const answer = input.trim().toLowerCase();
             const feedback = document.getElementById("feedback");
             const countryMapping = await loadCountryMapping();
@@ -300,60 +297,52 @@
                 Object.entries(clubNameMapping).map(([original, formatted]) => [formatted.toLowerCase(), original.toLowerCase()])
             );
 
-
             let checkAnswerValue = answer
-
             if (originalClubMapping[answer]) {
                 checkAnswerValue = originalClubMapping[answer]
             }
 
             if (checkAnswerValue === selectedPlayer.toLowerCase()) {
                  playerNameDisplay.textContent = selectedPlayer;
-                revealAllCells();
-
-                        let bonusScore = 0;
-        const tableBody = document.getElementById('career-table-body');
-         const hiddenCells = tableBody.querySelectorAll('td.hidden')
-         bonusScore =  (hiddenCells?.length || 0) * 5;
-            
-            
-        if(attempts > 1) {
-              let malusScore = 0;
-            malusScore =  (hiddenCells?.length || 0) * (attempts -1) * 0.1
-                score = score + bonusScore - malusScore
-        } else {
-             score +=  bonusScore
-        }
-       updateScoreDisplay()
-       isCorrect = true;
+                 revealAllCells();
+                score += 50;
+                 updateScoreDisplay(score-50);
+                isCorrect = true;
             } else {
                 if(feedback) {
-                  feedback.textContent = '';
-               }
-             attempts++;
-             document.getElementById("attempts").textContent = `Tentatives : ${attempts}`;
-    }
+                    feedback.textContent = '';
+                }
+                 attempts++;
+                 const attemptsElement = document.getElementById("attempts");
+                 if(attemptsElement) {
+                      attemptsElement.textContent = `Tentatives : ${attempts}`;
+                 }
+            }
 
             const cells = document.querySelectorAll('td[data-country], td[data-club]');
 
             for (const cell of cells) {
                 const cellCountry = cell.getAttribute('data-country')?.toLowerCase();
-                 const cellClub = cell.getAttribute('data-club')?.toLowerCase();
+                const cellClub = cell.getAttribute('data-club')?.toLowerCase();
 
-
-if(cellClub === checkAnswerValue) {
-            const countryCell = cell.parentElement.querySelector('td[data-country].hidden');
-            if (countryCell) {
-                    revealText(countryCell);
-                    isCorrect = true;
+                if (cellClub === checkAnswerValue) {
+                   const countryCell = cell.parentElement.querySelector('td[data-country].hidden');
+                    if (countryCell) {
+                        revealText(countryCell);
+                         score += 20;
+                          updateScoreDisplay(score - 20);
+                    }
+                    revealText(cell)
+                     isCorrect = true;
                 }
-           }
-        else if (cellCountry === answer || reverseMapping[cellCountry] === answer) {
-             revealText(cell);
-             isCorrect = true;
-         }
-    }
+                else if (cellCountry === answer || reverseMapping[cellCountry] === answer) {
+                    revealText(cell);
+                    score += 10;
+                    updateScoreDisplay(score - 10)
+                    isCorrect = true;
+              }
 
+            }
             blinkInput(isCorrect);
         }
         
@@ -378,15 +367,21 @@ if(cellClub === checkAnswerValue) {
             allCells.forEach(cell => {
                 cell.classList.add('visible');
             });
-             
-            score +=  document.querySelectorAll('#career-table-body td.hidden').length * 5
-             updateScoreDisplay()
-        }
-const input = document.getElementById("guess-input");
+            
+            if(revealPlayerOnce === false) {
+                   const tableBody = document.getElementById('career-table-body');
+                        let hiddenCells = tableBody.querySelectorAll('td.hidden')
+                    const bonusScore =  (hiddenCells?.length || 0) * 5;
+                    score += bonusScore
+                 updateScoreDisplay(score - bonusScore);
+
+           }
+      }
+        
+ const input = document.getElementById("guess-input");
         input.addEventListener("input", async () => {
             const value = input.value;
              await showSuggestions(value);
-            console.log("Current Suggestions after showSuggestion:", currentSuggestions)
 
             const autocompleteList = document.getElementById("autocomplete-list");
             const firstItem = autocompleteList.querySelector(".suggestion-item");
@@ -398,26 +393,23 @@ const input = document.getElementById("guess-input");
             } else if (firstItem) {
                  firstItem.classList.remove("selected");
             }
-
-
         });
-
-          input.addEventListener("keyup", (event) => {
-            const autocompleteList = document.getElementById("autocomplete-list");
+        input.addEventListener("keyup", (event) => {
+              const autocompleteList = document.getElementById("autocomplete-list");
                 if (event.key === "Enter") {
                     if (autocompleteList.querySelector('.suggestion-item.selected')) {
                         const selectedSuggestion = autocompleteList.querySelector('.suggestion-item.selected');
                     checkAnswer(selectedSuggestion.textContent);
-                       input.value = "";
-                        autocompleteList.innerHTML = "";
+                      input.value = "";
+                       autocompleteList.innerHTML = "";
                 } else {
                         checkAnswer(input.value);
-                        input.value = "";
+                         input.value = "";
                         document.getElementById("autocomplete-list").innerHTML = "";
                     }
                 event.preventDefault();
              }
-        });
+         });
         
          const indiceClubButton = document.getElementById("indiceClubButton");
         const indiceCountryButton = document.getElementById("indiceCountryButton");
@@ -434,17 +426,14 @@ const input = document.getElementById("guess-input");
         
         carriereButton.addEventListener("click", function () {
              revealAll();
-             score = 0
-            updateScoreDisplay()
+         
         });
         
-        reponseButton.addEventListener("click", function () {
+         reponseButton.addEventListener("click", function () {
            revealPlayer();
-             score = 0
-           updateScoreDisplay()
-        });
+      });
         
-     function revealRandomClueClub() {
+  function revealRandomClueClub() {
             if (!selectedPlayer) return;
           
            indiceClubButton.disabled = true;
@@ -465,7 +454,7 @@ const input = document.getElementById("guess-input");
                      const randomIndex = Math.floor(Math.random() * availableCells.length);
                      const randomCell = availableCells[randomIndex];
                      const row = randomCell.row;
-                    const cell = randomCell.cell;
+                     const cell = randomCell.cell;
 
                      cell.classList.remove('hidden');
                      cell.classList.add('visible');
@@ -476,16 +465,31 @@ const input = document.getElementById("guess-input");
                         countryCell.classList.remove('hidden');
                        countryCell.classList.add('visible');
                      }
-                        const previousScore = score
-                         score -= Math.round((95 * 0.6666666666) * tableSize) / 100
+                         const previousScore = score;
+                         score -= Math.round((95 * 0.6666666666) * tableSize) / 100;
                          updateScoreDisplay(previousScore);
-                        indiceClubButton.disabled = false;
-                          indiceClubButton.classList.remove("button-disabled");
-                   } else {
-                       indiceClubButton.classList.add("button-disabled");
-                 }
+                     }
 
-        }
+                    
+            
+        
+               let availableCellsAfter = [];
+
+                 document.querySelectorAll('#career-table-body tr').forEach((row, rowIndex) => {
+                      const cell = row.querySelector(`td:nth-child(2).hidden`);
+                      if (cell) {
+                         availableCellsAfter.push({row, rowIndex, cell});
+                    }
+                });
+
+               availableCellsAfter = availableCellsAfter.filter(item => item.cell.classList.contains('hidden') && !item.cell.classList.contains('visible'));
+                if(availableCellsAfter.length === 0 ) {
+                   indiceClubButton.classList.add("button-disabled");
+                  } else {
+                    indiceClubButton.disabled = false;
+                    indiceClubButton.classList.remove("button-disabled");
+                }
+            }
     function revealRandomClueCountry() {
           if (!selectedPlayer) return;
         
@@ -512,36 +516,53 @@ const input = document.getElementById("guess-input");
                         cell.classList.remove('hidden');
                          cell.classList.add('visible');
                         availableCells.splice(randomIndex, 1)
-                        const previousScore = score;
-                         score -=  Math.round((95 * 0.3333333333) * tableSize) / 100;
-                           updateScoreDisplay(previousScore);
-                   
-                        indiceCountryButton.disabled = false;
-                        indiceCountryButton.classList.remove("button-disabled");
+                         const previousScore = score;
+                        score -=  Math.round((95 * 0.3333333333) * tableSize) / 100;
+                           updateScoreDisplay(previousScore)
+                 }
+                   let availableCellsAfter = [];
 
+            document.querySelectorAll('#career-table-body tr').forEach((row, rowIndex) => {
+                      const cell = row.querySelector(`td:nth-child(3).hidden`);
+                      if (cell) {
+                         availableCellsAfter.push({row, rowIndex, cell});
+                    }
+                });
+            availableCellsAfter = availableCellsAfter.filter(item => item.cell.classList.contains('hidden') && !item.cell.classList.contains('visible'));
+
+                 if(availableCellsAfter.length === 0) {
+                      indiceCountryButton.classList.add("button-disabled");
                  } else {
-                       indiceCountryButton.classList.add("button-disabled");
-                  }
+                     indiceCountryButton.disabled = false;
+                    indiceCountryButton.classList.remove("button-disabled");
 
+                 }
         }
- function revealAll() {
+        
+      function revealAll() {
             if (!selectedPlayer) return;
         
             document.querySelectorAll('#career-table-body tr td').forEach(cell => {
             cell.classList.add('visible')
-        })
+            })
             carriereButton.disabled = true
             carriereButton.classList.add("button-disabled")
-             indiceClubButton.disabled = true;
+          reponseButton.disabled = true
+            reponseButton.classList.add("button-disabled")
+            indiceClubButton.disabled = true
             indiceClubButton.classList.add("button-disabled")
-              indiceCountryButton.disabled = true;
-           indiceCountryButton.classList.add("button-disabled")
+           indiceCountryButton.disabled = true
+            indiceCountryButton.classList.add("button-disabled")
         
         
-           const previousScore = score
-             score = 0
-               updateScoreDisplay(previousScore)
-        }
+          const previousScore = score;
+            score = 25;
+          if(score < 25) {
+                 score = previousScore;
+            }
+
+            updateScoreDisplay(previousScore);
+       }
         
          function revealPlayer() {
             if (!selectedPlayer) return;
@@ -552,17 +573,32 @@ const input = document.getElementById("guess-input");
             revealAllCells();
 
             revealPlayerOnce = true;
-            reponseButton.disabled = true
+             reponseButton.disabled = true
             reponseButton.classList.add("button-disabled")
            carriereButton.disabled = true
-          carriereButton.classList.add("button-disabled")
+            carriereButton.classList.add("button-disabled")
              indiceClubButton.disabled = true
-            indiceClubButton.classList.add("button-disabled")
-              indiceCountryButton.disabled = true
-             indiceCountryButton.classList.add("button-disabled")
-               const previousScore = score
-               score = 0
-               updateScoreDisplay(previousScore)
+           indiceClubButton.classList.add("button-disabled")
+             indiceCountryButton.disabled = true
+            indiceCountryButton.classList.add("button-disabled")
+               const previousScore = score;
+               score = 0;
+               updateScoreDisplay(previousScore);
+       }
+        function updateScoreDisplay(previousScore = null) {
+            const scoreDisplay = document.getElementById('score');
+            scoreDisplay.textContent = `Score : ${score.toFixed(2)}`;
+            if(previousScore !== null && score < previousScore) {
+                 scoreDisplay.classList.add('highlight-decrease');
+                  setTimeout(() => {
+                       scoreDisplay.classList.remove('highlight-decrease');
+                   }, 300);
+            } else {
+                 scoreDisplay.classList.add('highlight');
+                 setTimeout(() => {
+                       scoreDisplay.classList.remove('highlight');
+                    }, 300);
+             }
         }
         displayPlayerStats();
     </script>
