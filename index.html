@@ -499,7 +499,7 @@ document.addEventListener("click", (event) => {
                        countryCell.classList.add('visible');
                      }
                           const previousScore = score;
-                          score -= Math.floor((95 * 0.6666666666) / tableSize)
+                          score -= Math((95 * 0.6666666666) / tableSize)
                            updateScoreDisplay(previousScore);
                  }
                let availableCellsAfter = [];
@@ -546,7 +546,7 @@ document.addEventListener("click", (event) => {
                          cell.classList.add('visible');
                         availableCells.splice(randomIndex, 1)
                           const previousScore = score;
-                        score -= Math.floor((95 * 0.3333333333) / tableSize);
+                        score -= Math((95 * 0.3333333333) / tableSize);
                           updateScoreDisplay(previousScore);
                     
                  }
