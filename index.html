@@ -53,12 +53,13 @@
       let selectedPlayer;
         let attempts = 0;
         let revealPlayerOnce = false;
-        let score = 100; // Initialize score variable
+        let score = 95; // Initialize score variable
          const playerNameDisplay = document.getElementById("player-name-display");
          let currentSuggestions = [];
         
         const globalContainer = document.querySelector('.global-container');
         const fixedHeader = document.querySelector('.fixed-header');
+        let tableSize = 0
 
          function adjustGlobalContainerMargin() {
             globalContainer.style.marginTop = `${fixedHeader.offsetHeight}px`;
