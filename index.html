@@ -86,26 +86,25 @@
             globalContainer.style.marginTop = `${fixedHeader.offsetHeight}px`;
          }
 
-  const infoIcon = document.getElementById("info-icon");
+   const infoIcon = document.getElementById("info-icon");
         const infoWindow = document.getElementById("info-window");
         const closeInfo = document.getElementById("close-info");
 
-
-        infoIcon.addEventListener("click", (event) => {
-                event.stopPropagation();
-                infoWindow.classList.toggle("hidden");
-         });
-         closeInfo.addEventListener("click", (event) => {
-                infoWindow.classList.add("hidden");
-             event.stopPropagation();
+     infoIcon.addEventListener('click', (event) => {
+            event.stopPropagation();
+             infoWindow.classList.toggle('hidden');
          });
 
-     document.addEventListener("click", (event) => {
-            if (!infoWindow.contains(event.target) && event.target !== infoIcon) {
-             infoWindow.classList.add("hidden")
-            }
+       closeInfo.addEventListener("click", (event) => {
+          event.stopPropagation();
+          infoWindow.classList.add("hidden");
        });
 
+     document.addEventListener("click", (event) => {
+            if(!infoWindow.contains(event.target) && event.target !== infoIcon) {
+                   infoWindow.classList.add("hidden")
+           }
+        });
         
         async function loadPlayerStats() {
             const response = await fetch('./players_stats.json');
