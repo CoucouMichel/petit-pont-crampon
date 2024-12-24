@@ -439,8 +439,8 @@ const input = document.getElementById("guess-input");
              score = 0
            updateScoreDisplay()
         });
-        
-     function revealRandomClueClub() {
+
+        } function revealRandomClueClub() {
             if (!selectedPlayer) return;
           
            indiceClubButton.disabled = true;
@@ -472,8 +472,9 @@ const input = document.getElementById("guess-input");
                         countryCell.classList.remove('hidden');
                        countryCell.classList.add('visible');
                      }
-                          score -= 25;
-                           updateScoreDisplay()
+                        const previousScore = score
+                         score -= 25;
+                            updateScoreDisplay(previousScore)
                      }
 
                     
@@ -515,15 +516,16 @@ const input = document.getElementById("guess-input");
 
           if (availableCells.length > 0) {
                      const randomIndex = Math.floor(Math.random() * availableCells.length);
-                    const randomCell = availableCells[randomIndex];
+                     const randomCell = availableCells[randomIndex];
                      const row = randomCell.row;
                       const cell = randomCell.cell;
                      
                         cell.classList.remove('hidden');
                          cell.classList.add('visible');
                         availableCells.splice(randomIndex, 1)
-                         score -= 10
-                         updateScoreDisplay()
+                         const previousScore = score;
+                         score -= 10;
+                           updateScoreDisplay(previousScore);
                  }
                    let availableCellsAfter = [];
 
@@ -542,6 +544,7 @@ const input = document.getElementById("guess-input");
                     indiceCountryButton.classList.remove("button-disabled");
 
                  }
+        }
  function revealAll() {
             if (!selectedPlayer) return;
         
