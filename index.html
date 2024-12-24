@@ -11,25 +11,39 @@
         <div class="fixed-header">
             <h1>Petit Pont Crampon</h1>
             <p>Démasquez le joueur mystère en trouvant les pays et les clubs dans lesquels il a joué !</p>
-              <p id="score">Score : 0</p>
-             <!-- Button Container -->
-            <div class="button-container">
-                <button id="indiceClubButton">Indice Club</button>
-                 <button id="indiceCountryButton">Indice Pays</button>
-                <button id="carriereButton">Révéler Carrière</button>
-                <button id="reponseButton">Révéler Joueur</button>
-            </div>
-             <div class="input-container" style="position: relative;">
+            <div class="input-container" style="position: relative;">
                 <input
                     type="text"
                     id="guess-input"
                     placeholder="Tapez un pays, un club ou le nom du joueur mystère"
-                    autocomplete="on"
+                    autocomplete="off"
                 >
                 <ul id="autocomplete-list" class="autocomplete-suggestions"></ul>
                 <div id="guess-feedback"></div>
+            </div>
+            
+             <p id="score">Score : 100 <span id="info-icon" style="cursor: pointer; font-size: 15px; margin-left: 5px; vertical-align: middle;">ⓘ</span></p>
+   <div id="info-window" class="info-window hidden">
+    <h3>Point System</h3>
+    <ul>
+        <li>Finding the mystery player: 50 points + 5 points for each hidden cell.</li>
+        <li>Correct Country: 10 points.</li>
+        <li>Correct Club: 20 points.</li>
+        <li>Using Indice Club: -25 points.</li>
+        <li>Using Indice Pays: -10 points.</li>
+       <li>Using Carrière : Score goes to zero.</li>
+        <li>Using Réponse : Score goes to zero.</li>
+    </ul>
 </div>
-
+            <p id="feedback"></p>
+             <!-- Button Container -->
+            <div class="button-container">
+                <button id="indiceClubButton">Indice Club</button>
+                 <button id="indiceCountryButton">Indice Pays</button>
+                <button id="carriereButton">Carrière</button>
+                <button id="reponseButton">Réponse</button>
+            </div>
+        </div>
 
         <div class="container">
              <h2 class="ai-style-change-1" id="player-name-display"></h2>
