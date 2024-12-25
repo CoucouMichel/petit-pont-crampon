@@ -8,14 +8,22 @@
 </head>
 <body>
     <div class="global-container">
-        <div class="fixed-header">
+         <div class="fixed-header">
             <h1>Petit Pont Crampon</h1>
             <p>Démasquez le joueur mystère en trouvant les pays et les clubs dans lesquels il a joué !</p>
 
-     <div class="score-container">
-            <p id="score">Score : 100 <span id="info-icon" style="cursor: pointer; font-size: 15px; margin-left: 5px; vertical-align: middle;">ⓘ</span></p>
-            <p id="attempts">Essais : 0</p>
-        </div>
+             <!-- Button Container -->
+            <div class="button-container">
+                <button id="indiceClubButton">Indice Club</button>
+                 <button id="indiceCountryButton">Indice Pays</button>
+                <button id="carriereButton">Carrière</button>
+                <button id="reponseButton">Réponse</button>
+            </div>
+        <div class="score-attempts-container">
+           <p id="score">Score : 100 <span id="info-icon" style="cursor: pointer; font-size: 15px; margin-left: 5px; vertical-align: middle;">ⓘ</span></p>
+           <p id="attempts">Essais : 0</p>
+           </div>
+          
    <div id="info-window" class="info-window hidden">
     <div class="info-header">
          <h3>Point System</h3>
@@ -32,17 +40,7 @@
         <li>Using Réponse : Score goes to zero.</li>
     </ul>
 </div>
-            <p id="feedback"></p>
-             <!-- Button Container -->
-            <div class="button-container">
-                <button id="indiceClubButton">Indice Club</button>
-                 <button id="indiceCountryButton">Indice Pays</button>
-                <button id="carriereButton">Carrière</button>
-                <button id="reponseButton">Réponse</button>
-            </div>
-        </div>
-
-                    <div class="input-container" style="position: relative;">
+         <div class="input-container" style="position: relative;">
                 <input
                     type="text"
                     id="guess-input"
@@ -52,8 +50,10 @@
                 <ul id="autocomplete-list" class="autocomplete-suggestions"></ul>
                 <div id="guess-feedback"></div>
             </div>
-            
+           
+            <p id="feedback"></p>
 
+        </div>
         <div class="container">
              <h2 class="ai-style-change-1" id="player-name-display"></h2>
             <table id="career-table">
