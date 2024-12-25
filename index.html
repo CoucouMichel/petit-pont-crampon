@@ -303,7 +303,7 @@
                          attempts++;
                     const attemptsElement = document.getElementById("attempts");
                          if(attemptsElement) {
-                                attemptsElement.textContent = `Tentatives : ${attempts}`;
+                                attemptsElement.textContent = `Essais : ${attempts}`;
                         }
                         checkAnswer(suggestion);
                     });
@@ -355,7 +355,7 @@
                  playerNameDisplay.textContent = selectedPlayer;
                 revealAllCells();
                 
-                let bonusScore = 0;
+                let bonusScore = 5;
                 const tableBody = document.getElementById('career-table-body');
                 const previousScore = score;
                    score = score - (attempts -1) * 0.1;
@@ -373,7 +373,7 @@
                  attempts++;
                   const attemptsElement = document.getElementById("attempts");
                   if(attemptsElement) {
-                      attemptsElement.textContent = `Tentatives : ${attempts}`;
+                      attemptsElement.textContent = `Essais : ${attempts}`;
                   }
            }
          const cells = document.querySelectorAll('td[data-country], td[data-club]');
