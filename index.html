@@ -171,14 +171,26 @@ async function shouldSelectNewPlayer() {
 }
 
 async function initializeGame() {
-        if(await shouldSelectNewPlayer()) {
-             displayPlayerStats()
-         } else {
-                 await selectRandomPlayer()
-                await displayPlayerStats()
-         }
-}
+    const now = new Date();
+      const nowFrench = new Date(now.toLocaleString('en-US', { timeZone: 'Europe/Paris' }));
 
+    const currentHour = nowFrench.getHours();
+    const currentMinutes = nowFrench.getMinutes()
+
+        if(await shouldSelectNewPlayer()) {
+                await displayPlayerStats()
+                console.log("New player selected")
+            } else if (currentHour === 0 && currentMinutes === 0) {
+                await displayPlayerStats()
+                console.log("New player selected at midnight")
+
+            } else {
+                await selectRandomPlayer()
+                await displayPlayerStats()
+                console.log("Previous player selected")
+
+           }
+        }
  async function displayPlayerStats() {
             const clubNameMapping = await loadClubNameMapping(); // Load the club name mappings
             const countryMapping = await loadCountryMapping(); // Load the country mapping
