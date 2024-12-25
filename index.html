@@ -444,6 +444,9 @@ async function initializeGame() {
            if(revealPlayerOnce === false) {
                 const tableBody = document.getElementById('career-table-body');
                   let hiddenCells = tableBody.querySelectorAll('td.hidden')
+               constbonusScore = (hiddenCells?.length || 0) * 0;
+               score += bonusScore
+               updateScoreDisplay(score - bonusScore);
           }
        }
 const input = document.getElementById("guess-input");
