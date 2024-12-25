@@ -429,9 +429,6 @@ th:nth-child(3), td:nth-child(3) {
     max-width: 150px;
      white-space: nowrap;
     text-align: center;
-       position: relative;
-     left: 50%;
-       transform: translateX(-50%);
          align-items: center;
         justify-content: center;
      white-space: nowrap;
