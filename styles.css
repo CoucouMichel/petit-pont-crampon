@@ -396,6 +396,26 @@ th:nth-child(3), td:nth-child(3) {
         font-weight: bold;
         border-radius: 5px;
 }
+
+.score-container {
+        display: flex; /* Display inline to make the items on a row */
+    justify-content: center;
+        align-items: center;
+        gap: 10px;
+
+}
+/* Style pour afficher les tentatives */
+#attempts {
+    margin-top: -2px;
+    color: var(--text-color);
+    font-size: 14px;
+   display: inline-block;
+        padding: 5px 10px; /* Add some padding */
+        border: 1px solid rgba(52, 152, 219, 0.6); /* Add a border */
+        border-radius: 5px;
+      background-color: rgba(52, 152, 219, 0.2);
+         box-sizing: border-box;
+}
 #score {
     margin-top: -2px;
     color: var(--text-color);
@@ -405,7 +425,7 @@ th:nth-child(3), td:nth-child(3) {
         padding: 5px 10px;
         border: 1px solid rgba(52, 152, 219, 0.6);
         border-radius: 5px;
-    display: inline-flex;
+    display: inline-block;
     max-width: 150px;
      white-space: nowrap;
     text-align: center;
@@ -414,6 +434,7 @@ th:nth-child(3), td:nth-child(3) {
        transform: translateX(-50%);
          align-items: center;
         justify-content: center;
+     white-space: nowrap;
 }
 #score.highlight {
     color: var(--success-color);
@@ -423,6 +444,7 @@ th:nth-child(3), td:nth-child(3) {
 #score.highlight-decrease {
     color: #d22e2e;
 }
+
 
 .info-window {
     position: absolute;
