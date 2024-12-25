@@ -17,9 +17,9 @@
            </div>
              <!-- Button Container -->
             <div class="button-container">
-                <button id="indiceClubButton">Indice Club</button>
-                 <button id="indiceCountryButton">Indice Pays</button>
-                <button id="carriereButton">Carrière</button>
+                <button id="indiceCountryButton">Indice Club</button>
+                 <button id="indiceClubButton">Indice Pays</button>
+                <button id="revealsLettersButton">Carrière</button>
                 <button id="reponseButton">Réponse</button>
             </div>
           
@@ -203,13 +203,14 @@ async function initializeGame() {
                  for (let i = 0; i < selectedPlayer.length; i++) {
                       if (selectedPlayer[i] === " ") {
                          const space = document.createElement("span")
-                         space.innerHTML = " "
+                         space.innerHTML = " "
                          playerNameDisplay.appendChild(space)
                       } else {
                         const rectangle = document.createElement("span");
-                        rectangle.classList.add("player-name-rectangle");
-                        playerNameDisplay.appendChild(rectangle);
-                       }
+                         rectangle.classList.add("player-name-rectangle");
+                           rectangle.id = `letter-${i}`
+                            playerNameDisplay.appendChild(rectangle);
+                        }
                 }
             }
 
@@ -376,11 +377,11 @@ async function initializeGame() {
                  playerNameDisplay.textContent = selectedPlayer;
                 revealAllCells();
                 
-                let bonusScore = 5;
+                let bonusScore = 40;
                 const tableBody = document.getElementById('career-table-body');
                 const hiddenCells = tableBody.querySelectorAll('td.hidden')
                  
-                   score = score - (attempts -1) * 0.1;
+                   score = score - (attempts -1) * 0.5;
                   if(score < 0) score = 0;
                   score = score + bonusScore;
                 updateScoreDisplay(score - bonusScore)
@@ -417,7 +418,36 @@ async function initializeGame() {
            }
            blinkInput(isCorrect);
         }
-    
+        
+      let revealLettersOnce = false;
+ const revealLettersButton = document.getElementById("revealLettersButton");
+        
+        revealLettersButton.addEventListener("click", function () {
+            revealAllLetters();
+        });
+        
+         function revealAllLetters() {
+            if (!selectedPlayer) return;
+          
+            if (revealLettersOnce) {
+                    return
+            }
+            const nameDisplay = document.getElementById('player-name-display');
+          const allRectangles = nameDisplay.querySelectorAll('.player-name-rectangle');
+        
+           allRectangles.forEach((rectangle, index) => {
+             if(rectangle.innerHTML !== " ") {
+                rectangle.classList.add('visible')
+                 rectangle.innerHTML = selectedPlayer[index];
+              }
+            })
+            
+               score -= Math.round((95 * 0.5) / tableSize) ;
+                  updateScoreDisplay(score + Math.round((95 * 0.5) / tableSize));
+                revealLettersOnce = true;
+                revealLettersButton.disabled = true
+                revealLettersButton.classList.add("button-disabled")
+        }
         function blinkInput(isCorrect) {
             const inputField = document.getElementById("guess-input");
             if (isCorrect) {
@@ -532,7 +562,7 @@ const input = document.getElementById("guess-input");
                        countryCell.classList.add('visible');
                      }
                          const previousScore = score;
-                         score -= Math.round((95 * 0.6666666666) * tableSize) / 100;
+                         score -= Math.round((40 * 0.6666666666) * tableSize) / 100;
                              updateScoreDisplay(previousScore);
                      }
 
@@ -583,7 +613,7 @@ const input = document.getElementById("guess-input");
                          cell.classList.add('visible');
                         availableCells.splice(randomIndex, 1)
                          const previousScore = score;
-                        score -=  Math.round((95 * 0.3333333333) * tableSize) / 100;
+                        score -=  Math.round((40 * 0.3333333333) * tableSize) / 100;
                          updateScoreDisplay(previousScore);
                  }
                    let availableCellsAfter = [];
