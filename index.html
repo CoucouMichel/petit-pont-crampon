@@ -380,9 +380,6 @@ async function initializeGame() {
                 const tableBody = document.getElementById('career-table-body');
                 const hiddenCells = tableBody.querySelectorAll('td.hidden')
                  
-                if(attempts === 1) {
-                      bonusScore =  (hiddenCells?.length || 0) * 5;
-                   }
                    score = score - (attempts -1) * 0.1;
                   if(score < 0) score = 0;
                   score = score + bonusScore;
