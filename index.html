@@ -384,8 +384,8 @@ async function initializeGame() {
                   if(score < 0) score = 0;
                   score = score + bonusScore;
                 updateScoreDisplay(score - bonusScore)
-                isCorrect = true;
                 document.getElementById("guess-input").disabled = true;
+                isCorrect = true;
             } else {
                 if(feedback) {
                    feedback.textContent = '';
