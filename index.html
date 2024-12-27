@@ -532,7 +532,6 @@ const input = document.getElementById("guess-input");
         
         const indiceClubButton = document.getElementById("indiceClubButton");
         const indiceCountryButton = document.getElementById("indiceCountryButton");
-        const carriereButton = document.getElementById("carriereButton");
         const reponseButton = document.getElementById("reponseButton");
         
         indiceClubButton.addEventListener("click", function () {
@@ -688,8 +687,6 @@ function revealAllLetters() {
             revealPlayerOnce = true;
             reponseButton.disabled = true
             reponseButton.classList.add("button-disabled")
-           carriereButton.disabled = true
-           carriereButton.classList.add("button-disabled")
              indiceClubButton.disabled = true
             indiceClubButton.classList.add("button-disabled")
              indiceCountryButton.disabled = true
