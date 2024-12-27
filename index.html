@@ -698,6 +698,7 @@ function revealAllLetters() {
                score = 0;
                updateScoreDisplay(previousScore);
         }
+``javascript
 const originalUpdateScoreDisplay = window.updateScoreDisplay;
 const originalDisplayPlayerStats = window.displayPlayerStats;
 window.updateScoreDisplay = function (...args) {
@@ -730,6 +731,11 @@ window.updateScoreDisplay = function (...args) {
     originalDisplayPlayerStats();
     return;
   }
+    if (!parentElement.contains(targetElement)) {
+        console.error('targetElement is not a child of parentElement');
+        originalDisplayPlayerStats();
+        return;
+    }
   const wrapper = document.createElement('div');
   wrapper.id = 'span-wrapper';
   setElementStyles(wrapper, {
