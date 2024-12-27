@@ -395,7 +395,7 @@ async function initializeGame() {
                  }, 300);
             }
         }
-    async function checkAnswer(input) {
+async function checkAnswer(input) {
             const answer = input.trim().toLowerCase();
             const feedback = document.getElementById("feedback");
             const countryMapping = await loadCountryMapping();
@@ -408,57 +408,59 @@ async function initializeGame() {
             const originalClubMapping = Object.fromEntries(
                 Object.entries(clubNameMapping).map(([original, formatted]) => [formatted.toLowerCase(), original.toLowerCase()])
             );
-    
-            let checkAnswerValue = answer
-            if (originalClubMapping[answer]) {
-                checkAnswerValue = originalClubMapping[answer]
-            }
 
+            let checkAnswerValue = answer;
+          if (originalClubMapping[answer]) {
+            checkAnswerValue = originalClubMapping[answer];
+             }
             if (checkAnswerValue === selectedPlayer.toLowerCase()) {
                  playerNameDisplay.textContent = selectedPlayer;
                 revealAllCells();
-                
-                let bonusScore = 5;
+                 let bonusScore = 0;
                 const tableBody = document.getElementById('career-table-body');
-                const hiddenCells = tableBody.querySelectorAll('td.hidden')
-                 
+                 const hiddenCells = tableBody.querySelectorAll('td.hidden')
+                if(attempts === 1) {
+                    bonusScore =  (hiddenCells?.length || 0) * 5;
+                 }
                    score = score - (attempts -1) * 0.1;
-                  if(score < 0) score = 0;
+                 if(score < 0) score = 0;
                   score = score + bonusScore;
-                updateScoreDisplay(score - bonusScore)
-                document.getElementById("guess-input").disabled = true;
-                isCorrect = true;
-            } else {
-                if(feedback) {
-                   feedback.textContent = '';
+               updateScoreDisplay(score - bonusScore)
+               isCorrect = true;
+               document.getElementById("guess-input").disabled = true;
+
+           } else {
+                 if(feedback) {
+                      feedback.textContent = '';
                 }
-              attempts++;
-                 const attemptsElement = document.getElementById("attempts");
-               if(attemptsElement) {
-                   attemptsElement.textContent = `Essais : ${attempts}`;
+               attempts++;
+               const attemptsElement = document.getElementById("attempts");
+                if(attemptsElement) {
+                  attemptsElement.textContent = `Tentatives : ${attempts}`;
                }
-        }
+         }
 
-            const cells = document.querySelectorAll('td[data-country], td[data-club]');
+        const cells = document.querySelectorAll('td[data-country], td[data-club]');
 
-            for (const cell of cells) {
+          for (const cell of cells) {
                  const cellCountry = cell.getAttribute('data-country')?.toLowerCase();
-                 const cellClub = cell.getAttribute('data-club')?.toLowerCase();
-               if(cellClub === checkAnswerValue) {
-                   const countryCell = cell.parentElement.querySelector('td[data-country].hidden');
-                     if(countryCell) {
-                        revealText(countryCell);
-                  }
-                   revealText(cell)
-                 isCorrect = true;
-                }
-              else if (cellCountry === answer || reverseMapping[cellCountry] === answer ) {
+                const cellClub = cell.getAttribute('data-club')?.toLowerCase();
+            if (cellClub === checkAnswerValue) {
+                  const countryCell = cell.parentElement.querySelector('td[data-country].hidden');
+                  if(countryCell) {
+                     revealText(countryCell);
+                 }
                     revealText(cell);
-                     isCorrect = true;
-              }
-           }
-           blinkInput(isCorrect);
-        }
+                    isCorrect = true;
+
+                } else if (cellCountry === answer || reverseMapping[cellCountry] === answer) {
+                   revealText(cell);
+                    isCorrect = true;
+               }
+         }
+        
+            blinkInput(isCorrect);
+}
     
         function blinkInput(isCorrect) {
             const inputField = document.getElementById("guess-input");
@@ -668,7 +670,7 @@ function revealAllLetters() {
             revealLettersButton.classList.add("button-disabled");
         }
         
-         function revealPlayer() {
+          function revealPlayer() {
             if (!selectedPlayer) return;
 
             if (revealPlayerOnce) return;
@@ -677,17 +679,24 @@ function revealAllLetters() {
             revealAllCells();
 
             revealPlayerOnce = true;
-             reponseButton.disabled = true
-             reponseButton.classList.add("button-disabled")
-
+            reponseButton.disabled = true
+            reponseButton.classList.add("button-disabled")
+           carriereButton.disabled = true
+           carriereButton.classList.add("button-disabled")
              indiceClubButton.disabled = true
             indiceClubButton.classList.add("button-disabled")
-              indiceCountryButton.disabled = true
-             indiceCountryButton.classList.add("button-disabled")
+             indiceCountryButton.disabled = true
+            indiceCountryButton.classList.add("button-disabled")
                const previousScore = score;
                score = 0;
-               updateScoreDisplay(previousScore);
-        }
+              updateScoreDisplay(previousScore);
+           
+         const nameDisplay = document.getElementById('player-name-display');
+    const spanNationality = nameDisplay.querySelector('.player-nationality');
+       if(spanNationality) {
+        spanNationality.classList.add("visible");
+       }
+   }
        function updateScoreDisplay(previousScore = null) {
             const scoreDisplay = document.getElementById('score');
             scoreDisplay.textContent = `Score : ${score.toFixed(2)}`;
