@@ -282,29 +282,51 @@ input#guess-input {
     vertical-align: middle;
     transition: all 0.5s ease;
     border-radius: 2px;
-     margin-top: 0; /* Remove the margin-top */
+    margin-top: 0;
+}
+.player-name-rectangle.visible {
+    display: inline-block;
+}
+
+.player-name-rectangle.morph {
+    width: auto;
+    height: auto;
+    padding: 0px 10px;
+    border-radius: 0px;
+    margin-right: 0px;
+    margin-top: 0px;
+     background-color: transparent;
+    display: inline;
+}
+
+.player-name-rectangle.morph::after {
+    content: attr(data-letter);
+    font-weight: bold;
+        display: inline;
+        color: white;
+        font-size: 20px;
 }
 #player-name-display {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
-    #player-name-display span {
-        text-align: center;
+#player-name-display span {
+    text-align: center;
 }
 
 .player-nationality {
-  margin-top: 5px;
+    margin-top: 5px;
     text-align: center;
-    opacity: 0; /* Make it hidden by default */
-     transition: opacity 0.3s ease-in-out; /* Fade effect */
-        margin-bottom: 10px;
-     display: block
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+    margin-bottom: 10px;
 }
-.player-nationality.visible {
-  opacity: 1; /* Make it visible */
 
+.player-nationality.visible {
+    opacity: 1;
+    display: block;
 }
 
 /* Définir la largeur des colonnes */
