@@ -722,7 +722,10 @@ window.updateScoreDisplay = function (...args) {
     console.log('parentElement.contains(targetElement):', parentElement.contains(targetElement));
   const siblingElements = Array.from(parentElement.children).filter(child => child !== targetElement);
   console.log('siblingElements:', siblingElements);
-
+  if (parentElement.querySelector('#span-wrapper')) {
+    console.log('span-wrapper already exists');
+    return;
+  }
   const wrapper = document.createElement('div');
   wrapper.id = 'span-wrapper';
   setElementStyles(wrapper, {
@@ -745,6 +748,10 @@ window.updateScoreDisplay = function (...args) {
     'justify-content': 'center',
   });
   console.log('Code executed');
+};
+displayPlayerStats();
+const data = {
+  message: 'Added a check to prevent multiple executions of the code.',
 };
 displayPlayerStats();
     </script>
