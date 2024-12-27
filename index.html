@@ -8,14 +8,14 @@
 </head>
 <body>
     <div class="global-container">
-         <div class="fixed-header">
+        <div class="fixed-header">
             <h1>Petit Pont Crampon</h1>
             <p>Démasquez le joueur mystère en trouvant les pays et les clubs dans lesquels il a joué !</p>
- <div class="score-attempts-container">
-           <p id="score">Score : 95 <span id="info-icon" style="cursor: pointer; font-size: 15px; margin-left: 5px; vertical-align: middle;">ⓘ</span></p>
-           <p id="attempts">Essais : 0</p>
-           </div>
-             <!-- Button Container -->
+            <div class="score-attempts-container">
+                <p id="score">Score : 95 <span id="info-icon" class="info-icon">ⓘ</span></p>
+                <p id="attempts">Essais : 0</p>
+            </div>
+            <!-- Button Container -->
             <div class="button-container">
                 <button id="indiceCountryButton">Pays</button>
                 <button id="indiceClubButton">Club</button>
@@ -23,24 +23,22 @@
                 <button id="revealLettersButton">Lettres</button>
                 <button id="reponseButton">Réponse</button>
             </div>
-          
-   <div id="info-window" class="info-window hidden">
-    <div class="info-header">
-         <h3>Point System</h3>
-        <span id="close-info" class="close-info">✖</span>
-       </div>
-   
-    <ul>
-        <li>Finding the mystery player: 50 points + 5 points for each hidden cell.</li>
-        <li>Correct Country: 10 points.</li>
-        <li>Correct Club: 20 points.</li>
-        <li>Using Indice Club: -25 points.</li>
-        <li>Using Indice Pays: -10 points.</li>
-       <li>Using Carrière : Score goes to zero.</li>
-        <li>Using Réponse : Score goes to zero.</li>
-    </ul>
-</div>
-         <div class="input-container" style="position: relative;">
+            <div id="info-window" class="info-window hidden">
+                <div class="info-header">
+                    <h3>Point System</h3>
+                    <span id="close-info" class="close-info">✖</span>
+                </div>
+                <ul>
+                    <li>Finding the mystery player: 50 points + 5 points for each hidden cell.</li>
+                    <li>Correct Country: 10 points.</li>
+                    <li>Correct Club: 20 points.</li>
+                    <li>Using Indice Club: -25 points.</li>
+                    <li>Using Indice Pays: -10 points.</li>
+                    <li>Using Carrière: Score goes to zero.</li>
+                    <li>Using Réponse: Score goes to zero.</li>
+                </ul>
+            </div>
+            <div class="input-container">
                 <input
                     type="text"
                     id="guess-input"
@@ -50,29 +48,25 @@
                 <ul id="autocomplete-list" class="autocomplete-suggestions"></ul>
             </div>
         </div>
-<div class="container">
-  <h2 id="player-name-display">
-    <!-- Span letters are here -->
-  </h2>
-  <div class="player-nationality visible">
-    <!-- Nationality content -->
-  </div>
-</div>
-            <table id="career-table">
-                <thead>
-                    <tr>
-                        <th>Années</th>
-                        <th>Club</th>
-                        <th>Pays</th>
-                    </tr>
-                </thead>
-                <tbody id="career-table-body">
-                    <!-- Les lignes du tableau seront ajoutées dynamiquement -->
-                </tbody>
-            </table>
-            <p id="country-feedback" style="color: red; margin-top: 10px;"></p>
+        <div class="container">
+            <h2 id="player-name-display"></h2>
+            <div class="player-nationality visible"></div>
         </div>
+        <table id="career-table">
+            <thead>
+                <tr>
+                    <th>Années</th>
+                    <th>Club</th>
+                    <th>Pays</th>
+                </tr>
+            </thead>
+            <tbody id="career-table-body"></tbody>
+        </table>
+        <p id="country-feedback" class="feedback"></p>
     </div>
+    <script src="scripts.js"></script>
+</body>
+</html>
     
     <script>
 let selectedPlayer;
