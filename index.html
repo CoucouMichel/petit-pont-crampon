@@ -699,6 +699,7 @@ function revealAllLetters() {
                updateScoreDisplay(previousScore);
         }
 const originalUpdateScoreDisplay = window.updateScoreDisplay;
+const originalDisplayPlayerStats = window.displayPlayerStats;
 window.updateScoreDisplay = function (...args) {
   originalUpdateScoreDisplay.apply(this, args);
   console.log('DOM fully loaded and parsed');
@@ -726,6 +727,7 @@ window.updateScoreDisplay = function (...args) {
   console.log('siblingElements:', siblingElements);
   if (parentElement.querySelector('#span-wrapper')) {
     console.log('span-wrapper already exists');
+    originalDisplayPlayerStats();
     return;
   }
   const wrapper = document.createElement('div');
@@ -750,10 +752,7 @@ window.updateScoreDisplay = function (...args) {
     'justify-content': 'center',
   });
   console.log('Code executed');
-};
-displayPlayerStats();
-const data = {
-  message: 'Added a check to prevent multiple executions of the code.',
+  originalDisplayPlayerStats();
 };
 displayPlayerStats();
     </script>
