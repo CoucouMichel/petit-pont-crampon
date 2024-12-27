@@ -698,6 +698,8 @@ function revealAllLetters() {
                score = 0;
                updateScoreDisplay(previousScore);
         }
+``
+``javascript
 const originalUpdateScoreDisplay = window.updateScoreDisplay;
 const originalDisplayPlayerStats = window.displayPlayerStats;
 const observer = new MutationObserver((mutations) => {
@@ -740,10 +742,24 @@ const observer = new MutationObserver((mutations) => {
     'justify-content': 'center',
     'width': '100%',
   });
+  const container = document.createElement('div');
+  container.id = 'fixed-container';
+  setElementStyles(container, {
+    'position': 'fixed',
+    'top': '50%',
+    'left': '50%',
+    'transform': 'translate(-50%, -50%)',
+    'display': 'flex',
+    'flex-direction': 'column',
+    'align-items': 'center',
+    'justify-content': 'center',
+  });
   for (const sibling of siblingElements) {
     wrapper.appendChild(sibling);
   }
-  parentElement.insertBefore(wrapper, targetElement);
+  container.appendChild(wrapper);
+  container.appendChild(targetElement);
+  document.body.appendChild(container);
   setElementStyles(parentElement, {
     'flex-direction': 'column',
     'align-items': 'center',
@@ -754,9 +770,6 @@ observer.observe(document.body, { childList: true, subtree: true });
 window.updateScoreDisplay = function (...args) {
   originalUpdateScoreDisplay.apply(this, args);
   originalDisplayPlayerStats();
-};
-const data = {
-  message: 'Added a MutationObserver to track DOM changes.',
 };
 displayPlayerStats();
     </script>
