@@ -189,27 +189,50 @@ async function initializeGame() {
 
            }
         }
-async function displayPlayerStats() {
+ async function displayPlayerStats() {
             const clubNameMapping = await loadClubNameMapping(); // Load the club name mappings
             const countryMapping = await loadCountryMapping(); // Load the country mapping
             const clubLogos = await loadClubLogos(); // Load the club logos
-            const stats = await selectRandomPlayer(); // Fetch the player stats
-         
-             // Initial display as rectangles
-             createRectangles()
+             const stats = await selectRandomPlayer(); // Fetch the player stats
+        const clubCountries = await loadClubsCountries();
+            playerNameDisplay.innerHTML = "";
+            if(selectedPlayer) {
+                 for (let i = 0; i < selectedPlayer.length; i++) {
+                      if (selectedPlayer[i] === " ") {
+                         const space = document.createElement("span")
+                         space.innerHTML = " "
+                         playerNameDisplay.appendChild(space)
+                      } else {
+                        const rectangle = document.createElement("span");
+                        rectangle.classList.add("player-name-rectangle");
+                           rectangle.id = `letter-${i}`
+                            playerNameDisplay.appendChild(rectangle);
+                        }
+                }
 
+              const playerCountryCode = clubCountries[selectedPlayer]
+                const playerCountryName = countryMapping[playerCountryCode]
+                const flagUrl = `https://flagcdn.com/w20/${playerCountryCode}.png`;
+
+             const flagSpan = document.createElement('span')
+                 flagSpan.innerHTML = `
+                     <img src="${flagUrl}" alt="${playerCountryName} flag" style="width: 20px; height: 15px; margin-right: 5px; vertical-align: middle;"> ${playerCountryName}
+                  `;
+                playerNameDisplay.appendChild(flagSpan);
+
+            }
 
             adjustGlobalContainerMargin();
             window.addEventListener('resize', adjustGlobalContainerMargin);
 
-            document.getElementById('score').innerHTML = `Score : ${score.toFixed(2)} <span id="info-icon" style="cursor: pointer; font-size: 15px; margin-left: 5px; vertical-align: middle;">ⓘ</span>`;
+         document.getElementById('score').innerHTML = `Score : ${score.toFixed(2)} <span id="info-icon" style="cursor: pointer; font-size: 15px; margin-left: 5px; vertical-align: middle;">ⓘ</span>`;
 
         
             const tableBody = document.getElementById('career-table-body'); // Get the table body element
         
             tableBody.innerHTML = ''; // Clear existing rows
             revealPlayerOnce = false //reset the value
-             revealedCells = [];
+            revealedCells = [];
             // Check if stats is an array
             if (!Array.isArray(stats)) {
                 console.error("Expected stats to be an array, but got:", stats);
