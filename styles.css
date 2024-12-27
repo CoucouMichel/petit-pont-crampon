@@ -305,6 +305,14 @@ input#guess-input {
 
 }
 
+.player-nationality {
+    margin-top: 5px;
+    text-align: center;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+    margin-bottom: 10px; /* Add a margin bottom */
+}
+
 /* Définir la largeur des colonnes */
 th:nth-child(1), td:nth-child(1) {
     width: 20%; /* More width for the "Années" column */
