@@ -709,20 +709,16 @@ window.updateScoreDisplay = function (...args) {
     }
   }
 
-  const parentElement = document.querySelector('h2#player-name-display');
-  console.log('parentElement:', parentElement);
-  if (!parentElement) {
-    console.error('parentElement not found');
-    return;
-  }
   const targetElement = document.querySelector('.player-nationality.visible');
   console.log('targetElement:', targetElement);
   if (!targetElement) {
     console.error('targetElement not found');
     return;
   }
-    console.log('targetElement.parentElement:', targetElement.parentElement);
-    console.log('parentElement.contains(targetElement):', parentElement.contains(targetElement));
+  const parentElement = targetElement.parentElement;
+  console.log('parentElement:', parentElement);
+  console.log('targetElement.parentElement:', targetElement.parentElement);
+  console.log('parentElement.contains(targetElement):', parentElement.contains(targetElement));
   const siblingElements = Array.from(parentElement.children).filter(child => child !== targetElement);
   console.log('siblingElements:', siblingElements);
   if (parentElement.querySelector('#span-wrapper')) {
@@ -730,11 +726,15 @@ window.updateScoreDisplay = function (...args) {
     originalDisplayPlayerStats();
     return;
   }
-    if (!parentElement.contains(targetElement)) {
-        console.error('targetElement is not a child of parentElement');
-        originalDisplayPlayerStats();
-        return;
-    }
+  if (!parentElement.contains(targetElement)) {
+    console.error('targetElement is not a child of parentElement');
+    originalDisplayPlayerStats();
+    return;
+  }
+  const oldNationality = document.querySelector('.player-nationality:not(.visible)');
+  if (oldNationality) {
+    oldNationality.remove();
+  }
   const wrapper = document.createElement('div');
   wrapper.id = 'span-wrapper';
   setElementStyles(wrapper, {
@@ -758,6 +758,9 @@ window.updateScoreDisplay = function (...args) {
   });
   console.log('Code executed');
   originalDisplayPlayerStats();
+};
+const data = {
+  message: 'Selected the correct parent and target element dynamically.',
 };
 displayPlayerStats();
     </script>
