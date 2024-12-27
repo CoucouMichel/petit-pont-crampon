@@ -324,11 +324,13 @@ input#guess-input {
       flex-wrap: wrap;
   width: 100%;
 }
- .rectangles-container {
-  display: flex;
-      justify-content: center;
+/* Ensure spans are in one line */
+.rectangles-container {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
     align-items: center;
- }
+}
 
 #player-name-display span {
     text-align: center;
