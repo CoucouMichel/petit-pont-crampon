@@ -194,10 +194,10 @@ async function initializeGame() {
             const countryMapping = await loadCountryMapping(); // Load the country mapping
             const clubLogos = await loadClubLogos(); // Load the club logos
             const stats = await selectRandomPlayer(); // Fetch the player stats
-        const clubCountries = await loadClubsCountries();
-        
+        const clubCountries = await loadClubsCountries(); // Load the club countries
+
              // Initial display as rectangles
-            playerNameDisplay.innerHTML = "";
+             playerNameDisplay.innerHTML = "";
             if(selectedPlayer) {
                  for (let i = 0; i < selectedPlayer.length; i++) {
                       if (selectedPlayer[i] === " ") {
@@ -211,17 +211,17 @@ async function initializeGame() {
                             playerNameDisplay.appendChild(rectangle);
                         }
                 }
-                 if(clubCountries[selectedPlayer]) {
-                     const playerCountryCode = clubCountries[selectedPlayer].toLowerCase();
-                   const playerCountryName = countryMapping[playerCountryCode] || playerCountryCode;
-                   const flagUrl = `https://flagcdn.com/w20/${playerCountryCode}.png`;
-                    const flagSpan = document.createElement('div');
-                     flagSpan.classList.add('player-nationality');
-                      flagSpan.innerHTML = `
-                         <img src="${flagUrl}" alt="${playerCountryName} flag" style="width: 20px; height: 15px; margin-right: 5px; vertical-align: middle;"> ${playerCountryName}
-                    `;
-                  playerNameDisplay.appendChild(flagSpan);
-                  }
+        
+                const playerCountryCode = clubCountries[selectedPlayer]
+                const playerCountryName = countryMapping[playerCountryCode] || playerCountryCode
+                 const flagUrl = `https://flagcdn.com/w20/${playerCountryCode}.png`;
+
+                 const flagSpan = document.createElement('div');
+                    flagSpan.classList.add('player-nationality');
+                     flagSpan.innerHTML = `
+                       <img src="${flagUrl}" alt="${playerCountryName} flag" style="width: 20px; height: 15px; margin-right: 5px; vertical-align: middle;"> ${playerCountryName}
+                   `;
+                   playerNameDisplay.appendChild(flagSpan);
             }
 
             adjustGlobalContainerMargin();
@@ -232,8 +232,9 @@ async function initializeGame() {
         
             const tableBody = document.getElementById('career-table-body');
             tableBody.innerHTML = '';
-            revealPlayerOnce = false
-            revealedCells = [];
+             revealPlayerOnce = false
+             revealedCells = [];
+            // Check if stats is an array
             if (!Array.isArray(stats)) {
                 console.error("Expected stats to be an array, but got:", stats);
                 return;
