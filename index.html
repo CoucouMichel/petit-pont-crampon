@@ -607,24 +607,26 @@ const input = document.getElementById("guess-input");
         revealAllLetters();
     });
     
-     function revealAllLetters() {
-       if(!selectedPlayer) return;
-        if (revealLettersOnce) return;
+function revealAllLetters() {
+            if (!selectedPlayer) return;
+          
+            if (revealLettersOnce) return;
 
-        const nameDisplay = document.getElementById('player-name-display');
-      const allRectangles = nameDisplay.querySelectorAll('.player-name-rectangle');
-    
-         allRectangles.forEach((rectangle, index) => {
-           if(rectangle.innerHTML !== " ") {
-             rectangle.innerHTML = selectedPlayer[index];
-             rectangle.classList.add('visible')
-             }
-         })
+            const nameDisplay = document.getElementById('player-name-display');
+            const allRectangles = nameDisplay.querySelectorAll('.player-name-rectangle');
+            
+            allRectangles.forEach(rectangle => {
+                if(rectangle.innerHTML !== " ") {
+                     rectangle.classList.add('visible')
+                   }
 
-         revealLettersOnce = true;
-         revealLettersButton.disabled = true
-        revealLettersButton.classList.add("button-disabled")
-    }
+             });
+              score -= Math.round((95 * 0.5) / tableSize) ;
+                updateScoreDisplay(score + Math.round((95 * 0.5) / tableSize));
+            revealLettersOnce = true;
+            revealLettersButton.disabled = true;
+            revealLettersButton.classList.add("button-disabled");
+        }
         
          function revealPlayer() {
             if (!selectedPlayer) return;
