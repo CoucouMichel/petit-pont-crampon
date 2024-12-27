@@ -129,7 +129,7 @@ h2.ai-style-change-1 {
 
 /* Style du tableau */
 table#career-table {
-  width: 90%;
+  width: 100%;
   max-width: 600px;
   background-color: initial;
   z-index: 10;
