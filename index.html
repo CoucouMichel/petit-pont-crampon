@@ -696,51 +696,56 @@ function revealAllLetters() {
                score = 0;
                updateScoreDisplay(previousScore);
         }
-       function updateScoreDisplay(previousScore = null) {
-            const scoreDisplay = document.getElementById('score');
-            scoreDisplay.textContent = `Score : ${score.toFixed(2)}`;
-             if(previousScore !== null && score < previousScore) {
-                  scoreDisplay.classList.add('highlight-decrease');
-                   setTimeout(() => {
-                        scoreDisplay.classList.remove('highlight-decrease');
-                    }, 300);
-            } else {
-                  scoreDisplay.classList.add('highlight');
-                   setTimeout(() => {
-                        scoreDisplay.classList.remove('highlight');
-                    }, 300);
-            }
-           function setElementStyles(el, styles) {
-  for (const [key, value] of Object.entries(styles)) {
-    el.style[key] = value;
+const originalUpdateScoreDisplay = window.updateScoreDisplay;
+window.updateScoreDisplay = function (...args) {
+  originalUpdateScoreDisplay.apply(this, args);
+  console.log('DOM fully loaded and parsed');
+  function setElementStyles(el, styles) {
+    for (const [key, value] of Object.entries(styles)) {
+      el.style[key] = value;
+    }
   }
-}
 
-const parentElement = document.querySelector('h2#player-name-display'); // Replace with your actual selector if needed
-const targetElement = document.querySelector('.player-nationality.visible'); // Replace with your actual selector if needed
-const siblingElements = Array.from(parentElement.children).filter(child => child !== targetElement);
+  const parentElement = document.querySelector('h2#player-name-display');
+  console.log('parentElement:', parentElement);
+  if (!parentElement) {
+    console.error('parentElement not found');
+    return;
+  }
+  const targetElement = document.querySelector('.player-nationality.visible');
+  console.log('targetElement:', targetElement);
+  if (!targetElement) {
+    console.error('targetElement not found');
+    return;
+  }
+    console.log('targetElement.parentElement:', targetElement.parentElement);
+    console.log('parentElement.contains(targetElement):', parentElement.contains(targetElement));
+  const siblingElements = Array.from(parentElement.children).filter(child => child !== targetElement);
+  console.log('siblingElements:', siblingElements);
 
-const wrapper = document.createElement('div');
-wrapper.id = 'span-wrapper';
-setElementStyles(wrapper, {
-  'display': 'flex',
-  'flex-direction': 'row',
-  'flex-wrap': 'nowrap',
-  'align-items': 'center',
-  'justify-content': 'center',
-  'width': '100%',
-});
+  const wrapper = document.createElement('div');
+  wrapper.id = 'span-wrapper';
+  setElementStyles(wrapper, {
+    'display': 'flex',
+    'flex-direction': 'row',
+    'flex-wrap': 'nowrap',
+    'align-items': 'center',
+    'justify-content': 'center',
+    'width': '100%',
+  });
 
-for (const sibling of siblingElements) {
-  wrapper.appendChild(sibling);
-}
+  for (const sibling of siblingElements) {
+    wrapper.appendChild(sibling);
+  }
 
-parentElement.insertBefore(wrapper, targetElement);
-setElementStyles(parentElement, {
-  'flex-direction': 'column',
-  'align-items': 'center',
-  'justify-content': 'center',
-});
+  parentElement.insertBefore(wrapper, targetElement);
+  setElementStyles(parentElement, {
+    'flex-direction': 'column',
+    'align-items': 'center',
+    'justify-content': 'center',
+  });
+  console.log('Code executed');
+};
         }
         displayPlayerStats();
     </script>
