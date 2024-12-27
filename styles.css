@@ -306,12 +306,18 @@ input#guess-input {
         color: white;
         font-size: 20px;
 }
+
 #player-name-display {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
     white-space: nowrap;
 }
+ .rectangles-container {
+  display: flex;
+      justify-content: center;
+    align-items: center;
+ }
 
 #player-name-display span {
     text-align: center;
@@ -329,6 +335,7 @@ input#guess-input {
     opacity: 1;
     display: block;
 }
+
 
 /* Définir la largeur des colonnes */
 th:nth-child(1), td:nth-child(1) {
