@@ -189,12 +189,12 @@ async function initializeGame() {
 
            }
         }
-         async function displayPlayerStats() {
+  async function displayPlayerStats() {
             const clubNameMapping = await loadClubNameMapping(); // Load the club name mappings
             const countryMapping = await loadCountryMapping(); // Load the country mapping
             const clubLogos = await loadClubLogos(); // Load the club logos
             const stats = await selectRandomPlayer(); // Fetch the player stats
-         
+           const clubCountries = await loadClubsCountries(); // Load the club countries
              // Initial display as rectangles
              playerNameDisplay.innerHTML = "";
             if(selectedPlayer) {
@@ -206,37 +206,36 @@ async function initializeGame() {
                       } else {
                         const rectangle = document.createElement("span");
                         rectangle.classList.add("player-name-rectangle");
-                           rectangle.id = `letter-${i}`
+                         rectangle.id = `letter-${i}`
                             playerNameDisplay.appendChild(rectangle);
-                        }
+                       }
                 }
-                  const playersData = await loadPlayerStats()
-                   if(playersData[selectedPlayer] && playersData[selectedPlayer].length > 0) {
-                     const firstStat = playersData[selectedPlayer][0]
-                   const playerCountryCode = firstStat.country
-                  const playerCountryName = countryMapping[playerCountryCode] || firstStat.country
-                  const flagUrl = `https://flagcdn.com/w20/${playerCountryCode}.png`;
+                if(clubCountries[selectedPlayer]) {
+                  const playerCountryCode = clubCountries[selectedPlayer];
+                const playerCountryName = countryMapping[playerCountryCode] || playerCountryCode
+                 const flagUrl = `https://flagcdn.com/w20/${playerCountryCode}.png`;
               
-                   const flagSpan = document.createElement('span')
+                    const flagSpan = document.createElement('div');
+                      flagSpan.classList.add('player-nationality');
                        flagSpan.innerHTML = `
                            <img src="${flagUrl}" alt="${playerCountryName} flag" style="width: 20px; height: 15px; margin-right: 5px; vertical-align: middle;"> ${playerCountryName}
                         `;
-                    playerNameDisplay.appendChild(flagSpan);
-                }
+                     playerNameDisplay.appendChild(flagSpan);
+                 }
 
             }
 
             adjustGlobalContainerMargin();
             window.addEventListener('resize', adjustGlobalContainerMargin);
 
-         document.getElementById('score').innerHTML = `Score : ${score.toFixed(2)} <span id="info-icon" style="cursor: pointer; font-size: 15px; margin-right: 5px; vertical-align: middle;">ⓘ</span>`;
+         document.getElementById('score').innerHTML = `Score : ${score.toFixed(2)} <span id="info-icon" style="cursor: pointer; font-size: 15px; margin-left: 5px; vertical-align: middle;">ⓘ</span>`;
 
         
             const tableBody = document.getElementById('career-table-body'); // Get the table body element
         
             tableBody.innerHTML = ''; // Clear existing rows
-            revealPlayerOnce = false //reset the value
-             revealedCells = [];
+             revealPlayerOnce = false //reset the value
+              revealedCells = [];
             // Check if stats is an array
             if (!Array.isArray(stats)) {
                 console.error("Expected stats to be an array, but got:", stats);
@@ -273,7 +272,7 @@ async function initializeGame() {
          if(currentMerged) {
                  mergedStats.push(currentMerged)
             }
-          tableSize = mergedStats.length;
+          tableSize = mergedStats.length
 
             for (const mergedStat of mergedStats) {
                   const fullCountryName = countryMapping[mergedStat.countryCode] || mergedStat.countryCode;
@@ -290,18 +289,20 @@ async function initializeGame() {
                 : `${startSeason.substring(0, 4)}-${endSeason.substring(endSeason.length - 4)}`;
              
                     const row = document.createElement('tr');
-                     row.innerHTML = `
+
+                   row.innerHTML = `
                        <td>${formattedSeason}</td>
                         <td class="hidden" data-club="${mergedStat.teamCode}">
-                            <img src="${logoUrl}" alt="${formattedClubName} logo" style="width: 20px; height: 20px; margin-right: 5px;">
-                            ${formattedClubName}
+                                <img src="${logoUrl}" alt="${formattedClubName} logo" style="width: 20px; height: 20px; margin-right: 5px;">
+                                ${formattedClubName}
                             </td>
-                        <td class="hidden" data-country="${fullCountryName}">
+                            <td class="hidden" data-country="${fullCountryName}">
                                   <img src="${flagUrl}" alt="${fullCountryName} flag" style="width: 20px; height: 15px; margin-right: 5px; vertical-align: middle;">
                             ${fullCountryName}
-                            </td>
-                    `;
-                    tableBody.appendChild(row);
+                             </td>
+                   `;
+                 tableBody.appendChild(row);
+
             }
         }
  function createRectangles() {
