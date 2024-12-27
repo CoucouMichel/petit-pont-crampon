@@ -196,15 +196,19 @@ async function initializeGame() {
             const countryMapping = await loadCountryMapping(); // Load the country mapping
             const clubLogos = await loadClubLogos(); // Load the club logos
             const stats = await selectRandomPlayer(); // Fetch the player stats
-         
+            const countries = await loadCountries();
+     
              // Initial display as rectangles
             playerNameDisplay.innerHTML = "";
+            const rectanglesContainer = document.createElement('span');
+            rectanglesContainer.classList.add('rectangles-container')
+            
             if(selectedPlayer) {
                  for (let i = 0; i < selectedPlayer.length; i++) {
                       if (selectedPlayer[i] === " ") {
                          const space = document.createElement("span")
                          space.innerHTML = " "
-                         playerNameDisplay.appendChild(space)
+                      rectanglesContainer.appendChild(space)
                       } else {
                         const rectangle = document.createElement("span");
                         rectangle.classList.add("player-name-rectangle");
