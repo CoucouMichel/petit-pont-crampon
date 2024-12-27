@@ -280,37 +280,31 @@ input#guess-input {
     background-color: var(--text-color);
     margin-right: 1px;
     vertical-align: middle;
-    transition: all 0.5s ease; /* Added transition for smooth morphing */
+    transition: all 0.5s ease;
     border-radius: 2px;
-    margin-top: 30px;
+     margin-top: 0; /* Remove the margin-top */
 }
+#player-name-display {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
 
-.player-name-rectangle.morph {
-  width: auto;
-    height: auto;
-    padding: 0px 10px; /* Adding padding for better spacing */
-    border-radius: 0px; /* Removing the border radius */
-    margin-right: 0px; /* Removing right margin */
-    margin-top: 0px;
-     background-color: transparent;
-    display: inline;
-}
-
-.player-name-rectangle.morph::after {
-    content: attr(data-letter); /* Using the data-letter attribute to display the letter */
-    font-weight: bold;
-        display: inline;
-        color: white;
-        font-size: 20px; /* Adjust font size if you wish */
-
+    #player-name-display span {
+        text-align: center;
 }
 
 .player-nationality {
-    margin-top: 5px;
+  margin-top: 5px;
     text-align: center;
-    opacity: 0;
-    transition: opacity 0.5s ease-in-out;
-    margin-bottom: 10px; /* Add a margin bottom */
+    opacity: 0; /* Make it hidden by default */
+     transition: opacity 0.3s ease-in-out; /* Fade effect */
+        margin-bottom: 10px;
+     display: block
+}
+.player-nationality.visible {
+  opacity: 1; /* Make it visible */
+
 }
 
 /* Définir la largeur des colonnes */
