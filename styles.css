@@ -275,36 +275,35 @@ input#guess-input {
     
 }
 .player-name-rectangle {
+    display: inline-block;
     width: 15px;
     height: 25px;
     background-color: var(--text-color);
     margin-right: 1px;
     vertical-align: middle;
-        transition: all 0.5s ease;
+    transition: all 0.5s ease; /* Added transition for smooth morphing */
     border-radius: 2px;
     margin-top: -30px;
-    display: inline-block;
-}
-.player-name-rectangle.visible {
-    display: inline-block;
 }
 
 .player-name-rectangle.morph {
-    width: auto;
+  width: auto;
     height: auto;
-    padding: 0px 10px;
-    border-radius: 0px;
-    margin-right: 0px;
+    padding: 0px 10px; /* Adding padding for better spacing */
+    border-radius: 0px; /* Removing the border radius */
+    margin-right: 0px; /* Removing right margin */
     margin-top: 0px;
      background-color: transparent;
     display: inline;
 }
+
 .player-name-rectangle.morph::after {
-    content: attr(data-letter);
+    content: attr(data-letter); /* Using the data-letter attribute to display the letter */
     font-weight: bold;
         display: inline;
         color: white;
-        font-size: 20px;
+        font-size: 20px; /* Adjust font size if you wish */
+
 }
 
 /* Définir la largeur des colonnes */
