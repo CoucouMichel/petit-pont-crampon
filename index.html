@@ -19,7 +19,7 @@
             <div class="button-container">
                 <button id="indiceClubButton">Indice Club</button>
                  <button id="indiceCountryButton">Indice Pays</button>
-                <button id="carriereButton">Carrière</button>
+                <button id="revealLettersButton">Lettres</button>
                 <button id="reponseButton">Réponse</button>
             </div>
           
@@ -82,7 +82,8 @@ const globalContainer = document.querySelector('.global-container');
 const fixedHeader = document.querySelector('.fixed-header');
 let tableSize = 0;
 let usedPlayers = JSON.parse(localStorage.getItem("usedPlayers") || "[]");
-
+let revealLettersOnce = false;
+        
 function adjustGlobalContainerMargin() {
     globalContainer.style.marginTop = `${fixedHeader.offsetHeight}px`;
 }
@@ -197,21 +198,22 @@ async function initializeGame() {
             const clubLogos = await loadClubLogos(); // Load the club logos
             const stats = await selectRandomPlayer(); // Fetch the player stats
          
-             // Initial display as rectangles
-             playerNameDisplay.innerHTML = "";
-            if(selectedPlayer) {
-                 for (let i = 0; i < selectedPlayer.length; i++) {
-                      if (selectedPlayer[i] === " ") {
-                         const space = document.createElement("span")
-                         space.innerHTML = " "
-                         playerNameDisplay.appendChild(space)
-                      } else {
-                        const rectangle = document.createElement("span");
-                        rectangle.classList.add("player-name-rectangle");
-                        playerNameDisplay.appendChild(rectangle);
-                       }
-                }
-            }
+// Initial display as rectangles
+     playerNameDisplay.innerHTML = "";
+    if(selectedPlayer) {
+         for (let i = 0; i < selectedPlayer.length; i++) {
+              if (selectedPlayer[i] === " ") {
+                 const space = document.createElement("span")
+                 space.innerHTML = " "
+                 playerNameDisplay.appendChild(space)
+              } else {
+                const rectangle = document.createElement("span");
+                rectangle.classList.add("player-name-rectangle");
+                rectangle.id = `letter-${i}`
+                 playerNameDisplay.appendChild(rectangle);
+               }
+        }
+    }
 
             adjustGlobalContainerMargin();
             window.addEventListener('resize', adjustGlobalContainerMargin);
@@ -604,28 +606,29 @@ const input = document.getElementById("guess-input");
 
                  }
         }
-  function revealAll() {
-            if (!selectedPlayer) return;
         
-            document.querySelectorAll('#career-table-body tr td').forEach(cell => {
-            cell.classList.add('visible')
-        })
-            carriereButton.disabled = true
-            carriereButton.classList.add("button-disabled")
-           indiceClubButton.disabled = true
-            indiceClubButton.classList.add("button-disabled")
-             indiceCountryButton.disabled = true
-            indiceCountryButton.classList.add("button-disabled")
-        
-        
-            const previousScore = score;
-            score = 25;
-             if(previousScore < 25) {
-                  score = previousScore;
-             }
+ revealLettersButton.addEventListener("click", function () {
+        revealAllLetters();
+    });
+    
+     function revealAllLetters() {
+       if(!selectedPlayer) return;
+        if (revealLettersOnce) return;
 
-            updateScoreDisplay(previousScore);
-        }
+        const nameDisplay = document.getElementById('player-name-display');
+      const allRectangles = nameDisplay.querySelectorAll('.player-name-rectangle');
+    
+         allRectangles.forEach((rectangle, index) => {
+           if(rectangle.innerHTML !== " ") {
+             rectangle.innerHTML = selectedPlayer[index];
+             rectangle.classList.add('visible')
+             }
+         })
+
+         revealLettersOnce = true;
+         revealLettersButton.disabled = true
+        revealLettersButton.classList.add("button-disabled")
+    }
         
          function revealPlayer() {
             if (!selectedPlayer) return;
@@ -638,8 +641,7 @@ const input = document.getElementById("guess-input");
             revealPlayerOnce = true;
              reponseButton.disabled = true
              reponseButton.classList.add("button-disabled")
-           carriereButton.disabled = true
-          carriereButton.classList.add("button-disabled")
+
              indiceClubButton.disabled = true
             indiceClubButton.classList.add("button-disabled")
               indiceCountryButton.disabled = true
