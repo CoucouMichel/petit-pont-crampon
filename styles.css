@@ -308,7 +308,7 @@ input#guess-input {
 }
 #player-name-display {
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
         align-items: center;
     white-space: nowrap;
 }
