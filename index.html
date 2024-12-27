@@ -700,40 +700,35 @@ function revealAllLetters() {
         }
 const originalUpdateScoreDisplay = window.updateScoreDisplay;
 const originalDisplayPlayerStats = window.displayPlayerStats;
-window.updateScoreDisplay = function (...args) {
-  originalUpdateScoreDisplay.apply(this, args);
-  console.log('DOM fully loaded and parsed');
-  function setElementStyles(el, styles) {
-    for (const [key, value] of Object.entries(styles)) {
-      el.style[key] = value;
-    }
-  }
-
+const observer = new MutationObserver((mutations) => {
+  console.log('DOM changed');
   const targetElement = document.querySelector('.player-nationality.visible');
-  console.log('targetElement:', targetElement);
   if (!targetElement) {
     console.error('targetElement not found');
     return;
   }
   const parentElement = targetElement.parentElement;
-  console.log('parentElement:', parentElement);
-  console.log('targetElement.parentElement:', targetElement.parentElement);
-  console.log('parentElement.contains(targetElement):', parentElement.contains(targetElement));
-  const siblingElements = Array.from(parentElement.children).filter(child => child !== targetElement);
-  console.log('siblingElements:', siblingElements);
+  if (!parentElement) {
+    console.error('parentElement not found');
+    return;
+  }
   if (parentElement.querySelector('#span-wrapper')) {
     console.log('span-wrapper already exists');
-    originalDisplayPlayerStats();
     return;
   }
   if (!parentElement.contains(targetElement)) {
     console.error('targetElement is not a child of parentElement');
-    originalDisplayPlayerStats();
     return;
   }
   const oldNationality = document.querySelector('.player-nationality:not(.visible)');
   if (oldNationality) {
     oldNationality.remove();
+  }
+  const siblingElements = Array.from(parentElement.children).filter(child => child !== targetElement);
+  function setElementStyles(el, styles) {
+    for (const [key, value] of Object.entries(styles)) {
+      el.style[key] = value;
+    }
   }
   const wrapper = document.createElement('div');
   wrapper.id = 'span-wrapper';
@@ -745,22 +740,23 @@ window.updateScoreDisplay = function (...args) {
     'justify-content': 'center',
     'width': '100%',
   });
-
   for (const sibling of siblingElements) {
     wrapper.appendChild(sibling);
   }
-
   parentElement.insertBefore(wrapper, targetElement);
   setElementStyles(parentElement, {
     'flex-direction': 'column',
     'align-items': 'center',
     'justify-content': 'center',
   });
-  console.log('Code executed');
+});
+observer.observe(document.body, { childList: true, subtree: true });
+window.updateScoreDisplay = function (...args) {
+  originalUpdateScoreDisplay.apply(this, args);
   originalDisplayPlayerStats();
 };
 const data = {
-  message: 'Selected the correct parent and target element dynamically.',
+  message: 'Added a MutationObserver to track DOM changes.',
 };
 displayPlayerStats();
     </script>
