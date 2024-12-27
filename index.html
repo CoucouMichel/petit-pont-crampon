@@ -711,6 +711,37 @@ function revealAllLetters() {
                     }, 300);
             }
         }
+function setElementStyles(el, styles) {
+  for (const [key, value] of Object.entries(styles)) {
+    el.style[key] = value;
+  }
+}
+
+const parentElement = document.querySelector('h2#player-name-display'); // Replace with your actual selector if needed
+const targetElement = document.querySelector('.player-nationality.visible'); // Replace with your actual selector if needed
+const siblingElements = Array.from(parentElement.children).filter(child => child !== targetElement);
+
+const wrapper = document.createElement('div');
+wrapper.id = 'span-wrapper';
+setElementStyles(wrapper, {
+  'display': 'flex',
+  'flex-direction': 'row',
+  'flex-wrap': 'nowrap',
+  'align-items': 'center',
+  'justify-content': 'center',
+  'width': '100%',
+});
+
+for (const sibling of siblingElements) {
+  wrapper.appendChild(sibling);
+}
+
+parentElement.insertBefore(wrapper, targetElement);
+setElementStyles(parentElement, {
+  'flex-direction': 'column',
+  'align-items': 'center',
+  'justify-content': 'center',
+});
 
         displayPlayerStats();
     </script>
