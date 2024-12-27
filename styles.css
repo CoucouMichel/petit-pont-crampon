@@ -312,6 +312,8 @@ input#guess-input {
     flex-direction: row;
     align-items: center;
     white-space: nowrap;
+      flex-wrap: wrap;
+  width: 100%;
 }
  .rectangles-container {
   display: flex;
