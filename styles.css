@@ -308,13 +308,13 @@ input#guess-input {
 /* Définir la largeur des colonnes */
 th:nth-child(1), td:nth-child(1) {
     width: 20%; /* More width for the "Années" column */
-    min-width: 18%;
+    min-width: 20%;
 }
 
 th:nth-child(2), td:nth-child(2),
 th:nth-child(3), td:nth-child(3) {
-     width: 41%; /* Slightly less width for "Club" and "Pays" columns */
-    min-width: 41%;
+     width: 40%; /* Slightly less width for "Club" and "Pays" columns */
+    min-width: 40%;
 }
 .autofill-container {
     position: relative;
