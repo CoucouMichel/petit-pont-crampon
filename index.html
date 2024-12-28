@@ -22,6 +22,7 @@
                     <h3>Point System</h3>
                     <span id="close-info" class="close-info">&#10006;</span>
                 </div>
+
                 <ul>
                     <li>Finding the mystery player: 50 points + 5 points for each hidden cell.</li>
                     <li>Correct Country: 10 points.</li>
@@ -32,6 +33,7 @@
                     <li>Using R&eacute;ponse : Score goes to zero.</li>
                 </ul>
             </div>
+            <!-- Button Container -->
             <div class="button-container">
                 <button id="indiceCountryButton">Pays</button>
                 <button id="indiceClubButton">Club</button>
@@ -47,25 +49,24 @@
             <p id="feedback"></p>
         </div>
 
-        <div class="container">
-            <div class="name-container">
-                <div id="player-name-box" class="hidden">
-                    <div id="player-name-display"></div>
-                </div>
-                <div class="rectangles-container">
-                    <span id="letter-0" class="player-name-rectangle"></span>
-                    <span id="letter-1" class="player-name-rectangle"></span>
-                    <span id="letter-2" class="player-name-rectangle"></span>
-                    <span id="letter-3" class="player-name-rectangle"></span>
-                    <span id="letter-4" class="player-name-rectangle"></span>
-                    <span id="letter-5" class="player-name-rectangle"></span>
-                    <span id="letter-6" class="player-name-rectangle"></span>
-                    <span></span>
-                    <span id="letter-8" class="player-name-rectangle"></span>
-                    <span id="letter-9" class="player-name-rectangle"></span>
-                    <span id="letter-10" class="player-name-rectangle"></span>
-                    <span id="letter-11" class="player-name-rectangle"></span>
-                </div>
+        <div class="global-container">
+            <div class="container">
+                <h2 id="player-name-display">
+                    <div>
+                        <span id="letter-0" class="player-name-rectangle"></span>
+                        <span id="letter-1" class="player-name-rectangle"></span>
+                        <span id="letter-2" class="player-name-rectangle"></span>
+                        <span id="letter-3" class="player-name-rectangle"></span>
+                        <span id="letter-4" class="player-name-rectangle"></span>
+                        <span id="letter-5" class="player-name-rectangle"></span>
+                        <span id="letter-6" class="player-name-rectangle"></span>
+                        <span></span>
+                        <span id="letter-8" class="player-name-rectangle"></span>
+                        <span id="letter-9" class="player-name-rectangle"></span>
+                        <span id="letter-10" class="player-name-rectangle"></span>
+                        <span id="letter-11" class="player-name-rectangle"></span>
+                    </div>
+                </h2>
             </div>
         </div>
         <div class="player-nationality hidden">
@@ -86,7 +87,9 @@
         <p id="country-feedback" style="color: red; margin-top: 10px;"></p>
     </div>
 
+
 </body>
+
 </html>
 <html>
 <script>
@@ -700,15 +703,15 @@
         revealAllLetters();
     });
 
-  function revealNationality() {
-    if (!selectedPlayer) return;
-
-    const spanNationality = document.querySelector('.player-nationality');
-    spanNationality.classList.remove('hidden');
-    spanNationality.classList.add('visible');
-    indiceNationalityButton.disabled = true;
-    indiceNationalityButton.classList.add("button-disabled");
-}
+    function revealNationality() {
+        if (!selectedPlayer) return;
+        const nameDisplay = document.getElementById('player-name-display');
+        const spanNationality = document.querySelector('.player-nationality');
+        spanNationality.classList.remove('hidden')
+        spanNationality.classList.add('visible')
+        indiceNationalityButton.disabled = true;
+        indiceNationalityButton.classList.add("button-disabled");
+    }
 
     function revealAllLetters() {
         if (!selectedPlayer) return;
@@ -731,41 +734,29 @@
         revealLettersButton.classList.add("button-disabled");
     }
 
-  
-function revealPlayer() {
-    if (!selectedPlayer) return;
+    function revealPlayer() {
+        if (!selectedPlayer) return;
 
-    if (revealPlayerOnce) return;
+        if (revealPlayerOnce) return;
 
-    const rectangles = document.querySelectorAll('.player-name-rectangle');
-    rectangles.forEach(rectangle => {
-        rectangle.classList.add('hidden');
-    });
+        playerNameDisplay.textContent = selectedPlayer;
+        revealAllCells();
 
-    const playerNameBox = document.getElementById("player-name-box");
-    const playerNameDisplay = document.getElementById("player-name-display");
-    playerNameDisplay.textContent = selectedPlayer;
-    playerNameBox.classList.add('visible');
-
-    const spanNationality = document.querySelector('.player-nationality');
-    spanNationality.classList.remove('hidden');
-    spanNationality.classList.add('visible');
-
-    revealPlayerOnce = true;
-    reponseButton.disabled = true;
-    reponseButton.classList.add("button-disabled");
-    indiceNationalityButton.disabled = true;
-    indiceNationalityButton.classList.add("button-disabled");
-    revealLettersButton.disabled = true;
-    revealLettersButton.classList.add("button-disabled");
-    indiceClubButton.disabled = true;
-    indiceClubButton.classList.add("button-disabled");
-    indiceCountryButton.disabled = true;
-    indiceCountryButton.classList.add("button-disabled");
-    const previousScore = score;
-    score = 0;
-    updateScoreDisplay(previousScore);
-}
+        revealPlayerOnce = true;
+        reponseButton.disabled = true
+        reponseButton.classList.add("button-disabled")
+        indiceNationalityButton.disabled = true
+        indiceNationalityButton.classList.add("button-disabled")
+        revealLettersButton.disabled = true
+        revealLettersButton.classList.add("button-disabled")
+        indiceClubButton.disabled = true
+        indiceClubButton.classList.add("button-disabled")
+        indiceCountryButton.disabled = true
+        indiceCountryButton.classList.add("button-disabled")
+        const previousScore = score;
+        score = 0;
+        updateScoreDisplay(previousScore);
+    }
     displayPlayerStats();
 </script>
 
