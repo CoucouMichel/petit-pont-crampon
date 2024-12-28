@@ -367,6 +367,12 @@ input#guess-input {
     top: -50px;
 }
 
+.player-nationality-container {
+    width: 100%;
+    text-align: center;
+    position: relative; /* Ensure it positions relative to its parent */
+}
+
 .player-nationality {
     text-align: center;
      transition: opacity 0.5s ease-in-out;
