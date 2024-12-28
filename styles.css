@@ -369,7 +369,6 @@ input#guess-input {
 }
 
 .player-nationality {
-    margin-top: -70px;
     text-align: center;
      transition: opacity 0.5s ease-in-out;
     margin-bottom: 10px; /* Add a margin bottom */
