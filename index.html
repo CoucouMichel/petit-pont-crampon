@@ -751,6 +751,7 @@ function revealPlayer() {
         playerNameDisplayBox.textContent = selectedPlayer;
         playerNameBox.classList.add("visible");
         if (spanNationality) {
+            spanNationality.classList.remove('hidden');
             spanNationality.classList.add('visible');
         }
     } else {
