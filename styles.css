@@ -370,10 +370,12 @@ input#guess-input {
 .player-nationality-container {
     width: 100%;
     text-align: center;
-    position: relative; /* Ensure it positions relative to its parent */
+    position: relative;
+    height: auto; /* Ensure the container can expand */
 }
 
 .player-nationality {
+    display: inline-block; /* Ensure the element is visible */
     text-align: center;
     transition: opacity 0.5s ease-in-out;
     margin-bottom: 10px;
