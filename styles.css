@@ -138,9 +138,9 @@ h2#player-name-display {
 
 #player-name-box {
     position: absolute;
-    top: 0;
+    top: -50%;
     left: 50%;
-    transform: translate(-50%, -100%);
+    transform: translate(-50%);
     background-color: rgba(0, 0, 0, 0.8);
     padding: 20px;
     border-radius: 10px;
