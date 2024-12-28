@@ -227,11 +227,15 @@
         const countries = await loadCountries();
         const clubCountries = await loadClubsCountries();
 
+            playerNameDisplay.innerHTML = "";
+          if(selectedPlayer) {
 
-        // Initial display as rectangles
-        playerNameDisplay.innerHTML = "";
-        if (selectedPlayer) {
-            for (let i = 0; i < selectedPlayer.length; i++) {
+            const nameSpan = document.createElement('span');
+                nameSpan.classList.add("player-name-text");
+                nameSpan.textContent = selectedPlayer;
+                    playerNameDisplay.appendChild(nameSpan);
+                 // Initial display as rectangles
+              for (let i = 0; i < selectedPlayer.length; i++) {
                 if (selectedPlayer[i] === " ") {
                     const space = document.createElement("span")
                     space.innerHTML = "&nbsp;"
@@ -753,10 +757,15 @@
         indiceClubButton.classList.add("button-disabled")
         indiceCountryButton.disabled = true
         indiceCountryButton.classList.add("button-disabled")
+         const nameDisplay = document.getElementById('player-name-display');
+        const spanNationality = nameDisplay.querySelector('.player-nationality');
+         if(spanNationality) {
+              spanNationality.classList.add("visible");
+        }
         const previousScore = score;
-        score = 0;
-        updateScoreDisplay(previousScore);
-    }
+         score = 0;
+         updateScoreDisplay(previousScore);
+        }
     displayPlayerStats();
 </script>
 
