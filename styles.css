@@ -138,7 +138,7 @@ h2#player-name-display {
 
 #player-name-box {
     position: absolute;
-    top: 0;
+    top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: rgba(0, 0, 0, 0.8);
@@ -151,7 +151,6 @@ h2#player-name-display {
 #player-name-box.visible {
     visibility: visible;
 }
-
 /* Style du tableau */
 table#career-table {
   width: 100%;
