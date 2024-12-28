@@ -745,9 +745,18 @@ function revealPlayer() {
 
     if (revealPlayerOnce) return;
 
-    playerNameDisplay.textContent = selectedPlayer;
-    playerNameDisplayBox.textContent = selectedPlayer; // Add this line
-    document.getElementById("player-name-box").classList.add("visible"); // Add this line
+    // Check if playerNameDisplayBox and player-name-box are correctly referenced
+    const playerNameDisplayBox = document.getElementById("player-name-display-box");
+    const playerNameBox = document.getElementById("player-name-box");
+
+    if (playerNameDisplayBox && playerNameBox) {
+        playerNameDisplay.textContent = selectedPlayer;
+        playerNameDisplayBox.textContent = selectedPlayer;
+        playerNameBox.classList.add("visible");
+    } else {
+        console.error("player-name-display-box or player-name-box element is missing");
+    }
+
     revealAllCells();
 
     revealPlayerOnce = true;
@@ -765,7 +774,6 @@ function revealPlayer() {
     score = 0;
     updateScoreDisplay(previousScore);
 }
-    }
     displayPlayerStats();
 </script>
 
