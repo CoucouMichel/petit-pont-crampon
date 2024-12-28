@@ -344,10 +344,11 @@ input#guess-input {
 }
 
 #player-name-display {
-    display: flex;
+    display: none;
     align-items: center;
     white-space: nowrap;
     justify-content: center;
+    
 }
  .rectangles-container {
   display: flex;
