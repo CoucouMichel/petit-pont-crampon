@@ -149,10 +149,6 @@ table#career-table {
     margin-top: -60px;
 }
 
-table tr:nth-of-type(even) {
-  background-color: #17181a; /* Dark grey */
-}
-
 /* Définir la largeur des colonnes */
 th, td {
     padding: 12px 15px;
