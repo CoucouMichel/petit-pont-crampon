@@ -742,7 +742,6 @@ function revealPlayer() {
     if (!selectedPlayer) return;
     if (revealPlayerOnce) return;
 
-    // Check if playerNameDisplayBox and player-name-box are correctly referenced
     const playerNameDisplayBox = document.getElementById("player-name-display-box");
     const playerNameBox = document.getElementById("player-name-box");
     const spanNationality = document.querySelector('.player-nationality');
@@ -759,7 +758,6 @@ function revealPlayer() {
     }
 
     revealAllCells();
-
     revealPlayerOnce = true;
     reponseButton.disabled = true;
     reponseButton.classList.add("button-disabled");
@@ -771,9 +769,8 @@ function revealPlayer() {
     indiceClubButton.classList.add("button-disabled");
     indiceCountryButton.disabled = true;
     indiceCountryButton.classList.add("button-disabled");
-    const previousScore = score;
     score = 0;
-    updateScoreDisplay(previousScore);
+    updateScoreDisplay(score);
 }
     displayPlayerStats();
 </script>
