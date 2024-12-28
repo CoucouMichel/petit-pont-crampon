@@ -140,7 +140,6 @@ h2#player-name-display {
 table#career-table {
   width: 100%;
   max-width: 600px;
-  background-color: initial;
   z-index: 10;
   border-collapse: collapse;
   margin-bottom: 20px;
@@ -148,6 +147,10 @@ table#career-table {
     top: 0px;
     table-layout: fixed;
     margin-top: -60px;
+}
+
+table tr:nth-of-type(even) {
+  background-color: #17181a; /* Dark grey */
 }
 
 /* Définir la largeur des colonnes */
