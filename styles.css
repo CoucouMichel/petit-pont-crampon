@@ -289,7 +289,7 @@ input#guess-input {
     background-color: var(--text-color);
     margin-right: 3px;
     vertical-align: middle;
-        transition: all 0.5s ease;
+    transition: all 0.5s ease;
     border-radius: 2px;
     margin-top: -30px;
 }
@@ -322,11 +322,11 @@ input#guess-input {
     white-space: nowrap;
     justify-content: center;
 }
-.rectangles-container {
+ .rectangles-container {
   display: flex;
     justify-content: center;
     align-items: center;
-}
+ }
 
 #player-name-display span {
     text-align: center;
@@ -335,17 +335,17 @@ input#guess-input {
 .player-nationality {
     margin-top: 5px;
     text-align: center;
-    opacity: 1;
      transition: opacity 0.5s ease-in-out;
     margin-bottom: 10px; /* Add a margin bottom */
-    display: block;
 }
-
 .player-nationality.visible {
     opacity: 1;
-    display: block;
 }
-
+.name-container {
+  display: flex;
+  flex-direction: column;
+    align-items: center;
+}
 
 /* Définir la largeur des colonnes */
 th:nth-child(1), td:nth-child(1) {
