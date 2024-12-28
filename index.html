@@ -450,6 +450,10 @@
         }
 
         if (checkAnswerValue === selectedPlayer.toLowerCase()) {
+            // Show player name in the player-name-box
+            playerNameDisplayBox.textContent = selectedPlayer;
+            document.getElementById("player-name-box").classList.add("visible");
+            
             playerNameDisplay.textContent = selectedPlayer;
             revealAllCells();
 
