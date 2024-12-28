@@ -1,18 +1,16 @@
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Petit Pont Crampon</title>
     <link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
     <div class="global-container">
         <div class="fixed-header">
             <h1>Petit Pont Crampon</h1>
-            <p>D&eacute;masquez le joueur myst&egrave;re en trouvant les pays et les clubs dans lesquels il a jou&eacute; !</p>
+            <p>Démasquez le joueur mystère en trouvant les pays et les clubs dans lesquels il a joué !</p>
             <div class="score-attempts-container">
                 <p id="score">Score : 100 <span id="info-icon" style="cursor: pointer; font-size: 15px; margin-left: 5px; vertical-align: middle;">&#9432;</span></p>
                 <p id="attempts">Essais : 0</p>
@@ -22,51 +20,38 @@
                     <h3>Point System</h3>
                     <span id="close-info" class="close-info">&#10006;</span>
                 </div>
-
                 <ul>
                     <li>Finding the mystery player: 50 points + 5 points for each hidden cell.</li>
                     <li>Correct Country: 10 points.</li>
                     <li>Correct Club: 20 points.</li>
                     <li>Using Indice Club: -25 points.</li>
                     <li>Using Indice Pays: -10 points.</li>
-                    <li>Using Carri&egrave;re : Score goes to zero.</li>
-                    <li>Using R&eacute;ponse : Score goes to zero.</li>
+                    <li>Using Carrière : Score goes to zero.</li>
+                    <li>Using Réponse : Score goes to zero.</li>
                 </ul>
             </div>
-            <!-- Button Container -->
             <div class="button-container">
                 <button id="indiceCountryButton">Pays</button>
                 <button id="indiceClubButton">Club</button>
                 <button id="indiceNationalityButton">Nation</button>
                 <button id="revealLettersButton">Lettres</button>
-                <button id="reponseButton">R&eacute;ponse</button>
+                <button id="reponseButton">Réponse</button>
             </div>
             <div class="input-container" style="position: relative;">
-                <input type="text" id="guess-input" placeholder="Tapez un pays, un club ou le nom du joueur myst&egrave;re" autocomplete="off">
+                <input type="text" id="guess-input" placeholder="Tapez un pays, un club ou le nom du joueur mystère" autocomplete="off">
                 <ul id="autocomplete-list" class="autocomplete-suggestions"></ul>
                 <div id="guess-feedback"></div>
             </div>
             <p id="feedback"></p>
         </div>
-
         <div class="global-container">
             <div class="container">
-                <h2 id="player-name-display">
-                    <div>
-                        <span id="letter-0" class="player-name-rectangle"></span>
-                        <span id="letter-1" class="player-name-rectangle"></span>
-                        <span id="letter-2" class="player-name-rectangle"></span>
-                        <span id="letter-3" class="player-name-rectangle"></span>
-                        <span id="letter-4" class="player-name-rectangle"></span>
-                        <span id="letter-5" class="player-name-rectangle"></span>
-                        <span id="letter-6" class="player-name-rectangle"></span>
-                        <span></span>
-                        <span id="letter-8" class="player-name-rectangle"></span>
-                        <span id="letter-9" class="player-name-rectangle"></span>
-                        <span id="letter-10" class="player-name-rectangle"></span>
-                        <span id="letter-11" class="player-name-rectangle"></span>
-                    </div>
+                <h2 id="player-name-display" class="hidden">
+                    <!-- Player name will be dynamically inserted here -->
                 </h2>
+                <div class="rectangles-container">
+                    <!-- Rectangles will be dynamically created here -->
+                </div>
             </div>
         </div>
         <div class="player-nationality hidden">
@@ -81,23 +66,19 @@
                 </tr>
             </thead>
             <tbody id="career-table-body">
-                <!-- Les lignes du tableau seront ajout&eacute;es dynamiquement -->
+                <!-- Les lignes du tableau seront ajoutées dynamiquement -->
             </tbody>
         </table>
         <p id="country-feedback" style="color: red; margin-top: 10px;"></p>
     </div>
-
-
 </body>
-
-</html>
-<html>
 <script>
     let selectedPlayer;
     let attempts = 0;
     let revealPlayerOnce = false;
     let score = 95;
     const playerNameDisplay = document.getElementById("player-name-display");
+    const rectanglesContainer = document.querySelector(".rectangles-container");
     let currentSuggestions = [];
     const globalContainer = document.querySelector('.global-container');
     const fixedHeader = document.querySelector('.fixed-header');
@@ -126,11 +107,11 @@
         if (players.length === 0) {
             usedPlayers = [];
             localStorage.setItem('usedPlayers', JSON.stringify(usedPlayers));
-            return selectRandomPlayer()
+            return selectRandomPlayer();
         }
 
         selectedPlayer = players[Math.floor(Math.random() * players.length)];
-        usedPlayers.push(selectedPlayer)
+        usedPlayers.push(selectedPlayer);
         localStorage.setItem('usedPlayers', JSON.stringify(usedPlayers));
         return playersData[selectedPlayer];
     }
@@ -138,9 +119,7 @@
     async function loadCountryMapping() {
         try {
             const response = await fetch('./country2letters.json');
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
+            if (!response.ok) throw new Error('Network response was not ok');
             return response.json();
         } catch (error) {
             console.error("Error loading country mapping:", error);
@@ -151,9 +130,7 @@
     async function loadClubNameMapping() {
         try {
             const response = await fetch('./clubNameMapping.json');
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
+            if (!response.ok) throw new Error('Network response was not ok');
             return response.json();
         } catch (error) {
             console.error("Error loading club name mapping:", error);
@@ -164,27 +141,22 @@
     async function loadClubLogos() {
         try {
             const response = await fetch('./clubLogos.json');
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
+            if (!response.ok) throw new Error('Network response was not ok');
             return await response.json();
         } catch (error) {
             console.error("Error loading club logos:", error);
             return {};
         }
     }
+
     async function shouldSelectNewPlayer() {
         const lastSelectedDate = localStorage.getItem("lastSelectedDate");
         const now = new Date();
 
         if (lastSelectedDate) {
             const lastSelected = new Date(lastSelectedDate);
-            const nowFrench = new Date(now.toLocaleString('en-US', {
-                timeZone: 'Europe/Paris'
-            }));
-            const lastSelectedFrench = new Date(lastSelected.toLocaleString('en-US', {
-                timeZone: 'Europe/Paris'
-            }));
+            const nowFrench = new Date(now.toLocaleString('en-US', { timeZone: 'Europe/Paris' }));
+            const lastSelectedFrench = new Date(lastSelected.toLocaleString('en-US', { timeZone: 'Europe/Paris' }));
             if (nowFrench.getDate() !== lastSelectedFrench.getDate()) {
                 localStorage.setItem("lastSelectedDate", now);
                 return true;
@@ -192,33 +164,30 @@
             return false;
         } else {
             localStorage.setItem("lastSelectedDate", now);
-            return true
+            return true;
         }
     }
 
     async function initializeGame() {
         const now = new Date();
-        const nowFrench = new Date(now.toLocaleString('en-US', {
-            timeZone: 'Europe/Paris'
-        }));
+        const nowFrench = new Date(now.toLocaleString('en-US', { timeZone: 'Europe/Paris' }));
 
         const currentHour = nowFrench.getHours();
-        const currentMinutes = nowFrench.getMinutes()
+        const currentMinutes = nowFrench.getMinutes();
 
         if (await shouldSelectNewPlayer()) {
-            await displayPlayerStats()
-            console.log("New player selected")
+            await displayPlayerStats();
+            console.log("New player selected");
         } else if (currentHour === 0 && currentMinutes === 0) {
-            await displayPlayerStats()
-            console.log("New player selected at midnight")
-
+            await displayPlayerStats();
+            console.log("New player selected at midnight");
         } else {
-            await selectRandomPlayer()
-            await displayPlayerStats()
-            console.log("Previous player selected")
-
+            await selectRandomPlayer();
+            await displayPlayerStats();
+            console.log("Previous player selected");
         }
     }
+
     async function displayPlayerStats() {
         const clubNameMapping = await loadClubNameMapping();
         const countryMapping = await loadCountryMapping();
@@ -227,35 +196,33 @@
         const countries = await loadCountries();
         const clubCountries = await loadClubsCountries();
 
-
         // Initial display as rectangles
-        playerNameDisplay.innerHTML = "";
+        rectanglesContainer.innerHTML = "";
+
         if (selectedPlayer) {
             for (let i = 0; i < selectedPlayer.length; i++) {
                 if (selectedPlayer[i] === " ") {
-                    const space = document.createElement("span")
-                    space.innerHTML = "&nbsp;"
-                    playerNameDisplay.appendChild(space)
+                    const space = document.createElement("span");
+                    space.innerHTML = "&nbsp;";
+                    rectanglesContainer.appendChild(space);
                 } else {
                     const rectangle = document.createElement("span");
                     rectangle.classList.add("player-name-rectangle");
-                    rectangle.id = `letter-${i}`
-                    playerNameDisplay.appendChild(rectangle);
+                    rectangle.id = `letter-${i}`;
+                    rectanglesContainer.appendChild(rectangle);
                 }
             }
             if (clubCountries && clubCountries[selectedPlayer]) {
-                const playerCountryName = clubCountries[selectedPlayer]
-
+                const playerCountryName = clubCountries[selectedPlayer];
                 const playerCountryCode = countries[playerCountryName] || playerCountryName;
-
 
                 const flagUrl = `https://flagcdn.com/w20/${playerCountryCode}.png`;
                 const flagSpan = document.createElement('div');
                 flagSpan.classList.add('player-nationality');
                 flagSpan.innerHTML = `
-                            <img src="${flagUrl}" alt="${playerCountryName} flag" style="width: 20px; height: 15px; margin-right: 5px; vertical-align: middle;"> ${playerCountryName}
-                        `;
-                playerNameDisplay.appendChild(flagSpan);
+                    <img src="${flagUrl}" alt="${playerCountryName} flag" style="width: 20px; height: 15px; margin-right: 5px; vertical-align: middle;"> ${playerCountryName}
+                `;
+                rectanglesContainer.appendChild(flagSpan);
             }
         }
 
@@ -264,10 +231,9 @@
 
         document.getElementById('score').innerHTML = `Score : ${score.toFixed(2)} <span id="info-icon" style="cursor: pointer; font-size: 15px; margin-left: 5px; vertical-align: middle;">&#9432;`;
 
-
         const tableBody = document.getElementById('career-table-body');
         tableBody.innerHTML = '';
-        revealPlayerOnce = false
+        revealPlayerOnce = false;
         revealedCells = [];
         if (!Array.isArray(stats)) {
             console.error("Expected stats to be an array, but got:", stats);
@@ -284,10 +250,9 @@
 
             if (currentMerged && currentMerged.team === formattedClubName && currentMerged.country === fullCountryName) {
                 currentMerged.endSeason = stat.season;
-
             } else {
                 if (currentMerged) {
-                    mergedStats.push(currentMerged)
+                    mergedStats.push(currentMerged);
                 }
                 currentMerged = {
                     startSeason: stat.season,
@@ -296,15 +261,14 @@
                     country: fullCountryName,
                     teamCode: stat.team,
                     countryCode: stat.country
-                }
+                };
             }
         }
 
-
         if (currentMerged) {
-            mergedStats.push(currentMerged)
+            mergedStats.push(currentMerged);
         }
-        tableSize = mergedStats.length
+        tableSize = mergedStats.length;
 
         for (const mergedStat of mergedStats) {
             const fullCountryName = countryMapping[mergedStat.countryCode] || mergedStat.countryCode;
@@ -316,33 +280,29 @@
             const startSeason = mergedStat.startSeason;
             const endSeason = mergedStat.endSeason;
 
-            const formattedSeason = startSeason === endSeason ?
-                startSeason.substring(0, 9) :
-                `${startSeason.substring(0, 4)}-${endSeason.substring(endSeason.length - 4)}`;
+            const formattedSeason = startSeason === endSeason ? startSeason.substring(0, 9) : `${startSeason.substring(0, 4)}-${endSeason.substring(endSeason.length - 4)}`;
 
             const row = document.createElement('tr');
 
             row.innerHTML = `
-                       <td>${formattedSeason}
-                        <td class="hidden" data-club="${mergedStat.teamCode}">
-                                <img src="${logoUrl}" alt="${formattedClubName} logo" style="width: 20px; height: 20px; margin-right: 5px;">
-                                ${formattedClubName}
-                            
-                            <td class="hidden" data-country="${fullCountryName}">
-                                  <img src="${flagUrl}" alt="${fullCountryName} flag" style="width: 20px; height: 15px; margin-right: 5px; vertical-align: middle;">
-                            ${fullCountryName}
-                             
-                   `;
+                <td>${formattedSeason}</td>
+                <td class="hidden" data-club="${mergedStat.teamCode}">
+                    <img src="${logoUrl}" alt="${formattedClubName} logo" style="width: 20px; height: 20px; margin-right: 5px;">
+                    ${formattedClubName}
+                </td>
+                <td class="hidden" data-country="${fullCountryName}">
+                    <img src="${flagUrl}" alt="${fullCountryName} flag" style="width: 20px; height: 15px; margin-right: 5px; vertical-align: middle;">
+                    ${fullCountryName}
+                </td>
+            `;
             tableBody.appendChild(row);
-
         }
     }
+
     async function loadCountries() {
         try {
             const response = await fetch('./countries.json');
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
+            if (!response.ok) throw new Error('Network response was not ok');
             return response.json();
         } catch (error) {
             console.error("Error loading club to country mapping:", error);
@@ -351,19 +311,19 @@
     }
 
     function createRectangles() {
-        playerNameDisplay.innerHTML = "";
+        rectanglesContainer.innerHTML = "";
         if (selectedPlayer) {
             for (let i = 0; i < selectedPlayer.length; i++) {
                 if (selectedPlayer[i] === " ") {
-                    const space = document.createElement("span")
-                    space.innerHTML = " "
-                    playerNameDisplay.appendChild(space)
+                    const space = document.createElement("span");
+                    space.innerHTML = " ";
+                    rectanglesContainer.appendChild(space);
                 } else {
                     const rectangle = document.createElement("span");
                     rectangle.classList.add("player-name-rectangle");
                     rectangle.classList.add("hidden");
-                    rectangle.id = `letter-${i}`
-                    playerNameDisplay.appendChild(rectangle);
+                    rectangle.id = `letter-${i}`;
+                    rectanglesContainer.appendChild(rectangle);
                 }
             }
         }
@@ -371,12 +331,12 @@
 
     async function showSuggestions(value) {
         const autocompleteList = document.getElementById("autocomplete-list");
-        autocompleteList.innerHTML = ""; // R&eacute;initialiser la liste
+        autocompleteList.innerHTML = ""; // Réinitialiser la liste
 
-        if (value.trim() === "") return; // Ne rien afficher si l'entr&eacute;e est vide
+        if (value.trim() === "") return; // Ne rien afficher si l'entrée est vide
 
         try {
-            const data = await loadClubsCountries(); // Charger les donn&eacute;es depuis le JSON
+            const data = await loadClubsCountries(); // Charger les données depuis le JSON
             const suggestions = new Set();
             const normalizedValue = value.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 
@@ -395,15 +355,15 @@
 
             // Trier les suggestions
             const sortedSuggestions = Array.from(suggestions).sort();
-            currentSuggestions = sortedSuggestions
-            // Ajouter chaque suggestion &agrave; la liste
+            currentSuggestions = sortedSuggestions;
+            // Ajouter chaque suggestion à la liste
             sortedSuggestions.forEach(suggestion => {
                 const listItem = document.createElement("li");
                 listItem.textContent = suggestion;
                 listItem.classList.add("suggestion-item");
                 listItem.addEventListener("click", () => {
                     document.getElementById("guess-input").value = "";
-                    autocompleteList.innerHTML = ""; // Effacer la liste apr&egrave;s un clic
+                    autocompleteList.innerHTML = ""; // Effacer la liste après un clic
                     checkAnswer(suggestion);
                 });
                 autocompleteList.appendChild(listItem);
@@ -429,48 +389,41 @@
             }, 300);
         }
     }
+
     async function checkAnswer(input) {
         const answer = input.trim().toLowerCase();
         const feedback = document.getElementById("feedback");
         const countryMapping = await loadCountryMapping();
-        const reverseMapping = Object.fromEntries(
-            Object.entries(countryMapping).map(([abbr, fullName]) => [fullName.toLowerCase(), abbr.toLowerCase()])
-        );
+        const reverseMapping = Object.fromEntries(Object.entries(countryMapping).map(([abbr, fullName]) => [fullName.toLowerCase(), abbr.toLowerCase()]));
         let isCorrect = false;
 
         const clubNameMapping = await loadClubNameMapping();
-        const originalClubMapping = Object.fromEntries(
-            Object.entries(clubNameMapping).map(([original, formatted]) => [formatted.toLowerCase(), original.toLowerCase()])
-        );
+        const originalClubMapping = Object.fromEntries(Object.entries(clubNameMapping).map(([original, formatted]) => [formatted.toLowerCase(), original.toLowerCase()]));
 
-        let checkAnswerValue = answer
+        let checkAnswerValue = answer;
         if (originalClubMapping[answer]) {
-            checkAnswerValue = originalClubMapping[answer]
+            checkAnswerValue = originalClubMapping[answer];
         }
 
         if (checkAnswerValue === selectedPlayer.toLowerCase()) {
-            playerNameDisplay.textContent = selectedPlayer;
+            revealPlayerName();
             revealAllCells();
 
             let bonusScore = 5;
             const tableBody = document.getElementById('career-table-body');
-            const hiddenCells = tableBody.querySelectorAll('td.hidden')
+            const hiddenCells = tableBody.querySelectorAll('td.hidden');
 
             score = score - (attempts - 1) * 0.1;
             if (score < 0) score = 0;
             score = score + bonusScore;
-            updateScoreDisplay(score - bonusScore)
+            updateScoreDisplay(score - bonusScore);
             document.getElementById("guess-input").disabled = true;
             isCorrect = true;
         } else {
-            if (feedback) {
-                feedback.textContent = '';
-            }
+            if (feedback) feedback.textContent = '';
             attempts++;
             const attemptsElement = document.getElementById("attempts");
-            if (attemptsElement) {
-                attemptsElement.textContent = `Essais : ${attempts}`;
-            }
+            if (attemptsElement) attemptsElement.textContent = `Essais : ${attempts}`;
         }
 
         const cells = document.querySelectorAll('td[data-country], td[data-club]');
@@ -480,10 +433,8 @@
             const cellClub = cell.getAttribute('data-club')?.toLowerCase();
             if (cellClub === checkAnswerValue) {
                 const countryCell = cell.parentElement.querySelector('td[data-country].hidden');
-                if (countryCell) {
-                    revealText(countryCell);
-                }
-                revealText(cell)
+                if (countryCell) revealText(countryCell);
+                revealText(cell);
                 isCorrect = true;
             } else if (cellCountry === answer || reverseMapping[cellCountry] === answer) {
                 revealText(cell);
@@ -515,10 +466,9 @@
             cell.classList.add('visible');
         });
 
-
-        if (revealPlayerOnce === false) {
+        if (!revealPlayerOnce) {
             const tableBody = document.getElementById('career-table-body');
-            let hiddenCells = tableBody.querySelectorAll('td.hidden')
+            let hiddenCells = tableBody.querySelectorAll('td.hidden');
         }
     }
     const input = document.getElementById("guess-input");
