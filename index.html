@@ -10,42 +10,47 @@
 
 <body>
     <div class="global-container">
-        <div class="fixed-header">
-            <h1>Petit Pont Crampon</h1>
-            <p>D&eacute;masquez le joueur myst&egrave;re en trouvant les pays et les clubs dans lesquels il a jou&eacute; !</p>
-            <div class="score-attempts-container">
-                <p id="score">Score : 100 <span id="info-icon" style="cursor: pointer; font-size: 15px; margin-left: 5px; vertical-align: middle;">&#9432;</span></p>
-                <p id="attempts">Essais : 0</p>
-            </div>
-            <div id="info-window" class="info-window hidden">
-                <div class="info-header">
-                    <h3>Point System</h3>
-                    <span id="close-info" class="close-info">&#10006;</span>
-                </div>
-                <ul>
-                    <li>Finding the mystery player: 50 points + 5 points for each hidden cell.</li>
-                    <li>Correct Country: 10 points.</li>
-                    <li>Correct Club: 20 points.</li>
-                    <li>Using Indice Club: -25 points.</li>
-                    <li>Using Indice Pays: -10 points.</li>
-                    <li>Using Carri&egrave;re : Score goes to zero.</li>
-                    <li>Using R&eacute;ponse : Score goes to zero.</li>
-                </ul>
-            </div>
-            <div class="button-container">
-                <button id="indiceCountryButton">Pays</button>
-                <button id="indiceClubButton">Club</button>
-                <button id="indiceNationalityButton">Nation</button>
-                <button id="revealLettersButton">Lettres</button>
-                <button id="reponseButton">R&eacute;ponse</button>
-            </div>
-            <div class="input-container" style="position: relative;">
-                <input type="text" id="guess-input" placeholder="Tapez un pays, un club ou le nom du joueur myst&egrave;re" autocomplete="off">
-                <ul id="autocomplete-list" class="autocomplete-suggestions"></ul>
-                <div id="guess-feedback"></div>
-            </div>
-            <p id="feedback"></p>
+<div class="fixed-header">
+    <h1>Petit Pont Crampon</h1>
+    <p>D&eacute;masquez le joueur myst&egrave;re en trouvant les pays et les clubs dans lesquels il a jou&eacute; !</p>
+    <div class="score-attempts-container">
+        <p id="score">Score : 100 <span id="info-icon" style="cursor: pointer; font-size: 15px; margin-left: 5px; vertical-align: middle;">&#9432;</span></p>
+        <p id="attempts">Essais : 0</p>
+    </div>
+    <div id="info-window" class="info-window hidden">
+        <div class="info-header">
+            <h3>Point System</h3>
+            <span id="close-info" class="close-info">&#10006;</span>
         </div>
+        <ul>
+            <li>Finding the mystery player: 50 points + 5 points for each hidden cell.</li>
+            <li>Correct Country: 10 points.</li>
+            <li>Correct Club: 20 points.</li>
+            <li>Using Indice Club: -25 points.</li>
+            <li>Using Indice Pays: -10 points.</li>
+            <li>Using Carri&egrave;re : Score goes to zero.</li>
+            <li>Using R&eacute;ponse : Score goes to zero.</li>
+        </ul>
+    </div>
+    <div class="button-container">
+        <button id="indiceCountryButton">Pays</button>
+        <button id="indiceClubButton">Club</button>
+        <button id="indiceNationalityButton">Nation</button>
+        <button id="revealLettersButton">Lettres</button>
+        <button id="reponseButton">R&eacute;ponse</button>
+    </div>
+    <div class="input-container" style="position: relative;">
+        <input type="text" id="guess-input" placeholder="Tapez un pays, un club ou le nom du joueur myst&egrave;re" autocomplete="off">
+        <ul id="autocomplete-list" class="autocomplete-suggestions"></ul>
+        <div id="guess-feedback"></div>
+    </div>
+    <p id="feedback"></p>
+    <div class="player-nationality-container">
+        <div class="player-nationality hidden">
+            <!-- The flag image and country name will be inserted here by JavaScript -->
+        </div>
+    </div>
+</div>
 
             <div class="container">
                 <div class="player-info-container">
@@ -67,11 +72,6 @@
                     </h2>
                     <div id="player-name-box" class="hidden">
                         <div id="player-name-display-box"></div>
-                    </div>
-                </div>
-                <div class="player-nationality-container">
-                    <div class="player-nationality hidden">
-                        <!-- The flag image and country name will be inserted here by JavaScript -->
                     </div>
                 </div>
             </div>
