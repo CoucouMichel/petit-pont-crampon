@@ -125,6 +125,7 @@ h2.ai-style-change-1 {
     align-items: center;
     position: relative;
      top: -50px;
+    opacity: 0;
 }
 
 /* h2 styling */
@@ -138,7 +139,7 @@ h2#player-name-display {
 
 #player-name-box {
     position: absolute;
-    max-width: 400px;
+    max-width: 300px;
     top: 552px;
     left: 50%;
     transform: translate(-50%, -50%);
