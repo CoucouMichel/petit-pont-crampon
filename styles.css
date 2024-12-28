@@ -343,6 +343,7 @@ input#guess-input {
     position: absolute;
     z-index: 1;
     font-size: 11px;
+    opacity: 0;
 }
 .player-nationality.visible {
     opacity: 1;
