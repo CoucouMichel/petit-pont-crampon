@@ -684,29 +684,35 @@
         revealLettersButton.classList.add("button-disabled");
     }
 
-    function revealPlayer() {
-        if (!selectedPlayer) return;
+function revealPlayer() {
+    if (!selectedPlayer) return;
 
-        if (revealPlayerOnce) return;
+    if (revealPlayerOnce) return;
 
-        playerNameDisplay.textContent = selectedPlayer;
-        revealAllCells();
+    const rectangles = document.querySelectorAll('.player-name-rectangle');
+    rectangles.forEach(rectangle => {
+        rectangle.classList.add('hidden');
+    });
 
-        revealPlayerOnce = true;
-        reponseButton.disabled = true
-        reponseButton.classList.add("button-disabled")
-        indiceNationalityButton.disabled = true
-        indiceNationalityButton.classList.add("button-disabled")
-        revealLettersButton.disabled = true
-        revealLettersButton.classList.add("button-disabled")
-        indiceClubButton.disabled = true
-        indiceClubButton.classList.add("button-disabled")
-        indiceCountryButton.disabled = true
-        indiceCountryButton.classList.add("button-disabled")
-        const previousScore = score;
-        score = 0;
-        updateScoreDisplay(previousScore);
-    }
+    const playerNameDisplay = document.getElementById("player-name-display");
+    playerNameDisplay.textContent = selectedPlayer;
+    playerNameDisplay.classList.add('visible');
+
+    revealPlayerOnce = true;
+    reponseButton.disabled = true
+    reponseButton.classList.add("button-disabled")
+    indiceNationalityButton.disabled = true
+    indiceNationalityButton.classList.add("button-disabled")
+    revealLettersButton.disabled = true
+    revealLettersButton.classList.add("button-disabled")
+    indiceClubButton.disabled = true
+    indiceClubButton.classList.add("button-disabled")
+    indiceCountryButton.disabled = true
+    indiceCountryButton.classList.add("button-disabled")
+    const previousScore = score;
+    score = 0;
+    updateScoreDisplay(previousScore);
+}
     displayPlayerStats();
 </script>
 
