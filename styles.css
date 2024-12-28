@@ -139,12 +139,13 @@ h2#player-name-display {
 #player-name-box {
     position: absolute;
     max-width: 400px;
-    top: 560px;
+    top: 552px;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: #FF7FDE;
+    color: black;
     padding: 8px;
-    border-radius: 10px;
+    border-radius: 5px;
     z-index: 3;
     visibility: hidden; /* Initially hidden */
 }
