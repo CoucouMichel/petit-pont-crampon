@@ -72,7 +72,7 @@
             </h2>
         </div>
     </div>
-    <div class="player-nationality">
+    <div class="player-nationality hidden">
         <!-- The flag image and country name will be inserted here by JavaScript -->
     </div>
              <table id="career-table">
@@ -673,6 +673,16 @@ const input = document.getElementById("guess-input");
  revealLettersButton.addEventListener("click", function () {
         revealAllLetters();
     });
+
+function revealNationality() {
+    if(!selectedPlayer) return;
+    const nameDisplay = document.getElementById('player-name-display');
+    const spanNationality = document.querySelector('.player-nationality');
+        spanNationality.classList.remove('hidden')
+          spanNationality.classList.add('visible')
+    indiceNationalityButton.disabled = true;
+    indiceNationalityButton.classList.add("button-disabled");
+}
     
 function revealAllLetters() {
             if (!selectedPlayer) return;
