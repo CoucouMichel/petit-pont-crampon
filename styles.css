@@ -159,7 +159,7 @@ table#career-table {
   z-index: 10;
   border-collapse: collapse;
   margin-bottom: 20px;
-  position: fixed;
+  position: relative;
     top: 100px;
     table-layout: fixed;
 }
