@@ -159,10 +159,9 @@ table#career-table {
   z-index: 10;
   border-collapse: collapse;
   margin-bottom: 20px;
-  position: relative;
-    top: 0px;
+  position: fixed;
+    top: 100px;
     table-layout: fixed;
-    margin-top: -60px;
 }
 
 /* Définir la largeur des colonnes */
