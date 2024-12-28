@@ -739,28 +739,32 @@
         revealLettersButton.classList.add("button-disabled");
     }
 
-    function revealPlayer() {
-        if (!selectedPlayer) return;
+// Inside the revealPlayer function
+function revealPlayer() {
+    if (!selectedPlayer) return;
 
-        if (revealPlayerOnce) return;
+    if (revealPlayerOnce) return;
 
-        playerNameDisplay.textContent = selectedPlayer;
-        revealAllCells();
+    playerNameDisplay.textContent = selectedPlayer;
+    playerNameDisplayBox.textContent = selectedPlayer; // Add this line
+    document.getElementById("player-name-box").classList.add("visible"); // Add this line
+    revealAllCells();
 
-        revealPlayerOnce = true;
-        reponseButton.disabled = true
-        reponseButton.classList.add("button-disabled")
-        indiceNationalityButton.disabled = true
-        indiceNationalityButton.classList.add("button-disabled")
-        revealLettersButton.disabled = true
-        revealLettersButton.classList.add("button-disabled")
-        indiceClubButton.disabled = true
-        indiceClubButton.classList.add("button-disabled")
-        indiceCountryButton.disabled = true
-        indiceCountryButton.classList.add("button-disabled")
-        const previousScore = score;
-        score = 0;
-        updateScoreDisplay(previousScore);
+    revealPlayerOnce = true;
+    reponseButton.disabled = true;
+    reponseButton.classList.add("button-disabled");
+    indiceNationalityButton.disabled = true;
+    indiceNationalityButton.classList.add("button-disabled");
+    revealLettersButton.disabled = true;
+    revealLettersButton.classList.add("button-disabled");
+    indiceClubButton.disabled = true;
+    indiceClubButton.classList.add("button-disabled");
+    indiceCountryButton.disabled = true;
+    indiceCountryButton.classList.add("button-disabled");
+    const previousScore = score;
+    score = 0;
+    updateScoreDisplay(previousScore);
+}
     }
     displayPlayerStats();
 </script>
