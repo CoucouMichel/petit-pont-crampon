@@ -740,17 +740,20 @@ function revealNationality() {
 // Inside the revealPlayer function
 function revealPlayer() {
     if (!selectedPlayer) return;
-
     if (revealPlayerOnce) return;
 
     // Check if playerNameDisplayBox and player-name-box are correctly referenced
     const playerNameDisplayBox = document.getElementById("player-name-display-box");
     const playerNameBox = document.getElementById("player-name-box");
+    const spanNationality = document.querySelector('.player-nationality');
 
     if (playerNameDisplayBox && playerNameBox) {
         playerNameDisplay.textContent = selectedPlayer;
         playerNameDisplayBox.textContent = selectedPlayer;
         playerNameBox.classList.add("visible");
+        if (spanNationality) {
+            spanNationality.classList.add('visible');
+        }
     } else {
         console.error("player-name-display-box or player-name-box element is missing");
     }
