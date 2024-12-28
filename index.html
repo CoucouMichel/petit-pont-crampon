@@ -711,6 +711,7 @@
 function revealNationality() {
     const spanNationality = document.querySelector('.player-nationality');
     if (spanNationality) {
+        spanNationality.classList.remove('hidden');
         spanNationality.classList.add('visible');
         indiceNationalityButton.disabled = true;
         indiceNationalityButton.classList.add("button-disabled");
