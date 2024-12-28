@@ -136,6 +136,22 @@ h2#player-name-display {
     width: 100%;
 }
 
+#player-name-box {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+    z-index: 3;
+    visibility: hidden; /* Initially hidden */
+}
+
+#player-name-box.visible {
+    visibility: visible;
+}
+
 /* Style du tableau */
 table#career-table {
   width: 100%;
