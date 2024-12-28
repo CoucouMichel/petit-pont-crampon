@@ -706,15 +706,15 @@
         revealAllLetters();
     });
 
-    function revealNationality() {
-        if (!selectedPlayer) return;
-        const nameDisplay = document.getElementById('player-name-display');
-        const spanNationality = document.querySelector('.player-nationality');
-        spanNationality.classList.remove('hidden')
-        spanNationality.classList.add('visible')
-        indiceNationalityButton.disabled = true;
-        indiceNationalityButton.classList.add("button-disabled");
-    }
+  function revealNationality() {
+    if (!selectedPlayer) return;
+
+    const spanNationality = document.querySelector('.player-nationality');
+    spanNationality.classList.remove('hidden');
+    spanNationality.classList.add('visible');
+    indiceNationalityButton.disabled = true;
+    indiceNationalityButton.classList.add("button-disabled");
+}
 
     function revealAllLetters() {
         if (!selectedPlayer) return;
@@ -737,7 +737,8 @@
         revealLettersButton.classList.add("button-disabled");
     }
 
-  function revealPlayer() {
+  
+function revealPlayer() {
     if (!selectedPlayer) return;
 
     if (revealPlayerOnce) return;
@@ -751,6 +752,10 @@
     const playerNameDisplay = document.getElementById("player-name-display");
     playerNameDisplay.textContent = selectedPlayer;
     playerNameBox.classList.add('visible');
+
+    const spanNationality = document.querySelector('.player-nationality');
+    spanNationality.classList.remove('hidden');
+    spanNationality.classList.add('visible');
 
     revealPlayerOnce = true;
     reponseButton.disabled = true;
