@@ -238,6 +238,15 @@ td[data-club] {
      th, td {
            padding: 8px;
     }
+        #player-name-box {
+        top: 572px !important;
+        transform: none !important;
+        left: 0 !important;
+        right: 0 !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        width: fit-content !important;
+    }
 }
 
 /* Centrer la barre de saisie */
