@@ -375,20 +375,16 @@ input#guess-input {
 
 .player-nationality {
     text-align: center;
-     transition: opacity 0.5s ease-in-out;
-    margin-bottom: 10px; /* Add a margin bottom */
-    position: absolute;
-    z-index: 1000;
+    transition: opacity 0.5s ease-in-out;
+    margin-bottom: 10px;
+    position: relative; /* Change from absolute to relative */
+    z-index: 1;
     font-size: 11px;
     opacity: 0;
 }
+
 .player-nationality.visible {
     opacity: 1;
-}
-.name-container {
-  display: flex;
-  flex-direction: column;
-    align-items: center;
 }
 
 /* Définir la largeur des colonnes */
