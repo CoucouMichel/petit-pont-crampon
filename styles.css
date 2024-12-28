@@ -141,8 +141,8 @@ h2#player-name-display {
     position: absolute;
     max-width: 300px;
     width: fit-content;
-    font-size: 25px;
-    top: 588px;
+    font-size: 20px;
+    top: 568px;
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: #529f39;
@@ -150,7 +150,8 @@ h2#player-name-display {
     padding: 5px;
     border-radius: 5px;
     z-index: 3;
-    visibility: hidden;
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
 #player-name-box.visible {
