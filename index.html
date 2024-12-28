@@ -550,19 +550,24 @@ const input = document.getElementById("guess-input");
         
         const indiceClubButton = document.getElementById("indiceClubButton");
         const indiceCountryButton = document.getElementById("indiceCountryButton");
-        const carriereButton = document.getElementById("carriereButton");
+        const indiceNationalityButton = document.getElementById("indiceNationality");
+        let showNationalityOnce = false;
         const reponseButton = document.getElementById("reponseButton");
         
         indiceClubButton.addEventListener("click", function () {
-            revealRandomClueClub();
+        revealRandomClueClub();
         });
         
         indiceCountryButton.addEventListener("click", function () {
-           revealRandomClueCountry();
+        revealRandomClueCountry();
+        });
+
+        indiceNationalityButton.addEventListener("click", function () {
+        revealNationality();
         });
         
         reponseButton.addEventListener("click", function () {
-           revealPlayer();
+        revealPlayer();
         });
          function revealRandomClueClub() {
             if (!selectedPlayer) return;
