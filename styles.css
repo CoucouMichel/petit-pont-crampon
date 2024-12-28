@@ -342,6 +342,7 @@ input#guess-input {
     margin-bottom: 10px; /* Add a margin bottom */
     position: absolute;
     z-index: 1;
+    font-size: 11px;
 }
 .player-nationality.visible {
     opacity: 1;
