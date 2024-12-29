@@ -98,7 +98,6 @@
     let revealPlayerOnce = false;
     let score = 95;
     const playerNameDisplay = document.getElementById("player-name-display");
-    const playerNameDisplayBox = document.getElementById("player-name-display-box");
     let currentSuggestions = [];
     const globalContainer = document.querySelector('.global-container');
     const fixedHeader = document.querySelector('.fixed-header');
@@ -450,10 +449,6 @@
         }
 
         if (checkAnswerValue === selectedPlayer.toLowerCase()) {
-            // Show player name in the player-name-box
-            playerNameDisplayBox.textContent = selectedPlayer;
-            document.getElementById("player-name-box").classList.add("visible");
-            
             playerNameDisplay.textContent = selectedPlayer;
             revealAllCells();
 
@@ -739,43 +734,32 @@
         revealLettersButton.classList.add("button-disabled");
     }
 
-// Inside the revealPlayer function
-function revealPlayer() {
-    if (!selectedPlayer) return;
+    function revealPlayer() {
+        if (!selectedPlayer) return;
 
-    if (revealPlayerOnce) return;
+        if (revealPlayerOnce) return;
 
-    // Check if playerNameDisplayBox and player-name-box are correctly referenced
-    const playerNameDisplayBox = document.getElementById("player-name-display-box");
-    const playerNameBox = document.getElementById("player-name-box");
-
-    if (playerNameDisplayBox && playerNameBox) {
         playerNameDisplay.textContent = selectedPlayer;
-        playerNameDisplayBox.textContent = selectedPlayer;
-        playerNameBox.classList.add("visible");
-    } else {
-        console.error("player-name-display-box or player-name-box element is missing");
+        revealAllCells();
+
+        revealPlayerOnce = true;
+        reponseButton.disabled = true
+        reponseButton.classList.add("button-disabled")
+        indiceNationalityButton.disabled = true
+        indiceNationalityButton.classList.add("button-disabled")
+        revealLettersButton.disabled = true
+        revealLettersButton.classList.add("button-disabled")
+        indiceClubButton.disabled = true
+        indiceClubButton.classList.add("button-disabled")
+        indiceCountryButton.disabled = true
+        indiceCountryButton.classList.add("button-disabled")
+        const previousScore = score;
+        score = 0;
+        updateScoreDisplay(previousScore);
     }
-
-    revealAllCells();
-
-    revealPlayerOnce = true;
-    reponseButton.disabled = true;
-    reponseButton.classList.add("button-disabled");
-    indiceNationalityButton.disabled = true;
-    indiceNationalityButton.classList.add("button-disabled");
-    revealLettersButton.disabled = true;
-    revealLettersButton.classList.add("button-disabled");
-    indiceClubButton.disabled = true;
-    indiceClubButton.classList.add("button-disabled");
-    indiceCountryButton.disabled = true;
-    indiceCountryButton.classList.add("button-disabled");
-    const previousScore = score;
-    score = 0;
-    updateScoreDisplay(previousScore);
-}
     displayPlayerStats();
 </script>
 
 </html>
+
 
