@@ -381,11 +381,11 @@ input#guess-input {
     opacity: 0;
     transition: opacity 0.5s ease-in-out;
     margin-bottom: 10px;
-    display: block;
+    display: block; /* Ensure it takes up space */
 }
-
 .player-nationality.visible {
-  opacity: 1;
+    opacity: 1;
+    display: block;
 }
 
 /* Définir la largeur des colonnes */
