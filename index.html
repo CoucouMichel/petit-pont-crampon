@@ -46,7 +46,7 @@
     </div>
     <p id="feedback"></p>
     <div class="player-nationality-container">
-        <div class="player-nationality">
+        <div class="player-nationality hidden">
             <!-- The flag image and country name will be inserted here by JavaScript -->
         </div>
     </div>
@@ -220,117 +220,124 @@
 
         }
     }
-  async function displayPlayerStats() {
-    const clubNameMapping = await loadClubNameMapping();
-    const countryMapping = await loadCountryMapping();
-    const clubLogos = await loadClubLogos();
-    const stats = await selectRandomPlayer();
-    const countries = await loadCountries();
-    const clubCountries = await loadClubsCountries();
+    async function displayPlayerStats() {
+        const clubNameMapping = await loadClubNameMapping();
+        const countryMapping = await loadCountryMapping();
+        const clubLogos = await loadClubLogos();
+        const stats = await selectRandomPlayer();
+        const countries = await loadCountries();
+        const clubCountries = await loadClubsCountries();
 
-    // Initial display as rectangles
-    playerNameDisplay.innerHTML = "";
-    if (selectedPlayer) {
-        for (let i = 0; i < selectedPlayer.length; i++) {
-            if (selectedPlayer[i] === " ") {
-                const space = document.createElement("span");
-                space.innerHTML = "&nbsp;";
-                playerNameDisplay.appendChild(space);
+
+        // Initial display as rectangles
+        playerNameDisplay.innerHTML = "";
+        if (selectedPlayer) {
+            for (let i = 0; i < selectedPlayer.length; i++) {
+                if (selectedPlayer[i] === " ") {
+                    const space = document.createElement("span")
+                    space.innerHTML = "&nbsp;"
+                    playerNameDisplay.appendChild(space)
+                } else {
+                    const rectangle = document.createElement("span");
+                    rectangle.classList.add("player-name-rectangle");
+                    rectangle.id = `letter-${i}`
+                    playerNameDisplay.appendChild(rectangle);
+                }
+            }
+            if (clubCountries && clubCountries[selectedPlayer]) {
+                const playerCountryName = clubCountries[selectedPlayer]
+
+                const playerCountryCode = countries[playerCountryName] || playerCountryName;
+
+
+                const flagUrl = `https://flagcdn.com/w20/${playerCountryCode}.png`;
+                const flagSpan = document.createElement('div');
+                flagSpan.classList.add('player-nationality');
+                flagSpan.innerHTML = `
+                            <img src="${flagUrl}" alt="${playerCountryName} flag" style="width: 20px; height: 15px; margin-right: 5px; vertical-align: middle;"> ${playerCountryName}
+                        `;
+                playerNameDisplay.appendChild(flagSpan);
+            }
+        }
+
+        adjustGlobalContainerMargin();
+        window.addEventListener('resize', adjustGlobalContainerMargin);
+
+        document.getElementById('score').innerHTML = `Score : ${score.toFixed(2)} <span id="info-icon" style="cursor: pointer; font-size: 15px; margin-left: 5px; vertical-align: middle;">&#9432;`;
+
+
+        const tableBody = document.getElementById('career-table-body');
+        tableBody.innerHTML = '';
+        revealPlayerOnce = false
+        revealedCells = [];
+        if (!Array.isArray(stats)) {
+            console.error("Expected stats to be an array, but got:", stats);
+            return;
+        }
+
+        let mergedStats = [];
+        let currentMerged = null;
+
+        for (const stat of stats) {
+            if (stat.season && stat.season.toLowerCase().includes("season")) return;
+            const formattedClubName = clubNameMapping[stat.team] || stat.team;
+            const fullCountryName = countryMapping[stat.country] || stat.country;
+
+            if (currentMerged && currentMerged.team === formattedClubName && currentMerged.country === fullCountryName) {
+                currentMerged.endSeason = stat.season;
+
             } else {
-                const rectangle = document.createElement("span");
-                rectangle.classList.add("player-name-rectangle");
-                rectangle.id = `letter-${i}`;
-                playerNameDisplay.appendChild(rectangle);
+                if (currentMerged) {
+                    mergedStats.push(currentMerged)
+                }
+                currentMerged = {
+                    startSeason: stat.season,
+                    endSeason: stat.season,
+                    team: formattedClubName,
+                    country: fullCountryName,
+                    teamCode: stat.team,
+                    countryCode: stat.country
+                }
             }
         }
-        if (clubCountries && clubCountries[selectedPlayer]) {
-            const playerCountryName = clubCountries[selectedPlayer];
-            const playerCountryCode = countries[playerCountryName] || playerCountryName;
 
-            const flagUrl = `https://flagcdn.com/w20/${playerCountryCode}.png`;
-            const flagSpan = document.createElement('div');
-            flagSpan.classList.add('player-nationality');
-            flagSpan.innerHTML = `
-                        <img src="${flagUrl}" alt="${playerCountryName} flag" style="width: 20px; height: 15px; margin-right: 5px; vertical-align: middle;"> ${playerCountryName}
-                    `;
-            playerNameDisplay.appendChild(flagSpan);
+
+        if (currentMerged) {
+            mergedStats.push(currentMerged)
+        }
+        tableSize = mergedStats.length
+
+        for (const mergedStat of mergedStats) {
+            const fullCountryName = countryMapping[mergedStat.countryCode] || mergedStat.countryCode;
+            const flagUrl = `https://flagcdn.com/w20/${mergedStat.countryCode}.png`;
+
+            // Use the clubNameMapping to change club names
+            const formattedClubName = clubNameMapping[mergedStat.teamCode] || mergedStat.teamCode;
+            const logoUrl = clubLogos[mergedStat.teamCode] || '';
+            const startSeason = mergedStat.startSeason;
+            const endSeason = mergedStat.endSeason;
+
+            const formattedSeason = startSeason === endSeason ?
+                startSeason.substring(0, 9) :
+                `${startSeason.substring(0, 4)}-${endSeason.substring(endSeason.length - 4)}`;
+
+            const row = document.createElement('tr');
+
+            row.innerHTML = `
+                       <td>${formattedSeason}
+                        <td class="hidden" data-club="${mergedStat.teamCode}">
+                                <img src="${logoUrl}" alt="${formattedClubName} logo" style="width: 20px; height: 20px; margin-right: 5px;">
+                                ${formattedClubName}
+                            
+                            <td class="hidden" data-country="${fullCountryName}">
+                                  <img src="${flagUrl}" alt="${fullCountryName} flag" style="width: 20px; height: 15px; margin-right: 5px; vertical-align: middle;">
+                            ${fullCountryName}
+                             
+                   `;
+            tableBody.appendChild(row);
+
         }
     }
-
-    adjustGlobalContainerMargin();
-    window.addEventListener('resize', adjustGlobalContainerMargin);
-
-    document.getElementById('score').innerHTML = `Score : ${score.toFixed(2)} <span id="info-icon" style="cursor: pointer; font-size: 15px; margin-left: 5px; vertical-align: middle;">&#9432;`;
-
-    const tableBody = document.getElementById('career-table-body');
-    tableBody.innerHTML = '';
-    revealPlayerOnce = false;
-    revealedCells = [];
-    if (!Array.isArray(stats)) {
-        console.error("Expected stats to be an array, but got:", stats);
-        return;
-    }
-
-    let mergedStats = [];
-    let currentMerged = null;
-
-    for (const stat of stats) {
-        if (stat.season && stat.season.toLowerCase().includes("season")) return;
-        const formattedClubName = clubNameMapping[stat.team] || stat.team;
-        const fullCountryName = countryMapping[stat.country] || stat.country;
-
-        if (currentMerged && currentMerged.team === formattedClubName && currentMerged.country === fullCountryName) {
-            currentMerged.endSeason = stat.season;
-        } else {
-            if (currentMerged) {
-                mergedStats.push(currentMerged);
-            }
-            currentMerged = {
-                startSeason: stat.season,
-                endSeason: stat.season,
-                team: formattedClubName,
-                country: fullCountryName,
-                teamCode: stat.team,
-                countryCode: stat.country
-            };
-        }
-    }
-
-    if (currentMerged) {
-        mergedStats.push(currentMerged);
-    }
-    tableSize = mergedStats.length;
-
-    for (const mergedStat of mergedStats) {
-        const fullCountryName = countryMapping[mergedStat.countryCode] || mergedStat.countryCode;
-        const flagUrl = `https://flagcdn.com/w20/${mergedStat.countryCode}.png`;
-
-        // Use the clubNameMapping to change club names
-        const formattedClubName = clubNameMapping[mergedStat.teamCode] || mergedStat.teamCode;
-        const logoUrl = clubLogos[mergedStat.teamCode] || '';
-        const startSeason = mergedStat.startSeason;
-        const endSeason = mergedStat.endSeason;
-
-        const formattedSeason = startSeason === endSeason ?
-            startSeason.substring(0, 9) :
-            `${startSeason.substring(0, 4)}-${endSeason.substring(endSeason.length - 4)}`;
-
-        const row = document.createElement('tr');
-
-        row.innerHTML = `
-                   <td>${formattedSeason}
-                    <td class="hidden" data-club="${mergedStat.teamCode}">
-                            <img src="${logoUrl}" alt="${formattedClubName} logo" style="width: 20px; height: 20px; margin-right: 5px;">
-                            ${formattedClubName}
-                        
-                        <td class="hidden" data-country="${fullCountryName}">
-                              <img src="${flagUrl}" alt="${fullCountryName} flag" style="width: 20px; height: 15px; margin-right: 5px; vertical-align: middle;">
-                        ${fullCountryName}
-                         
-               `;
-        tableBody.appendChild(row);
-    }
-}
     async function loadCountries() {
         try {
             const response = await fetch('./countries.json');
@@ -701,15 +708,16 @@
         revealAllLetters();
     });
 
-  function revealNationality() {
-    if (!selectedPlayer) return;
+    function revealNationality() {
+        if (!selectedPlayer) return;
+        const nameDisplay = document.getElementById('player-name-display');
+        const spanNationality = document.querySelector('.player-nationality');
+        spanNationality.classList.remove('hidden')
+        spanNationality.classList.add('visible')
+        indiceNationalityButton.disabled = true;
+        indiceNationalityButton.classList.add("button-disabled");
+    }
 
-    const spanNationality = document.querySelector('.player-nationality');
-    spanNationality.classList.remove('hidden');
-    spanNationality.classList.add('visible');
-    indiceNationalityButton.disabled = true;
-    indiceNationalityButton.classList.add("button-disabled");
-}
     function revealAllLetters() {
         if (!selectedPlayer) return;
 
@@ -734,25 +742,23 @@
 // Inside the revealPlayer function
 function revealPlayer() {
     if (!selectedPlayer) return;
+
     if (revealPlayerOnce) return;
 
+    // Check if playerNameDisplayBox and player-name-box are correctly referenced
     const playerNameDisplayBox = document.getElementById("player-name-display-box");
     const playerNameBox = document.getElementById("player-name-box");
-    const spanNationality = document.querySelector('.player-nationality');
 
     if (playerNameDisplayBox && playerNameBox) {
         playerNameDisplay.textContent = selectedPlayer;
         playerNameDisplayBox.textContent = selectedPlayer;
         playerNameBox.classList.add("visible");
-        if (spanNationality) {
-            spanNationality.classList.remove('hidden');
-            spanNationality.classList.add('visible');
-        }
     } else {
         console.error("player-name-display-box or player-name-box element is missing");
     }
 
     revealAllCells();
+
     revealPlayerOnce = true;
     reponseButton.disabled = true;
     reponseButton.classList.add("button-disabled");
@@ -764,10 +770,12 @@ function revealPlayer() {
     indiceClubButton.classList.add("button-disabled");
     indiceCountryButton.disabled = true;
     indiceCountryButton.classList.add("button-disabled");
+    const previousScore = score;
     score = 0;
-    updateScoreDisplay(score);
+    updateScoreDisplay(previousScore);
 }
     displayPlayerStats();
 </script>
 
 </html>
+
