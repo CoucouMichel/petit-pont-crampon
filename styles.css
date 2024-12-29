@@ -79,11 +79,11 @@ button:disabled {
 }
 
 .hidden {
-    display: none;
+    opacity: 0;
 }
 
 .visible {
-    display: inline;
+    opacity: 1;
 }
 
 .button-container {
