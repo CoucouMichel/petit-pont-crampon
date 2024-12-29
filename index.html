@@ -702,15 +702,21 @@
         revealAllLetters();
     });
 
-  function revealNationality() {
-    if (!selectedPlayer) return;
+     function revealNationality() {
+         if(!selectedPlayer) return;
 
-    const spanNationality = document.querySelector('.player-nationality');
-    spanNationality.classList.remove('hidden');
-    spanNationality.classList.add('visible');
-    indiceNationalityButton.disabled = true;
-    indiceNationalityButton.classList.add("button-disabled");
-}
+        if (revealPlayerOnce) return;
+        const nameDisplay = document.getElementById('player-name-display');
+       const spanNationality = nameDisplay.querySelector('.player-nationality');
+        
+         if(spanNationality) {
+             spanNationality.classList.add('visible')
+          }
+
+        indiceNationalityButton.disabled = true;
+         indiceNationalityButton.classList.add("button-disabled");
+      
+   }
     function revealAllLetters() {
         if (!selectedPlayer) return;
 
