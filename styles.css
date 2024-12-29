@@ -16,7 +16,7 @@ body {
   margin: 0;
   padding: 0;
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: flex-start; /* Changed to align items to the top */
   min-height: 100vh;
   text-align: center;
@@ -125,37 +125,17 @@ h2.ai-style-change-1 {
     align-items: center;
     position: relative;
      top: -50px;
-    opacity: 0;
 }
 
 /* h2 styling */
 h2#player-name-display {
+    display: flex;
     flex-direction: row;
     align-items: center;
     white-space: nowrap;
     width: 100%;
 }
 
-#player-name-box {
-    position: absolute;
-    max-width: 300px;
-    width: fit-content;
-    font-size: 20px;
-    top: 568px;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: #529f39;
-    color: #ffffff;
-    padding: 5px;
-    border-radius: 5px;
-    z-index: 3;
-    padding-left: 20px;
-    padding-right: 20px;
-}
-
-#player-name-box.visible {
-    visibility: visible;
-}
 /* Style du tableau */
 table#career-table {
   width: 100%;
@@ -164,8 +144,9 @@ table#career-table {
   border-collapse: collapse;
   margin-bottom: 20px;
   position: relative;
-    top: 35px;
+    top: 0px;
     table-layout: fixed;
+    margin-top: -60px;
 }
 
 /* Définir la largeur des colonnes */
@@ -240,19 +221,6 @@ td[data-club] {
     
      th, td {
            padding: 8px;
-    }
-    #player-name-box {
-        top: 568px !important;
-        transform: none !important;
-        left: 0 !important;
-        right: 0 !important;
-        margin-left: auto !important;
-        margin-right: auto !important;
-        width: fit-content !important;
-        padding: 5px;
-        font-size: 20px;
-        padding-left: 20px;
-        padding-right: 20px;
     }
 }
 
@@ -350,11 +318,10 @@ input#guess-input {
 }
 
 #player-name-display {
-    display: none;
+    display: flex;
     align-items: center;
     white-space: nowrap;
     justify-content: center;
-    
 }
  .rectangles-container {
   display: flex;
@@ -367,25 +334,23 @@ input#guess-input {
     top: -50px;
 }
 
-.player-nationality-container {
-    width: 100%;
-    text-align: center;
-    position: relative;
-    height: auto;
-    min-height: 50px; 
-}
-
 .player-nationality {
-    margin-top: 5px;
+    margin-top: -70px;
     text-align: center;
+     transition: opacity 0.5s ease-in-out;
+    margin-bottom: 10px; /* Add a margin bottom */
+    position: absolute;
+    z-index: 1;
+    font-size: 11px;
     opacity: 0;
-    transition: opacity 0.5s ease-in-out;
-    margin-bottom: 10px;
-    display: block; /* Ensure it takes up space */
 }
 .player-nationality.visible {
     opacity: 1;
-    display: block;
+}
+.name-container {
+  display: flex;
+  flex-direction: column;
+    align-items: center;
 }
 
 /* Définir la largeur des colonnes */
@@ -547,6 +512,10 @@ th:nth-child(3), td:nth-child(3) {
 }
 .info-window ul {
   padding-left: 20px;
+}
+
+.info-window.hidden {
+    display: none;
 }
 
 .info-header {
