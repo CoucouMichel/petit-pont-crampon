@@ -219,124 +219,97 @@
 
         }
     }
-    async function displayPlayerStats() {
-        const clubNameMapping = await loadClubNameMapping();
-        const countryMapping = await loadCountryMapping();
-        const clubLogos = await loadClubLogos();
-        const stats = await selectRandomPlayer();
-        const countries = await loadCountries();
-        const clubCountries = await loadClubsCountries();
+   async function displayPlayerStats() {
+            const clubNameMapping = await loadClubNameMapping(); // Load the club name mappings
+            const countryMapping = await loadCountryMapping(); // Load the country mapping
+            const clubLogos = await loadClubLogos(); // Load the club logos
+            const stats = await selectRandomPlayer(); // Fetch the player stats
+         const countries = await loadClubsCountries();
+
+             // Initial display as rectangles
+           createRectangles()
 
 
-        // Initial display as rectangles
-        playerNameDisplay.innerHTML = "";
-        if (selectedPlayer) {
-            for (let i = 0; i < selectedPlayer.length; i++) {
-                if (selectedPlayer[i] === " ") {
-                    const space = document.createElement("span")
-                    space.innerHTML = "&nbsp;"
-                    playerNameDisplay.appendChild(space)
-                } else {
-                    const rectangle = document.createElement("span");
-                    rectangle.classList.add("player-name-rectangle");
-                    rectangle.id = `letter-${i}`
-                    playerNameDisplay.appendChild(rectangle);
-                }
+            adjustGlobalContainerMargin();
+            window.addEventListener('resize', adjustGlobalContainerMargin);
+
+         document.getElementById('score').innerHTML = `Score : ${score.toFixed(2)} <span id="info-icon" style="cursor: pointer; font-size: 15px; margin-left: 5px; vertical-align: middle;">ⓘ</span>`;
+
+        
+            const tableBody = document.getElementById('career-table-body'); // Get the table body element
+        
+            tableBody.innerHTML = ''; // Clear existing rows
+            revealPlayerOnce = false //reset the value
+             revealedCells = [];
+            // Check if stats is an array
+            if (!Array.isArray(stats)) {
+                console.error("Expected stats to be an array, but got:", stats);
+                return; // Exit the function if stats is not an array
             }
-            if (clubCountries && clubCountries[selectedPlayer]) {
-                const playerCountryName = clubCountries[selectedPlayer]
+        
+           let mergedStats = [];
+            let currentMerged = null;
 
-                const playerCountryCode = countries[playerCountryName] || playerCountryName;
-
-
-                const flagUrl = `https://flagcdn.com/w20/${playerCountryCode}.png`;
-                const flagSpan = document.createElement('div');
-                flagSpan.classList.add('player-nationality');
-                flagSpan.innerHTML = `
-                            <img src="${flagUrl}" alt="${playerCountryName} flag" style="width: 20px; height: 15px; margin-right: 5px; vertical-align: middle;"> ${playerCountryName}
-                        `;
-                playerNameDisplay.appendChild(flagSpan);
+            for (const stat of stats) {
+                 if (stat.season && stat.season.toLowerCase().includes("season")) return;
+                const formattedClubName = clubNameMapping[stat.team] || stat.team;
+                 const fullCountryName = countryMapping[stat.country] || stat.country;
+                
+               if (currentMerged && currentMerged.team === formattedClubName && currentMerged.country === fullCountryName) {
+                   currentMerged.endSeason = stat.season;
+                   
+               } else {
+                    if(currentMerged) {
+                       mergedStats.push(currentMerged)
+                    }
+                   currentMerged = {
+                       startSeason: stat.season,
+                       endSeason: stat.season,
+                        team: formattedClubName,
+                        country:fullCountryName,
+                       teamCode: stat.team,
+                        countryCode: stat.country
+                    }
+               }
             }
-        }
-
-        adjustGlobalContainerMargin();
-        window.addEventListener('resize', adjustGlobalContainerMargin);
-
-        document.getElementById('score').innerHTML = `Score : ${score.toFixed(2)} <span id="info-icon" style="cursor: pointer; font-size: 15px; margin-left: 5px; vertical-align: middle;">&#9432;`;
 
 
-        const tableBody = document.getElementById('career-table-body');
-        tableBody.innerHTML = '';
-        revealPlayerOnce = false
-        revealedCells = [];
-        if (!Array.isArray(stats)) {
-            console.error("Expected stats to be an array, but got:", stats);
-            return;
-        }
-
-        let mergedStats = [];
-        let currentMerged = null;
-
-        for (const stat of stats) {
-            if (stat.season && stat.season.toLowerCase().includes("season")) return;
-            const formattedClubName = clubNameMapping[stat.team] || stat.team;
-            const fullCountryName = countryMapping[stat.country] || stat.country;
-
-            if (currentMerged && currentMerged.team === formattedClubName && currentMerged.country === fullCountryName) {
-                currentMerged.endSeason = stat.season;
-
-            } else {
-                if (currentMerged) {
-                    mergedStats.push(currentMerged)
-                }
-                currentMerged = {
-                    startSeason: stat.season,
-                    endSeason: stat.season,
-                    team: formattedClubName,
-                    country: fullCountryName,
-                    teamCode: stat.team,
-                    countryCode: stat.country
-                }
+         if(currentMerged) {
+                 mergedStats.push(currentMerged)
             }
-        }
+          tableSize = mergedStats.length
 
+            for (const mergedStat of mergedStats) {
+                  const fullCountryName = countryMapping[mergedStat.countryCode] || mergedStat.countryCode;
+                   const flagUrl = `https://flagcdn.com/w20/${mergedStat.countryCode}.png`;
+                  
+                     // Use the clubNameMapping to change club names
+                    const formattedClubName = clubNameMapping[mergedStat.teamCode] || mergedStat.teamCode;
+                   const logoUrl = clubLogos[mergedStat.teamCode] || '';
+                   const startSeason = mergedStat.startSeason;
+                    const endSeason = mergedStat.endSeason;
 
-        if (currentMerged) {
-            mergedStats.push(currentMerged)
-        }
-        tableSize = mergedStats.length
+                 const formattedSeason = startSeason === endSeason
+                ? startSeason.substring(0,9)
+                : `${startSeason.substring(0, 4)}-${endSeason.substring(endSeason.length - 4)}`;
+             
+                    const row = document.createElement('tr');
 
-        for (const mergedStat of mergedStats) {
-            const fullCountryName = countryMapping[mergedStat.countryCode] || mergedStat.countryCode;
-            const flagUrl = `https://flagcdn.com/w20/${mergedStat.countryCode}.png`;
-
-            // Use the clubNameMapping to change club names
-            const formattedClubName = clubNameMapping[mergedStat.teamCode] || mergedStat.teamCode;
-            const logoUrl = clubLogos[mergedStat.teamCode] || '';
-            const startSeason = mergedStat.startSeason;
-            const endSeason = mergedStat.endSeason;
-
-            const formattedSeason = startSeason === endSeason ?
-                startSeason.substring(0, 9) :
-                `${startSeason.substring(0, 4)}-${endSeason.substring(endSeason.length - 4)}`;
-
-            const row = document.createElement('tr');
-
-            row.innerHTML = `
-                       <td>${formattedSeason}
+                   row.innerHTML = `
+                       <td>${formattedSeason}</td>
                         <td class="hidden" data-club="${mergedStat.teamCode}">
                                 <img src="${logoUrl}" alt="${formattedClubName} logo" style="width: 20px; height: 20px; margin-right: 5px;">
                                 ${formattedClubName}
-                            
+                            </td>
                             <td class="hidden" data-country="${fullCountryName}">
                                   <img src="${flagUrl}" alt="${fullCountryName} flag" style="width: 20px; height: 15px; margin-right: 5px; vertical-align: middle;">
                             ${fullCountryName}
-                             
+                             </td>
                    `;
-            tableBody.appendChild(row);
+                 tableBody.appendChild(row);
 
+            }
         }
-    }
     async function loadCountries() {
         try {
             const response = await fetch('./countries.json');
@@ -350,24 +323,37 @@
         }
     }
 
-    function createRectangles() {
-        playerNameDisplay.innerHTML = "";
-        if (selectedPlayer) {
-            for (let i = 0; i < selectedPlayer.length; i++) {
-                if (selectedPlayer[i] === " ") {
-                    const space = document.createElement("span")
-                    space.innerHTML = " "
-                    playerNameDisplay.appendChild(space)
-                } else {
-                    const rectangle = document.createElement("span");
-                    rectangle.classList.add("player-name-rectangle");
-                    rectangle.classList.add("hidden");
-                    rectangle.id = `letter-${i}`
-                    playerNameDisplay.appendChild(rectangle);
+  function createRectangles() {
+            playerNameDisplay.innerHTML = "";
+            if(selectedPlayer) {
+                 for (let i = 0; i < selectedPlayer.length; i++) {
+                      if (selectedPlayer[i] === " ") {
+                         const space = document.createElement("span")
+                         space.innerHTML = " "
+                         playerNameDisplay.appendChild(space)
+                      } else {
+                        const rectangle = document.createElement("span");
+                        rectangle.classList.add("player-name-rectangle");
+                         rectangle.id = `letter-${i}`
+                         playerNameDisplay.appendChild(rectangle);
+                       }
                 }
+                    const playersData = await loadPlayerStats()
+                    if(playersData[selectedPlayer] && playersData[selectedPlayer].length > 0) {
+                        const firstStat = playersData[selectedPlayer][0]
+                        const playerCountryCode = firstStat.country
+                    const playerCountryName = countryMapping[playerCountryCode] || playerCountryCode;
+                        const flagUrl = `https://flagcdn.com/w20/${playerCountryCode}.png`;
+                        const flagSpan = document.createElement('div');
+                         flagSpan.classList.add('player-nationality');
+                           flagSpan.classList.add('hidden');
+                        flagSpan.innerHTML = `
+                             <img src="${flagUrl}" alt="${playerCountryName} flag" style="width: 20px; height: 15px; margin-right: 5px; vertical-align: middle;"> ${playerCountryName}
+                        `;
+                    playerNameDisplay.appendChild(flagSpan);
+                 }
             }
         }
-    }
 
     async function showSuggestions(value) {
         const autocompleteList = document.getElementById("autocomplete-list");
