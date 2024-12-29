@@ -83,7 +83,7 @@ button:disabled {
 }
 
 .visible {
-    opacity: 1;
+    display: inline;
 }
 
 .button-container {
