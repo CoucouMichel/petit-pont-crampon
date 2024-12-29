@@ -220,41 +220,45 @@
 
         }
     }
-  async function displayPlayerStats() {
+ async function displayPlayerStats() {
     const clubNameMapping = await loadClubNameMapping();
     const countryMapping = await loadCountryMapping();
     const clubLogos = await loadClubLogos();
     const stats = await selectRandomPlayer();
-    const countries = await loadCountries();
-    const clubCountries = await loadClubsCountries();
+        const countries = await loadClubsCountries()
 
     playerNameDisplay.innerHTML = "";
-    if (selectedPlayer) {
+     if(selectedPlayer) {
+        const rectanglesContainer = document.createElement("span")
+        rectanglesContainer.classList.add("rectangles-container");
         for (let i = 0; i < selectedPlayer.length; i++) {
             if (selectedPlayer[i] === " ") {
-                const space = document.createElement("span");
-                space.innerHTML = "&nbsp;";
-                playerNameDisplay.appendChild(space);
+                const space = document.createElement("span")
+                    space.innerHTML = " "
+                rectanglesContainer.appendChild(space)
             } else {
                 const rectangle = document.createElement("span");
-                rectangle.classList.add("player-name-rectangle");
-                rectangle.id = `letter-${i}`;
-                playerNameDisplay.appendChild(rectangle);
+                 rectangle.classList.add("player-name-rectangle");
+                     rectangle.id = `letter-${i}`
+                    rectanglesContainer.appendChild(rectangle);
+                }
             }
+                playerNameDisplay.appendChild(rectanglesContainer);
+         
+        
+        if(countries[selectedPlayer]) {
+            const playerCountryCode = countries[selectedPlayer];
+                const playerCountryName = countryMapping[playerCountryCode] || playerCountryCode;
+                 const flagUrl = `https://flagcdn.com/w20/${playerCountryCode}.png`;
+    
+                     const flagSpan = document.createElement('span');
+                    flagSpan.classList.add('player-nationality');
+                    flagSpan.innerHTML = `
+                        <img src="${flagUrl}" alt="${playerCountryName} flag" style="width: 20px; height: 15px; margin-right: 5px; vertical-align: middle;"> ${playerCountryName}
+                    `;
+                     playerNameDisplay.appendChild(flagSpan);
         }
-        if (clubCountries && clubCountries[selectedPlayer]) {
-            const playerCountryName = clubCountries[selectedPlayer];
-            const playerCountryCode = countries[playerCountryName] || playerCountryName;
-
-            const flagUrl = `https://flagcdn.com/w20/${playerCountryCode}.png`;
-            const flagSpan = document.createElement('div');
-            flagSpan.classList.add('player-nationality');
-            flagSpan.innerHTML = `
-                <img src="${flagUrl}" alt="${playerCountryName} flag" style="width: 20px; height: 15px; margin-right: 5px; vertical-align: middle;"> ${playerCountryName}
-            `;
-            playerNameDisplay.appendChild(flagSpan);
-        }
-    }
+   }
 
     adjustGlobalContainerMargin();
     window.addEventListener('resize', adjustGlobalContainerMargin);
