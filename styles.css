@@ -376,20 +376,16 @@ input#guess-input {
 }
 
 .player-nationality {
-    display: inline-block;
+    margin-top: 5px;
     text-align: center;
+    opacity: 0;
     transition: opacity 0.5s ease-in-out;
     margin-bottom: 10px;
-    position: relative;
-    z-index: 1;
-    font-size: 11px;
+    display: block;
 }
 
-.player-nationality.hidden {
-    opacity: 0;
-}
 .player-nationality.visible {
-    opacity: 1;
+  opacity: 1;
 }
 
 /* Définir la largeur des colonnes */
