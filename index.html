@@ -708,21 +708,15 @@
         revealAllLetters();
     });
 
-function revealNationality() {
-    const spanNationality = document.querySelector('.player-nationality');
-    if (spanNationality) {
-        // Insert content if missing
-        if (spanNationality.innerHTML.trim() === "") {
-            spanNationality.innerHTML = `
-                <img src="path/to/flag.png" alt="Country flag" style="width: 20px; height: 15px; margin-right: 5px; vertical-align: middle;"> Country Name
-            `;
-        }
-        spanNationality.classList.remove('hidden');
-        spanNationality.classList.add('visible');
+    function revealNationality() {
+        if (!selectedPlayer) return;
+        const nameDisplay = document.getElementById('player-name-display');
+        const spanNationality = document.querySelector('.player-nationality');
+        spanNationality.classList.remove('hidden')
+        spanNationality.classList.add('visible')
         indiceNationalityButton.disabled = true;
         indiceNationalityButton.classList.add("button-disabled");
     }
-}
     function revealAllLetters() {
         if (!selectedPlayer) return;
 
