@@ -371,21 +371,18 @@ input#guess-input {
     width: 100%;
     text-align: center;
     position: relative;
-    height: auto; 
+    height: auto;
     min-height: 50px; /* Ensure a minimum height */
 }
 
 .player-nationality {
     margin-top: -70px;
     text-align: center;
-     transition: opacity 0.5s ease-in-out;
+    transition: opacity 0.5s ease-in-out;
     margin-bottom: 10px; /* Add a margin bottom */
     position: absolute;
     z-index: 1;
     font-size: 11px;
-    opacity: 0;
-}
-.player-nationality.visible {
     opacity: 1;
 }
 
