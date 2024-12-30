@@ -357,6 +357,7 @@ input#guess-input {
 
 #player-name-box.visible {
     visibility: visible;
+    width: 500px;
 }
 
 .player-nationality {
