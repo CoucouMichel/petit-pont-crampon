@@ -298,6 +298,11 @@ input#guess-input {
     display: inline-block;
 }
 
+.player-name-rectangle.hidden {
+    display: inline-block;
+    opacity: 0;
+}
+
 .player-name-rectangle.morph {
     width: auto;
     height: auto;
@@ -337,11 +342,11 @@ input#guess-input {
     position: absolute;
     max-width: 300px;
     width: fit-content;
-    font-size: 20px;
-    top: 610px;
+    font-size: 25px;
+    top: 605px;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: #529f39;
+    background-color: #539f3900;
     color: #ffffff;
     padding: 5px;
     border-radius: 5px;
@@ -357,7 +362,7 @@ input#guess-input {
 .player-nationality {
     margin-top: -70px;
     text-align: center;
-     transition: opacity 0.5s ease-in-out;
+     transition: opacity 0.8s ease-in-out;
     margin-bottom: 10px; /* Add a margin bottom */
     position: absolute;
     z-index: 1;
