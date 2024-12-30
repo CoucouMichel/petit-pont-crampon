@@ -740,30 +740,40 @@
     }
 
 // Inside the revealPlayer function
- function revealPlayer() {
-        if (!selectedPlayer) return;
+function revealPlayer() {
+    if (!selectedPlayer) return;
 
-        if (revealPlayerOnce) return;
+    if (revealPlayerOnce) return;
 
-        playerNameDisplay.textContent = selectedPlayer;
-        revealAllCells(); // Retain this functionality to reveal other cells
+    // Check if playerNameDisplayBox and player-name-box are correctly referenced
+    const playerNameDisplayBox = document.getElementById("player-name-display-box");
+    const playerNameBox = document.getElementById("player-name-box");
 
-        revealPlayerOnce = true;
-        reponseButton.disabled = true;
-        reponseButton.classList.add("button-disabled");
-        indiceNationalityButton.disabled = true;
-        indiceNationalityButton.classList.add("button-disabled");
-        revealLettersButton.disabled = true;
-        revealLettersButton.classList.add("button-disabled");
-        indiceClubButton.disabled = true;
-        indiceClubButton.classList.add("button-disabled");
-        indiceCountryButton.disabled = true;
-        indiceCountryButton.classList.add("button-disabled");
-        const previousScore = score;
-        score = 0;
-        updateScoreDisplay(previousScore);
+    if (playerNameDisplayBox && playerNameBox) {
+        playerNameDisplayBox.textContent = selectedPlayer;
+        playerNameBox.classList.add("visible");
+    } else {
+        console.error("player-name-display-box or player-name-box element is missing");
     }
 
+    revealAllCells();
+
+    revealPlayerOnce = true;
+    reponseButton.disabled = true;
+    reponseButton.classList.add("button-disabled");
+    indiceNationalityButton.disabled = true;
+    indiceNationalityButton.classList.add("button-disabled");
+    revealLettersButton.disabled = true;
+    revealLettersButton.classList.add("button-disabled");
+    indiceClubButton.disabled = true;
+    indiceClubButton.classList.add("button-disabled");
+    indiceCountryButton.disabled = true;
+    indiceCountryButton.classList.add("button-disabled");
+    const previousScore = score;
+    score = 0;
+    updateScoreDisplay(previousScore);
+}
     displayPlayerStats();
+</script>
 
 </html>
