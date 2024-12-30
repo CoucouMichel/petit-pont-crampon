@@ -222,6 +222,12 @@ td[data-club] {
      th, td {
            padding: 8px;
     }
+    
+    #player-name-box {
+        font-size: 20px;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
 }
 
 /* Centrer la barre de saisie */
