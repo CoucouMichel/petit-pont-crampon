@@ -368,7 +368,8 @@ input#guess-input {
     visibility: visible;
     width: 500px;
     color: #28ff48;
-    margin-top: -15%;
+    display: flex
+    justify-content: center;
     
 }
 
