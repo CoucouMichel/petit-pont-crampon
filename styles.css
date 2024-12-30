@@ -367,6 +367,8 @@ input#guess-input {
 #player-name-box.visible {
     visibility: visible;
     width: 500px;
+    color: #28ff48;
+    margin-top: -15%;
     
 }
 
