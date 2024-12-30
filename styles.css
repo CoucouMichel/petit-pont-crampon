@@ -129,7 +129,7 @@ h2.ai-style-change-1 {
 
 /* h2 styling */
 h2#player-name-display {
-    display: flex;
+    display: none;
     flex-direction: row;
     align-items: center;
     white-space: nowrap;
@@ -332,6 +332,26 @@ input#guess-input {
 #player-name-display span {
     text-align: center;
     top: -50px;
+}
+#player-name-box {
+    position: absolute;
+    max-width: 300px;
+    width: fit-content;
+    font-size: 20px;
+    top: 568px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #529f39;
+    color: #ffffff;
+    padding: 5px;
+    border-radius: 5px;
+    z-index: 3;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+#player-name-box.visible {
+    visibility: visible;
 }
 
 .player-nationality {
