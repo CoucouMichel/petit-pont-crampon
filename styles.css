@@ -223,7 +223,7 @@ td[data-club] {
            padding: 8px;
     }
     
-    #player-name-box {
+    #player-name-box.visible {
         font-size: 20px;
         left: 50%;
         transform: translate(-50%, -50%);
