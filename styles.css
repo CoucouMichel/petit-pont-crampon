@@ -129,7 +129,7 @@ h2.ai-style-change-1 {
 
 /* h2 styling */
 h2#player-name-display {
-    display: none;
+    display: flex;
     flex-direction: row;
     align-items: center;
     white-space: nowrap;
