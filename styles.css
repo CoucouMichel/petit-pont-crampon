@@ -350,7 +350,7 @@ input#guess-input {
     max-width: 300px;
     width: fit-content;
     font-size: 25px;
-    margin-top: -25%;
+    margin-top: -13%;
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: #539f3900;
