@@ -329,6 +329,11 @@ input#guess-input {
     white-space: nowrap;
     justify-content: center;
 }
+
+#player-name-display span {
+  visibility: visible;
+}
+
  .rectangles-container {
   display: flex;
     justify-content: center;
