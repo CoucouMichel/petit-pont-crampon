@@ -465,6 +465,13 @@
             updateScoreDisplay(score - bonusScore)
             document.getElementById("guess-input").disabled = true;
             isCorrect = true;
+
+                    // Hide player-nationality if it's visible
+        const playerNationality = document.querySelector('.player-nationality');
+        if (playerNationality && playerNationality.classList.contains('visible')) {
+            playerNationality.classList.remove('visible');
+            playerNationality.classList.add('hidden');
+        }
         } else {
             if (feedback) {
                 feedback.textContent = '';
