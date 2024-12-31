@@ -268,8 +268,8 @@ if (button) {
   button.addEventListener('click', () => {
     spansToToggle.forEach(span => {
       const currentDisplay = window.getComputedStyle(span)['display'];
-      if (currentDisplay === 'none') {
-        span.style.display = 'inline-block';
+      if (currentVisibility === 'hidden') {
+        span.style.visibility = 'visible';
       } else {
         span.style.visibility = 'hidden';
       }
