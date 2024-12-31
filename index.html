@@ -269,9 +269,9 @@ if (button) {
     spansToToggle.forEach(span => {
       const currentDisplay = window.getComputedStyle(span)['display'];
       if (currentDisplay === 'none') {
-        span.style.display = 'none';
-      } else {
         span.style.display = 'inline-block';
+      } else {
+        span.style.display = 'none';
       }
     });
   });
