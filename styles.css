@@ -346,6 +346,7 @@ input#guess-input {
 #player-name-display span {
     text-align: center;
     top: -50px;
+    display: none;
 }
 #player-name-box {
     top: -128px;
