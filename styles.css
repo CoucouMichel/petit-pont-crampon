@@ -227,7 +227,7 @@ td[data-club] {
         font-size: 30px;
         left: 50%;
         transform: translate(-50%, -50%);
-        margin-top: -22%;
+        top: -20px;
         color: #28ff48;
         position: relative;
     }
@@ -303,6 +303,14 @@ input#guess-input {
     position: relative;
     z-index: 2;
 }
+.player-name-rectangle.visible {
+    display: inline-block;
+}
+
+.player-name-rectangle.hidden {
+    display: inline-block;
+    opacity: 0;
+}
 
 .player-name-rectangle.morph {
     width: auto;
@@ -329,15 +337,16 @@ input#guess-input {
     white-space: nowrap;
     justify-content: center;
 }
-
-#player-name-display span {
-  visibility: visible;
-}
-
  .rectangles-container {
   display: flex;
     justify-content: center;
     align-items: center;
+ }
+
+#player-name-display span {
+    text-align: center;
+    top: -50px;
+    display: none;
 }
 #player-name-box {
     top: -128px;
