@@ -229,6 +229,7 @@ td[data-club] {
         transform: translate(-50%, -50%);
         margin-top: -22%;
         color: #28ff48;
+        position: relative;
     }
 }
 
