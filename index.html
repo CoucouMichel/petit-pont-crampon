@@ -260,6 +260,23 @@
             }
         }
 
+const parentElement = document.querySelector('#player-name-display');
+const spansToToggle = Array.from(parentElement.querySelectorAll('span'));
+const button = Array.from(document.querySelectorAll('button')).find(button => button.textContent.includes('Lettres'));
+
+if (button) {
+  button.addEventListener('click', () => {
+    spansToToggle.forEach(span => {
+      const currentDisplay = window.getComputedStyle(span)['display'];
+      if (currentDisplay === 'none') {
+        span.style.display = 'block';
+      } else {
+        span.style.display = 'none';
+      }
+    });
+  });
+}
+        
         adjustGlobalContainerMargin();
         window.addEventListener('resize', adjustGlobalContainerMargin);
 
