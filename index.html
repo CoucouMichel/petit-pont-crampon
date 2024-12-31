@@ -268,11 +268,11 @@ if (button) {
   button.addEventListener('click', () => {
     spansToToggle.forEach(span => {
       const currentDisplay = window.getComputedStyle(span)['display'];
-      if (currentDisplay === 'none') {
-        span.style.display = 'block';
-      } else {
+if (currentDisplay === 'none') {
+        span.style.display = 'inline-block';
+    } else {
         span.style.display = 'none';
-      }
+    }
     });
   });
 }
