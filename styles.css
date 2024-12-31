@@ -303,14 +303,6 @@ input#guess-input {
     position: relative;
     z-index: 2;
 }
-.player-name-rectangle.visible {
-    display: inline-block;
-}
-
-.player-name-rectangle.hidden {
-    display: inline-block;
-    opacity: 0;
-}
 
 .player-name-rectangle.morph {
     width: auto;
@@ -341,12 +333,6 @@ input#guess-input {
   display: flex;
     justify-content: center;
     align-items: center;
- }
-
-#player-name-display span {
-    text-align: center;
-    top: -50px;
-    visibility:hidden;
 }
 #player-name-box {
     top: -128px;
