@@ -51,18 +51,7 @@
                 <div class="player-info-container">
                     <h2 id="player-name-display">
                         <div>
-                            <span id="letter-0" class="player-name-rectangle"></span>
-                            <span id="letter-1" class="player-name-rectangle"></span>
-                            <span id="letter-2" class="player-name-rectangle"></span>
-                            <span id="letter-3" class="player-name-rectangle"></span>
-                            <span id="letter-4" class="player-name-rectangle"></span>
-                            <span id="letter-5" class="player-name-rectangle"></span>
-                            <span id="letter-6" class="player-name-rectangle"></span>
-                            <span></span>
-                            <span id="letter-8" class="player-name-rectangle"></span>
-                            <span id="letter-9" class="player-name-rectangle"></span>
-                            <span id="letter-10" class="player-name-rectangle"></span>
-                            <span id="letter-11" class="player-name-rectangle"></span>
+                            <span class="player-name-rectangle" id="letter-0"></span>
                         </div>
                     </h2>
                     <div id="player-name-box" class="hidden">
@@ -261,17 +250,17 @@
         }
 
 const parentElement = document.querySelector('#player-name-display');
-const spansToToggle = Array.from(parentElement.querySelectorAll('span'));
+const spansToToggle = Array.from(parentElement.querySelectorAll('.player-name-rectangle'));
 const button = Array.from(document.querySelectorAll('button')).find(button => button.textContent.includes('Lettres'));
 
 if (button) {
   button.addEventListener('click', () => {
     spansToToggle.forEach(span => {
-      const currentDisplay = window.getComputedStyle(span)['display'];
-      if (currentVisibility === 'hidden') {
-        span.style.visibility = 'visible';
-      } else {
+      const currentVisibility = window.getComputedStyle(span)['visibility'];
+      if (currentVisibility === 'visible') {
         span.style.visibility = 'hidden';
+      } else {
+        span.style.visibility = 'visible';
       }
     });
   });
