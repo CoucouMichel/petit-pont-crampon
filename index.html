@@ -626,7 +626,7 @@ function revealRandomClueClub() {
     // Get all hidden cells in the Club column
     document.querySelectorAll('#career-table-body tr').forEach((row, rowIndex) => {
         const cell = row.querySelector(`td:nth-child(2).hidden`);
-        if (cell) {
+        if (cell && !cell.classList.contains('visible')) {
             availableCells.push({
                 row,
                 rowIndex,
@@ -646,7 +646,7 @@ function revealRandomClueClub() {
         availableCells.splice(randomIndex, 1);
 
         const countryCell = row.querySelector('td:nth-child(3).hidden');
-        if (countryCell) {
+        if (countryCell && !countryCell.classList.contains('visible')) {
             countryCell.classList.remove('hidden');
             countryCell.classList.add('visible');
         }
@@ -659,7 +659,7 @@ function revealRandomClueClub() {
 
     document.querySelectorAll('#career-table-body tr').forEach((row, rowIndex) => {
         const cell = row.querySelector(`td:nth-child(2).hidden`);
-        if (cell) {
+        if (cell && !cell.classList.contains('visible')) {
             availableCellsAfter.push({
                 row,
                 rowIndex,
@@ -668,7 +668,6 @@ function revealRandomClueClub() {
         }
     });
 
-    availableCellsAfter = availableCellsAfter.filter(item => item.cell.classList.contains('hidden') && !item.cell.classList.contains('visible'));
     if (availableCellsAfter.length === 0) {
         indiceClubButton.classList.add("button-disabled");
     } else {
@@ -688,7 +687,7 @@ function revealRandomClueCountry() {
     // Get all hidden cells in the Country column
     document.querySelectorAll('#career-table-body tr').forEach((row, rowIndex) => {
         const cell = row.querySelector(`td:nth-child(3).hidden`);
-        if (cell) {
+        if (cell && !cell.classList.contains('visible')) {
             availableCells.push({
                 row,
                 rowIndex,
@@ -710,11 +709,12 @@ function revealRandomClueCountry() {
         score -= Math.round((95 * 0.3333333333) * tableSize) / 100;
         updateScoreDisplay(previousScore);
     }
+
     let availableCellsAfter = [];
 
     document.querySelectorAll('#career-table-body tr').forEach((row, rowIndex) => {
         const cell = row.querySelector(`td:nth-child(3).hidden`);
-        if (cell) {
+        if (cell && !cell.classList.contains('visible')) {
             availableCellsAfter.push({
                 row,
                 rowIndex,
@@ -722,7 +722,6 @@ function revealRandomClueCountry() {
             });
         }
     });
-    availableCellsAfter = availableCellsAfter.filter(item => item.cell.classList.contains('hidden') && !item.cell.classList.contains('visible'));
 
     if (availableCellsAfter.length === 0) {
         indiceCountryButton.classList.add("button-disabled");
