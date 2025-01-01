@@ -680,11 +680,10 @@ function revealRandomClueClub() {
 
     if (availableCellsAfter.length === 0) {
         indiceClubButton.classList.add("button-disabled");
+        indiceCountryButton.classList.add("button-disabled");
     } else {
         indiceClubButton.disabled = false;
         indiceClubButton.classList.remove("button-disabled");
-        indiceCountryButton.disabled = false;
-        indiceCountryButton.classList.remove("button-disabled");
     }
 }
 
