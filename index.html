@@ -779,17 +779,17 @@ function revealPlayer() {
         console.error("player-name-display-box or player-name-box element is missing");
     }
 
-// Hide all span letters
-const allSpans = document.querySelectorAll('#player-name-display span');
-allSpans.forEach(span => {
-    span.style.display = 'none';
-});
+    // Hide all span letters
+    const allSpans = document.querySelectorAll('#player-name-display span');
+    allSpans.forEach(span => {
+        span.style.display = 'none';
+    });
 
-// Hide player-nationality if it's visible
-const playerNationality = document.querySelector('.player-nationality');
-if (playerNationality && playerNationality.classList.contains('visible')) {
-    playerNationality.style.display = 'none';
-}
+    // Hide player-nationality if it's visible
+    const playerNationality = document.querySelector('.player-nationality');
+    if (playerNationality && playerNationality.classList.contains('visible')) {
+        playerNationality.style.display = 'none';
+    }
 
     revealAllCells();
 
