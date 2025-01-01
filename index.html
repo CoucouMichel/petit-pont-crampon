@@ -661,7 +661,7 @@ function revealRandomClueClub() {
             countryCell.classList.add('visible');
         }
         const previousScore = score;
-        score -= Math.round((30 * 0.6666666666) * tableSize)/100;
+        score -= Math.round((30 * 0.6666666666) / tableSize);
         updateScoreDisplay(previousScore);
     }
 
@@ -719,7 +719,7 @@ function revealRandomClueCountry() {
         cell.classList.add('visible');
         availableCells.splice(randomIndex, 1);
         const previousScore = score;
-        score -= Math.round((30 * 0.3333333333) * tableSize)/100;
+        score -= Math.round((30 * 0.3333333333) / tableSize);
         updateScoreDisplay(previousScore);
     }
 
