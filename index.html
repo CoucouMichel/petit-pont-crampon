@@ -14,7 +14,7 @@
             <h1>Petit Pont Crampon</h1>
             <p>D&eacute;masquez le joueur myst&egrave;re en trouvant les pays et les clubs dans lesquels il a jou&eacute; !</p>
             <div class="score-attempts-container">
-                <p id="score">Score : 60 <span id="info-icon" style="cursor: pointer; font-size: 15px; margin-left: 5px; vertical-align: middle;">&#9432;</span></p>
+                <p id="score">Score : 60.00 <span id="info-icon" style="cursor: pointer; font-size: 15px; margin-left: 5px; vertical-align: middle;">&#9432;</span></p>
                 <p id="attempts">Essais : 0</p>
             </div>
             <div id="info-window" class="info-window hidden">
@@ -661,7 +661,7 @@ function revealRandomClueClub() {
             countryCell.classList.add('visible');
         }
         const previousScore = score;
-        score -= Math.round((30 * 0.6666666666) * tableSize);
+        score -= Math.round((30 * 0.6666666666) * tableSize)/100;
         updateScoreDisplay(previousScore);
     }
 
@@ -719,7 +719,7 @@ function revealRandomClueCountry() {
         cell.classList.add('visible');
         availableCells.splice(randomIndex, 1);
         const previousScore = score;
-        score -= Math.round((30 * 0.3333333333) * tableSize);
+        score -= Math.round((30 * 0.3333333333) * tableSize)/100;
         updateScoreDisplay(previousScore);
     }
 
