@@ -615,7 +615,17 @@ if (button) {
         revealPlayer();
     });
 
+function incrementAttempts() {
+        attempts++;
+        const attemptsElement = document.getElementById("attempts");
+        if (attemptsElement) {
+            attemptsElement.textContent = `Essais : ${attempts}`;
+        }
+    }
+    
 function revealRandomClueClub() {
+    incrementAttempts();
+    
     if (!selectedPlayer) return;
 
     indiceClubButton.disabled = true;
@@ -651,7 +661,7 @@ function revealRandomClueClub() {
             countryCell.classList.add('visible');
         }
         const previousScore = score;
-        score -= Math.round((95 * 0.6666666666) * tableSize) / 100;
+        score -= Math.round((40 * 0.6666666666) * tableSize) / 100;
         updateScoreDisplay(previousScore);
     }
 
@@ -677,6 +687,8 @@ function revealRandomClueClub() {
 }
 
 function revealRandomClueCountry() {
+    incrementAttempts();
+    
     if (!selectedPlayer) return;
 
     indiceCountryButton.disabled = true;
@@ -706,7 +718,7 @@ function revealRandomClueCountry() {
         cell.classList.add('visible');
         availableCells.splice(randomIndex, 1);
         const previousScore = score;
-        score -= Math.round((95 * 0.3333333333) * tableSize) / 100;
+        score -= Math.round((40 * 0.3333333333) * tableSize) / 100;
         updateScoreDisplay(previousScore);
     }
 
@@ -736,6 +748,8 @@ function revealRandomClueCountry() {
     });
 
     function revealNationality() {
+             incrementAttempts();
+        
         if (!selectedPlayer) return;
         const nameDisplay = document.getElementById('player-name-display');
         const spanNationality = document.querySelector('.player-nationality');
@@ -746,6 +760,7 @@ function revealRandomClueCountry() {
     }
 
     function revealAllLetters() {
+        incrementAttempts();
         if (!selectedPlayer) return;
 
         if (revealLettersOnce) return;
