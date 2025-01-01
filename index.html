@@ -197,6 +197,20 @@
         }
     }
 
+    document.getElementById("info-icon").addEventListener("click", function() {
+        const infoWindow = document.getElementById("info-window");
+        if (infoWindow.classList.contains("hidden")) {
+            infoWindow.classList.remove("hidden");
+        } else {
+            infoWindow.classList.add("hidden");
+        }
+    });
+
+    document.getElementById("close-info").addEventListener("click", function() {
+        const infoWindow = document.getElementById("info-window");
+        infoWindow.classList.add("hidden");
+    });
+    
     async function initializeGame() {
         const now = new Date();
         const nowFrench = new Date(now.toLocaleString('en-US', {
