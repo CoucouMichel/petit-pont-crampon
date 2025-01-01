@@ -231,7 +231,11 @@ td[data-club] {
         color: #28ff48;
         position: relative;
     }
+
+    input#guess-input {
+    font-size: 12px;
 }
+    }
 
 /* Centrer la barre de saisie */
 body {
