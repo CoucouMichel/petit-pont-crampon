@@ -615,130 +615,152 @@ if (button) {
         revealPlayer();
     });
 
-    function incrementAttempts() {
+function incrementAttempts() {
         attempts++;
         const attemptsElement = document.getElementById("attempts");
         if (attemptsElement) {
             attemptsElement.textContent = `Essais : ${attempts}`;
         }
     }
+    
+function revealRandomClueClub() {
+    incrementAttempts();
+    
+    if (!selectedPlayer) return;
 
-    function checkAndGreyOutButtons() {
-        const hiddenCountryCells = document.querySelectorAll('td[data-country].hidden');
-        const hiddenClubCells = document.querySelectorAll('td[data-club].hidden');
+    indiceClubButton.disabled = true;
+    indiceClubButton.classList.add("button-disabled");
 
-        if (hiddenCountryCells.length === 0) {
-            indiceCountryButton.disabled = true;
-            indiceCountryButton.classList.add("button-disabled");
+    let availableCells = [];
+
+    // Get all hidden cells in the Club column
+    document.querySelectorAll('#career-table-body tr').forEach((row, rowIndex) => {
+        const cell = row.querySelector(`td:nth-child(2).hidden`);
+        if (cell && !cell.classList.contains('visible')) {
+            availableCells.push({
+                row,
+                rowIndex,
+                cell
+            });
         }
+    });
 
-        if (hiddenClubCells.length === 0) {
-            indiceClubButton.disabled = true;
-            indiceClubButton.classList.add("button-disabled");
-            indiceCountryButton.disabled = true;
-            indiceCountryButton.classList.add("button-disabled");
+    if (availableCells.length > 0) {
+        const randomIndex = Math.floor(Math.random() * availableCells.length);
+        const randomCell = availableCells[randomIndex];
+        const row = randomCell.row;
+        const cell = randomCell.cell;
+
+        cell.classList.remove('hidden');
+        cell.classList.add('visible');
+        availableCells.splice(randomIndex, 1);
+
+        const countryCell = row.querySelector('td:nth-child(3).hidden');
+        if (countryCell && !countryCell.classList.contains('visible')) {
+            countryCell.classList.remove('hidden');
+            countryCell.classList.add('visible');
         }
+        const previousScore = score;
+        score -= Math.round((40 * 0.6666666666) * tableSize) / 100;
+        updateScoreDisplay(previousScore);
     }
 
-    function revealRandomClueClub() {
-        incrementAttempts();
+    let availableCellsAfter = [];
 
-        if (!selectedPlayer) return;
+    document.querySelectorAll('#career-table-body tr').forEach((row, rowIndex) => {
+        const cell = row.querySelector(`td:nth-child(2).hidden`);
+        if (cell && !cell.classList.contains('visible')) {
+            availableCellsAfter.push({
+                row,
+                rowIndex,
+                cell
+            });
+        }
+    });
 
-        indiceClubButton.disabled = true;
+    if (availableCellsAfter.length === 0) {
         indiceClubButton.classList.add("button-disabled");
+    } else {
+        indiceClubButton.disabled = false;
+        indiceClubButton.classList.remove("button-disabled");
+    }
+}
 
-        let availableCells = [];
+function revealRandomClueCountry() {
+    incrementAttempts();
+    
+    if (!selectedPlayer) return;
 
-        // Get all hidden cells in the Club column
-        document.querySelectorAll('#career-table-body tr').forEach((row, rowIndex) => {
-            const cell = row.querySelector(`td:nth-child(2).hidden`);
-            if (cell && !cell.classList.contains('visible')) {
-                availableCells.push({
-                    row,
-                    rowIndex,
-                    cell
-                });
-            }
-        });
+    indiceCountryButton.disabled = true;
+    indiceCountryButton.classList.add("button-disabled");
 
-        if (availableCells.length > 0) {
-            const randomIndex = Math.floor(Math.random() * availableCells.length);
-            const randomCell = availableCells[randomIndex];
-            const row = randomCell.row;
-            const cell = randomCell.cell;
+    let availableCells = [];
 
-            cell.classList.remove('hidden');
-            cell.classList.add('visible');
-            availableCells.splice(randomIndex, 1);
-
-            const countryCell = row.querySelector('td:nth-child(3).hidden');
-            if (countryCell && !countryCell.classList.contains('visible')) {
-                countryCell.classList.remove('hidden');
-                countryCell.classList.add('visible');
-            }
-            const previousScore = score;
-            score -= Math.round((95 * 0.6666666666) * tableSize) / 100;
-            updateScoreDisplay(previousScore);
-
-            checkAndGreyOutButtons();
+    // Get all hidden cells in the Country column
+    document.querySelectorAll('#career-table-body tr').forEach((row, rowIndex) => {
+        const cell = row.querySelector(`td:nth-child(3).hidden`);
+        if (cell && !cell.classList.contains('visible')) {
+            availableCells.push({
+                row,
+                rowIndex,
+                cell
+            });
         }
+    });
+
+    if (availableCells.length > 0) {
+        const randomIndex = Math.floor(Math.random() * availableCells.length);
+        const randomCell = availableCells[randomIndex];
+        const row = randomCell.row;
+        const cell = randomCell.cell;
+
+        cell.classList.remove('hidden');
+        cell.classList.add('visible');
+        availableCells.splice(randomIndex, 1);
+        const previousScore = score;
+        score -= Math.round((40 * 0.3333333333) * tableSize) / 100;
+        updateScoreDisplay(previousScore);
     }
 
-    function revealRandomClueCountry() {
-        incrementAttempts();
+    let availableCellsAfter = [];
 
-        if (!selectedPlayer) return;
+    document.querySelectorAll('#career-table-body tr').forEach((row, rowIndex) => {
+        const cell = row.querySelector(`td:nth-child(3).hidden`);
+        if (cell && !cell.classList.contains('visible')) {
+            availableCellsAfter.push({
+                row,
+                rowIndex,
+                cell
+            });
+        }
+    });
 
-        indiceCountryButton.disabled = true;
+    if (availableCellsAfter.length === 0) {
         indiceCountryButton.classList.add("button-disabled");
-
-        let availableCells = [];
-
-        // Get all hidden cells in the Country column
-        document.querySelectorAll('#career-table-body tr').forEach((row, rowIndex) => {
-            const cell = row.querySelector(`td:nth-child(3).hidden`);
-            if (cell && !cell.classList.contains('visible')) {
-                availableCells.push({
-                    row,
-                    rowIndex,
-                    cell
-                });
-            }
-        });
-
-        if (availableCells.length > 0) {
-            const randomIndex = Math.floor(Math.random() * availableCells.length);
-            const randomCell = availableCells[randomIndex];
-            const row = randomCell.row;
-            const cell = randomCell.cell;
-
-            cell.classList.remove('hidden');
-            cell.classList.add('visible');
-            availableCells.splice(randomIndex, 1);
-            const previousScore = score;
-            score -= Math.round((95 * 0.3333333333) * tableSize) / 100;
-            updateScoreDisplay(previousScore);
-
-            checkAndGreyOutButtons();
-        }
+    } else {
+        indiceCountryButton.disabled = false;
+        indiceCountryButton.classList.remove("button-disabled");
     }
+}
+
+    revealLettersButton.addEventListener("click", function() {
+        revealAllLetters();
+    });
 
     function revealNationality() {
-        incrementAttempts();
-
+             incrementAttempts();
+        
         if (!selectedPlayer) return;
         const nameDisplay = document.getElementById('player-name-display');
         const spanNationality = document.querySelector('.player-nationality');
-        spanNationality.classList.remove('hidden');
-        spanNationality.classList.add('visible');
+        spanNationality.classList.remove('hidden')
+        spanNationality.classList.add('visible')
         indiceNationalityButton.disabled = true;
         indiceNationalityButton.classList.add("button-disabled");
     }
 
     function revealAllLetters() {
         incrementAttempts();
-
         if (!selectedPlayer) return;
 
         if (revealLettersOnce) return;
@@ -746,7 +768,9 @@ if (button) {
         const nameDisplay = document.getElementById('player-name-display');
         const allRectangles = nameDisplay.querySelectorAll('.player-name-rectangle');
 
+        console.log("Revealing all letters");
         allRectangles.forEach(rectangle => {
+            console.log("Revealing letter:", rectangle);
             rectangle.classList.remove('hidden');
             rectangle.classList.add('visible');
         });
@@ -758,58 +782,52 @@ if (button) {
         revealLettersButton.classList.add("button-disabled");
     }
 
-    function revealPlayer() {
-        incrementAttempts();
+// Inside the revealPlayer function
+function revealPlayer() {
+    if (!selectedPlayer) return;
 
-        if (!selectedPlayer) return;
+    if (revealPlayerOnce) return;
 
-        if (revealPlayerOnce) return;
+    // Check if playerNameDisplayBox and player-name-box are correctly referenced
+    const playerNameDisplayBox = document.getElementById("player-name-display-box");
+    const playerNameBox = document.getElementById("player-name-box");
 
-        const playerNameDisplayBox = document.getElementById("player-name-display-box");
-        const playerNameBox = document.getElementById("player-name-box");
-
-        if (playerNameDisplayBox && playerNameBox) {
-            playerNameDisplayBox.textContent = selectedPlayer;
-            playerNameBox.classList.add("visible");
-        } else {
-            console.error("player-name-display-box or player-name-box element is missing");
-        }
-
-        const allSpans = document.querySelectorAll('#player-name-display span');
-        allSpans.forEach(span => {
-            span.style.display = 'none';
-        });
-
-        const playerNationality = document.querySelector('.player-nationality');
-        if (playerNationality && playerNationality.classList.contains('visible')) {
-            playerNationality.style.display = 'none';
-        }
-
-        revealAllCells();
-
-        revealPlayerOnce = true;
-        reponseButton.disabled = true;
-        reponseButton.classList.add("button-disabled");
-        indiceNationalityButton.disabled = true;
-        indiceNationalityButton.classList.add("button-disabled");
-        revealLettersButton.disabled = true;
-        revealLettersButton.classList.add("button-disabled");
-        indiceClubButton.disabled = true;
-        indiceClubButton.classList.add("button-disabled");
-        indiceCountryButton.disabled = true;
-        indiceCountryButton.classList.add("button-disabled");
-        const previousScore = score;
-        score = 0;
-        updateScoreDisplay(previousScore);
+    if (playerNameDisplayBox && playerNameBox) {
+        playerNameDisplayBox.textContent = selectedPlayer;
+        playerNameBox.classList.add("visible");
+    } else {
+        console.error("player-name-display-box or player-name-box element is missing");
     }
 
-    // Add event listeners to buttons
-    indiceClubButton.addEventListener("click", revealRandomClueClub);
-    indiceCountryButton.addEventListener("click", revealRandomClueCountry);
-    indiceNationalityButton.addEventListener("click", revealNationality);
-    revealLettersButton.addEventListener("click", revealAllLetters);
-    reponseButton.addEventListener("click", revealPlayer);
+    // Hide all span letters
+    const allSpans = document.querySelectorAll('#player-name-display span');
+    allSpans.forEach(span => {
+        span.style.display = 'none';
+    });
 
+    // Hide player-nationality if it's visible
+    const playerNationality = document.querySelector('.player-nationality');
+    if (playerNationality && playerNationality.classList.contains('visible')) {
+        playerNationality.style.display = 'none';
+    }
+
+    revealAllCells();
+
+    revealPlayerOnce = true;
+    reponseButton.disabled = true;
+    reponseButton.classList.add("button-disabled");
+    indiceNationalityButton.disabled = true;
+    indiceNationalityButton.classList.add("button-disabled");
+    revealLettersButton.disabled = true;
+    revealLettersButton.classList.add("button-disabled");
+    indiceClubButton.disabled = true;
+    indiceClubButton.classList.add("button-disabled");
+    indiceCountryButton.disabled = true;
+    indiceCountryButton.classList.add("button-disabled");
+    const previousScore = score;
+    score = 0;
+    updateScoreDisplay(previousScore);
+}
     displayPlayerStats();
 </script>
 
