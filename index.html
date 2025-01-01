@@ -494,6 +494,13 @@ if (button) {
         allSpans.forEach(span => {
             span.style.display = 'none';
         });
+            
+   // Grey out all buttons
+        const buttons = document.querySelectorAll('.button-container button');
+        buttons.forEach(button => {
+            button.disabled = true;
+            button.style.backgroundColor = 'grey';
+        });
     } else {
         if (feedback) {
             feedback.textContent = '';
