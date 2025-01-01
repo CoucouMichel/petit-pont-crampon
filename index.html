@@ -483,22 +483,27 @@ if (button) {
             document.getElementById("guess-input").disabled = true;
             isCorrect = true;
 
-                    // Hide player-nationality if it's visible
+        // Hide player-nationality if it's visible
         const playerNationality = document.querySelector('.player-nationality');
         if (playerNationality && playerNationality.classList.contains('visible')) {
-            playerNationality.classList.remove('visible');
-            playerNationality.classList.add('hidden');
+            playerNationality.style.display = 'none';
         }
-        } else {
-            if (feedback) {
-                feedback.textContent = '';
-            }
-            attempts++;
-            const attemptsElement = document.getElementById("attempts");
-            if (attemptsElement) {
-                attemptsElement.textContent = `Essais : ${attempts}`;
-            }
+
+        // Hide all span letters
+        const allSpans = document.querySelectorAll('#player-name-display span');
+        allSpans.forEach(span => {
+            span.style.display = 'none';
+        });
+    } else {
+        if (feedback) {
+            feedback.textContent = '';
         }
+        attempts++;
+        const attemptsElement = document.getElementById("attempts");
+        if (attemptsElement) {
+            attemptsElement.textContent = `Essais : ${attempts}`;
+        }
+    }
 
         const cells = document.querySelectorAll('td[data-country], td[data-club]');
 
