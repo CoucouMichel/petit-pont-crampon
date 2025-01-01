@@ -14,7 +14,7 @@
             <h1>Petit Pont Crampon</h1>
             <p>D&eacute;masquez le joueur myst&egrave;re en trouvant les pays et les clubs dans lesquels il a jou&eacute; !</p>
             <div class="score-attempts-container">
-                <p id="score">Score : 100 <span id="info-icon" style="cursor: pointer; font-size: 15px; margin-left: 5px; vertical-align: middle;">&#9432;</span></p>
+                <p id="score">Score : 60 <span id="info-icon" style="cursor: pointer; font-size: 15px; margin-left: 5px; vertical-align: middle;">&#9432;</span></p>
                 <p id="attempts">Essais : 0</p>
             </div>
             <div id="info-window" class="info-window hidden">
@@ -96,7 +96,7 @@
     let selectedPlayer;
     let attempts = 0;
     let revealPlayerOnce = false;
-    let score = 95;
+    let score = 60;
     const playerNameDisplay = document.getElementById("player-name-display");
     const playerNameDisplayBox = document.getElementById("player-name-display-box");
     let currentSuggestions = [];
@@ -472,11 +472,11 @@ if (button) {
             document.getElementById("player-name-box").classList.add("visible");
             revealAllCells();
 
-            let bonusScore = 5;
+            let bonusScore = 40;
             const tableBody = document.getElementById('career-table-body');
             const hiddenCells = tableBody.querySelectorAll('td.hidden')
 
-            score = score - (attempts - 1) * 0.1;
+            score = score - (attempts - 1) * 0.5;
             if (score < 0) score = 0;
             score = score + bonusScore;
             updateScoreDisplay(score - bonusScore)
@@ -661,7 +661,7 @@ function revealRandomClueClub() {
             countryCell.classList.add('visible');
         }
         const previousScore = score;
-        score -= Math.round((40 * 0.6666666666) * tableSize) / 100;
+        score -= Math.round((30 * 0.6666666666) * tableSize) / 100;
         updateScoreDisplay(previousScore);
     }
 
@@ -719,7 +719,7 @@ function revealRandomClueCountry() {
         cell.classList.add('visible');
         availableCells.splice(randomIndex, 1);
         const previousScore = score;
-        score -= Math.round((40 * 0.3333333333) * tableSize) / 100;
+        score -= Math.round((30 * 0.3333333333) * tableSize) / 100;
         updateScoreDisplay(previousScore);
     }
 
@@ -758,6 +758,11 @@ function revealRandomClueCountry() {
         spanNationality.classList.add('visible')
         indiceNationalityButton.disabled = true;
         indiceNationalityButton.classList.add("button-disabled");
+
+                // Deduct 10 points for pressing the Nation button
+        const previousScore = score;
+        score -= 10;
+        updateScoreDisplay(previousScore);
     }
 
     function revealAllLetters() {
@@ -769,15 +774,16 @@ function revealRandomClueCountry() {
         const nameDisplay = document.getElementById('player-name-display');
         const allRectangles = nameDisplay.querySelectorAll('.player-name-rectangle');
 
-        console.log("Revealing all letters");
         allRectangles.forEach(rectangle => {
-            console.log("Revealing letter:", rectangle);
             rectangle.classList.remove('hidden');
             rectangle.classList.add('visible');
         });
 
-        score -= Math.round((95 * 0.5) / tableSize);
-        updateScoreDisplay(score + Math.round((95 * 0.5) / tableSize));
+        // Deduct 20 points for pressing the Lettres button
+        const previousScore = score;
+        score -= 20;
+        updateScoreDisplay(previousScore);
+        
         revealLettersOnce = true;
         revealLettersButton.disabled = true;
         revealLettersButton.classList.add("button-disabled");
