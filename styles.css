@@ -349,7 +349,7 @@ input#guess-input {
     display: none;
 }
 #player-name-box {
-    top: -128px;
+    top: -100px;
     left: auto;
     position: relative;
     transform: none;
