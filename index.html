@@ -1,4 +1,371 @@
-<script>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Petit Pont Crampon</title>
+    <style>
+        :root {
+            --bg-gradient: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            --surface: rgba(255, 255, 255, 0.05);
+            --surface-border: rgba(255, 255, 255, 0.12);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent: #10b981; 
+            --gold: #fbbf24;
+            --danger: #ef4444;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text-main);
+            margin: 0;
+            padding: 2rem 1rem;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .global-container {
+            width: 100%;
+            max-width: 720px;
+            background: var(--surface);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid var(--surface-border);
+            border-radius: 24px;
+            padding: 2.5rem 2rem;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+
+        .fixed-header {
+            width: 100%;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 32px;
+            color: var(--gold);
+            margin: 0 0 10px 0;
+            letter-spacing: -0.5px;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 14px;
+            margin: 0 0 20px 0;
+        }
+
+        .score-attempts-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        #score, #attempts {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--surface-border);
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        button {
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--text-main);
+            border: 1px solid var(--surface-border);
+            padding: 9px 18px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        button:hover:not(:disabled) {
+            background: var(--gold);
+            color: #000;
+            border-color: var(--gold);
+            transform: translateY(-2px);
+        }
+
+        button:disabled, .button-disabled {
+            opacity: 0.4;
+            cursor: not-allowed !important;
+            transform: none !important;
+            background: rgba(255, 255, 255, 0.03) !important;
+            color: var(--text-muted) !important;
+        }
+
+        .input-container {
+            width: 100%;
+            max-width: 440px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        #guess-input {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--surface-border);
+            color: white;
+            padding: 14px 20px;
+            border-radius: 30px;
+            font-size: 15px;
+            text-align: center;
+            outline: none;
+            transition: border-color 0.3s, background-color 0.3s;
+        }
+
+        #guess-input:focus {
+            border-color: var(--accent);
+        }
+
+        .autocomplete-suggestions {
+            position: absolute;
+            top: calc(100% + 6px);
+            left: 0;
+            width: 100%;
+            background: #1e293b;
+            border: 1px solid var(--surface-border);
+            border-radius: 14px;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            max-height: 220px;
+            overflow-y: auto;
+            z-index: 100;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            text-align: left;
+        }
+
+        .suggestion-item {
+            padding: 12px 20px;
+            cursor: pointer;
+            font-size: 14px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            transition: background 0.2s;
+        }
+
+        .suggestion-item:hover, .suggestion-item.selected {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--gold);
+        }
+
+        .info-window {
+            position: absolute;
+            top: 130px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1e293b;
+            padding: 18px;
+            border-radius: 14px;
+            border: 1px solid var(--surface-border);
+            max-width: 340px;
+            width: 90%;
+            z-index: 200;
+            box-shadow: 0 20px 30px rgba(0,0,0,0.5);
+            text-align: left;
+        }
+
+        .player-info-container {
+            margin: 15px 0 25px 0;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        #player-name-display {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+            margin: 0;
+            flex-wrap: wrap;
+            min-height: 36px;
+        }
+
+        .player-name-rectangle {
+            display: inline-block;
+            width: 16px;
+            height: 24px;
+            background: rgba(255,255,255,0.25);
+            border-radius: 4px;
+            border: 1px solid var(--surface-border);
+        }
+
+        .player-name-rectangle.hidden-letter {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        #player-name-box {
+            font-size: 26px;
+            font-weight: 700;
+            color: var(--accent);
+            display: none;
+        }
+
+        #player-name-box.visible { display: block; }
+
+        .player-nationality {
+            font-size: 14px;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        table#career-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 8px;
+            margin-top: 10px;
+        }
+
+        th {
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 8px 14px;
+            text-align: left;
+        }
+
+        td {
+            background: rgba(0,0,0,0.25);
+            padding: 14px;
+            font-size: 14px;
+            vertical-align: middle;
+        }
+
+        td:first-child { 
+            border-radius: 12px 0 0 12px; 
+            font-weight: 600; 
+            color: var(--gold); 
+            width: 25%;
+        }
+        
+        td:nth-child(2) { width: 40%; }
+        td:last-child { 
+            border-radius: 0 12px 12px 0; 
+            width: 35%;
+        }
+
+        td.cell-hidden .cell-content { display: none; }
+        td.cell-hidden::after {
+            content: '••••••';
+            letter-spacing: 2px;
+            color: rgba(255, 255, 255, 0.2);
+            font-weight: bold;
+        }
+
+        td.cell-visible .cell-content {
+            display: inline-flex;
+            align-items: center;
+        }
+        td.cell-visible::after { display: none; }
+
+        .hidden-panel { display: none !important; }
+        .blink-green { animation: flashGreen 0.6s ease; }
+        .blink-red { animation: flashRed 0.6s ease; }
+
+        @keyframes flashGreen {
+            50% { background-color: rgba(16, 185, 129, 0.3) !important; border-color: var(--accent); }
+        }
+        @keyframes flashRed {
+            50% { background-color: rgba(239, 68, 68, 0.3) !important; border-color: var(--danger); }
+        }
+    </style>
+</head>
+<body>
+    <div class="global-container">
+        <div class="fixed-header">
+            <h1>Petit Pont Crampon</h1>
+            <p class="subtitle">Démasquez le joueur mystère en devinant ses clubs et ses pays !</p>
+            
+            <div class="score-attempts-container">
+                <p id="score">Score : 60.00 <span id="info-icon" style="cursor: pointer; margin-left: 6px;">&#9432;</span></p>
+                <p id="attempts">Essais : 0</p>
+                <button id="nouveauJoueurButton">Nouveau Joueur</button>
+            </div>
+            
+            <div id="info-window" class="info-window hidden-panel">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                    <h3 style="margin: 0; font-size: 15px; color: var(--gold);">Barème des points</h3>
+                    <span id="close-info" style="cursor: pointer; padding: 2px 6px;">&#10006;</span>
+                </div>
+                <ul style="margin: 0; padding-left: 18px; font-size: 12px; color: #cbd5e1; line-height: 1.6;">
+                    <li>Trouver le joueur : +50 pts (+5 pts par case masquée)</li>
+                    <li>Pays trouvé : +10 pts</li>
+                    <li>Club trouvé : +20 pts</li>
+                    <li>Indice Club : -25 pts</li>
+                    <li>Indice Pays : -10 pts</li>
+                    <li>Bouton Réponse : Score ramené à 0</li>
+                </ul>
+            </div>
+
+            <div class="button-container">
+                <button id="indiceCountryButton">Pays</button>
+                <button id="indiceClubButton">Club</button>
+                <button id="indiceNationalityButton">Nation</button>
+                <button id="revealLettersButton">Lettres</button>
+                <button id="reponseButton">Réponse</button>
+            </div>
+
+            <div class="input-container">
+                <input type="text" id="guess-input" placeholder="Tapez un club, un pays ou le joueur..." autocomplete="off">
+                <ul id="autocomplete-list" class="autocomplete-suggestions"></ul>
+            </div>
+        </div>
+
+        <div class="player-info-container">
+            <div id="player-name-display"></div>
+            <div id="player-name-box">
+                <span id="player-name-display-box"></span>
+            </div>
+            <div class="player-nationality hidden-panel" id="player-nationality"></div>
+        </div>
+
+        <table id="career-table">
+            <thead>
+                <tr>
+                    <th>Saisons</th>
+                    <th>Club</th>
+                    <th>Pays</th>
+                </tr>
+            </thead>
+            <tbody id="career-table-body"></tbody>
+        </table>
+    </div>
+
+    <script>
         let allPlayersData = {};
         let clubCountriesData = {};
         let clubNameMappingData = {};
@@ -13,23 +380,7 @@
         let revealLettersOnce = false;
         let usedPlayers = JSON.parse(localStorage.getItem("usedPlayers") || "[]");
 
-        // Éléments DOM
-        const playerNameDisplay = document.getElementById("player-name-display");
-        const playerNameDisplayBox = document.getElementById("player-name-display-box");
-        const playerNameBox = document.getElementById("player-name-box");
-        const playerNationalityDiv = document.getElementById("player-nationality");
-        const guessInput = document.getElementById("guess-input");
-        const autocompleteList = document.getElementById("autocomplete-list");
-        const scoreElement = document.getElementById("score");
-        const attemptsElement = document.getElementById("attempts");
-        const infoWindow = document.getElementById("info-window");
-
-        const indiceClubButton = document.getElementById("indiceClubButton");
-        const indiceCountryButton = document.getElementById("indiceCountryButton");
-        const indiceNationalityButton = document.getElementById("indiceNationalityButton");
-        const revealLettersButton = document.getElementById("revealLettersButton");
-        const reponseButton = document.getElementById("reponseButton");
-        const nouveauJoueurButton = document.getElementById("nouveauJoueurButton");
+        const el = (id) => document.getElementById(id);
 
         async function loadJSON(path) {
             try {
@@ -37,18 +388,12 @@
                 if (!res.ok) throw new Error(`HTTP ${res.status}`);
                 return await res.json();
             } catch (err) {
-                console.warn(`[Info] Fichier non chargé : ${path}`, err);
+                console.warn(`[Chargement] Fichier non accessible : ${path}`, err);
                 return null;
             }
         }
 
         async function initGame() {
-            // Avertissement protocole file:///
-            if (window.location.protocol === 'file:') {
-                console.error("ATTENTION : Vous ouvrez la page en 'file://'. Les navigateurs bloquent fetch(). Utilisez un serveur local (Live Server, python -m http.server, etc.)");
-            }
-
-            // Chargement de l'ensemble des JSON
             allPlayersData = await loadJSON('./players_stats.json');
             clubCountriesData = await loadJSON('./clubscountries.json') || {};
             clubNameMappingData = await loadJSON('./clubNameMapping.json') || {};
@@ -56,67 +401,70 @@
             countriesData = await loadJSON('./countries.json') || {};
             clubLogosData = await loadJSON('./clubLogos.json') || {};
 
-            // Fallback de secours si players_stats.json n'est pas accessible
             if (!allPlayersData || Object.keys(allPlayersData).length === 0) {
-                const tableBody = document.getElementById('career-table-body');
-                tableBody.innerHTML = `
-                    <tr>
-                        <td colspan="3" style="text-align: center; color: #ef4444; padding: 20px;">
-                            ⚠️ Impossible de charger <code>players_stats.json</code>.<br><br>
-                            <small style="color: #94a3b8;">
-                                Si vous testez en local, lancez un serveur local (ex: <b>Live Server</b> sous VS Code ou <code>python -m http.server</code>).
-                            </small>
-                        </td>
-                    </tr>
-                `;
+                const tableBody = el('career-table-body');
+                if (tableBody) {
+                    tableBody.innerHTML = `
+                        <tr>
+                            <td colspan="3" style="text-align: center; color: #ef4444; padding: 25px;">
+                                ⚠️ <b>Données introuvables</b><br><br>
+                                <span style="font-size: 13px; color: #94a3b8;">
+                                    Lancez la page via un serveur local (ex: <b>Live Server</b> ou <code>python -m http.server</code>).
+                                </span>
+                            </td>
+                        </tr>
+                    `;
+                }
                 return;
             }
 
-            // Sélection du joueur
-            const players = Object.keys(allPlayersData).filter(p => !usedPlayers.includes(p));
-            if (players.length === 0) {
+            const playerList = Object.keys(allPlayersData).filter(p => !usedPlayers.includes(p));
+            if (playerList.length === 0) {
                 usedPlayers = [];
                 localStorage.setItem('usedPlayers', JSON.stringify(usedPlayers));
                 selectedPlayer = Object.keys(allPlayersData)[Math.floor(Math.random() * Object.keys(allPlayersData).length)];
             } else {
-                selectedPlayer = players[Math.floor(Math.random() * players.length)];
+                selectedPlayer = playerList[Math.floor(Math.random() * playerList.length)];
             }
 
             usedPlayers.push(selectedPlayer);
             localStorage.setItem('usedPlayers', JSON.stringify(usedPlayers));
 
             const rawStats = allPlayersData[selectedPlayer];
-            console.log("Joueur sélectionné :", selectedPlayer);
 
-            // Affichage des boîtes de lettres
-            playerNameDisplay.innerHTML = "";
-            for (let i = 0; i < selectedPlayer.length; i++) {
-                if (selectedPlayer[i] === " ") {
-                    const space = document.createElement("span");
-                    space.innerHTML = "&nbsp;&nbsp;";
-                    playerNameDisplay.appendChild(space);
-                } else {
-                    const rect = document.createElement("span");
-                    rect.classList.add("player-name-rectangle", "hidden-letter");
-                    rect.id = `letter-${i}`;
-                    playerNameDisplay.appendChild(rect);
+            // Rendu des lettres masquées
+            const display = el('player-name-display');
+            if (display) {
+                display.innerHTML = "";
+                for (let i = 0; i < selectedPlayer.length; i++) {
+                    if (selectedPlayer[i] === " ") {
+                        const space = document.createElement("span");
+                        space.innerHTML = "&nbsp;&nbsp;";
+                        display.appendChild(space);
+                    } else {
+                        const rect = document.createElement("span");
+                        rect.classList.add("player-name-rectangle", "hidden-letter");
+                        rect.id = `letter-${i}`;
+                        display.appendChild(rect);
+                    }
                 }
             }
 
-            // Nationalité
-            if (clubCountriesData[selectedPlayer]) {
+            // Rendu de la nationalité
+            const natDiv = el('player-nationality');
+            if (natDiv && clubCountriesData[selectedPlayer]) {
                 const countryName = clubCountriesData[selectedPlayer];
                 const countryCode = countriesData[countryName] || countryName;
                 const flagUrl = `https://flagcdn.com/w20/${String(countryCode).toLowerCase()}.png`;
-                playerNationalityDiv.innerHTML = `
+                natDiv.innerHTML = `
                     <img src="${flagUrl}" alt="${countryName}" style="width: 20px; height: 14px; border-radius: 2px;">
                     <span>${countryName}</span>
                 `;
             }
 
-            // Traitement des saisons/lignes de carrière
-            const tableBody = document.getElementById('career-table-body');
-            tableBody.innerHTML = '';
+            // Agrégation des saisons consécutives dans le même club
+            const tableBody = el('career-table-body');
+            if (tableBody) tableBody.innerHTML = '';
             let mergedStats = [];
             let currentMerged = null;
 
@@ -145,59 +493,57 @@
 
             tableSize = mergedStats.length;
 
-            // Remplissage du tableau
-            mergedStats.forEach(stat => {
-                const fullCountry = countryMappingData[stat.countryCode] || stat.countryCode || stat.country;
-                const flagCode = stat.countryCode || '';
-                const flagUrl = `https://flagcdn.com/w20/${String(flagCode).toLowerCase()}.png`;
-                const formattedClub = clubNameMappingData[stat.teamCode] || stat.teamCode || stat.team;
-                const logoUrl = clubLogosData[stat.teamCode] || '';
-                
-                const startSeason = String(stat.startSeason || '');
-                const endSeason = String(stat.endSeason || '');
-                const formattedSeason = (startSeason === endSeason || !endSeason) ? 
-                    startSeason.substring(0, 9) : 
-                    `${startSeason.substring(0, 4)}-${endSeason.substring(endSeason.length - 4)}`;
+            if (tableBody) {
+                mergedStats.forEach(stat => {
+                    const fullCountry = countryMappingData[stat.countryCode] || stat.countryCode || stat.country;
+                    const flagCode = stat.countryCode || '';
+                    const flagUrl = `https://flagcdn.com/w20/${String(flagCode).toLowerCase()}.png`;
+                    const formattedClub = clubNameMappingData[stat.teamCode] || stat.teamCode || stat.team;
+                    const logoUrl = clubLogosData[stat.teamCode] || '';
+                    
+                    const startSeason = String(stat.startSeason || '');
+                    const endSeason = String(stat.endSeason || '');
+                    const formattedSeason = (startSeason === endSeason || !endSeason) ? 
+                        startSeason.substring(0, 9) : 
+                        `${startSeason.substring(0, 4)}-${endSeason.substring(endSeason.length - 4)}`;
 
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${formattedSeason}</td>
-                    <td class="cell-hidden" data-club="${stat.teamCode || formattedClub}">
-                        <span class="cell-content">
-                            ${logoUrl ? `<img src="${logoUrl}" style="width: 18px; height: 18px; margin-right: 8px; vertical-align: middle;">` : ''}
-                            ${formattedClub}
-                        </span>
-                    </td>
-                    <td class="cell-hidden" data-country="${fullCountry}">
-                        <span class="cell-content">
-                            ${flagCode ? `<img src="${flagUrl}" style="width: 18px; height: 13px; margin-right: 8px; vertical-align: middle; border-radius: 2px;">` : ''}
-                            ${fullCountry}
-                        </span>
-                    </td>
-                `;
-                tableBody.appendChild(row);
-            });
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${formattedSeason}</td>
+                        <td class="cell-hidden" data-club="${stat.teamCode || formattedClub}">
+                            <span class="cell-content">
+                                ${logoUrl ? `<img src="${logoUrl}" style="width: 18px; height: 18px; margin-right: 8px; vertical-align: middle;">` : ''}
+                                ${formattedClub}
+                            </span>
+                        </td>
+                        <td class="cell-hidden" data-country="${fullCountry}">
+                            <span class="cell-content">
+                                ${flagCode ? `<img src="${flagUrl}" style="width: 18px; height: 13px; margin-right: 8px; vertical-align: middle; border-radius: 2px;">` : ''}
+                                ${fullCountry}
+                            </span>
+                        </td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            }
 
             updateScoreDisplay();
         }
 
-        // Suggestions d'autocomplétion
         function showSuggestions(val) {
-            autocompleteList.innerHTML = "";
+            const list = el('autocomplete-list');
+            if (!list) return;
+            list.innerHTML = "";
             if (!val || val.trim() === "") return;
 
             const normalizedVal = val.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
             const suggestions = new Set();
 
-            // 1. Joueurs
             Object.keys(allPlayersData).forEach(player => {
                 const normalizedPlayer = player.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
-                if (normalizedPlayer.includes(normalizedVal)) {
-                    suggestions.add(player);
-                }
+                if (normalizedPlayer.includes(normalizedVal)) suggestions.add(player);
             });
 
-            // 2. Clubs & Pays
             for (let club in clubCountriesData) {
                 const country = clubCountriesData[club];
                 const normalizedClub = club.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
@@ -215,17 +561,17 @@
                 if (index === 0) li.classList.add("selected");
                 
                 li.addEventListener("click", () => {
-                    guessInput.value = "";
-                    autocompleteList.innerHTML = "";
+                    const input = el('guess-input');
+                    if (input) input.value = "";
+                    list.innerHTML = "";
                     checkAnswer(item);
                 });
-                autocompleteList.appendChild(li);
+                list.appendChild(li);
             });
         }
 
         function checkAnswer(inputVal) {
             const answer = inputVal.trim().toLowerCase();
-            
             const reverseMapping = Object.fromEntries(
                 Object.entries(countryMappingData).map(([abbr, full]) => [full.toLowerCase(), abbr.toLowerCase()])
             );
@@ -236,27 +582,31 @@
             let checkVal = originalClubMapping[answer] || answer;
             let isCorrect = false;
 
-            // Victoire joueur mystère
             if (checkVal === selectedPlayer.toLowerCase() || answer === selectedPlayer.toLowerCase()) {
-                playerNameDisplayBox.textContent = selectedPlayer;
-                playerNameBox.classList.add("visible");
-                playerNameDisplay.style.display = "none";
-                playerNationalityDiv.classList.add("hidden-panel");
+                const nameDisplayBox = el('player-name-display-box');
+                const nameBox = el('player-name-box');
+                const nameDisplay = el('player-name-display');
+                const natDiv = el('player-nationality');
+                const input = el('guess-input');
+
+                if (nameDisplayBox) nameDisplayBox.textContent = selectedPlayer;
+                if (nameBox) nameBox.classList.add("visible");
+                if (nameDisplay) nameDisplay.style.display = "none";
+                if (natDiv) natDiv.classList.add("hidden-panel");
                 revealAllCells();
 
-                let bonus = 40;
-                score = Math.max(0, score - (attempts * 0.5)) + bonus;
+                score = Math.max(0, score - (attempts * 0.5)) + 40;
                 updateScoreDisplay();
-                guessInput.disabled = true;
+                if (input) input.disabled = true;
                 disableAllButtons();
                 blinkInput(true);
                 return;
             } else {
                 attempts++;
-                attemptsElement.textContent = `Essais : ${attempts}`;
+                const attEl = el('attempts');
+                if (attEl) attEl.textContent = `Essais : ${attempts}`;
             }
 
-            // Révélation de cellules
             const cells = document.querySelectorAll('td[data-country], td[data-club]');
             cells.forEach(cell => {
                 const cellCountry = (cell.getAttribute('data-country') || '').toLowerCase();
@@ -286,118 +636,156 @@
         }
 
         function blinkInput(isCorrect) {
-            guessInput.classList.add(isCorrect ? "blink-green" : "blink-red");
-            setTimeout(() => {
-                guessInput.classList.remove("blink-green", "blink-red");
-            }, 600);
+            const input = el('guess-input');
+            if (!input) return;
+            input.classList.add(isCorrect ? "blink-green" : "blink-red");
+            setTimeout(() => input.classList.remove("blink-green", "blink-red"), 600);
         }
 
         function updateScoreDisplay() {
-            scoreElement.innerHTML = `Score : ${score.toFixed(2)} <span id="info-icon" style="cursor: pointer; margin-left: 6px;">&#9432;</span>`;
-            reattachInfoIcon();
+            const scoreEl = el('score');
+            if (scoreEl) {
+                scoreEl.innerHTML = `Score : ${score.toFixed(2)} <span id="info-icon" style="cursor: pointer; margin-left: 6px;">&#9432;</span>`;
+                const icon = el('info-icon');
+                if (icon) {
+                    icon.onclick = () => {
+                        const win = el('info-window');
+                        if (win) win.classList.toggle("hidden-panel");
+                    };
+                }
+            }
         }
 
         function disableAllButtons() {
-            [indiceClubButton, indiceCountryButton, indiceNationalityButton, revealLettersButton, reponseButton].forEach(btn => {
-                btn.disabled = true;
-                btn.classList.add("button-disabled");
-            });
-        }
-
-        function reattachInfoIcon() {
-            const icon = document.getElementById("info-icon");
-            if (icon) {
-                icon.onclick = () => infoWindow.classList.toggle("hidden-panel");
-            }
-        }
-
-        // Événements
-        guessInput.addEventListener("input", (e) => showSuggestions(e.target.value));
-        guessInput.addEventListener("keydown", (e) => {
-            if (e.key === "Enter") {
-                const selected = autocompleteList.querySelector('.suggestion-item.selected') || autocompleteList.querySelector('.suggestion-item');
-                const val = selected ? selected.textContent : guessInput.value;
-                if (val) {
-                    checkAnswer(val);
-                    guessInput.value = "";
-                    autocompleteList.innerHTML = "";
+            ['indiceClubButton', 'indiceCountryButton', 'indiceNationalityButton', 'revealLettersButton', 'reponseButton'].forEach(id => {
+                const btn = el(id);
+                if (btn) {
+                    btn.disabled = true;
+                    btn.classList.add("button-disabled");
                 }
-                e.preventDefault();
-            }
-        });
-
-        indiceClubButton.addEventListener("click", () => {
-            if (!selectedPlayer) return;
-            const hiddenClubs = Array.from(document.querySelectorAll('td[data-club].cell-hidden'));
-            if (hiddenClubs.length > 0) {
-                attempts++;
-                attemptsElement.textContent = `Essais : ${attempts}`;
-                const target = hiddenClubs[Math.floor(Math.random() * hiddenClubs.length)];
-                revealCell(target);
-                const countrySibling = target.parentElement.querySelector('td[data-country]');
-                if (countrySibling) revealCell(countrySibling);
-                score -= Math.round(20 / (tableSize || 1));
-                updateScoreDisplay();
-            }
-            if (document.querySelectorAll('td[data-club].cell-hidden').length === 0) {
-                indiceClubButton.disabled = true;
-            }
-        });
-
-        indiceCountryButton.addEventListener("click", () => {
-            if (!selectedPlayer) return;
-            const hiddenCountries = Array.from(document.querySelectorAll('td[data-country].cell-hidden'));
-            if (hiddenCountries.length > 0) {
-                attempts++;
-                attemptsElement.textContent = `Essais : ${attempts}`;
-                const target = hiddenCountries[Math.floor(Math.random() * hiddenCountries.length)];
-                revealCell(target);
-                score -= Math.round(10 / (tableSize || 1));
-                updateScoreDisplay();
-            }
-            if (document.querySelectorAll('td[data-country].cell-hidden').length === 0) {
-                indiceCountryButton.disabled = true;
-            }
-        });
-
-        indiceNationalityButton.addEventListener("click", () => {
-            if (!selectedPlayer) return;
-            playerNationalityDiv.classList.remove("hidden-panel");
-            indiceNationalityButton.disabled = true;
-            score -= 10;
-            attempts++;
-            attemptsElement.textContent = `Essais : ${attempts}`;
-            updateScoreDisplay();
-        });
-
-        revealLettersButton.addEventListener("click", () => {
-            if (!selectedPlayer || revealLettersOnce) return;
-            document.querySelectorAll('.player-name-rectangle').forEach(rect => {
-                rect.classList.remove('hidden-letter');
             });
-            revealLettersOnce = true;
-            revealLettersButton.disabled = true;
-            score -= 20;
-            attempts++;
-            attemptsElement.textContent = `Essais : ${attempts}`;
-            updateScoreDisplay();
-        });
+        }
 
-        reponseButton.addEventListener("click", () => {
-            if (!selectedPlayer) return;
-            playerNameDisplayBox.textContent = selectedPlayer;
-            playerNameBox.classList.add("visible");
-            playerNameDisplay.style.display = "none";
-            revealAllCells();
-            score = 0;
-            updateScoreDisplay();
-            disableAllButtons();
-            guessInput.disabled = true;
-        });
+        // Configuration sécurisée des écouteurs
+        const guessInput = el('guess-input');
+        if (guessInput) {
+            guessInput.addEventListener("input", (e) => showSuggestions(e.target.value));
+            guessInput.addEventListener("keydown", (e) => {
+                if (e.key === "Enter") {
+                    const list = el('autocomplete-list');
+                    const selected = list ? (list.querySelector('.suggestion-item.selected') || list.querySelector('.suggestion-item')) : null;
+                    const val = selected ? selected.textContent : guessInput.value;
+                    if (val) {
+                        checkAnswer(val);
+                        guessInput.value = "";
+                        if (list) list.innerHTML = "";
+                    }
+                    e.preventDefault();
+                }
+            });
+        }
 
-        nouveauJoueurButton.addEventListener("click", () => location.reload());
-        document.getElementById("close-info").addEventListener("click", () => infoWindow.classList.add("hidden-panel"));
+        const btnClub = el('indiceClubButton');
+        if (btnClub) {
+            btnClub.addEventListener("click", () => {
+                if (!selectedPlayer) return;
+                const hiddenClubs = Array.from(document.querySelectorAll('td[data-club].cell-hidden'));
+                if (hiddenClubs.length > 0) {
+                    attempts++;
+                    const attEl = el('attempts');
+                    if (attEl) attEl.textContent = `Essais : ${attempts}`;
+                    const target = hiddenClubs[Math.floor(Math.random() * hiddenClubs.length)];
+                    revealCell(target);
+                    const countrySibling = target.parentElement.querySelector('td[data-country]');
+                    if (countrySibling) revealCell(countrySibling);
+                    score -= Math.round(20 / (tableSize || 1));
+                    updateScoreDisplay();
+                }
+                if (document.querySelectorAll('td[data-club].cell-hidden').length === 0) btnClub.disabled = true;
+            });
+        }
 
-        // Lancement
+        const btnCountry = el('indiceCountryButton');
+        if (btnCountry) {
+            btnCountry.addEventListener("click", () => {
+                if (!selectedPlayer) return;
+                const hiddenCountries = Array.from(document.querySelectorAll('td[data-country].cell-hidden'));
+                if (hiddenCountries.length > 0) {
+                    attempts++;
+                    const attEl = el('attempts');
+                    if (attEl) attEl.textContent = `Essais : ${attempts}`;
+                    const target = hiddenCountries[Math.floor(Math.random() * hiddenCountries.length)];
+                    revealCell(target);
+                    score -= Math.round(10 / (tableSize || 1));
+                    updateScoreDisplay();
+                }
+                if (document.querySelectorAll('td[data-country].cell-hidden').length === 0) btnCountry.disabled = true;
+            });
+        }
+
+        const btnNat = el('indiceNationalityButton');
+        if (btnNat) {
+            btnNat.addEventListener("click", () => {
+                if (!selectedPlayer) return;
+                const natDiv = el('player-nationality');
+                if (natDiv) natDiv.classList.remove("hidden-panel");
+                btnNat.disabled = true;
+                score -= 10;
+                attempts++;
+                const attEl = el('attempts');
+                if (attEl) attEl.textContent = `Essais : ${attempts}`;
+                updateScoreDisplay();
+            });
+        }
+
+        const btnLetters = el('revealLettersButton');
+        if (btnLetters) {
+            btnLetters.addEventListener("click", () => {
+                if (!selectedPlayer || revealLettersOnce) return;
+                document.querySelectorAll('.player-name-rectangle').forEach(rect => rect.classList.remove('hidden-letter'));
+                revealLettersOnce = true;
+                btnLetters.disabled = true;
+                score -= 20;
+                attempts++;
+                const attEl = el('attempts');
+                if (attEl) attEl.textContent = `Essais : ${attempts}`;
+                updateScoreDisplay();
+            });
+        }
+
+        const btnReponse = el('reponseButton');
+        if (btnReponse) {
+            btnReponse.addEventListener("click", () => {
+                if (!selectedPlayer) return;
+                const nameDisplayBox = el('player-name-display-box');
+                const nameBox = el('player-name-box');
+                const nameDisplay = el('player-name-display');
+
+                if (nameDisplayBox) nameDisplayBox.textContent = selectedPlayer;
+                if (nameBox) nameBox.classList.add("visible");
+                if (nameDisplay) nameDisplay.style.display = "none";
+                revealAllCells();
+                score = 0;
+                updateScoreDisplay();
+                disableAllButtons();
+                const input = el('guess-input');
+                if (input) input.disabled = true;
+            });
+        }
+
+        const btnNew = el('nouveauJoueurButton');
+        if (btnNew) btnNew.addEventListener("click", () => location.reload());
+
+        const btnCloseInfo = el('close-info');
+        if (btnCloseInfo) {
+            btnCloseInfo.addEventListener("click", () => {
+                const win = el('info-window');
+                if (win) win.classList.add("hidden-panel");
+            });
+        }
+
+        // Lancement initial
         initGame();
     </script>
+</body>
+</html>
